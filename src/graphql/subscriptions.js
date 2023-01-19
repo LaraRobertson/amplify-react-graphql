@@ -8,6 +8,10 @@ export const onCreateNote = /* GraphQL */ `
       name
       description
       image
+      test {
+        title
+        email
+      }
       createdAt
       updatedAt
     }
@@ -20,6 +24,10 @@ export const onUpdateNote = /* GraphQL */ `
       name
       description
       image
+      test {
+        title
+        email
+      }
       createdAt
       updatedAt
     }
@@ -32,6 +40,58 @@ export const onDeleteNote = /* GraphQL */ `
       name
       description
       image
+      test {
+        title
+        email
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateUser = /* GraphQL */ `
+  subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
+    onCreateUser(filter: $filter) {
+      id
+      name
+      description
+      image
+      test {
+        title
+        email
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateUser = /* GraphQL */ `
+  subscription OnUpdateUser($filter: ModelSubscriptionUserFilterInput) {
+    onUpdateUser(filter: $filter) {
+      id
+      name
+      description
+      image
+      test {
+        title
+        email
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteUser = /* GraphQL */ `
+  subscription OnDeleteUser($filter: ModelSubscriptionUserFilterInput) {
+    onDeleteUser(filter: $filter) {
+      id
+      name
+      description
+      image
+      test {
+        title
+        email
+      }
       createdAt
       updatedAt
     }

@@ -8,6 +8,10 @@ export const getNote = /* GraphQL */ `
       name
       description
       image
+      test {
+        title
+        email
+      }
       createdAt
       updatedAt
     }
@@ -25,6 +29,49 @@ export const listNotes = /* GraphQL */ `
         name
         description
         image
+        test {
+          title
+          email
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getUser = /* GraphQL */ `
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
+      id
+      name
+      description
+      image
+      test {
+        title
+        email
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listUsers = /* GraphQL */ `
+  query ListUsers(
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        description
+        image
+        test {
+          title
+          email
+        }
         createdAt
         updatedAt
       }
