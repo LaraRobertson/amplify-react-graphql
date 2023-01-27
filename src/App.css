@@ -28,7 +28,142 @@
 .App-link {
   color: #61dafb;
 }
+* {
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+}
+body {
+  background: #f7f7f7;
+  padding: 0 10px;
+}
+html {
+  font-family: Helvetica, system-ui, Verdana, Arial, sans-serif;
+}
+.wp-block-columns {
+  display:flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.wp-block-column {
+  padding:10px;
+}
+.wp-block-column-intro {
+  padding:10px;
+  min-width:70px;
+}
+.input-column2 {
+  width:150px;
+}
+.backpack-button {
+  width:100px;
+}
 
+.link {
+  font-size:20px;
+  font-weight:bold;
+  color:#004C09;}
+.link:hover {
+  text-decoration: underline;
+}
+.font-small {
+  font-size:.9em;
+}
+.italics {
+  font-style: italic;
+}
+.green {
+  color:green;
+}
+.red {
+  color:red;
+}
+.button {
+  background-color: #4CAF50;
+  border: 1px solid black;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-right:20px;
+}
+.button-small {
+  background-color: #4CAF50;
+  border: 1px solid black;
+  color: white;
+  padding: 5px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 10px 20px 10px 0;
+}
+.button:hover, .button-small:hover {
+  cursor: pointer;
+  background-color: #555;
+}
+
+.button2 {
+  background-color: #4CAF50;
+  border: 1px solid black;
+  color: white;
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12px;
+  position: absolute;
+  top:0px;
+  right:20px;
+}
+
+.button2:hover {
+  cursor: pointer;
+  background-color: #555;
+}
+.button3 {
+  left:30px;
+  right:auto;
+}
+.close-button {
+  background-color: transparent;
+  color: #325A42;
+  border: 1px solid black;
+  padding: 3px;
+  margin-bottom: 15px;
+  position:absolute;
+  top:10px;
+  right:20px;
+  font-size:20px;
+}
+.exit-button {
+  margin-bottom: 15px;
+  margin-right:20px;
+  top:10px;
+  left:10px;
+  border:none;
+  background-color:transparent;
+}
+.action-button {
+  background-color: #0B4311;
+  color: #ffffff;
+  border: 1px solid black;
+  padding: 3px;
+  margin-bottom: 15px;
+}
+.hide {
+  display:none;
+}
+.show {
+  display:block;
+}
+.inputNumBox {
+  width:30px;
+  border: 1px solid black;
+  height:30px;
+  font-size:20px;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -36,4 +171,24 @@
   to {
     transform: rotate(360deg);
   }
+}
+.auth-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+.zIndex102 {
+  z-index: 102;
+}
+.backgroundCoverTopCenter {
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+:root, [data-amplify-theme] {
+  --amplify-colors-font-primary: #333;
+  /* you can also use references: */
+  --amplify-colors-white: #fff;
+  --amplify-colors-font-secondary: var(--amplify-colors-neutral-60);
 }

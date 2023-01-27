@@ -12,9 +12,11 @@ code {
     monospace;
 }
 
-:root {
+:root, [data-amplify-theme]{
   --amplify-primary-color: #11a29b;
   --amplify-primary-tint: #3f6060;
   --amplify-primary-shade: #2dba89;
   --amplify-background-color: #e0faf4;
+  --amplify-colors-white: #000000;
+  --amplify-components-tabs-item-active-color: #ff0000;
 }

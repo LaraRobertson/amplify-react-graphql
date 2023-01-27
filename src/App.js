@@ -1,21 +1,39 @@
-import { useAuthenticator } from "@aws-amplify/ui-react";
-import { Amplify } from "aws-amplify";
+//App.js
+import { Authenticator } from '@aws-amplify/ui-react';
+import { ThiefPage2 } from './components/ThiefPage2';
+import { RequireAuth } from './RequireAuth';
+import { Login } from './components/Login';
+import { Home } from './components/Home';
 
-import { Home } from "./Home";
-import { Login } from "./Login";
-import "./App.css";
-import "@aws-amplify/ui-react/styles.css";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import awsExports from "./aws-exports";
-Amplify.configure(awsExports);
+import './App.css';
 
-export default function App() {
-    const { user } = useAuthenticator();
-    console.log("user: " + user);
-    if (user) {
-        return <Home />;
-    }
-    return <Login />;
+function MyRoutes() {
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Home />}>
+                    <Route
+                        path="/page2"
+                        element={
+                            <RequireAuth>
+                                <ThiefPage2 />
+                            </RequireAuth>
+                        }
+                    />
+                </Route>
+            </Routes>
+        </BrowserRouter>
+    );
+}
 
-};
+function App() {
+    return (
+        <Authenticator.Provider>
+            <MyRoutes />
+        </Authenticator.Provider>
+    );
+}
 
+export default App;
