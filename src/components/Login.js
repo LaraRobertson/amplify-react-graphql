@@ -5,6 +5,12 @@ import {Authenticator, Button, useAuthenticator, View} from '@aws-amplify/ui-rea
 import '@aws-amplify/ui-react/styles.css';
 
 import { useNavigate, useLocation } from 'react-router';
+import {
+    Routes,
+    Route,
+    Link,
+    Navigate,
+} from 'react-router-dom';
 
 export function Login() {
     const { route } = useAuthenticator((context) => [context.route]);
@@ -32,12 +38,12 @@ export function Login() {
         console.log("homeDetail (useEffect): " + homeDetail);
         //if (homeDetail === "show") navigate('/');
     });
+    const shouldRedirect = true;
+
     return (
-        <View className="auth-wrapper">
-            <div>
-            <Button onClick={() => setHome()}>Home</Button>
-            </div>
-            <Authenticator></Authenticator>
-        </View>
+        <>
+            <h2>Login</h2>
+            {shouldRedirect && <Navigate replace to="/" />}
+        </>
     );
 }

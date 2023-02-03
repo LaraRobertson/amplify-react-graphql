@@ -87,7 +87,7 @@ export function Home() {
     });
     useEffect(() => {
         console.log("user (useEffect-user): " + user);
-        console.log("user.username): " + user.username);
+        console.log("user.username: " + user.username);
         if (user.username === "lararobertson70@gmail.com" && route === 'authenticated' & homeDetail==="show") setAdminDetail("show");
     });
     useEffect(() => {
