@@ -58,6 +58,177 @@ export const deleteNote = /* GraphQL */ `
     }
   }
 `;
+export const createGameStats = /* GraphQL */ `
+  mutation CreateGameStats(
+    $input: CreateGameStatsInput!
+    $condition: ModelGameStatsConditionInput
+  ) {
+    createGameStats(input: $input, condition: $condition) {
+      id
+      gameName
+      gameScore
+      gameStates
+      gameTime
+      type
+      createdAt
+      user {
+        items {
+          id
+          gameStatsId
+          userId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const updateGameStats = /* GraphQL */ `
+  mutation UpdateGameStats(
+    $input: UpdateGameStatsInput!
+    $condition: ModelGameStatsConditionInput
+  ) {
+    updateGameStats(input: $input, condition: $condition) {
+      id
+      gameName
+      gameScore
+      gameStates
+      gameTime
+      type
+      createdAt
+      user {
+        items {
+          id
+          gameStatsId
+          userId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const deleteGameStats = /* GraphQL */ `
+  mutation DeleteGameStats(
+    $input: DeleteGameStatsInput!
+    $condition: ModelGameStatsConditionInput
+  ) {
+    deleteGameStats(input: $input, condition: $condition) {
+      id
+      gameName
+      gameScore
+      gameStates
+      gameTime
+      type
+      createdAt
+      user {
+        items {
+          id
+          gameStatsId
+          userId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const createGame = /* GraphQL */ `
+  mutation CreateGame(
+    $input: CreateGameInput!
+    $condition: ModelGameConditionInput
+  ) {
+    createGame(input: $input, condition: $condition) {
+      id
+      gameName
+      gameDescriptionH2
+      gameDescriptionH3
+      gameDescriptionP
+      gameLocation
+      gameType
+      gameStop
+      type
+      createdAt
+      user {
+        items {
+          id
+          gameId
+          userId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const updateGame = /* GraphQL */ `
+  mutation UpdateGame(
+    $input: UpdateGameInput!
+    $condition: ModelGameConditionInput
+  ) {
+    updateGame(input: $input, condition: $condition) {
+      id
+      gameName
+      gameDescriptionH2
+      gameDescriptionH3
+      gameDescriptionP
+      gameLocation
+      gameType
+      gameStop
+      type
+      createdAt
+      user {
+        items {
+          id
+          gameId
+          userId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const deleteGame = /* GraphQL */ `
+  mutation DeleteGame(
+    $input: DeleteGameInput!
+    $condition: ModelGameConditionInput
+  ) {
+    deleteGame(input: $input, condition: $condition) {
+      id
+      gameName
+      gameDescriptionH2
+      gameDescriptionH3
+      gameDescriptionP
+      gameLocation
+      gameType
+      gameStop
+      type
+      createdAt
+      user {
+        items {
+          id
+          gameId
+          userId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
 export const createUser = /* GraphQL */ `
   mutation CreateUser(
     $input: CreateUserInput!
@@ -65,12 +236,28 @@ export const createUser = /* GraphQL */ `
   ) {
     createUser(input: $input, condition: $condition) {
       id
-      name
+      userName
       description
-      image
-      test {
-        title
-        email
+      email
+      game {
+        items {
+          id
+          gameId
+          userId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      gameStats {
+        items {
+          id
+          gameStatsId
+          userId
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       createdAt
       updatedAt
@@ -84,12 +271,28 @@ export const updateUser = /* GraphQL */ `
   ) {
     updateUser(input: $input, condition: $condition) {
       id
-      name
+      userName
       description
-      image
-      test {
-        title
-        email
+      email
+      game {
+        items {
+          id
+          gameId
+          userId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      gameStats {
+        items {
+          id
+          gameStatsId
+          userId
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       createdAt
       updatedAt
@@ -103,12 +306,283 @@ export const deleteUser = /* GraphQL */ `
   ) {
     deleteUser(input: $input, condition: $condition) {
       id
-      name
+      userName
       description
-      image
-      test {
-        title
+      email
+      game {
+        items {
+          id
+          gameId
+          userId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      gameStats {
+        items {
+          id
+          gameStatsId
+          userId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createUserGameStats = /* GraphQL */ `
+  mutation CreateUserGameStats(
+    $input: CreateUserGameStatsInput!
+    $condition: ModelUserGameStatsConditionInput
+  ) {
+    createUserGameStats(input: $input, condition: $condition) {
+      id
+      gameStatsId
+      userId
+      gameStats {
+        id
+        gameName
+        gameScore
+        gameStates
+        gameTime
+        type
+        createdAt
+        user {
+          nextToken
+        }
+        updatedAt
+      }
+      user {
+        id
+        userName
+        description
         email
+        game {
+          nextToken
+        }
+        gameStats {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateUserGameStats = /* GraphQL */ `
+  mutation UpdateUserGameStats(
+    $input: UpdateUserGameStatsInput!
+    $condition: ModelUserGameStatsConditionInput
+  ) {
+    updateUserGameStats(input: $input, condition: $condition) {
+      id
+      gameStatsId
+      userId
+      gameStats {
+        id
+        gameName
+        gameScore
+        gameStates
+        gameTime
+        type
+        createdAt
+        user {
+          nextToken
+        }
+        updatedAt
+      }
+      user {
+        id
+        userName
+        description
+        email
+        game {
+          nextToken
+        }
+        gameStats {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteUserGameStats = /* GraphQL */ `
+  mutation DeleteUserGameStats(
+    $input: DeleteUserGameStatsInput!
+    $condition: ModelUserGameStatsConditionInput
+  ) {
+    deleteUserGameStats(input: $input, condition: $condition) {
+      id
+      gameStatsId
+      userId
+      gameStats {
+        id
+        gameName
+        gameScore
+        gameStates
+        gameTime
+        type
+        createdAt
+        user {
+          nextToken
+        }
+        updatedAt
+      }
+      user {
+        id
+        userName
+        description
+        email
+        game {
+          nextToken
+        }
+        gameStats {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createUserGamePlay = /* GraphQL */ `
+  mutation CreateUserGamePlay(
+    $input: CreateUserGamePlayInput!
+    $condition: ModelUserGamePlayConditionInput
+  ) {
+    createUserGamePlay(input: $input, condition: $condition) {
+      id
+      gameId
+      userId
+      game {
+        id
+        gameName
+        gameDescriptionH2
+        gameDescriptionH3
+        gameDescriptionP
+        gameLocation
+        gameType
+        gameStop
+        type
+        createdAt
+        user {
+          nextToken
+        }
+        updatedAt
+      }
+      user {
+        id
+        userName
+        description
+        email
+        game {
+          nextToken
+        }
+        gameStats {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateUserGamePlay = /* GraphQL */ `
+  mutation UpdateUserGamePlay(
+    $input: UpdateUserGamePlayInput!
+    $condition: ModelUserGamePlayConditionInput
+  ) {
+    updateUserGamePlay(input: $input, condition: $condition) {
+      id
+      gameId
+      userId
+      game {
+        id
+        gameName
+        gameDescriptionH2
+        gameDescriptionH3
+        gameDescriptionP
+        gameLocation
+        gameType
+        gameStop
+        type
+        createdAt
+        user {
+          nextToken
+        }
+        updatedAt
+      }
+      user {
+        id
+        userName
+        description
+        email
+        game {
+          nextToken
+        }
+        gameStats {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteUserGamePlay = /* GraphQL */ `
+  mutation DeleteUserGamePlay(
+    $input: DeleteUserGamePlayInput!
+    $condition: ModelUserGamePlayConditionInput
+  ) {
+    deleteUserGamePlay(input: $input, condition: $condition) {
+      id
+      gameId
+      userId
+      game {
+        id
+        gameName
+        gameDescriptionH2
+        gameDescriptionH3
+        gameDescriptionP
+        gameLocation
+        gameType
+        gameStop
+        type
+        createdAt
+        user {
+          nextToken
+        }
+        updatedAt
+      }
+      user {
+        id
+        userName
+        description
+        email
+        game {
+          nextToken
+        }
+        gameStats {
+          nextToken
+        }
+        createdAt
+        updatedAt
       }
       createdAt
       updatedAt

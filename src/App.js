@@ -15,7 +15,7 @@ function MyRoutes() {
             <Routes>
                 <Route path="/" element={<Home />}>
                     <Route
-                        path="/page2"
+                        path="/thief-1-page1"
                         element={
                             <RequireAuth>
                                 <ThiefPage2 />

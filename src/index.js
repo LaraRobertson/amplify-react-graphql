@@ -10,12 +10,45 @@ import "./index.css";
 
 Amplify.configure(awsExports);
 
+/* use for changing things in theme like fonts, colors, etc */
+const theme: Theme = {
+    name: 'custom-theme',
+    tokens: {
+        colors: {
+            green: {value: '#76C988'}
+        },
+        fonts: {
+            default: {
+                variable: {value:'\'Open Sans\',\'InterVariable\', \'Inter var\', \'Inter\', -apple-system, BlinkMacSystemFont,\'Helvetica Neue\', \'Segoe UI\', Oxygen, Ubuntu, Cantarell,sans-serif;'}
+            }
+        },
+        components: {
+            card: {
+                // You can reference other tokens
+                backgroundColor: { value: '{colors.background.success}' },
+                borderRadius: { value: '{radii.large}' },
+                padding: { value: '{space.xl}' },
 
+                // Variations
+                outlined: {
+                    // Or use explicit values
+                    borderWidth: { value: '10px' },
+                    backgroundColor: { value: '{colors.background.warning}' },
+                },
+                elevated: {
+                    backgroundColor: { value: '{colors.background.info}' },
+                    boxShadow: { value: '{shadows.large}' },
+                },
+            },
+
+        },
+    },
+};
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-      <ThemeProvider>
+      <ThemeProvider theme={theme} >
           <Authenticator.Provider>
               <App />
           </Authenticator.Provider>
