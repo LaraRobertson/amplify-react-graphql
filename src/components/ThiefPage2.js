@@ -120,7 +120,7 @@ export function ThiefPage2() {
                 height="calc(100vh - 60px)"
                 maxHeight="400px"
                 display="block"
-                backgroundImage = "url('https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/lower-porch-background.png')">
+                backgroundImage = "url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/lower-porch-background-new.jpg')">
               <View
                     className="zIndex102"
                     ariaLabel="Notes Button"
@@ -137,7 +137,9 @@ export function ThiefPage2() {
                         <Image src="http://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/notes.png" />
                     </button>
               </View>
-              <View className={areNotesVisible ? "show" : "hide"} >
+              <View
+                  arialLabel="Notes Open"
+                  className={areNotesVisible ? "show" : "hide"} >
                   <button className="close-button"  onClick={toggleNotesThief}>X</button>
                       <div>Take some notes</div>
                       <br />
@@ -155,6 +157,31 @@ export function ThiefPage2() {
                           }
                       />
               </View>
+              <View
+                  arialLabel="Red Table 4 chairs"
+                  max-width="200px"
+                  position="absolute"
+                  right="10%"
+                  top="37%"
+                  width="28%"
+                  zindex="22"
+              >
+                  <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/table-palette-knife.png" />
+              </View>
+            <View
+                arialLabel="backpack Image"
+                maxWidth="51px"
+                position="absolute"
+                right="10%"
+                top="2%"
+                width="28%"
+                zindex="102"
+                >
+
+                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png" />
+
+
+            </View>
             </View>
         </View>
     )

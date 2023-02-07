@@ -2,7 +2,7 @@
 import React, {useEffect, useState} from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import {useAuthenticator, Flex, Button, useTheme, Heading, View, Image, Authenticator,Card, Text, TextField, TextAreaField} from '@aws-amplify/ui-react';
-import { API, graphqlOperation, Storage,Auth   } from "aws-amplify";
+import { API, graphqlOperation, Storage, Auth   } from "aws-amplify";
 import { listGames, listUsers,gamesByDate } from "../graphql/queries";
 import {
     createGame as createGameMutation,
@@ -12,19 +12,12 @@ import {
 import { format } from 'date-fns'
 
 export function Home() {
-    const [gameName, setGameName] = useState("Thief 1");
-    const [gamePage, setGamePage] = useState("Intro");
     const [userInfo, setUserInfo] = useState({});
     const [user, setUser] = useState([]);
     const [homeDetail, setHomeDetail] = useState("show");
     const [loginDetail, setLoginDetail] = useState("hide");
     const [adminDetail, setAdminDetail] = useState("hide");
     const [isGameDetailVisible, setIsGameDetailVisible] = useState(true);
-    const [game1Num1Page1,setGame1Num1Page1] = useState('');
-    const [game1Num2Page1,setGame1Num2Page1] = useState('');
-    const [game1NumPage1guess,setGame1NumPage1guess] = useState( {Num1:"",Num2:""});
-    const [haveGuessedGame1Page1,setHaveGuessedGame1Page1] = useState(false);
-    const [isGame1Page1Wrong, setIsGame1Page1Wrong] = useState(true);
     /* classes */
     let buttonDetailClassHide = "button button-small hide";
     let buttonDetailClassShow = "button button-small show";
@@ -257,11 +250,9 @@ export function Home() {
                     </div>
                 </View>
             </header>
-
             <View
-
-                    maxWidth="800px"
-                    margin="10px auto 10px auto">
+                maxWidth="800px"
+                margin="10px auto 10px auto">
                 <Flex>
                 <div>
                     {route === 'authenticated' ? (
@@ -387,18 +378,11 @@ export function Home() {
                     </Flex>
                     <View paddingTop="40px"> © 2022 EscapeOut.Games</View>
                 </View>
-
-
-
-
-
-
             <View
                 maxWidth="800px"
                 margin="10px auto 10px auto"
                 className={adminDetail}
             >
-
             <Heading level={3}>Admin</Heading>
             <View as="form" margin="3rem 0" onSubmit={createUserGamePlay}>
                 <Flex direction="row" justifyContent="center">
