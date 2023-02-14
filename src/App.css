@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,700;1,500;1,700&family=Roboto&display=swap');
 .App {
   text-align: center;
 }
@@ -82,6 +83,7 @@ html {
   background-color: #76C988;
   position:relative;
   font-family:'Roboto',sans-serif;
+  margin: 5px 10px;
 }
 .button-small {
   font-size: 12px;
@@ -126,14 +128,7 @@ html {
   width:30px;
   height:30px;
 }
-.exit-button {
-  margin-bottom: 15px;
-  margin-right:20px;
-  top:10px;
-  left:10px;
-  border:none;
-  background-color:transparent;
-}
+
 .action-button {
   background-color: #0B4311;
   color: #ffffff;
@@ -148,12 +143,10 @@ html {
   display:block;
 }
 .hide-gradual {
-  display:none;
   visibility: hidden;
   opacity: 0;
 }
 .show-gradual {
-  display:block;
   visibility: visible;
   opacity: .9;
 }
@@ -176,9 +169,7 @@ html {
   justify-content: center;
   margin-top: 2rem;
 }
-.zIndex102 {
-  z-index: 102;
-}
+
 .backgroundCoverTopCenter {
   background-position: top center;
   background-repeat: no-repeat;
@@ -219,11 +210,48 @@ html {
   top: 0;
   right: 0;
   width: 95vw;
-  max-width: 95vw;
+  max-width: 800px;
   background-color: #699A7D;
   opacity: .9;
   height: calc(100vh - 60px);
   z-index: 103;
   transition: visibility 0s, opacity .5s linear;
   padding:20px;
+}
+/* z-indexes because not supported by <View />*/
+.zIndex102 {
+  z-index: 102;
+}
+.zIndex103 {
+  z-index: 103;
+}
+.zIndex20 {
+  z-index: 20;
+}
+.waiverClass {
+  position:absolute;
+  padding:20px;
+  background-color:#699A7D;
+  color:white;
+  height:calc(100vh - 60px);
+  width:calc(100vw - 60px);
+}
+.gameCard {
+  width:300px;
+}
+.small {
+  font-size:10px;
+}
+.hintHolder {
+  position:absolute;
+  top:-1px;
+  max-width: 800px;
+  width: calc(100vw - 40px);
+  left:-1px;
+  background-color:#699A7D;
+  height: calc(100vh - 40px);
+  margin-bottom:20px;
+  padding:20px 30px 20px 20px;
+  transition: visibility 0s, opacity .5s linear;
+  z-index:150;
 }

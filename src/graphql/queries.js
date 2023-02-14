@@ -44,22 +44,14 @@ export const getGameStats = /* GraphQL */ `
   query GetGameStats($id: ID!) {
     getGameStats(id: $id) {
       id
+      gameID
+      userEmail
       gameName
       gameScore
       gameStates
       gameTime
       type
       createdAt
-      user {
-        items {
-          id
-          gameStatsId
-          userId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       updatedAt
     }
   }
@@ -73,15 +65,14 @@ export const listGameStats = /* GraphQL */ `
     listGameStats(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        gameID
+        userEmail
         gameName
         gameScore
         gameStates
         gameTime
         type
         createdAt
-        user {
-          nextToken
-        }
         updatedAt
       }
       nextToken
@@ -159,16 +150,6 @@ export const getUser = /* GraphQL */ `
         }
         nextToken
       }
-      gameStats {
-        items {
-          id
-          gameStatsId
-          userId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -188,83 +169,6 @@ export const listUsers = /* GraphQL */ `
         email
         game {
           nextToken
-        }
-        gameStats {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getUserGameStats = /* GraphQL */ `
-  query GetUserGameStats($id: ID!) {
-    getUserGameStats(id: $id) {
-      id
-      gameStatsId
-      userId
-      gameStats {
-        id
-        gameName
-        gameScore
-        gameStates
-        gameTime
-        type
-        createdAt
-        user {
-          nextToken
-        }
-        updatedAt
-      }
-      user {
-        id
-        userName
-        description
-        email
-        game {
-          nextToken
-        }
-        gameStats {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listUserGameStats = /* GraphQL */ `
-  query ListUserGameStats(
-    $filter: ModelUserGameStatsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listUserGameStats(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        gameStatsId
-        userId
-        gameStats {
-          id
-          gameName
-          gameScore
-          gameStates
-          gameTime
-          type
-          createdAt
-          updatedAt
-        }
-        user {
-          id
-          userName
-          description
-          email
-          createdAt
-          updatedAt
         }
         createdAt
         updatedAt
@@ -301,9 +205,6 @@ export const getUserGamePlay = /* GraphQL */ `
         description
         email
         game {
-          nextToken
-        }
-        gameStats {
           nextToken
         }
         createdAt
@@ -353,6 +254,68 @@ export const listUserGamePlays = /* GraphQL */ `
     }
   }
 `;
+export const gameStatsByGameID = /* GraphQL */ `
+  query GameStatsByGameID(
+    $gameID: String!
+    $sortDirection: ModelSortDirection
+    $filter: ModelGameStatsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    gameStatsByGameID(
+      gameID: $gameID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        gameID
+        userEmail
+        gameName
+        gameScore
+        gameStates
+        gameTime
+        type
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const gameStatsByUserEmail = /* GraphQL */ `
+  query GameStatsByUserEmail(
+    $userEmail: String!
+    $sortDirection: ModelSortDirection
+    $filter: ModelGameStatsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    gameStatsByUserEmail(
+      userEmail: $userEmail
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        gameID
+        userEmail
+        gameName
+        gameScore
+        gameStates
+        gameTime
+        type
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const gameStatsByGameNameAndType = /* GraphQL */ `
   query GameStatsByGameNameAndType(
     $gameName: String!
@@ -372,15 +335,14 @@ export const gameStatsByGameNameAndType = /* GraphQL */ `
     ) {
       items {
         id
+        gameID
+        userEmail
         gameName
         gameScore
         gameStates
         gameTime
         type
         createdAt
-        user {
-          nextToken
-        }
         updatedAt
       }
       nextToken
@@ -406,15 +368,14 @@ export const gameStatsByDate = /* GraphQL */ `
     ) {
       items {
         id
+        gameID
+        userEmail
         gameName
         gameScore
         gameStates
         gameTime
         type
         createdAt
-        user {
-          nextToken
-        }
         updatedAt
       }
       nextToken
@@ -495,16 +456,16 @@ export const gamesByDate = /* GraphQL */ `
     }
   }
 `;
-export const userGameStatsByGameStatsId = /* GraphQL */ `
-  query UserGameStatsByGameStatsId(
-    $gameStatsId: ID!
+export const usersByEmail = /* GraphQL */ `
+  query UsersByEmail(
+    $email: String!
     $sortDirection: ModelSortDirection
-    $filter: ModelUserGameStatsFilterInput
+    $filter: ModelUserFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    userGameStatsByGameStatsId(
-      gameStatsId: $gameStatsId
+    usersByEmail(
+      email: $email
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -512,69 +473,11 @@ export const userGameStatsByGameStatsId = /* GraphQL */ `
     ) {
       items {
         id
-        gameStatsId
-        userId
-        gameStats {
-          id
-          gameName
-          gameScore
-          gameStates
-          gameTime
-          type
-          createdAt
-          updatedAt
-        }
-        user {
-          id
-          userName
-          description
-          email
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const userGameStatsByUserId = /* GraphQL */ `
-  query UserGameStatsByUserId(
-    $userId: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserGameStatsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    userGameStatsByUserId(
-      userId: $userId
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        gameStatsId
-        userId
-        gameStats {
-          id
-          gameName
-          gameScore
-          gameStates
-          gameTime
-          type
-          createdAt
-          updatedAt
-        }
-        user {
-          id
-          userName
-          description
-          email
-          createdAt
-          updatedAt
+        userName
+        description
+        email
+        game {
+          nextToken
         }
         createdAt
         updatedAt

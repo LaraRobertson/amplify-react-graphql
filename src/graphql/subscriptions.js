@@ -55,22 +55,14 @@ export const onCreateGameStats = /* GraphQL */ `
   ) {
     onCreateGameStats(filter: $filter) {
       id
+      gameID
+      userEmail
       gameName
       gameScore
       gameStates
       gameTime
       type
       createdAt
-      user {
-        items {
-          id
-          gameStatsId
-          userId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       updatedAt
     }
   }
@@ -81,22 +73,14 @@ export const onUpdateGameStats = /* GraphQL */ `
   ) {
     onUpdateGameStats(filter: $filter) {
       id
+      gameID
+      userEmail
       gameName
       gameScore
       gameStates
       gameTime
       type
       createdAt
-      user {
-        items {
-          id
-          gameStatsId
-          userId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       updatedAt
     }
   }
@@ -107,22 +91,14 @@ export const onDeleteGameStats = /* GraphQL */ `
   ) {
     onDeleteGameStats(filter: $filter) {
       id
+      gameID
+      userEmail
       gameName
       gameScore
       gameStates
       gameTime
       type
       createdAt
-      user {
-        items {
-          id
-          gameStatsId
-          userId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       updatedAt
     }
   }
@@ -225,16 +201,6 @@ export const onCreateUser = /* GraphQL */ `
         }
         nextToken
       }
-      gameStats {
-        items {
-          id
-          gameStatsId
-          userId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -251,16 +217,6 @@ export const onUpdateUser = /* GraphQL */ `
         items {
           id
           gameId
-          userId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      gameStats {
-        items {
-          id
-          gameStatsId
           userId
           createdAt
           updatedAt
@@ -288,136 +244,6 @@ export const onDeleteUser = /* GraphQL */ `
           updatedAt
         }
         nextToken
-      }
-      gameStats {
-        items {
-          id
-          gameStatsId
-          userId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateUserGameStats = /* GraphQL */ `
-  subscription OnCreateUserGameStats(
-    $filter: ModelSubscriptionUserGameStatsFilterInput
-  ) {
-    onCreateUserGameStats(filter: $filter) {
-      id
-      gameStatsId
-      userId
-      gameStats {
-        id
-        gameName
-        gameScore
-        gameStates
-        gameTime
-        type
-        createdAt
-        user {
-          nextToken
-        }
-        updatedAt
-      }
-      user {
-        id
-        userName
-        description
-        email
-        game {
-          nextToken
-        }
-        gameStats {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateUserGameStats = /* GraphQL */ `
-  subscription OnUpdateUserGameStats(
-    $filter: ModelSubscriptionUserGameStatsFilterInput
-  ) {
-    onUpdateUserGameStats(filter: $filter) {
-      id
-      gameStatsId
-      userId
-      gameStats {
-        id
-        gameName
-        gameScore
-        gameStates
-        gameTime
-        type
-        createdAt
-        user {
-          nextToken
-        }
-        updatedAt
-      }
-      user {
-        id
-        userName
-        description
-        email
-        game {
-          nextToken
-        }
-        gameStats {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteUserGameStats = /* GraphQL */ `
-  subscription OnDeleteUserGameStats(
-    $filter: ModelSubscriptionUserGameStatsFilterInput
-  ) {
-    onDeleteUserGameStats(filter: $filter) {
-      id
-      gameStatsId
-      userId
-      gameStats {
-        id
-        gameName
-        gameScore
-        gameStates
-        gameTime
-        type
-        createdAt
-        user {
-          nextToken
-        }
-        updatedAt
-      }
-      user {
-        id
-        userName
-        description
-        email
-        game {
-          nextToken
-        }
-        gameStats {
-          nextToken
-        }
-        createdAt
-        updatedAt
       }
       createdAt
       updatedAt
@@ -454,9 +280,6 @@ export const onCreateUserGamePlay = /* GraphQL */ `
         description
         email
         game {
-          nextToken
-        }
-        gameStats {
           nextToken
         }
         createdAt
@@ -499,9 +322,6 @@ export const onUpdateUserGamePlay = /* GraphQL */ `
         game {
           nextToken
         }
-        gameStats {
-          nextToken
-        }
         createdAt
         updatedAt
       }
@@ -540,9 +360,6 @@ export const onDeleteUserGamePlay = /* GraphQL */ `
         description
         email
         game {
-          nextToken
-        }
-        gameStats {
           nextToken
         }
         createdAt

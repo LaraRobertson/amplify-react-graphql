@@ -1,11 +1,17 @@
 //App.js
-import { Authenticator } from '@aws-amplify/ui-react';
-import { ThiefPage2 } from './components/ThiefPage2';
-import { RequireAuth } from './RequireAuth';
-import { Login } from './components/Login';
-import { Home } from './components/Home';
+import {Authenticator, useAuthenticator} from '@aws-amplify/ui-react';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { RequireAuth } from './RequireAuthLogin';
+import { Login } from './components/Login';
+import { Home } from './components/Home';
+import { Admin } from './components/Admin';
+import { Layout } from './components/Layout';
+import { Waiver } from './components/Waiver';
+
+/* Game Stops */
+import { Thief1Stop1 } from './games/thief1/Thief1Stop1';
+
 
 import './App.css';
 
@@ -13,12 +19,29 @@ function MyRoutes() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Home />}>
+                <Route path="/" element={<Layout/>}>
+                    <Route index element={<Home />} />
                     <Route
-                        path="/thief-1-page1"
+                        path="/admin"
                         element={
                             <RequireAuth>
-                                <ThiefPage2 />
+                                <Admin />
+                            </RequireAuth>
+                        }
+                    />
+                    <Route
+                        path="/thief-1-stop1"
+                        element={
+                            <RequireAuth>
+                                <Thief1Stop1 />
+                            </RequireAuth>
+                        }
+                    />
+                    <Route
+                        path="/waiver"
+                        element={
+                            <RequireAuth>
+                                <Waiver />
                             </RequireAuth>
                         }
                     />
@@ -37,7 +60,7 @@ function MyRoutes() {
 function App() {
     return (
         <Authenticator.Provider>
-            <MyRoutes />
+            <MyRoutes  />
         </Authenticator.Provider>
     );
 }

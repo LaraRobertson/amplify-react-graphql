@@ -4,9 +4,7 @@ import React, {useState} from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
 import awsExports from "./aws-exports";
-import "./index.css";
 
 Amplify.configure(awsExports);
 
