@@ -41,7 +41,7 @@ export function Thief1Stop1() {
     const [gameNotes,setGameNotes] = useState('');
     const [isBackpackVisible, setIsBackpackVisible] = useState(false);
     const [gameBackpack, setGameBackpack] = useState([]);
-    const [gameBackpackHasItemsThief, setGameBackpackHasItemsThief] = useState(false);
+    const [gameBackpackHasItems, setGameBackpackHasItems] = useState(false);
 
     /* game specific */
     const [isLightVisible, setIsLightVisible] = useState(true);
@@ -220,7 +220,7 @@ export function Thief1Stop1() {
                 key: 'light'
             })
         }
-        setGameBackpackHasItemsThief( true);
+        setGameBackpackHasItems( true);
     }
     useEffect(() => {
         console.log("***useEffect***: gameBackpack: " + gameBackpack);
@@ -231,6 +231,7 @@ export function Thief1Stop1() {
             }
         }
     });
+
     function showItemContents (value) {
         console.log("show contents value: " + value);
         switch (value) {
@@ -267,49 +268,33 @@ export function Thief1Stop1() {
 
         }
 
-
     }
 
     return (
         <View
               ariaLabel="Main Container"
-              maxWidth="800px"
-              padding="10px"
-              backgroundColor="var(--amplify-colors-white)"
-              margin="auto"
               position="relative">
             <View
-                className="backgroundCoverTopCenter"
+                className="image-holder"
                 ariaLabel="Image Holder"
-                position="relative"
-                height="calc(100vh - 60px)"
-                maxHeight="400px"
-                display="block"
                 backgroundImage = "url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/lower-porch-background-new3.png')">
                 <View
-                    className="zIndex102"
+                    className="z-index102 info-button"
                     ariaLabel="Info Button"
-                    position="absolute"
-                    right="3%"
-                    top="4%"
-                    width="7%"
-                    maxWidth="50px"
-                    fontSize="10px"
-                    marginBottom="20px"
                     onClick={() => toggleInfo()}>
                         <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/info.png" />
                 </View>
                 <View
-                    className="zIndex102"
+                    className="z-index102 notes-button"
                     ariaLabel="Notes Button"
-                    position="absolute"
-                    right="3%"
-                    top="10%"
-                    width="7%"
-                    maxWidth="50px"
-                    marginBottom="20px"
                     onClick={() => toggleNotes()}>
                         <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/notes.png" />
+                </View>
+                <View
+                    className="z-index102 backpack-image"
+                    ariaLabel="backpack Image"
+                    onClick={()=>toggleBackpack()}>
+                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png" />
                 </View>
                 <View
                     ariaLabel="Red Table 4 chairs"
@@ -319,18 +304,7 @@ export function Thief1Stop1() {
                     top="37%"
                     width="28%"
                     zindex="22">
-                      <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/table-palette-knife.png" />
-                </View>
-                <View
-                    className="zIndex102"
-                    ariaLabel="backpack Image"
-                    maxWidth="51px"
-                    position="absolute"
-                    right="10%"
-                    top="2%"
-                    width="28%"
-                    onClick={()=>toggleBackpack()}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png" />
+                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/table-palette-knife.png" />
                 </View>
                 <View
                     className={isLightVisible ? "zIndex20 show" : "hide"}
@@ -347,7 +321,7 @@ export function Thief1Stop1() {
             </View>
 
             <NotesOpen areNotesVisible={areNotesVisible} toggleNotes={toggleNotes} gameNotes={gameNotes} setNotesFunction={setNotesFunction}/>
-            <View className={isInfoVisible ? "allScreen show-gradual" : "allScreen hide-gradual"}>
+            <View className={isInfoVisible ? "all-screen show-gradual" : "all-screen hide-gradual"}>
                 <Button className="close-button" onClick={() => toggleInfo()}>X</Button>
                     <View width="100%" padding="10px">
                         <div className="wp-block-columns">
@@ -372,14 +346,14 @@ export function Thief1Stop1() {
                         <Button className="button-small" onClick={() => toggleHint4()}>Open Hint (order of numbers)</Button>
 
                         <br /><br />
-                        <div className={isHint4Visible ? "hintHolder show-gradual" : "hintHolder hide-gradual"}>
+                        <div className={isHint4Visible ? "hint-holder show-gradual" : "hint-holder hide-gradual"}>
                             <Button className="button-small" onClick={() => toggleHint4()}>X</Button>
                             <strong>Hint for somewhere order of numbers for safe:</strong>
                             <br /><br />The diary had a little rhyme.  This rhyme tells you the order of the numbers.
                             <br /><br />
 
                         </div>
-                        <div className={isHint3Visible ? "hintHolder show-gradual" : "hintHolder hide-gradual"}>
+                        <div className={isHint3Visible ? "hint-holder show-gradual" : "hint-holder hide-gradual"}>
                             <Button className="button-small" onClick={() => toggleHint3()}>X</Button>
                             <strong>Hint for light (in backpack):</strong>
                             <br /><br />Once you click on light it should go into your backpack. This is a blacklight and when you
@@ -387,7 +361,7 @@ export function Thief1Stop1() {
                             <br /><br />
 
                         </div>
-                        <div className={isHint2Visible ? "hintHolder show-gradual" : "hintHolder hide-gradual"}>
+                        <div className={isHint2Visible ? "hint-holder show-gradual" : "hint-holder hide-gradual"}>
                             <Button className="button-small" onClick={() => toggleHint2()}>X</Button>
                             <strong>Hint for game clue:</strong> <br /><br />You may have to ask someone about this contest.
                             It happened in July of 2021. Or you can look on their facebook/instagram feed.
@@ -395,7 +369,7 @@ export function Thief1Stop1() {
                             happen to know the name of the animal prowling around then you know the answer to this puzzle.<br /><br />
 
                         </div>
-                        <div className={isHint1Visible ? "hintHolder show-gradual" : "hintHolder hide-gradual"}>
+                        <div className={isHint1Visible ? "hint-holder show-gradual" : "hint-holder hide-gradual"}>
                             <Button className="button-small" onClick={() => toggleHint1()}>X</Button>
                             <strong>Hint for shops clue:</strong> <br /><br />There are many little shops along the west side of the Tybee Oaks area - Inferno, Glazed and Confused are in the north part.
                             The southern most shop on the west side is "Tipsy Mermaid Art", then "granny flounders", then "The Tybee Gallery", then "Rachel Vogel Designs".
@@ -405,7 +379,7 @@ export function Thief1Stop1() {
                         <Button onClick={() => toggleInfo()}>Close Info and Play</Button>
                 </View>
             </View>
-            <View className={isBackpackVisible ? "allScreen zIndex103 show-gradual" : "allScreen hide-gradual"} >
+            <View className={isBackpackVisible ? "all-screen zIndex103 show-gradual" : "all-screen hide-gradual"} >
                 <Button className="close-button" onClick={() => toggleBackpack()}>X</Button>
                     <h3>Backpack Contents</h3><br />
                     {gameBackpack.map((item) => {

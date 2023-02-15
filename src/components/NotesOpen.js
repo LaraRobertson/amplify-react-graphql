@@ -5,7 +5,7 @@ const NotesOpen = (props) => {
     return (
         <View
             ariaLabel="Notes Open"
-            className={props.areNotesVisible ? "allScreen show-gradual" : "allScreen hide-gradual"}>
+            className={props.areNotesVisible ? "all-screen show-gradual" : "all-screen hide-gradual"}>
             <button className="close-button" onClick={() => props.toggleNotes()}>X</button>
             <div>Take some notes</div>
             <br/>

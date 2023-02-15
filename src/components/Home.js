@@ -8,13 +8,12 @@ import {
     View,
     Card,
     Text,
-    TextField,
-    TextAreaField,
+    Image,
+    Grid,
     useAuthenticator
 } from '@aws-amplify/ui-react';
 import {API, Auth} from "aws-amplify";
 import {listGames, gamesByDate, usersByEmail, userGamePlaysByUserId,gameStatsByGameID} from "../graphql/queries";
-import { format } from 'date-fns'
 import {
     createGame as createGameMutation, createGameStats,
     createUser as createUserMutation,
@@ -22,6 +21,9 @@ import {
     createGameStats as createGameStatsMutation
 } from "../graphql/mutations";
 import { useNavigate } from 'react-router-dom';
+import { format } from 'date-fns'
+/*({format(new Date(game.createdAt), "MM/dd/yyyy H:mma")})*/
+
 
 export function Home() {
     const [games, setGames] = useState([]);
@@ -33,7 +35,7 @@ export function Home() {
     const [isGameDetailVisible, setIsGameDetailVisible] = useState(false);
     const [gameIndex, setGameIndex] = useState();
 
-    const {tokens} = useTheme();
+    //const {tokens} = useTheme();
     const { route } = useAuthenticator((context) => [context.route]);
     const navigate = useNavigate();
 
@@ -58,8 +60,8 @@ export function Home() {
     const GameDetailView = () => {
         console.log("gameIndex: " + gameIndex);
         console.log("gameIndex - typeof: " + typeof gameIndex);
-        let gameDetailClass = "allScreen hide-gradual";
-        if (isGameDetailVisible) gameDetailClass = "allScreen show-gradual";
+        let gameDetailClass = "all-screen hide-gradual";
+        if (isGameDetailVisible) gameDetailClass = "all-screen show-gradual";
         let gameDescriptionH2 = "";
         let gameDescriptionH3 = "";
         let gameDescriptionP = "";
@@ -95,30 +97,19 @@ export function Home() {
                 on their own device - just click on appropriate link to access game, once you have loaded game you don't need the internet.
                 If you keep the window open gameplay will be saved over a long period of time.<br /><br />
                 <strong>Helpful Hints:</strong>
-                <div className="wp-block-columns">
-                    <div className="wp-block-column-intro">
-                        <img className="test" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/info.png" />
-                </div>
-                <div className="wp-block-column-intro">
-                <h3>Click on Info bubble for helpful information about game</h3>
-                </div>
-                </div>
-                <div className="wp-block-columns">
-                <div className="wp-block-column-intro">
-                <img className="test" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/diary-50.png" />
-                </div>
-                <div className="wp-block-column-intro">
-                <h3>Clicking on objects will sometimes open a small window with information and sometimes put them in your backpack.</h3>
-                </div>
-                </div>
-                <div className="wp-block-columns">
-                <div className="wp-block-column-intro">
-                <img className="test" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/04/backpack.png" />
-                </div>
-                <div className="wp-block-column-intro">
-                <h3>If an object is in your backpack it will be highlighted .</h3>
-                </div>
-                </div>
+                <br /><br />
+                <Grid
+                    templateColumns="1fr 4fr"
+                    rowGap="0.5rem"
+                >
+                    <View><img className="test" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/info.png" /></View>
+                    <View><h3>Click on Info bubble for helpful information about game</h3></View>
+                    <View><img className="test" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/diary-50.png" /></View>
+                    <View><h3>Clicking on objects will sometimes open a small window with information and sometimes put them in your backpack.</h3></View>
+                    <View><Image width="50px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png" /></View>
+                    <View><h3>If an object is in your backpack it will be highlighted .</h3></View>
+
+                </Grid>
 
                 <h4>Start Playing when you are here</h4>
 
@@ -162,17 +153,23 @@ export function Home() {
         } else {
             console.log("go to page: " + gameDetails.gameName);
             /* check if waiver signed */
-            if (apiGameStats.data.gameStatsByGameID.items.gameStates !== "" || apiGameStats.data.gameStatsByGameID.items.gameStates !== null ) {
+            if (apiGameStats.data.gameStatsByGameID.items[0].gameStates !== "" || apiGameStats.data.gameStatsByGameID.items[0].gameStates !== null ) {
                 console.log("check waiver");
                 const gamesStatsFromAPI = apiGameStats.data.gameStatsByGameID.items[0];
-                let gameStatsState =  JSON.parse(gamesStatsFromAPI.gameStates);
-                console.log("gameStatsState:" + gameStatsState);
-                if (gameStatsState !== null && gameStatsState.waiverSigned) {
-                    let path = gameDetails.gameName.replace(/\s+/g, '-').toLowerCase();
-                    console.log("go to page: " + '/' + path + '-stop1');
-                    navigate('/' + path + '-stop1');
+                console.log("gamesStatsFromAPI.gameStates: " + gamesStatsFromAPI.gameStates);
+                if (gamesStatsFromAPI.gameStates!= "") {
+                    let gameStatsState =  JSON.parse(gamesStatsFromAPI.gameStates);
+                    console.log("gameStatsState:" + gameStatsState);
+                    if (gameStatsState !== null && gameStatsState.waiverSigned) {
+                        localStorage.setItem("agreeToWaiver", true);
+                        let path = gameDetails.gameName.replace(/\s+/g, '-').toLowerCase();
+                        console.log("go to page: " + '/' + path + '-stop1');
+                        navigate('/' + path + '-stop1');
+                    } else {
+                        navigate('/waiver');
+                    }
                 } else {
-                    navigate('/waiver')
+                    navigate('/waiver');
                 }
             } else {
                 console.log("go to waiver then page: " + gameDetails.gameName);
@@ -358,7 +355,7 @@ export function Home() {
                     <Button className={buttonDetailClassShow} onClick={fetchGames} >All Games</Button>
                     <Button className={buttonDetailClassShow} onClick={fetchGamesFree} >Show Free Only</Button>
                     {gameNameLink ?
-                    <Button onClick={() => goToGameSet({gameName:gameName,gameID:''})}>
+                    <Button className={buttonDetailClassShow} onClick={() => goToGameSet({gameName:gameName,gameID:''})}>
                         go to game
                     </Button> : <div></div>
                     }
@@ -373,7 +370,8 @@ export function Home() {
                 >
                     {games.map((game,index) => (
                         <Card className="gameCard" variation="elevated"  key={game.id || game.gameName} >
-                            <Text>{game.gameName} - {game.gameType} {index} <span className="small"> ({format(new Date(game.createdAt), "MM/dd/yyyy H:mma")})</span></Text>
+                            <Text>{game.gameName} <span className="small">({game.gameType})</span></Text>
+                            <Text>Location: {game.gameLocation}</Text>
                             {(gamesIDUser.includes(game.id) || game.gameType === "free") ?
                                 (<div>
                                     <Button onClick={() => goToGame({gameName:game.gameName,gameID:game.id})}>
@@ -417,13 +415,14 @@ export function Home() {
                 >
                     {games.map((game,index) => (
                         <Card className="gameCard" variation="elevated" key={game.id || game.gameName}>
-                            <Text>{game.gameName} - {game.gameType}({index}) <span className="small"> ({format(new Date(game.createdAt), "MM/dd/yyyy H:mma")})</span></Text>
+                            <Text>{game.gameName} <span className="small"> ({game.gameType})</span></Text>
+                            <Text>Location: {game.gameLocation}</Text>
                             <Button className={buttonDetailClassShow} onClick={() => showGameDetail(index)} >Show Game Details</Button>
                         </Card>
 
                     ))}
                 </Flex>
-                <View paddingTop="40px"> © 2022 EscapeOut.Games</View>
+
             </View>
         )}
         </div>

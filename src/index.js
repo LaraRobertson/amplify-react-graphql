@@ -9,6 +9,7 @@ import awsExports from "./aws-exports";
 Amplify.configure(awsExports);
 
 /* use for changing things in theme like fonts, colors, etc */
+/* if used tokes but disabled for now */
 const theme: Theme = {
     name: 'custom-theme',
     tokens: {

@@ -37,15 +37,15 @@ export function Admin() {
     /* classes */
     let buttonDetailClassHide = "button button-small hide";
     let buttonDetailClassShow = "button button-small show";
-    let gameDetailClass = "allScreen hide-gradual";
+    let gameDetailClass = "all-screen hide-gradual";
     if (isGameDetailVisible === true) {
         buttonDetailClassHide = "button button-small hide";
         buttonDetailClassShow = "button button-small show";
-        gameDetailClass = "allScreen hide-gradual";
+        gameDetailClass = "all-screen hide-gradual";
     } else {
         buttonDetailClassHide = "button button-small show";
         buttonDetailClassShow = "button button-small hide";
-        gameDetailClass = "allScreen show-gradual";
+        gameDetailClass = "alls-screen show-gradual";
     }
     function showGameDetail() {
         setIsGameDetailVisible(false);

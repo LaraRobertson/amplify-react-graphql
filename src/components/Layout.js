@@ -116,31 +116,29 @@ export function Layout() {
 
     const location = useLocation();
     const navigate = useNavigate();
-    const { tokens } = useTheme();
+   // const { tokens } = useTheme();
     console.log("location: " + location.pathname);
 
     return (
-        <View>
+        <View
+            maxWidth="800px"
+            margin="10px auto 10px auto">
             <header>
-                <View
-                      maxWidth="800px"
-                      margin="10px auto 10px auto">
+                <View>
                     <div className="wp-block-columns">
                         <div><Image className="test" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/logo-escapeout.png" /></div>
                     </div>
                 </View>
             </header>
-            <View
-                maxWidth="800px"
-                margin="10px auto 10px auto">
+            <View>
                 <Flex>
                     <div>
                         {route === 'authenticated' ? (
-                            <div>
+                            <View padding=".5rem 0">
                                 <Button onClick={() => goHome()}>Home</Button> | <Button
                                 onClick={() => logOut()}>Logout</Button> | <Button
-                                onClick={() => save()}>Save</Button>
-                            </div>
+                                onClick={() => localStorage.clear()}>Clear</Button>
+                            </View>
 
                             ) : (
                                 <div>
@@ -161,9 +159,8 @@ export function Layout() {
                                                 <Button onClick={() => navigate('/')}>Home</Button>
                                             ) : (
                                                 <div>
-                                                    <div>Fell free to create an account and test:</div>
-                                                    <Button className="button bouncy" backgroundColor={tokens.colors.green}
-                                                            onClick={() => navigate('/login')}>Login or Create an
+                                                    <View paddingBottom="10px">Fell free to create an account and test:</View>
+                                                    <Button className="button bouncy" onClick={() => navigate('/login')}>Login or Create an
                                                         Account</Button>
                                                 </div>
                                             )
@@ -179,6 +176,7 @@ export function Layout() {
             </View>
             <ErrorComponent />
             <Outlet />
+            <View paddingTop="40px"> © 2023 EscapeOut.Games</View>
         </View>
     );
 }

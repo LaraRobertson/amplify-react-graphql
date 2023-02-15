@@ -39,8 +39,9 @@ body {
   padding: 0 10px;
 }
 html {
-  font-family: Helvetica, system-ui, Verdana, Arial, sans-serif;
+  font-family: "Open Sans", Helvetica, system-ui, Verdana, Arial, sans-serif;
 }
+/* all games */
 .wp-block-columns {
   display:flex;
   align-items: center;
@@ -59,7 +60,6 @@ html {
 .backpack-button {
   width:100px;
 }
-
 .link {
   font-size:20px;
   font-weight:bold;
@@ -78,63 +78,6 @@ html {
 }
 .red {
   color:red;
-}
-.button {
-  background-color: #76C988;
-  position:relative;
-  font-family:'Roboto',sans-serif;
-  margin: 5px 10px;
-}
-.button-small {
-  font-size: 12px;
-  margin: 10px 20px 10px 0;
-}
-.button:hover, .button-small:hover {
-  cursor: pointer;
-  background-color: #3FB20F !important;
-}
-
-.button2 {
-  background-color: #4CAF50;
-  border: 1px solid black;
-  color: white;
-  padding: 5px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 12px;
-  position: absolute;
-  top:0px;
-  right:20px;
-}
-
-.button2:hover {
-  cursor: pointer;
-  background-color: #555;
-}
-.button3 {
-  left:30px;
-  right:auto;
-}
-.close-button {
-  background-color: transparent;
-  color: #325A42;
-  border: 1px solid black;
-  padding: 3px;
-  margin-bottom: 15px;
-  position:absolute;
-  top:10px;
-  right:20px;
-  font-size:20px;
-  width:30px;
-  height:30px;
-}
-
-.action-button {
-  background-color: #0B4311;
-  color: #ffffff;
-  border: 1px solid black;
-  padding: 3px;
-  margin-bottom: 15px;
 }
 .hide {
   display:none;
@@ -170,24 +113,9 @@ html {
   margin-top: 2rem;
 }
 
-.backgroundCoverTopCenter {
-  background-position: top center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-:root, [data-amplify-theme] {
-  --amplify-colors-font-primary: #333;
-  /* you can also use references: */
-  --amplify-colors-white: #fff;
-  --amplify-colors-font-secondary: var(--amplify-colors-neutral-60);
-  --amplify-components-card-padding: 50px;
-}
 .bouncy{
   animation:bouncy 7s infinite linear;
-
 }
-
 @keyframes bouncy {
 0%{top:0em}
 40%{top:0em}
@@ -197,38 +125,15 @@ html {
 50%{top:0em}
 100%{top:0em;}
 }
-.descriptionText {
+.description-text {
   width: 190px;
 }
 @media (max-width:815px) {
-  .descriptionText {
+  .description-text {
     width:280px;
   }
 }
-.allScreen {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 95vw;
-  max-width: 800px;
-  background-color: #699A7D;
-  opacity: .9;
-  height: calc(100vh - 60px);
-  z-index: 103;
-  transition: visibility 0s, opacity .5s linear;
-  padding:20px;
-}
-/* z-indexes because not supported by <View />*/
-.zIndex102 {
-  z-index: 102;
-}
-.zIndex103 {
-  z-index: 103;
-}
-.zIndex20 {
-  z-index: 20;
-}
-.waiverClass {
+.waiver-class {
   position:absolute;
   padding:20px;
   background-color:#699A7D;
@@ -236,13 +141,24 @@ html {
   height:calc(100vh - 60px);
   width:calc(100vw - 60px);
 }
-.gameCard {
+.game-card {
   width:300px;
 }
 .small {
   font-size:10px;
 }
-.hintHolder {
+.all-screen {
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  max-width: 800px;
+  background-color: #76C988;
+  opacity: 1;
+  z-index: 103;
+  transition: visibility 0s, opacity .5s linear;
+  padding:20px;
+}
+.hint-holder {
   position:absolute;
   top:-1px;
   max-width: 800px;
@@ -254,4 +170,146 @@ html {
   padding:20px 30px 20px 20px;
   transition: visibility 0s, opacity .5s linear;
   z-index:150;
+}
+/* end all items */
+
+
+:root, [data-amplify-theme] {
+  --amplify-colors-font-primary: #333;
+  /* you can also use references: */
+  --amplify-colors-white: #fff;
+  --amplify-colors-font-secondary: var(--amplify-colors-neutral-60);
+  --amplify-components-card-padding: 50px;
+  --amplify-components-button-primary-background-color: #0D5189 !important;
+  --amplify-components-tabs-item-active-color: #0D5189 !important;
+  --amplify-components-tabs-item-active-border-color: #0D5189 !important;
+  /* you can also use references: */
+  --amplify-colors-font-secondary: var(--amplify-colors-neutral-60);
+  --amplify-components-button-padding-block-start: .25rem !important;
+  --amplify-components-button-padding-block-end: .25rem !important;
+}
+
+/* buttons */
+.button {
+  background-color: #0D5189;
+  font-family:'Roboto',sans-serif;
+  color:white;
+  font-weight:normal;
+}
+.button-small {
+  font-size: 12px;
+  margin: 10px 20px 10px 0;
+}
+.button:hover, .button-small:hover {
+  cursor: pointer;
+  background-color: #3FB20F !important;
+}
+
+.button2 {
+  background-color: #4CAF50;
+  border: 1px solid black;
+  color: white;
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12px;
+  position: absolute;
+  top:0px;
+  right:20px;
+}
+
+.button2:hover {
+  cursor: pointer;
+  background-color: #555;
+}
+.button3 {
+  left:30px;
+  right:auto;
+}
+.close-button {
+  background-color: transparent;
+  color: #000;
+  border: 1px solid black;
+  padding: 3px;
+  margin-bottom: 15px;
+  position:absolute;
+  top:10px;
+  right:20px;
+  font-size:20px;
+  width:30px;
+  height:30px;
+}
+
+.action-button {
+  background-color: #0B4311;
+  color: #ffffff;
+  border: 1px solid black;
+  padding: 3px;
+  margin-bottom: 15px;
+}
+/* z-indexes because not supported by <View />*/
+.z-index102 {
+  z-index: 102;
+}
+.z-index103 {
+  z-index: 103;
+}
+.z-index20 {
+  z-index: 20;
+}
+
+.image-holder {
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position:relative;
+  height:calc(100vh - 60px);
+  max-height:400px;
+  display:block;
+}
+/* backpack, info, notes */
+.info-button {
+  position:absolute;
+  right:2%;
+  top:4%;
+  width:10%;
+  max-width:50px;
+  font-size:10px;
+  margin-bottom:20px;
+}
+
+.notes-button {
+  position:absolute;
+  right:2%;
+  top:12%;
+  width:10%;
+  max-width:50px;
+  font-size:10px;
+  margin-bottom:20px;
+}
+@media (max-width:450px) {
+  .notes-button {
+    top:10%;
+    width:14%;
+  }
+  .info-button {
+    width:14%;
+  }
+}
+.backpack-image {
+  position:absolute;
+  right:9%;
+  top:2%;
+  width:28%;
+  max-width:50px;
+}
+@media (max-width:700px) {
+  .backpack-image {
+    right:12%;
+  }
+}
+@media (max-width:450px) {
+  .backpack-image {
+    right:14%;
+  }
 }
