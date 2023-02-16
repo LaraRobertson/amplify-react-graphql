@@ -100,7 +100,6 @@ export function Layout() {
     But in a functional component no such callback is allowed with useState hook.
     In that case we can use the useEffect hook to achieve it.
      */
-
     useEffect(() => {
         /* check table to make sure user is there, add free games if needed */
         console.log("***useEffect***: fetchUserInfofromDB() + email: " + userAuthEmail);
@@ -112,8 +111,6 @@ export function Layout() {
         getUserAuthInfo();
     }, [])
 
-
-
     const location = useLocation();
     const navigate = useNavigate();
    // const { tokens } = useTheme();
@@ -123,60 +120,63 @@ export function Layout() {
         <View
             maxWidth="800px"
             margin="10px auto 10px auto">
-            <header>
+            {(route === 'authenticated') && (location.pathname === '/') ? (
                 <View>
-                    <div className="wp-block-columns">
-                        <div><Image className="test" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/logo-escapeout.png" /></div>
-                    </div>
-                </View>
-            </header>
-            <View>
-                <Flex>
-                    <div>
-                        {route === 'authenticated' ? (
-                            <View padding=".5rem 0">
-                                <Button onClick={() => goHome()}>Home</Button> | <Button
-                                onClick={() => logOut()}>Logout</Button> | <Button
-                                onClick={() => localStorage.clear()}>Clear</Button>
-                            </View>
-
-                            ) : (
-                                <div>
-                                    <div>
-                                        <View padding="0 0 10px 0">
-                                            <hr />
-                                            <Heading
-                                                level={4}
-                                                paddingTop="10px">
-                                                Game is under development
-                                            </Heading>
-                                            <div>Please email us at info@escapeout.games if you have questions.</div>
-                                        </View>
-                                        <hr />
-                                        <View paddingTop="10px">
-
-                                            {location.pathname === '/login' ? (
-                                                <Button onClick={() => navigate('/')}>Home</Button>
-                                            ) : (
-                                                <div>
-                                                    <View paddingBottom="10px">Fell free to create an account and test:</View>
-                                                    <Button className="button bouncy" onClick={() => navigate('/login')}>Login or Create an
-                                                        Account</Button>
-                                                </div>
-                                            )
-                                            }
-
-                                        </View>
-                                    </div>
+                        <header>
+                            <View>
+                                <div className="wp-block-columns">
+                                    <div><Image className="test" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/logo-escapeout.png" /></div>
                                 </div>
-                            )
-                        }
+                            </View>
+                        </header>
+                        <View padding=".5rem 0">
+                            <Button onClick={() => goHome()}>Home</Button> | <Button
+                            onClick={() => logOut()}>Logout</Button> | <Button
+                            onClick={() => localStorage.clear()}>Clear</Button>
+                        </View>
+                </View>) : null}
+            {(route !== 'authenticated') && (location.pathname === '/')||(location.pathname === '/login') ? (
+                <View>
+                    <header>
+                        <View>
+                            <div className="wp-block-columns">
+                                <div><Image className="test" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/logo-escapeout.png" /></div>
+                            </div>
+                        </View>
+                    </header>
+                    <div>
+                        <div>
+                            <View padding="0 0 10px 0">
+                                <hr />
+                                <Heading
+                                    level={4}
+                                    paddingTop="10px">
+                                    Game is under development
+                                </Heading>
+                                <div>Please email us at info@escapeout.games if you have questions.</div>
+                            </View>
+                            <hr />
+                            <View paddingTop="10px">
+                                {location.pathname === '/login' ? (
+                                    <Button onClick={() => navigate('/')}>Home</Button>
+                                ) : (
+                                    <div>
+                                        <View paddingBottom="10px">Fell free to create an account and test:</View>
+                                        <Button className="button bouncy" onClick={() => navigate('/login')}>Login or Create an
+                                            Account</Button>
+                                    </div>
+                                )
+                                }
+
+                            </View>
+                        </div>
                     </div>
-                </Flex>
-            </View>
+                </View>) : null}
             <ErrorComponent />
             <Outlet />
-            <View paddingTop="40px"> © 2023 EscapeOut.Games</View>
+            {(location.pathname === '/')||(location.pathname === '/login') ? (
+                <View paddingTop="40px"> © 2023 EscapeOut.Games</View>
+            ) : null}
         </View>
     );
 }

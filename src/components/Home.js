@@ -120,8 +120,9 @@ export function Home() {
     async function goToGameSet(gameDetails) {
         let path = gameDetails.gameName.replace(/\s+/g, '-').toLowerCase();
         console.log("go to page: " + '/' + path + '-stop1');
-        navigate('/' + path + '-stop1');
+        navigate('/' + path);
     }
+
     async function goToGame(gameDetails) {
         localStorage.setItem("gameName",gameDetails.gameName);
         /* check if gameStats entry */
@@ -164,7 +165,7 @@ export function Home() {
                         localStorage.setItem("agreeToWaiver", true);
                         let path = gameDetails.gameName.replace(/\s+/g, '-').toLowerCase();
                         console.log("go to page: " + '/' + path + '-stop1');
-                        navigate('/' + path + '-stop1');
+                        navigate('/' + path);
                     } else {
                         navigate('/waiver');
                     }
@@ -348,18 +349,14 @@ export function Home() {
                   maxWidth="800px"
                   margin="10px auto 10px auto">
                 <HeadingComponent userName = {userAuth} />
+                {gameNameLink ?
+                    <div>currently playing {gameName}: <Button style={{display:'inline'}} className={buttonDetailClassShow} onClick={() => goToGameSet({gameName:gameName,gameID:''})}>
+                       go to game
+                    </Button></div> : <div></div>
+                }
                 <Heading level={"5"}>
                     Games:
                 </Heading>
-                <Flex>
-                    <Button className={buttonDetailClassShow} onClick={fetchGames} >All Games</Button>
-                    <Button className={buttonDetailClassShow} onClick={fetchGamesFree} >Show Free Only</Button>
-                    {gameNameLink ?
-                    <Button className={buttonDetailClassShow} onClick={() => goToGameSet({gameName:gameName,gameID:''})}>
-                        go to game
-                    </Button> : <div></div>
-                    }
-                </Flex>
 
                 <Flex
                     wrap="wrap"
@@ -401,10 +398,6 @@ export function Home() {
                 <Heading level={"5"}>
                     Games:
                 </Heading>
-                <Flex>
-                    <Button className={buttonDetailClassShow} onClick={fetchGames}>All Games</Button>
-                    <Button className={buttonDetailClassShow} onClick={fetchGamesFree}>Show Free Only</Button>
-                </Flex>
 
                 <Flex
                     wrap="wrap"

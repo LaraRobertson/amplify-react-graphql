@@ -10,7 +10,7 @@ import { Layout } from './components/Layout';
 import { Waiver } from './components/Waiver';
 
 /* Game Stops */
-import { Thief1Stop1 } from './games/thief1/Thief1Stop1';
+import { Thief1 } from './games/thief1/Thief1';
 
 
 import './App.css';
@@ -30,10 +30,10 @@ function MyRoutes() {
                         }
                     />
                     <Route
-                        path="/thief-1-stop1"
+                        path="/thief-1"
                         element={
                             <RequireAuth>
-                                <Thief1Stop1 />
+                                <Thief1 />
                             </RequireAuth>
                         }
                     />

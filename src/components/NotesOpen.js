@@ -6,21 +6,13 @@ const NotesOpen = (props) => {
         <View
             ariaLabel="Notes Open"
             className={props.areNotesVisible ? "all-screen show-gradual" : "all-screen hide-gradual"}>
-            <button className="close-button" onClick={() => props.toggleNotes()}>X</button>
+            <Button className="close-button" onClick={() => props.toggleNotes()}>X</Button>
             <div>Take some notes</div>
             <br/>
             <TextAreaField
                 label="Notes"
                 onChange={(e) => props.setNotesFunction(e.currentTarget.value)}
-                descriptiveText={
-                    <Text
-                        as="span"
-                        fontStyle="italic"
-                        fontSize="var(--amplify-font-sizes-small)"
-                    >
-                        {props.gameNotes}
-                    </Text>
-                }
+                descriptiveText="Take some Notes - close when done, they will still be here"
             />
         </View>
     )
