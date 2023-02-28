@@ -49,7 +49,7 @@ const shallowEqualLetters = (object1, object2) => {
     return true;
 }
 
-export function Thief1() {
+export function Thief2() {
     const [gameStatsState, setGameStatsState] = useState({});
     /* all games */
     const [areNotesVisible, setAreNotesVisible] = useState(false);
@@ -505,7 +505,7 @@ export function Thief1() {
             <View
                 className="image-holder"
                 ariaLabel="Image Holder"
-                backgroundImage = "url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/tybee-lower-porch-bg.jpg')">
+                backgroundImage = "url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/lower-porch-background-new3.png')">
                 <View
                     className="z-index102 info-button"
                     ariaLabel="Info Button"
@@ -527,7 +527,7 @@ export function Thief1() {
                 <View
                     ariaLabel="Red Table 4 chairs"
                     className="red-table-4-chairs">
-                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/red-table-right.png" />
+                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/table-palette-knife.png" />
                 </View>
                 <View
                     className={isLightVisible ? "black-light show" : "hide"}
@@ -539,7 +539,7 @@ export function Thief1() {
                     ariaLabel="Back Picnic Table"
                     className="back-picnic-table"
                  >
-                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blue-table-right.png"/>
+                    <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/back-picnic-table.png"/>
                 </View>
                 <View
                 ariaLabel="Torn Diary"
@@ -572,14 +572,14 @@ export function Thief1() {
                     ariaLabel="Tree Circle"
                     className="tree-circle"
                 >
-                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/brown-circle.png"/>
+                    <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/04/treecircle.png"/>
                 </View>
                 <View
                     ariaLabel="Tree with Sign"
                     className="tree-with-sign"
                     onClick={()=>toggleSign()}
                 >
-                    <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/tree-with-sign.png" />
+                    <Image  src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/tree-with-sign.png" />
                </View>
                 <View
                     ariaLabel="sign info"
@@ -599,14 +599,14 @@ export function Thief1() {
                             className="palm-tree"
                             onClick={()=>toggleKnobMessage()}
                         >
-                            <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/palm-tree.png" />
+                            <Image  src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/palmtreenew.png" />
                       </View>
                     ) : (
                         <View
                             ariaLabel="Palm Tree"
                             className="palm-tree"
                         >
-                            <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/palm-tree.png" />
+                            <Image  src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/palmtreenew.png" />
                         </View>
                     )
                 }
@@ -620,14 +620,14 @@ export function Thief1() {
                             className="red-table-2-chairs"
                             onClick={()=>toggleLegs()}
                         >
-                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/red-table-left.png"/>
+                            <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/red-table-2-chair.png"/>
                         </View>
                     ) : (
                         <View
                             ariaLabel="Red Table 2 chairs"
                             className="red-table-2-chairs"
                         >
-                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/red-table-left.png"/>
+                            <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/red-table-2-chair.png"/>
                         </View>
                     )
                 }
@@ -641,14 +641,14 @@ export function Thief1() {
                             className="bottom-blue-table"
                             onClick={()=>toggleNumBus()}
                         >
-                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blue-table-left.png"/>
+                            <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/front-picnic-table.png"/>
                         </View>
                     ) : (
                         <View
                             ariaLabel="Bottom Blue Table"
                             className="bottom-blue-table"
                         >
-                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blue-table-left.png"/>
+                            <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/front-picnic-table.png"/>
                         </View>
                     )
                 }

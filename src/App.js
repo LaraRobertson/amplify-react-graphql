@@ -9,8 +9,9 @@ import { Admin } from './components/Admin';
 import { Layout } from './components/Layout';
 import { Waiver } from './components/Waiver';
 
-/* Game Stops */
+/* Games */
 import { Thief1 } from './games/thief1/Thief1';
+import { Thief2 } from './games/thief2/Thief2';
 
 
 import './App.css';
@@ -34,6 +35,14 @@ function MyRoutes() {
                         element={
                             <RequireAuth>
                                 <Thief1 />
+                            </RequireAuth>
+                        }
+                    />
+                    <Route
+                        path="/thief-2-(new)"
+                        element={
+                            <RequireAuth>
+                                <Thief2 />
                             </RequireAuth>
                         }
                     />

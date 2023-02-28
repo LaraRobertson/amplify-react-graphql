@@ -211,6 +211,7 @@ export function Admin() {
             gameName: form.get("GameName"),
             gameType: form.get("GameType"),
             gameStop: form.get("GameStop"),
+            gameLocation: form.get("GameLocation"),
             type: "game",
             gameDescriptionH2: form.get("GameDescriptionH2"),
             gameDescriptionH3: form.get("GameDescriptionH3"),
@@ -384,6 +385,14 @@ export function Admin() {
                                     variation="quiet"
                                     required
                                 />
+                                <TextField
+                                    name="GameLocation"
+                                    placeholder="Game Location"
+                                    label="Game Location"
+                                    labelHidden
+                                    variation="quiet"
+                                    required
+                                />
                             </Flex>
                             <Flex direction="row" justifyContent="center" gap="1rem">
                                 <TextField
@@ -440,7 +449,13 @@ export function Admin() {
                             <Heading level={3}>Games</Heading>
                             <View>
                                 {games.map((game) => (
-                                    <div><strong>game id</strong>: {game.id} | <strong>game name</strong>: {game.gameName} | <strong>type</strong>: {game.gameType}</div>
+                                    <div><strong>game id</strong>: {game.id} | <strong>game name</strong>: {game.gameName} | <strong>type</strong>: {game.gameType} <br />
+                                   <strong>gameDescriptionH2</strong>: {game.gameDescriptionH2} <br />
+                                    <strong>gameDescriptionH3</strong>: {game.gameDescriptionH3} <br />
+                                   <strong>gameDescriptionP</strong> {game.gameDescriptionP} <br />
+                                        <hr />
+                                    </div>
+
                                 ))}
                             </View>
                             <Heading level={3}>Users</Heading>

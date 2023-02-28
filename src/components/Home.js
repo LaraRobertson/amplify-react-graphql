@@ -68,13 +68,13 @@ export function Home() {
         let gameStop = "";
         console.log("length of games: " + games.length);
         if (games.length > 0) {
-            if (gameIndex) {
+            if (gameIndex || gameIndex === 0) {
                 let test = games[gameIndex];
-               /* console.log("test - gamename: " + JSON.stringify(test));
+               console.log("test - gamename: " + JSON.stringify(test));
                 console.log("test - gamename: " + test.gameName);
                 for (const key in test) {
                     console.log(`${key}: ${test[key]}`);
-                }*/
+                }
                 gameDescriptionH2 = test.gameDescriptionH2;
                 gameDescriptionH3 = test.gameDescriptionH3;
                 gameDescriptionP = test.gameDescriptionP;
@@ -87,8 +87,8 @@ export function Home() {
                 <br />
                 <h2>{gameDescriptionH2}</h2>
                 <h3>{gameDescriptionH3}</h3>
-                <div>{gameDescriptionP}</div>
-                <strong>Game Details:</strong> This game has {gameStop} stops. You can tell if you are at the right stop by looking at the picture on the game.
+                <div>{gameDescriptionP}</div><br />
+                <strong>Game Details:</strong> This game has {gameStop}. You can tell if you are at the right stop by looking at the picture on the game.
                 The picture represents the playing area and contains some extra stuff on screen for you to use to find the thief's ill-begotten gains.
                 Once you are at the stop, you need click around on the game screen to
                 try and figure out the puzzles. You also need to use details from your surroundings.
@@ -197,6 +197,7 @@ export function Home() {
     }
 
     async function fetchGames() {
+        console.log("fetchGames");
         const apiData = await API.graphql({
             query: gamesByDate,
             variables: {sortDirection: "DESC", type: "game"}
@@ -320,6 +321,10 @@ export function Home() {
 
     useEffect(() => {
         console.log("***useEffect***: gamesIDUser: " + gamesIDUser);
+    });
+
+    useEffect(() => {
+        console.log("***useEffect***: games: " + games);
     });
 
     useEffect(() => {
