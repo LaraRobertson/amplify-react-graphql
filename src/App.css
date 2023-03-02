@@ -36,7 +36,7 @@
 }
 body {
   background: #f7f7f7;
-  padding: 0 10px;
+  padding: 0;
 }
 html {
   font-family: "Open Sans", Helvetica, system-ui, Verdana, Arial, sans-serif;
@@ -151,7 +151,7 @@ html {
   position: absolute;
   top: 0;
   width: 100vw;
-  max-width: 800px;
+  max-width: 1000px;
   min-height: calc(100vh - 60px);
   background-color: #699A7D;
   opacity: 1;
@@ -162,7 +162,7 @@ html {
 .hint-holder {
   position:absolute;
   top:-1px;
-  max-width: 800px;
+  max-width: 1000px;
   width: calc(100vw - 40px);
   left:-1px;
   background-color:#699A7D;
@@ -251,80 +251,75 @@ html {
 /* backpack, info, notes */
 .info-button {
   position:absolute;
-  right:4%;
-  top:4%;
+  right:3%;
+  top:2%;
   width:10%;
   max-width:50px;
   font-size:10px;
   margin-bottom:20px;
 }
-
 .notes-button {
   position:absolute;
-  right:4%;
-  top:12%;
+  right:3%;
+  top:10%;
   width:10%;
   max-width:50px;
   font-size:10px;
   margin-bottom:20px;
-}
-@media (max-width:450px) {
-  .notes-button {
-    right:2%;
-    top:10%;
-    width:14%;
-  }
-  .info-button {
-    right:2%;
-    width:14%;
-  }
 }
 .backpack-image {
   position:absolute;
-  right:11%;
-  top:2%;
+  right:9%;
+  top:0%;
   width:28%;
   max-width:50px;
 }
 @media (max-width:700px) {
+  .notes-button {
+    right:1%;
+  }
+  .info-button {
+    right:1%;
+  }
   .backpack-image {
-    right:12%;
+    right:10%;
   }
 }
-@media (max-width:450px) {
+@media (max-width:480px) {
+  .notes-button {
+    right:2%;
+    top:5%;
+    width:12.5%;
+  }
+  .info-button {
+    top:1%;
+    right:2%;
+    width:12.5%;
+  }
   .backpack-image {
-    right:14%;
+    right:16%;
   }
 }
-.back-picnic-table {
-  max-width: 174px;
-  padding: 0;
-  margin: auto;
-  position:absolute;
-  top:20%;
-  right:30%;
-  z-index:12;
-  width: 23%;
-}
-@media (max-width:450px) {
-  .back-picnic-table {
-    top: 28%;
-    right:20%;
-  }
-}
-@media (max-width:450px) {
 
-  .backpack-image {
-    right:14%;
-  }
+.no-show-small {
+  display: block;
 }
 @media (max-width:480px) {
   .no-show-small {
     display: none;
   }
 }
+.no-show-bigger {
+  display: none;
+}
+@media (max-width:480px) {
+  .no-show-bigger {
+    display: block;
+  }
+}
 .border {
   border: 1px solid #699A7D;
+  font-size:11px;
 }
 .borderRed {
   border: 1px solid red;
@@ -335,21 +330,19 @@ html {
   background-size: cover;
   position:relative;
   height:calc(100vh - 60px);
-  /*max-height:415px;
-  display:block;*/
+  max-height:600px;
 }
-/* grid positions */
+/* thief 1 */
 .red-table-4-chairs {
   position:absolute;
-  top:37%;
+  top:47%;
   right:10%;
   z-index:22;
-  width: 28%;
-  max-width:200px;
 }
-@media (max-width:450px) {
+@media (max-width:480px) {
   .red-table-4-chairs {
-    top: 57%;
+    top:77%;
+    right:1%;
   }
 }
 .black-light {
@@ -360,32 +353,56 @@ html {
   width: 10%;
   max-width:40px;
 }
+@media (max-width:480px) {
+  .black-light {
+    bottom:5%;
+    right:52%;
+    z-index:22;
+  }
+}
 .torn-diary {
-  max-width: 59px;
-  padding: 0;
-  margin: auto;
   position: absolute;
   bottom: 22%;
   left: 43%;
   z-index: 25;
-  width: 8%;
+}
+@media (max-width:480px) {
+  .torn-diary {
+    bottom: 12%;
+    z-index: 25;
+  }
 }
 .diary {
   max-width: 40px;
   margin: auto;
   position: absolute;
-  top: 21%;
+  top: 22%;
   right: 40%;
   z-index: 20;
   width: 10%;
 }
 @media (max-width:450px) {
   .diary {
-    top: 28%;
-    right:30%;
+    top: 42%;
+    right:10%;
   }
 }
-
+.back-picnic-table {
+  max-width: 174px;
+  padding: 0;
+  margin: auto;
+  position:absolute;
+  top:25%;
+  right:30%;
+  z-index:12;
+  width:40%;
+}
+@media (max-width:450px) {
+  .back-picnic-table {
+    top: 42%;
+    right:1%;
+  }
+}
 .diary-big {
   background: url("https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/opendiary.png") #699A7D top left / auto no-repeat;
 }
@@ -393,107 +410,117 @@ html {
   background: url("https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/04/torndiarythief.png") #699A7D top left / auto no-repeat;
 }
 .tree-circle {
-  max-width: 800px;
-  padding: 0;
-  margin: auto;
   position:absolute;
-  bottom:33%;
-  right:50%;
+  bottom:29%;
+  left:30%;
   z-index:12;
 }
-@media (max-width:450px) {
-  .tree-circle {
-    right:45%;
-    max-width:100px;
-  }
-}
 .tree-with-sign {
-  max-width: 100px;
-  padding: 0;
-  margin: auto;
   position:absolute;
-  bottom: 41%;
-  left:42%;
+  bottom: 37%;
+  left:38%;
   z-index:20;
-  width:14%;
 }
 .palm-tree {
-  max-width: 188px;
-  padding: 0;
-  margin: auto;
   position:absolute;
-  bottom:35%;
-  left:20%;
+  bottom:34%;
+  left:24%;
   z-index:20;
-  width:24%;
+}
+@media (max-width:480px) {
+  .tree-circle {
+    left:28%;
+    bottom: 21%;
+  }
+  .palm-tree {
+    bottom:23%;
+    left:18%;
+    max-width:130px;
+  }
+  .tree-with-sign {
+    bottom: 25%;
+    left:45%;
+  }
 }
 .knob-message {
-  max-width: 158px;
-  padding: 0;
-  margin: auto;
   position:absolute;
   bottom:35%;
-  left:15%;
-  width:20%;
+  left:18%;
   z-index:23;
+}
+@media (max-width:480px) {
+  .knob-message {
+    left:9%;
+  }
 }
 .red-table-2-chairs {
-  max-width: 150px;
-  padding: 0;
-  margin: auto;
+  max-width: 200px;
   position:absolute;
   bottom:50%;
   left:0%;
-  z-index:22;
-  width: 20%;
+  z-index:19;
+}
+@media (max-width:480px) {
+  .red-table-2-chairs {
+    max-width: 170px;
+    position:absolute;
+    bottom:59%;
+    left:0%;
+    z-index:19;
+  }
 }
 .legs {
-  max-width: 150px;
-  padding: 0;
-  margin: auto;
-  position:absolute;
-  bottom:50%;
-  left:0%;
-  z-index:22;
-  width: 20%;
-  z-index:23;
+  position: absolute;
+  bottom: 50%;
+  left: 5%;
+  z-index: 23;
+}
+@media (max-width:480px) {
+  .legs {
+    bottom: 57%;
+    left: 5%;
+  }
 }
 .bottom-blue-table {
-  max-width: 234px;
-  padding: 0;
-  margin: auto;
+  max-width: 200px;
   position:absolute;
   bottom:5%;
   left:0%;
   z-index:22;
-  width:30%;
+}
+@media (max-width:480px) {
+  .bottom-blue-table {
+    max-width: 150px;
+    position:absolute;
+    bottom:3%;
+    left:0%;
+    z-index:22;
+  }
 }
 .numbus {
-  max-width: 234px;
-  padding: 0;
-  margin: auto;
   position:absolute;
   bottom:5%;
   left:0%;
-  z-index:22;
-  width:30%;
   z-index:23;
-  font-size:12px;
+}
+@media (max-width:480px) {
+  .numbus {
+    bottom:-1%;
+    left:0%;
+    width:39%;
+  }
 }
 .tybean-octopus {
   position:absolute;
   top:12%;
-  right:20%;
-  margin-bottom:20px;
-  max-width:70px;
-  width:13%;
-  cursor:pointer;
+  right:17%;
+  max-width:100px;
   z-index:102;
 }
-@media (max-width:450px) {
+@media (max-width:480px) {
   .tybean-octopus {
-    top: 12%;
-    right: 40%;
+    top: 5%;
+    left: 15%;
   }
 }
 .safe {

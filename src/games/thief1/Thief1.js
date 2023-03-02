@@ -505,7 +505,7 @@ export function Thief1() {
             <View
                 className="image-holder"
                 ariaLabel="Image Holder"
-                backgroundImage = "url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/tybee-lower-porch-bg.jpg')">
+                backgroundImage = "url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/background-game-new.jpg')">
                 <View
                     className="z-index102 info-button"
                     ariaLabel="Info Button"
@@ -749,7 +749,7 @@ export function Thief1() {
                     </View>
                 ): null }
             <View className="time">
-                <Button className="bottom-button" onClick={() => goHome()}>Home</Button> | <Button className="bottom-button" onClick={() => pauseGame()}>Pause</Button>
+                <Button className="bottom-button" onClick={() => goHome()}>Home</Button>
                 <span className="small"> | hint time: {gameTimeHint} mins | real time: {gameTime} mins | tot: time: {gameTimeTotal} min</span>
             </View>
             <View padding="100px" className={isGamePaused ? "all-screen show" : "hide"}>

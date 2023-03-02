@@ -118,7 +118,7 @@ export function Layout() {
 
     return (
         <View
-            maxWidth="800px"
+            maxWidth="900px"
             margin="10px auto 10px auto">
             {(route === 'authenticated') && (location.pathname === '/') ? (
                 <View>

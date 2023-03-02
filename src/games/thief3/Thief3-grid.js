@@ -564,7 +564,7 @@ export function Thief3() {
             <View className = "border no-show-bigger"></View>
             <View className = "border"></View>
             <View className = "border"></View>
-            <View className = "border">w</View>
+            <View className = "border"></View>
             <View className = "border"></View>
             <View className = "border"></View>
             <View className = "border"></View>
