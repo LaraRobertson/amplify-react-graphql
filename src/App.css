@@ -153,7 +153,7 @@ html {
   width: 100vw;
   max-width: 800px;
   min-height: calc(100vh - 60px);
-  background-color: #76C988;
+  background-color: #699A7D;
   opacity: 1;
   z-index: 103;
   transition: visibility 0s, opacity .5s linear;
@@ -172,8 +172,6 @@ html {
   transition: visibility 0s, opacity .5s linear;
   z-index:150;
 }
-/* end all items */
-
 
 :root, [data-amplify-theme] {
   --amplify-colors-font-primary: #333;
@@ -248,26 +246,8 @@ html {
   padding: 3px;
   margin-bottom: 15px;
 }
-/* z-indexes because not supported by <View />*/
-.z-index102 {
-  z-index: 102;
-}
-.z-index103 {
-  z-index: 103;
-}
-.z-index20 {
-  z-index: 22 !important;
-}
 
-.image-holder {
-  background-position: top center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position:relative;
-  height:calc(100vh - 60px);
-  max-height:415px;
-  display:block;
-}
+
 /* backpack, info, notes */
 .info-button {
   position:absolute;
@@ -331,11 +311,34 @@ html {
     top: 28%;
     right:20%;
   }
-}@media (max-width:450px) {
+}
+@media (max-width:450px) {
+
   .backpack-image {
     right:14%;
   }
 }
+@media (max-width:480px) {
+  .no-show-small {
+    display: none;
+  }
+}
+.border {
+  border: 1px solid #699A7D;
+}
+.borderRed {
+  border: 1px solid red;
+}
+.image-holder {
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position:relative;
+  height:calc(100vh - 60px);
+  /*max-height:415px;
+  display:block;*/
+}
+/* grid positions */
 .red-table-4-chairs {
   position:absolute;
   top:37%;

@@ -1,7 +1,19 @@
 import React, {useEffect, useState} from "react"
 import data from "./gameConstants";
 import {NotesOpen} from "../../components/NotesOpen";
-import {Button, Heading, View, Image, TextAreaField, TextField, Text, Alert, Flex} from '@aws-amplify/ui-react';
+import {
+    Button,
+    Heading,
+    View,
+    Image,
+    TextAreaField,
+    TextField,
+    Text,
+    Alert,
+    Flex,
+    Grid,
+    useTheme
+} from '@aws-amplify/ui-react';
 import {useNavigate} from "react-router-dom";
 import {API} from "aws-amplify";
 import {gameStatsByGameID, gameStatsByUserEmail} from "../../graphql/queries";
@@ -49,7 +61,8 @@ const shallowEqualLetters = (object1, object2) => {
     return true;
 }
 
-export function Thief2() {
+export function Thief3() {
+    const {tokens} = useTheme();
     const [gameStatsState, setGameStatsState] = useState({});
     /* all games */
     const [areNotesVisible, setAreNotesVisible] = useState(false);
@@ -499,134 +512,190 @@ export function Thief2() {
         }
     }
     return (
-        <View
-              ariaLabel="Main Container"
-              position="relative">
-            <View
-                className="image-holder"
-                ariaLabel="Image Holder"
-                backgroundImage = "url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/lower-porch-background-new3.png')">
-                <View
-                    className="z-index102 info-button"
-                    ariaLabel="Info Button"
-                    onClick={() => toggleInfo()}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/info.png" />
+        <Grid
+            ariaLabel="Main container"
+            templateColumns="repeat(10, 10%)"
+            templateRows="repeat(20, 5%)"
+            className="image-holder"
+            backgroundImage = "url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/tybee-lower-porch-bg.jpg')">
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border no-show-small"></View>
+            <View ariaLabel="I1"
+                  className = "borderRed"
+                  columnSpan={{ base: 2, small: 1 }}
+                  rowSpan={{ base: 2, small: 4 }}
+                  onClick={()=>toggleBackpack()}>
+                <View textAlign="right" height="100%" >
+                    <Image height="100%" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png" />
                 </View>
-                <View
-                    className="z-index102 notes-button"
-                    ariaLabel="Notes Button"
-                    onClick={() => toggleNotes()}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/notes.png" />
+            </View>
+            <View ariaLabel="J1"
+                  rowSpan={{ base: 1, small: 2 }}
+                  className = "border"
+                  onClick={() => toggleInfo()}>
+                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/info.png" />
+            </View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View className = "border"></View>
+            <View ariaLabel="A9" className="border">
+            </View>
+            <View ariaLabel="B9" className = "border"></View>
+            <View ariaLabel="C9" className = "border"></View>
+            <View ariaLabel="D9" className = "border"></View>
+            <View ariaLabel="E9" className = "border"></View>
+            <View ariaLabel="A10" columnSpan={5} >
+                <View position="relative" textAlign="center" height="100%" >
+                    <View position="absolute" bottom="0" >
+                        <Button className="bottom-button" onClick={() => goHome()}>Home</Button> | <Button className="bottom-button" onClick={() => pauseGame()}>Pause</Button>
+                        <span className="small"> | hint time: {gameTimeHint} mins | real time: {gameTime} mins | tot: time: {gameTimeTotal} min</span>
+                    </View>
                 </View>
-                <View
-                    className="z-index102 backpack-image"
-                    ariaLabel="backpack Image"
-                    onClick={()=>toggleBackpack()}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png" />
-                </View>
-                <View
-                    ariaLabel="Red Table 4 chairs"
-                    className="red-table-4-chairs">
-                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/table-palette-knife.png" />
-                </View>
-                <View
-                    className={isLightVisible ? "black-light show" : "hide"}
-                    onClick={()=>backpackLight()}
-                >
-                    <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/blacklight.png" />
-                </View>
-                <View
-                    ariaLabel="Back Picnic Table"
-                    className="back-picnic-table"
-                 >
-                    <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/back-picnic-table.png"/>
-                </View>
-                <View
-                ariaLabel="Torn Diary"
-                className="torn-diary"
-                onClick={()=>toggleTornDiary()}
-                >
-                <Image  alt="torn diary" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/03/torndiarypage.png" />
-                </View>
-                <View
-                    ariaLabel="Diary"
-                    className="diary"
-                    onClick={()=>toggleDiary()}
-                >
-                    <Image  src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/diary.png" />
-                </View>
+            </View>
 
-
-                <View
-                    ariaLabel="Tree Circle"
-                    className="tree-circle"
-                >
-                    <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/04/treecircle.png"/>
-                </View>
-                <View
-                    ariaLabel="Tree with Sign"
-                    className="tree-with-sign"
-                    onClick={()=>toggleSign()}
-                >
-                    <Image  src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/tree-with-sign.png" />
-               </View>
-
-                <View
-                    ariaLabel="Palm Tree"
-                    className={isKnobMessageAvailable ? "palm-tree show" : "hide"}
-                    onClick={()=>toggleKnobMessage()}
-                >
-                    <Image  src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/palmtreenew.png" />
-                </View>
-                <View
-                    ariaLabel="Palm Tree"
-                    className={isKnobMessageAvailable ? "hide" : "palm-tree show"}
-                >
-                    <Image  src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/palmtreenew.png" />
-                </View>
-
-                 <View className={isKnobMessageVisible ? "knob-message show" : "hide"}  onClick={()=>toggleKnobMessage()}>
-                    <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/palmtreenew-message.png" />
-                </View>
-                <View
-                    ariaLabel="Red Table 2 chairs"
-                    className={isLegsAvailable ? "red-table-2-chairs show" : "hide"}
-                    onClick={()=>toggleLegs()}
-                >
-                    <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/red-table-2-chair.png"/>
-                </View>
-                <View
-                    ariaLabel="Red Table 2 chairs"
-                    className={isLegsAvailable ? "hide" : "red-table-2-chairs show"}
-                >
-                    <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/red-table-2-chair.png"/>
-                </View>
-                <View className={isLegsVisible ? "legs show" : "hide"}  onClick={()=>toggleLegs()}>
-                   <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/red-table-2-chair-message.png" />
-                </View>
-                <View
-                    ariaLabel="Bottom Blue Table"
-                    className={isNumBusAvailable ? "bottom-blue-table show" : "hide"}
-                    onClick={()=>toggleNumBus()}
-                >
-                    <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/front-picnic-table.png"/>
-                </View>
-                <View
-                    ariaLabel="Bottom Blue Table"
-                    className={isNumBusAvailable ? "hide" : "bottom-blue-table show" }
-                >
-                    <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/front-picnic-table.png"/>
-                </View>
-
-                <View className={isNumBusVisible ? "numbus show" : "hide"}  onClick={()=>toggleNumBus()}>
-                   <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/front-picnic-table-message.png"/>
-                </View>
-                <View
-                    ariaLabel="Tybean Octopus"
-                    className="tybean-octopus"
-                    onClick={()=>countClicks()}>
-                        <Image  src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/04/tybean-octopus.png" />
-                </View>
                 {isSafeVisible? (
                     <View
                         ariaLabel="Safe"
@@ -635,19 +704,11 @@ export function Thief2() {
                         <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/04/circle-safe.png"/>
                     </View>
                 ):null}
-            </View>
-            {(!isGame1Word1Page1ThiefWrong && !isGame1Word2Page1ThiefWrong && !isGame1Word3Page1ThiefWrong && !isGame1Word4Page1ThiefWrong)?
-                (
-                    <View
-                        ariaLabel="safe open"
-                        className="safe-open">
-                        <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/04/circle-safe-open.png"/>
-                    </View>
-                ): null }
-            <View className="time">
-                <Button className="bottom-button" onClick={() => goHome()}>Home</Button> | <Button className="bottom-button" onClick={() => pauseGame()}>Pause</Button>
-                <span className="small"> | hint time: {gameTimeHint} mins | real time: {gameTime} mins | tot: time: {gameTimeTotal} min</span>
-            </View>
+
+
+
+
+
             <View
                 className={isDiaryVisible ? "all-screen diary-big show" : "hide"}
             >
@@ -660,17 +721,6 @@ export function Thief2() {
                 className={isTornDiaryVisible ? "all-screen torn-diary-big show" : "hide"}
             >
                 <Button className="close-button" onClick={()=>toggleTornDiary()}>X</Button>
-            </View>
-            <View
-                ariaLabel="sign info"
-                className={isSignVisible ? "all-screen show" : "hide"}>
-                <Button className="close-button" onClick={()=>toggleSign()}>X</Button>
-                <br /><h3>Sign on Tree</h3>
-                <br />
-                <div>Look at the Little shops on West side of Tybee Oaks.
-                    <br />Go from South to North  <br />
-                    What word do you see?
-                    <br /><strong>Letter #6</strong><br /><strong>Letter #3</strong><br /><strong>Letter #4</strong><br /><strong>Letter #4</strong></div>
             </View>
             <View className={isSafeInfoVisible ? "all-screen show" : "hide"}>
                 <Button className="close-button" onClick={()=>toggleSafe()}>X</Button>
@@ -741,6 +791,14 @@ export function Thief2() {
                 <span className = "green">WINNER!!!</span>
                 <br /><br /><Button onClick={() => goHome()}>Home</Button>
             </View>
+                ): null }
+            {(!isGame1Word1Page1ThiefWrong && !isGame1Word2Page1ThiefWrong && !isGame1Word3Page1ThiefWrong && !isGame1Word4Page1ThiefWrong)?
+                (
+                    <View
+                        ariaLabel="safe open"
+                        className="safe-open">
+                        <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/04/circle-safe-open.png"/>
+                    </View>
                 ): null }
 
             <View padding="100px" className={isGamePaused ? "all-screen show" : "hide"}>
@@ -822,7 +880,7 @@ export function Thief2() {
                         )
                     })}
             </View>
-        </View>
+        </Grid>
     )
 }
 

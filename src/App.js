@@ -12,9 +12,11 @@ import { Waiver } from './components/Waiver';
 /* Games */
 import { Thief1 } from './games/thief1/Thief1';
 import { Thief2 } from './games/thief2/Thief2';
+import { Thief3 } from './games/thief3/Thief3';
 
 
 import './App.css';
+
 
 function MyRoutes() {
     return (
@@ -43,6 +45,14 @@ function MyRoutes() {
                         element={
                             <RequireAuth>
                                 <Thief2 />
+                            </RequireAuth>
+                        }
+                    />
+                    <Route
+                        path="/thief-3"
+                        element={
+                            <RequireAuth>
+                                <Thief3 />
                             </RequireAuth>
                         }
                     />
