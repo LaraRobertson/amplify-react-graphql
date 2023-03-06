@@ -13,9 +13,11 @@ import { Waiver } from './components/Waiver';
 import { Thief1 } from './games/thief1/Thief1';
 import { Thief2 } from './games/thief2/Thief2';
 import { Thief3 } from './games/thief3/Thief3';
+import { Hurricane1 } from './games/hurricane1/Hurricane1';
 
 
 import './App.css';
+import './jaycee.css';
 
 
 function MyRoutes() {
@@ -53,6 +55,14 @@ function MyRoutes() {
                         element={
                             <RequireAuth>
                                 <Thief3 />
+                            </RequireAuth>
+                        }
+                    />
+                    <Route
+                        path="/hurricane-1"
+                        element={
+                            <RequireAuth>
+                                <Hurricane1 />
                             </RequireAuth>
                         }
                     />

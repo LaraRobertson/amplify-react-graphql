@@ -6,7 +6,7 @@ import {API, Auth} from "aws-amplify";
 import {updateGameStats as updateGameStatsMutation} from "../graphql/mutations";
 
 export function Layout() {
-    const [userAuthEmail, setUserAuthEmail] = useState('');
+    const [userAuth, setUserAuth] = useState({});
     const [error, setError] = useState(false);
 
     const { route, signOut } = useAuthenticator((context) => [
@@ -22,7 +22,9 @@ export function Layout() {
         const gameStatID = localStorage.getItem("GameStatsID");
         const waiverSigned = localStorage.getItem("agreeToWaiver");
         /* update game state */
+        /* don't save game stats from home page */
         /* get values from local variables - need gamename and email */
+        /*
         const gameStatsValues = {
             waiverSigned: waiverSigned,
             gamePage: "test",
@@ -33,7 +35,9 @@ export function Layout() {
             gameStates: JSON.stringify(gameStatsValues)
         };
 
-        const apiGameStatsUpdate = await API.graphql({ query: updateGameStatsMutation, variables: {input: newGameStats}});
+        const apiGameStatsUpdate = await API.graphql({ query: updateGameStatsMutation, variables: {input: newGameStats}});*/
+        /* end save game stats */
+        setUserAuth({});
         signOut();
     }
 
@@ -86,7 +90,10 @@ export function Layout() {
         }).then(user => {
             console.log("getUserAuthInfo()");
             console.log(" user?.signInUserSession?.idToken?.payload?.email (useEffect-user): " + user?.signInUserSession?.idToken?.payload?.email);
-            setUserAuthEmail(user?.signInUserSession?.idToken?.payload?.email);
+            setUserAuth({
+                email: user?.signInUserSession?.idToken?.payload?.email
+            });
+           // setUserAuthEmail(user?.signInUserSession?.idToken?.payload?.email);
         })
             .catch(err => {
                 console.log(err)
@@ -102,8 +109,8 @@ export function Layout() {
      */
     useEffect(() => {
         /* check table to make sure user is there, add free games if needed */
-        console.log("***useEffect***: fetchUserInfofromDB() + email: " + userAuthEmail);
-    }, [userAuthEmail]);
+        console.log("***useEffect***: fetchUserInfofromDB() + email: " + userAuth.email);
+    }, [userAuth]);
 
     useEffect(() => {
         /* get userAuthEmail from authentication */
@@ -131,7 +138,7 @@ export function Layout() {
                         </header>
                         <View padding=".5rem 0">
                             <Button onClick={() => goHome()}>Home</Button> | <Button
-                            onClick={() => logOut()}>Logout</Button> | <Button
+                            onClick={() => signOut()}>Logout</Button> | <Button
                             onClick={() => localStorage.clear()}>Clear</Button>
                         </View>
                 </View>) : null}

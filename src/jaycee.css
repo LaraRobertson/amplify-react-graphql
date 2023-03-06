@@ -1,0 +1,20 @@
+.image-short {
+  max-height: 400px;
+}
+.hanging-sign{
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  z-index: 23;
+}
+.right-picnic-table {
+  position:absolute;
+  top:67%;
+  right:20%;
+  z-index:22;
+}
+@media (max-width:480px) {
+  .right-picnic-table {
+    right:1%;
+  }
+}
