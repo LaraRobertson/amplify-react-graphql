@@ -20,27 +20,6 @@ const shallowEqual = (object1, object2) => {
         console.log("object2[key]: " + object2[key]);
         console.log("typeof object1[key]: " + typeof object1[key]);
         console.log("typeof object2[key]: " + typeof object2[key]);
-        if (object1[key] !== object2[key]) {
-            console.log("false");
-            return false;
-        }
-    }
-    return true;
-}
-
-const shallowEqualLetters = (object1, object2) => {
-    const keys1 = Object.keys(object1);
-    console.log("keys1: " + keys1.length);
-    const keys2 = Object.keys(object2);
-    console.log("keys2: " + keys2.length);
-    if (keys1.length !== keys2.length) {
-        return false;
-    }
-    for (let key of keys1) {
-        console.log("object1[key]: " + object1[key]);
-        console.log("object2[key]: " + object2[key]);
-        console.log("typeof object1[key]: " + typeof object1[key]);
-        console.log("typeof object2[key]: " + typeof object2[key]);
         if (object1[key].toLowerCase() !== object2[key].toLowerCase()) {
             console.log("false");
             return false;
@@ -67,107 +46,24 @@ export function Hurricane1() {
     const [gameTimeTotal, setGameTimeTotal] = useState(0);
     const [isGamePlaying, setIsGamePlaying] = useState(true);
     const [isGamePaused, setIsGamePaused] = useState(false);
-
-    /* game specific */
-    /* stop 1 */
-    const [isLightVisible, setIsLightVisible] = useState(true);
-    const [isDiaryVisible, setIsDiaryVisible] = useState(false);
-    const [isTornDiaryVisible, setIsTornDiaryVisible] = useState(false);
-    const [isSignVisible, setIsSignVisible] = useState(false);
-    const [isLegsAvailable, setIsLegsAvailable] = useState(false);
-    const [isLegsVisible, setIsLegsVisible] = useState(false);
-    const [isLightOn, setIsLightOn] = useState(false);
-    const [isNumBusAvailable, setIsNumBusAvailable] = useState(false);
-    const [isNumBusVisible, setIsNumBusVisible] = useState(false);
-    const [isKnobMessageAvailable, setIsKnobMessageAvailable] = useState(false);
-    const [isKnobMessageVisible, setIsKnobMessageVisible] = useState(false);
     const [clickTimeNow,setClickTimeNow] = useState();
     const [clickTimeThen,setClickTimeThen] = useState();
     const [clickCount,setClickCount] = useState();
-    const [isSafeVisible, setIsSafeVisible] = useState(false);
-    const [isSafeInfoVisible, setIsSafeInfoVisible] = useState(false);
-
-    /* guessing states and answers for safe - 4 words */
-    const [game1Word1Page1ThiefGuess,setGame1Word1Page1ThiefGuess]= useState({'game1Word1Page1ThiefLetters':''});
-    const [haveGuessedGame1Word1Page1Thief,setHaveGuessedGame1Word1Page1Thief] = useState();
-    const [isGame1Word1Page1ThiefWrong, setIsGame1Word1Page1ThiefWrong] = useState(true);
-
-    const [game1Word2Page1ThiefGuess,setGame1Word2Page1ThiefGuess]= useState({'game1Word2Page1ThiefLetters':''});
-    const [haveGuessedGame1Word2Page1Thief,setHaveGuessedGame1Word2Page1Thief] = useState();
-    const [isGame1Word2Page1ThiefWrong, setIsGame1Word2Page1ThiefWrong] = useState(true);
-
-    const [game1Word3Page1ThiefGuess,setGame1Word3Page1ThiefGuess]= useState({'game1Word3Page1ThiefLetters':''});
-    const [haveGuessedGame1Word3Page1Thief,setHaveGuessedGame1Word3Page1Thief] = useState();
-    const [isGame1Word3Page1ThiefWrong, setIsGame1Word3Page1ThiefWrong] = useState(true);
-
-    const [game1Word4Page1ThiefGuess,setGame1Word4Page1ThiefGuess]= useState({'game1Word4Page1ThiefLetters':''});
-    const [haveGuessedGame1Word4Page1Thief,setHaveGuessedGame1Word4Page1Thief] = useState();
-    const [isGame1Word4Page1ThiefWrong, setIsGame1Word4Page1ThiefWrong] = useState(true);
-
-    const game1Word1Page1ThiefAnswer = {'game1Word1Page1ThiefLetters':'bean'};
-    const game1Word2Page1ThiefAnswer = {'game1Word2Page1ThiefLetters':'math'};
-    const game1Word3Page1ThiefAnswer = {'game1Word3Page1ThiefLetters':'ghirardelli'};
-    const game1Word4Page1ThiefAnswer= {'game1Word4Page1ThiefLetters':'inferno'};
-    /* end guessing states and answers for safe - 4 words */
-
-    /* not used */
-    const [game1Num1Page1,setGame1Num1Page1] = useState('');
-    const [game1Num2Page1,setGame1Num2Page1] = useState('');
-    const [game1NumPage1guess,setGame1NumPage1guess] = useState( {Num1:"",Num2:""});
-    const [haveGuessedGame1Stop1,setHaveGuessedGame1Stop1] = useState(false);
-    const [isGame1Page1Wrong, setIsGame1Page1Wrong] = useState(true);
-    /* end not used */
-
-    const gamePage = "Tybean Lower Porch (thief)";
 
     const navigate = useNavigate();
-
     function goHome() {
         localStorage.setItem("gameName","");
         navigate('/');
     }
 
-    function SetGuessGame1() {
-        const elementID1 = "game1Num1Page1";
-        const elementID2 = "game1Num2Page1";
-        var x = document.getElementById(elementID1).value;
-        var y = document.getElementById(elementID2).value;
-        console.log("x: " + x);
-        setGame1Num1Page1(x);
-        setGame1Num2Page1(y);
-        console.log("game1Num1Page1:" + game1Num1Page1);
-        console.log("game1Num2Page1:" + game1Num2Page1);
-        let updatedValue = {};
-        updatedValue = {Num1:x,Num2:y};
-        console.log("updatedValue.Num1: " + updatedValue.Num1);
-        console.log("updatedValue.Num2: " + updatedValue.Num2);
-        setGame1NumPage1guess(game1NumPage1guess => ({
-            ...game1NumPage1guess,
-            ...updatedValue
-        }));
-        //check if guess is right
-        if (shallowEqual(updatedValue, data.game1NumPage1)) {
-            console.log("right guess");
-            setHaveGuessedGame1Stop1(true);
-            localStorage.setItem("haveGuessedGame1Page1", true);
-            setIsGame1Page1Wrong(false);
-            localStorage.setItem("isGame1Page1Wrong", false);
-        } else {
-            console.log("wrong guess");
-            setHaveGuessedGame1Stop1(true);
-            localStorage.setItem("haveGuessedGame1Page1", true);
-            setIsGame1Page1Wrong(true);
-            localStorage.setItem("isGame1Page1Wrong", true);
-        }
-    }
-
+    /* TODO: get gamestats and set localstorage */
     async function getGameStats() {
         console.log ("get Game Stats");
         /* Waiver Signed, haveGuessedGame1Stop1 */
         /* check local host */
-        var haveGuessedGame1Stop1Local = localStorage.getItem("haveGuessedGame1Stop1");
-        if (haveGuessedGame1Stop1Local) {
-            setHaveGuessedGame1Stop1(haveGuessedGame1Stop1Local);
+        var haveGuessed1 = localStorage.getItem("haveGuessedGame1Stop1");
+        if (haveGuessed1) {
+            setHaveGuessed1(haveGuessed1);
         } else {
             /* check database */
 
@@ -195,12 +91,11 @@ export function Hurricane1() {
 
     }
 
-    /* get gamestats and set localstorage */
     /* need to useEffect */
     useEffect(() => {
         console.log("***useEffect***: getGameStats() - just localhost");
         /* get gamestats */
-        getGameStats();
+       // getGameStats();
     }, []);
 
     useEffect(() => {
@@ -209,8 +104,46 @@ export function Hurricane1() {
             console.log(`${key}: ${gameStatsState[key]}`);
         }
     });
+    function pauseGame() {
+        setIsGamePaused(true);
+        setIsGamePlaying(false);
+    }
+    function playGame() {
+        setIsGamePaused(false);
+        setIsGamePlaying(true);
+    }
+    /* 60000 miliseconds = 1 minute, timer shows 30 second intervals, should change */
+    const MINUTE_MS = 30000;
 
-        /* hint functions */
+    useEffect(() => {
+        const interval = setInterval(() => {
+            console.log('Logs every 30 seconds');
+            console.log('pause game: ' + isGamePaused);
+            console.log('game time: ' + gameTime);
+            if (gameTime) {
+                /* add 1 minute */
+                if (!isGamePaused) setGameTimeFunction(gameTime + .5);
+            } else {
+                if (!isGamePaused) setGameTimeFunction(.5);
+            }
+            setGameTimeTotal(gameTime + .5);
+        }, MINUTE_MS);
+
+        return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+    }, [gameTime,isGamePaused])
+
+    function setGameTimeFunction(time) {
+        console.log("gametimefunction: " + time);
+        setGameTime(time);
+    }
+    useEffect(() => {
+        console.log("***useEffect***: gameTime: " + gameTime);
+    });
+    useEffect(() => {
+        console.log("***useEffect***: isGamePaused: " + isGamePaused);
+    });
+
+    /* hint functions */
     function toggleHint1() {
         isHint1Visible ? setIsHint1Visible(false) : setIsHint1Visible(true);
     }
@@ -237,35 +170,52 @@ export function Hurricane1() {
         setGameNotes(notes);
     }
     /* end notes functions */
+
     /* backpack functions */
     function toggleBackpack() {
         isBackpackVisible ? setIsBackpackVisible(false) : setIsBackpackVisible(true);
     }
-    function toggleDiary() {
-        isDiaryVisible ? setIsDiaryVisible(false) : setIsDiaryVisible(true);
-    }
-    function toggleTornDiary() {
-        isTornDiaryVisible ? setIsTornDiaryVisible(false) : setIsTornDiaryVisible(true);
-    }
+    /* end backpack functions */
+
+
+    /* game/stop specific */
+    const gamePage = "Jaycee Park Shelter (Hurricane)";
+
+    /* guessing states and answers for first safe - 5 numbers */
+    const [guess1,setGuess1] = useState({'numbers':''});
+    const [haveGuessed1,setHaveGuessed1] = useState();
+    const [isWrong1, setIsWrong1] = useState(true);
+    const answer1 = {'numbers':'78594'};
+    useEffect(() => {
+        console.log("***useEffect***: guess1.numbers: " + guess1.numbers);
+    });
+    /* end guessing states and answers for first safe - 5 numbers */
+
+    /* guessing states and answers for 2nd safe - 5 numbers */
+    const [guess2,setGuess2] = useState({'numbers':''});
+    const [haveGuessed2,setHaveGuessed2] = useState();
+    const [isWrong2, setIsWrong2] = useState(true);
+    const answer2 = {'numbers':'78594'};
+    useEffect(() => {
+        console.log("***useEffect***: guess2.numbers: " + guess2.numbers);
+    });
+    /* end guessing states and answers for 2nd safe - 5 numbers */
+
+    const [isSignVisible, setIsSignVisible] = useState(false);
     function toggleSign() {
         isSignVisible ? setIsSignVisible(false) : setIsSignVisible(true);
     }
-    function toggleKnobMessage() {
-        isKnobMessageVisible ? setIsKnobMessageVisible(false) : setIsKnobMessageVisible(true);
-        console.log("toggleKnobMessage: " + isKnobMessageVisible);
-    }
-    function toggleLegs() {
-        isLegsVisible ? setIsLegsVisible(false) : setIsLegsVisible(true);
-        console.log("toggleLegs: " + isLegsVisible);
-    }
-    function toggleNumBus() {
-        isNumBusVisible ? setIsNumBusVisible(false) : setIsNumBusVisible(true);
-        console.log("toggleNumBus: " + isNumBusVisible);
-    }
+
+    const [isSafeInfoVisible, setIsSafeInfoVisible] = useState(false);
     function toggleSafe() {
         isSafeInfoVisible ? setIsSafeInfoVisible(false) : setIsSafeInfoVisible(true);
-        console.log("toggleSafe: " + isSafeVisible);
     }
+    useEffect(() => {
+        console.log("***useEffect***: isSafeInfoVisible: " + isSafeInfoVisible);
+    });
+
+    const [isLightOn, setIsLightOn] = useState(false);
+    const [isLightVisible, setIsLightVisible] = useState(true);
     function backpackLight() {
         setIsLightVisible(false);
         console.log("put light in backpack");
@@ -305,62 +255,15 @@ export function Hurricane1() {
         }
     });
     useEffect(() => {
-        console.log("***useEffect***: knobMessage: " + isKnobMessageAvailable);
-    });
-    useEffect(() => {
         console.log("***useEffect***: isLightOn: " + isLightOn);
     });
-    useEffect(() => {
-        console.log("***useEffect***: isSafeVisible: " + isSafeVisible);
-    });
-    useEffect(() => {
-        console.log("***useEffect***: game1Word1Page1ThiefGuess: " + game1Word1Page1ThiefGuess.game1Word1Page1ThiefLetters);
-    });
-    useEffect(() => {
-        console.log("***useEffect***: gameTime: " + gameTime);
-    });
-    useEffect(() => {
-        console.log("***useEffect***: isGamePaused: " + isGamePaused);
-    });
-    function pauseGame() {
-        setIsGamePaused(true);
-        setIsGamePlaying(false);
-    }
-    function playGame() {
-        setIsGamePaused(false);
-        setIsGamePlaying(true);
-    }
-    /* 60000 miliseconds = 1 minute */
-    const MINUTE_MS = 30000;
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            console.log('Logs every 30 seconds');
-            console.log('pause game: ' + isGamePaused);
-            console.log('game time: ' + gameTime);
-            if (gameTime) {
-                /* add 1 minute */
-                if (!isGamePaused) setGameTimeFunction(gameTime + .5);
-            } else {
-                if (!isGamePaused) setGameTimeFunction(.5);
-            }
-            setGameTimeTotal(gameTime + .5);
-        }, MINUTE_MS);
-
-        return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
-    }, [gameTime,isGamePaused])
-
-    function setGameTimeFunction(time) {
-        console.log("gametimefunction: " + time);
-        setGameTime(time);
-    }
     function showItemContents(value) {
         console.log("show contents value: " + value);
         switch (value) {
             case 'light':
                 console.log("isLightOn 1: " + isLightOn);
                 setIsLightOn(!isLightOn);
-                lightFunctions(!isLightOn);
                 // change image
                 for (var i = 0; i < gameBackpack.length; i++) {
                     if (gameBackpack[i].key === "light") {
@@ -378,126 +281,29 @@ export function Hurricane1() {
             default:
         }
     }
-    function lightFunctions(lightState) {
-        console.log("turn on/off light: " + isLightOn);
-        console.log("turn on/off lightstate: " + lightState);
-        if (lightState) {
-            console.log("Light is ON");
-            setIsLegsAvailable(true);
-            setIsNumBusAvailable(true);
-            setIsKnobMessageAvailable(true);
-        } else {
-            console.log("Light is Off");
-            setIsLegsAvailable(false);
-            setIsNumBusAvailable(false);
-            setIsKnobMessageAvailable(false);
-        }
-    }
-    function countClicks() {
-        var secondBetweenTwoDate = Math.abs((new Date().getTime() - clickTimeThen) / 1000);
-        console.log("diff: " + secondBetweenTwoDate);
-        let newDate = new Date();
-        setClickTimeNow(newDate);
-        if (clickCount === 0) {
-            // start timing
-            setClickTimeThen(new Date().getTime());
-            console.log("time now: " + clickTimeNow);
-            setClickCount(1);
-        } else if (secondBetweenTwoDate<5 && clickCount > 0) {
-            console.log("add click");
-            setClickTimeThen(clickTimeNow);
-            setClickCount(clickCount + 1);
-        } else {
-            setClickCount(0);
-        }
-        if (clickCount > 4) {
-            setIsSafeVisible(!isSafeVisible);
-            setClickCount(0);
-        }
-        console.log("count Clicks: " + clickCount);
-    }
 
-    function setGame1Word1Page1ThiefLetters(guess) {
+    function setGuess1Numbers(guess) {
         var x = guess;
-        console.log("game1 word1 x: " + x);
-        let guessObject = {"game1Word1Page1ThiefLetters":x};
-        setGame1Word1Page1ThiefGuess(guessObject);
-        localStorage.setItem("game1Word1Page1ThiefLetters", x);
+        console.log("guess1 x: " + x);
+        let guessObject = {"numbers":x};
+        setGuess1(guessObject);
+        localStorage.setItem("numbers", x);
         //check if guess is right
-        if (shallowEqualLetters(x, game1Word1Page1ThiefAnswer.game1Word1Page1ThiefLetters)) {
-            setHaveGuessedGame1Word1Page1Thief(true);
-            localStorage.setItem("haveGuessedGame1Word1Page1Thief", true);
-            setIsGame1Word1Page1ThiefWrong(false);
-            localStorage.setItem("isGame1Word1Page1ThiefWrong", false);
+        if (shallowEqual(x,answer1.numbers)) {
+            setHaveGuessed1(true);
+            localStorage.setItem("haveGuessed1", true);
+            setIsWrong1(false);
+            localStorage.setItem("isWrong1", false);
         } else {
             console.log("wrong guess");
-            setHaveGuessedGame1Word1Page1Thief(true);
-            localStorage.setItem("haveGuessedGame1Word1Page1Thief", true);
-            setIsGame1Word1Page1ThiefWrong(true);
-            localStorage.setItem("isGame1Word1Page1ThiefWrong", true);
+            setHaveGuessed1(true);
+            localStorage.setItem("haveGuessed1", true);
+            setIsWrong1(true);
+            localStorage.setItem("isWrong1", true);
         }
 
     }
-    function setGame1Word2Page1ThiefLetters(guess) {
-        var x = guess;
-        console.log("game1 word2 x: " + x);
-        let guessObject = {"game1Word2Page1ThiefLetters":x};
-        setGame1Word2Page1ThiefGuess(guessObject);
-        localStorage.setItem("game1Word2Page1ThiefLetters", x);
-        //check if guess is right
-        if (shallowEqualLetters(x, game1Word2Page1ThiefAnswer.game1Word2Page1ThiefLetters)) {
-            setHaveGuessedGame1Word2Page1Thief(true);
-            localStorage.setItem("haveGuessedGame1Word2Page1Thief", true);
-            setIsGame1Word2Page1ThiefWrong(false);
-            localStorage.setItem("isGame1Word2Page1ThiefWrong", false);
-        } else {
-            console.log("wrong guess");
-            setHaveGuessedGame1Word2Page1Thief(true);
-            localStorage.setItem("haveGuessedGame1Word2Page1Thief", true);
-            setIsGame1Word2Page1ThiefWrong(true);
-            localStorage.setItem("isGame1Word2Page1ThiefWrong", true);
-        }
-    }
-    function setGame1Word3Page1ThiefLetters(guess) {
-        var x = guess;
-        console.log("game1 word3 x: " + x);
-        let guessObject = {"game1Word3Page1ThiefLetters":x};
-        setGame1Word3Page1ThiefGuess(guessObject);
-        localStorage.setItem("game1Word3Page1ThiefLetters", x);
-        //check if guess is right
-        if (shallowEqualLetters(x, game1Word3Page1ThiefAnswer.game1Word3Page1ThiefLetters)) {
-            setHaveGuessedGame1Word3Page1Thief(true);
-            localStorage.setItem("haveGuessedGame1Word3Page1Thief", true);
-            setIsGame1Word3Page1ThiefWrong(false);
-            localStorage.setItem("isGame1Word3Page1ThiefWrong", false);
-        } else {
-            console.log("wrong guess");
-            setHaveGuessedGame1Word3Page1Thief(true);
-            localStorage.setItem("haveGuessedGame1Word3Page1Thief", true);
-            setIsGame1Word3Page1ThiefWrong(true);
-            localStorage.setItem("isGame1Word3Page1ThiefWrong", true);
-        }
-    }
-    function setGame1Word4Page1ThiefLetters(guess) {
-        var x = guess;
-        console.log("game1 word4 x: " + x);
-        let guessObject = {"game1Word4Page1ThiefLetters":x};
-        setGame1Word4Page1ThiefGuess(guessObject);
-        localStorage.setItem("game1Word4Page1ThiefLetters", x);
-        //check if guess is right
-        if (shallowEqualLetters(x, game1Word4Page1ThiefAnswer.game1Word4Page1ThiefLetters)) {
-            setHaveGuessedGame1Word4Page1Thief(true);
-            localStorage.setItem("haveGuessedGame1Word4Page1Thief", true);
-            setIsGame1Word4Page1ThiefWrong(false);
-            localStorage.setItem("isGame1Word4Page1ThiefWrong", false);
-        } else {
-            console.log("wrong guess");
-            setHaveGuessedGame1Word4Page1Thief(true);
-            localStorage.setItem("haveGuessedGame1Word4Page1Thief", true);
-            setIsGame1Word4Page1ThiefWrong(true);
-            localStorage.setItem("isGame1Word4Page1ThiefWrong", true);
-        }
-    }
+
     return (
         <View
               ariaLabel="Main Container"
@@ -530,127 +336,62 @@ export function Hurricane1() {
                     onClick={()=>toggleSign()}>
                     <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/hanging-sign.png" />
                 </View>
-                <View
-                    className={isLightVisible ? "black-light show" : "hide"}
-                    onClick={()=>backpackLight()}
-                >
-                    <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/blacklight.png" />
-                </View>
 
                 <View
-                ariaLabel="Torn Diary"
-                className="torn-diary"
-                onClick={()=>toggleTornDiary()}
-                >
-                <Image  alt="torn diary" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/03/torndiarypage.png" />
-                </View>
-                <View
                     ariaLabel="left picnic table"
-                    className="right-picnic-table"
+                    className="left-picnic-table"
                 >
                     <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/left-picnic-table.png" />
                 </View>
                 <View
-                    className={isDiaryVisible ? "all-screen diary-big show" : "hide"}
+                    ariaLabel="right picnic table"
+                    className="right-picnic-table"
                 >
-                        <Button className="close-button" onClick={()=>toggleDiary()}>X</Button>
-                        <View>
-                            Dear Diary, <br /><br />I learn about a game.<br/><br/>I saw the shops.<br /><br />What was in that Mocha?<br /><br />Where did I hide from Cops?
-                        </View>
+                    <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/right-picnic-table.png" />
                 </View>
-                <View
-                    className={isTornDiaryVisible ? "all-screen torn-diary-big show" : "hide"}
-                >
-                    <Button className="close-button" onClick={()=>toggleTornDiary()}>X</Button>
-                </View>
-
                 <View
                     ariaLabel="sign info"
                     className={isSignVisible ? "all-screen show" : "hide"}>
                     <Button className="close-button" onClick={()=>toggleSign()}>X</Button>
-                    <br /><h3>Sign on Tree</h3>
-                        <br />
-                        <div>Look at the Little shops on West side of Tybee Oaks.
-                            <br />Go from South to North  <br />
-                            What word do you see?
-                            <br /><strong>Letter #6</strong><br /><strong>Letter #3</strong><br /><strong>Letter #4</strong><br /><strong>Letter #4</strong></div>
+                    <br /><h3>Hanging Sign Says:</h3>
+                    <br />
+                    <div>I am an odd number. Take away a letter and I become even.</div>
                 </View>
-
-                 <View className={isKnobMessageVisible ? "knob-message show" : "hide"}  onClick={()=>toggleKnobMessage()}>
-                    <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/palmtreenew-message.png" />
+                <View
+                    ariaLabel="Safe Shelter"
+                    className="safe-shelter"
+                    onClick={()=>toggleSafe()}>
+                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe-shelter.png"/>
                 </View>
-
-                {isSafeVisible? (
-                    <View
-                        ariaLabel="Safe"
-                        className="safe"
-                        onClick={()=>toggleSafe()}>
-                        <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/04/circle-safe.png"/>
-                    </View>
-                ):null}
             </View>
             <View className={isSafeInfoVisible ? "all-screen show" : "hide"}>
                 <Button className="close-button" onClick={()=>toggleSafe()}>X</Button>
-                <div>Try to Open Safe!</div>
-                <br />
                 <TextField
-                    label="Word 1"
-                    value={game1Word1Page1ThiefGuess.game1Word1Page1ThiefLetters}
-                    onChange={(e) => setGame1Word1Page1ThiefLetters(e.currentTarget.value)}/>
+                    label="Try to Open Safe! (5 numbers)"
+                    value={guess1.numbers}
+                    onChange={(e) => setGuess1Numbers(e.currentTarget.value)}/>
                 {
-                    isGame1Word1Page1ThiefWrong && haveGuessedGame1Word1Page1Thief  ? (
+                    haveGuessed1 && isWrong1  ? (
                         <span className="red"> Wrong Answer!</span>
                     ) : null
                 }
-                {
-                    !isGame1Word1Page1ThiefWrong && haveGuessedGame1Word1Page1Thief  ? (
-                        <span className="green"> Right Answer!</span>
-                    ) : null
-                }
-                <TextField
-                    label="Word 2"
-                    value={game1Word2Page1ThiefGuess.game1Word2Page1ThiefLetters}
-                    onChange={(e) => setGame1Word2Page1ThiefLetters(e.currentTarget.value)}/>
-                {
-                    isGame1Word2Page1ThiefWrong && haveGuessedGame1Word2Page1Thief  ? (
-                        <span className="red"> Wrong Answer!</span>
-                    ) : null
-                }
-                {
-                    !isGame1Word2Page1ThiefWrong && haveGuessedGame1Word2Page1Thief  ? (
-                        <span className="green"> Right Answer!</span>
-                    ) : null
-                }
-                <TextField
-                    label="Word 3"
-                    value={game1Word3Page1ThiefGuess.game1Word3Page1ThiefLetters}
-                    onChange={(e) => setGame1Word3Page1ThiefLetters(e.currentTarget.value)}/>
-                {
-                    isGame1Word3Page1ThiefWrong && haveGuessedGame1Word3Page1Thief  ? (
-                        <span className="red"> Wrong Answer!</span>
-                    ) : null
-                }
-                {
-                    !isGame1Word3Page1ThiefWrong && haveGuessedGame1Word3Page1Thief  ? (
-                        <span className="green"> Right Answer!</span>
-                    ) : null
-                }
-                <TextField
-                    label="Word 4"
-                    value={game1Word4Page1ThiefGuess.game1Word4Page1ThiefLetters}
-                    onChange={(e) => setGame1Word4Page1ThiefLetters(e.currentTarget.value)}/>
-                {
-                    isGame1Word4Page1ThiefWrong && haveGuessedGame1Word4Page1Thief  ? (
-                        <span className="red"> Wrong Answer!</span>
-                    ) : null
-                }
-                {
-                    !isGame1Word4Page1ThiefWrong && haveGuessedGame1Word4Page1Thief  ? (
-                        <span className="green"> Right Answer!</span>
-                    ) : null
-                }
+
+                { !isWrong1 && haveGuessed1  ? (
+               <View>
+                    <span className="right"> Right Answer!</span><br />
+                   prybar! click to put in backpack
+               </View>
+                ) : (
+                <div>
+                    <br /><h3>Note Under Safe Says:</h3>
+                    As I sit here under <span className="bold-underline">this sign <span className="small">(#?)</span></span>,<br />
+                    I look South and see something near with <span className="bold-underline">vertical slots <span className="small">(#?)</span></span> that align,<br />
+                    I also collected the <span className="bold-underline">discs <span className="small">(#?)</span></span>, <span className="bold-underline">balls <span className="small">(#?)</span></span>,
+                    and <span className="bold-underline">water bottles <span className="small">(#?)</span></span> in record time.
+                </div>
+                )}
             </View>
-            {(!isGame1Word1Page1ThiefWrong && !isGame1Word2Page1ThiefWrong && !isGame1Word3Page1ThiefWrong && !isGame1Word4Page1ThiefWrong)?
+            {(!isWrong1 && !isWrong2)?
                 (
             <View
                 ariaLabel="winner"
@@ -659,14 +400,7 @@ export function Hurricane1() {
                 <br /><br /><Button onClick={() => goHome()}>Home</Button>
             </View>
                 ): null }
-            {(!isGame1Word1Page1ThiefWrong && !isGame1Word2Page1ThiefWrong && !isGame1Word3Page1ThiefWrong && !isGame1Word4Page1ThiefWrong)?
-                (
-                    <View
-                        ariaLabel="safe open"
-                        className="safe-open">
-                        <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/04/circle-safe-open.png"/>
-                    </View>
-                ): null }
+
             <View className="time">
                 <Button className="bottom-button" onClick={() => goHome()}>Home</Button>
                 <span className="small"> | hint time: {gameTimeHint} mins | real time: {gameTime} mins | tot: time: {gameTimeTotal} min</span>

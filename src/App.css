@@ -73,11 +73,13 @@ html {
 .italics {
   font-style: italic;
 }
-.green {
-  color:green;
+.right {
+  color:#46df07;
+  font-size: 1.5em;
+  font-weight: bold;
 }
 .red {
-  color:red;
+  color:#7e0b0b;
 }
 .hide {
   display:none;
@@ -145,7 +147,7 @@ html {
   width:300px;
 }
 .small {
-  font-size:10px;
+  font-size:.8em;
 }
 .all-screen {
   position: absolute;
@@ -174,11 +176,8 @@ html {
 }
 
 :root, [data-amplify-theme] {
-  --amplify-colors-font-primary: #333;
-  /* you can also use references: */
-  --amplify-colors-white: #fff;
-  --amplify-colors-font-secondary: var(--amplify-colors-neutral-60);
-  --amplify-components-card-padding: 50px;
+  --amplify-components-textfield-border-color: #000 !important;
+  --amplify-components-field-label-color: #000 !important;
   --amplify-components-button-primary-background-color: #0D5189 !important;
   --amplify-components-tabs-item-active-color: #0D5189 !important;
   --amplify-components-tabs-item-active-border-color: #0D5189 !important;
@@ -247,58 +246,29 @@ html {
   margin-bottom: 15px;
 }
 
+.bold-underline {
+  text-decoration: underline;
+  font-weight:bold;
+}
 
 /* backpack, info, notes */
 .info-button {
   position:absolute;
-  right:3%;
-  top:2%;
-  width:10%;
-  max-width:50px;
-  font-size:10px;
-  margin-bottom:20px;
+  right:10px;
+  top:7px;
+  width:50px;
 }
 .notes-button {
   position:absolute;
-  right:3%;
-  top:10%;
-  width:10%;
-  max-width:50px;
-  font-size:10px;
-  margin-bottom:20px;
+  right:10px;
+  top:40px;
+  width:50px;
 }
 .backpack-image {
   position:absolute;
-  right:9%;
-  top:0%;
-  width:28%;
-  max-width:50px;
-}
-@media (max-width:700px) {
-  .notes-button {
-    right:1%;
-  }
-  .info-button {
-    right:1%;
-  }
-  .backpack-image {
-    right:10%;
-  }
-}
-@media (max-width:480px) {
-  .notes-button {
-    right:2%;
-    top:5%;
-    width:12.5%;
-  }
-  .info-button {
-    top:1%;
-    right:2%;
-    width:12.5%;
-  }
-  .backpack-image {
-    right:16%;
-  }
+  right:65px;
+  top:0;
+  width:50px;
 }
 
 .no-show-small {
@@ -556,7 +526,6 @@ html {
 .time {
   text-align: center;
   position: relative;
-  margin-top: -20px;
 }
 .bottom-button {
   padding: 2px;

@@ -675,7 +675,7 @@ export function Thief1() {
                 <div>Try to Open Safe!</div>
                 <br />
                 <TextField
-                    label="Word 1"
+                    label="Word 1 (4 letters)"
                     value={game1Word1Page1ThiefGuess.game1Word1Page1ThiefLetters}
                     onChange={(e) => setGame1Word1Page1ThiefLetters(e.currentTarget.value)}/>
                 {
@@ -689,7 +689,7 @@ export function Thief1() {
                     ) : null
                 }
                 <TextField
-                    label="Word 2"
+                    label="Word 2 (4 letters)"
                     value={game1Word2Page1ThiefGuess.game1Word2Page1ThiefLetters}
                     onChange={(e) => setGame1Word2Page1ThiefLetters(e.currentTarget.value)}/>
                 {
@@ -703,7 +703,7 @@ export function Thief1() {
                     ) : null
                 }
                 <TextField
-                    label="Word 3"
+                    label="Word 3 (11 letters)"
                     value={game1Word3Page1ThiefGuess.game1Word3Page1ThiefLetters}
                     onChange={(e) => setGame1Word3Page1ThiefLetters(e.currentTarget.value)}/>
                 {
@@ -717,7 +717,7 @@ export function Thief1() {
                     ) : null
                 }
                 <TextField
-                    label="Word 4"
+                    label="Word 4 (inferno)"
                     value={game1Word4Page1ThiefGuess.game1Word4Page1ThiefLetters}
                     onChange={(e) => setGame1Word4Page1ThiefLetters(e.currentTarget.value)}/>
                 {

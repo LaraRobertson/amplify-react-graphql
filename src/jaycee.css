@@ -9,12 +9,37 @@
 }
 .right-picnic-table {
   position:absolute;
-  top:67%;
-  right:20%;
+  top:63%;
+  right:23%;
   z-index:22;
 }
 @media (max-width:480px) {
   .right-picnic-table {
     right:1%;
+    max-width:50%;
+  }
+}
+.safe-shelter {
+  position:absolute;
+  bottom:0;
+  right:18%;
+  z-index:22;
+}
+@media (max-width:480px) {
+  .safe-shelter {
+    right:1%;
+  }
+}
+.left-picnic-table {
+  position:absolute;
+  top:62%;
+  left:18%;
+  z-index:22;
+}
+@media (max-width:480px) {
+  .left-picnic-table {
+    left:1%;
+    max-width:50%;
+    top:64%;
   }
 }
