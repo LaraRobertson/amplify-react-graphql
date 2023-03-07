@@ -43,3 +43,16 @@
     top:64%;
   }
 }
+.cement-safe {
+  position:absolute;
+  bottom:0%;
+  left:43%;
+  width:100px;
+  z-index:22;
+}
+@media (max-width:480px) {
+  .cement-safe  {
+    left:38%;
+    bottom: 5%;
+  }
+}
