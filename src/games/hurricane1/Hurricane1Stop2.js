@@ -7,7 +7,7 @@ import {API} from "aws-amplify";
 import {gameStatsByGameID, gameStatsByUserEmail} from "../../graphql/queries";
 import {createGameStats as createGameStatsMutation, updateGameStats as updateGameStatsMutation} from "../../graphql/mutations";
 
-export function Hurricane1() {
+export function Hurricane1Stop2() {
     const [gameStatsState, setGameStatsState] = useState({});
     /* all games */
     const [areNotesVisible, setAreNotesVisible] = useState(false);
@@ -159,26 +159,25 @@ export function Hurricane1() {
     }
     /* end backpack functions */
 
-
     /* game/stop specific */
     const gamePage = "Jaycee Park Shelter (Hurricane)";
 
-    /* guessing states and answers for first safe - 5 numbers */
-    const [guess1,setGuess1] = useState({'numbers':''});
+    /* guessing states and answers for first safe - 6 letters - trying to find order of letters*/
+    const [guess1,setGuess1] = useState({'answer':''});
     const [haveGuessed1,setHaveGuessed1] = useState();
     const [isWrong1, setIsWrong1] = useState(true);
-    const answer1 = {'numbers':'78594'};
+    const answer1 = {'answer':'SBOVHW'};
     useEffect(() => {
-        console.log("***useEffect***: guess1.numbers: " + guess1.numbers);
+        console.log("***useEffect***: guess1.answer: " + guess1.answer);
     });
-    function setGuess1Numbers(guess) {
+    function setGuess1Function(guess) {
         var x = guess;
         console.log("guess1 x: " + x);
-        let guessObject = {"numbers":x};
+        let guessObject = {"answer":x};
         setGuess1(guessObject);
         localStorage.setItem("guess1", x);
         //check if guess is right
-        if (shallowEqual(x,answer1.numbers)) {
+        if (shallowEqual(x,answer1.answer)) {
             setHaveGuessed1(true);
             localStorage.setItem("haveGuessed1", true);
             setIsWrong1(false);
@@ -194,23 +193,23 @@ export function Hurricane1() {
     }
     /* end guessing states and answers for first safe - 5 numbers */
 
-    /* guessing states and answers for 2nd safe - 5 numbers */
-    const [guess2,setGuess2] = useState({'numbers':''});
+    /* guessing states and answers for 2nd safe - 4 numbers (adding stuff from signs) */
+    const [guess2,setGuess2] = useState({'answer':''});
     const [haveGuessed2,setHaveGuessed2] = useState();
     const [isWrong2, setIsWrong2] = useState(true);
 
-    const answer2 = {'numbers':'3687'};
+    const answer2 = {'answer':'1921'};
     useEffect(() => {
-        console.log("***useEffect***: guess2.numbers: " + guess2.numbers);
+        console.log("***useEffect***: guess2.answer: " + guess2.answer);
     })
-    function setGuess2Numbers(guess) {
+    function setGuess2Function(guess) {
         var x = guess;
         console.log("guess2 x: " + x);
-        let guessObject = {"numbers":x};
+        let guessObject = {"answer":x};
         setGuess2(guessObject);
         localStorage.setItem("guess2", x);
         //check if guess is right
-        if (shallowEqual(x,answer2.numbers)) {
+        if (shallowEqual(x,answer2.answer)) {
             setHaveGuessed2(true);
             localStorage.setItem("haveGuessed2", true);
             setIsWrong2(false);
@@ -224,13 +223,29 @@ export function Hurricane1() {
         }
 
     }
-    /* end guessing states and answers for 2nd safe - 5 numbers */
+    /* end guessing states and answers for 2nd safe - 4 numbers */
 
+    /* open bush to show keyhole */
+    const [isRightBushOpen, setIsRightBushOpen] = useState(false);
+    function toggleRightBush() {
+        isRightBushOpen ? setIsRightBushOpen(false) : setIsRightBushOpen(true);
+    }
+    /* open  bush to see safe */
+    const [isLeftBushOpen, setIsLeftBushOpen] = useState(false);
+    function toggleLeftBush() {
+        isLeftBushOpen ? setIsLeftBushOpen(false) : setIsLeftBushOpen(true);
+    }
+    /* sign has 6 boards with references to signs about girlscouts on path leading to gazebo */
     const [isSignVisible, setIsSignVisible] = useState(false);
     function toggleSign() {
         isSignVisible ? setIsSignVisible(false) : setIsSignVisible(true);
     }
-
+    /* bench has # references to signs about girlscouts on path leading to gazebo */
+    const [isBenchVisible, setIsBenchVisible] = useState(false);
+    function toggleBench() {
+        isBenchVisible ? setIsBenchVisible(false) : setIsBenchVisible(true);
+    }
+    /* open safe window with note */
     const [isSafeInfoVisible, setIsSafeInfoVisible] = useState(false);
     function toggleSafe() {
         isSafeInfoVisible ? setIsSafeInfoVisible(false) : setIsSafeInfoVisible(true);
@@ -238,56 +253,55 @@ export function Hurricane1() {
     useEffect(() => {
         console.log("***useEffect***: isSafeInfoVisible: " + isSafeInfoVisible);
     });
-    const [isCementSafeInfoVisible, setIsCementSafeInfoVisible] = useState(false);
-    function toggleCementSafeInfo() {
-        isCementSafeInfoVisible ? setIsCementSafeInfoVisible(false) : setIsCementSafeInfoVisible(true);
-    }
-    const [isCementSafeOpen, setIsCementSafeOpen] = useState(false);
-    function toggleCementSafe() {
-        isCementSafeOpen ? setIsCementSafeOpen(false) : setIsCementSafeOpen(true);
-    }
 
+    /* use key in key hole */
+    const [isKeyUsed, setIsKeyUsed] = useState(false);
+    function toggleUseKey() {
+        isKeyUsed ? setIsKeyUsed(false) : setIsKeyUsed(true);
+    }
     /* move on to next stop */
     const [isSandbagMessageVisible, setIsSandbagMessageVisible] = useState(false);
     function toggleSandbagMessages() {
         isSandbagMessageVisible ? setIsSandbagMessageVisible(false) : setIsSandbagMessageVisible(true);
     }
-    function goToStop2() {
-        console.log("go to stop 2");
-        navigate('/hurricane-1-stop2');
+    function goToStop3() {
+        console.log("go to stop 3");
+        navigate('/hurricane-2-stop3');
     }
 
-    /* backpack items: prybar */
-    const [isPrybarOn, setIsPrybarOn] = useState(false);
+    /* backpack items: key */
+    /* key is used to open sandbag vault */
+    const [isKeyOn, setIsKeyOn] = useState(false);
     useEffect(() => {
-        console.log("***useEffect***: isPrybarOn: " + isPrybarOn);
+        console.log("***useEffect***: isKeyOn: " + isKeyOn);
     });
-    const [isPrybarVisible, setIsPrybarVisible] = useState(true);
-    function pryBar() {
-        setIsPrybarVisible(false);
-        console.log("put prybar in backpack");
-        localStorage.setItem("prybar", "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/prybar-not-using.png");
+    /* remove key from window and put in backpack */
+    const [isKeyVisible, setIsKeyVisible] = useState(true);
+    function keyFunction() {
+        setIsKeyVisible(false);
+        console.log("put key in backpack");
+        localStorage.setItem("key", "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/key-not-using.png");
         /* check if there */
         if (gameBackpack.length > 0) {
             for (var i = 0; i < gameBackpack.length; i++) {
                 var bptest = true;
-                if (gameBackpack[i].key === "prybar") {
-                    console.log("prybar is already there");
+                if (gameBackpack[i].key === "key") {
+                    console.log("key is already there");
                     bptest = false;
                 }
             }
             if (bptest === true) {
-                console.log("push prybar to backpack");
+                console.log("push key to backpack");
                 gameBackpack.push({
-                    src: 'https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/prybar-not-using.png',
-                    key: 'prybar'
+                    src: 'https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/key-not-using.png',
+                    key: 'key'
                 })
             }
         } else {
-            console.log("push prybar to backpack");
+            console.log("push key to backpack");
             gameBackpack.push({
-                src: 'https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/prybar-not-using.png',
-                key: 'prybar'
+                src: 'https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/key-not-using.png',
+                key: 'key'
             })
         }
         setGameBackpackHasItems( true);
@@ -305,19 +319,19 @@ export function Hurricane1() {
     function showItemContents(value) {
         console.log("show contents value: " + value);
         switch (value) {
-            case 'prybar':
-                console.log("isPrybarOn 1: " + isPrybarOn);
-                setIsPrybarOn(!isPrybarOn);
+            case 'key':
+                console.log("isKeyOn 1: " + isKeyOn);
+                setIsKeyOn(!isKeyOn);
                 // change image
                 for (var i = 0; i < gameBackpack.length; i++) {
-                    if (gameBackpack[i].key === "prybar") {
-                        console.log("turn on/off prybar - state");
-                        if (!isPrybarOn) {
-                            gameBackpack[i].src = "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/prybar-using.png"
-                            localStorage.setItem("prybar", "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/prybar-using.png");
+                    if (gameBackpack[i].key === "key") {
+                        console.log("turn on/off key - state");
+                        if (!isKeyOn) {
+                            gameBackpack[i].src = "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/key-using.png"
+                            localStorage.setItem("key", "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/key-using.png");
                         } else {
-                            gameBackpack[i].src = "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/prybar-not-using.png"
-                            localStorage.setItem("prybar", "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/prybar-not-using.png");
+                            gameBackpack[i].src = "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/key-not-using.png"
+                            localStorage.setItem("key", "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/key-not-using.png");
                         }
                     }
                 }
@@ -335,7 +349,7 @@ export function Hurricane1() {
             <View
                 className="image-holder image-short"
                 ariaLabel="Image Holder"
-                backgroundImage = "url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-jaycee-shelter.jpg')">
+                backgroundImage = "url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-game-jaycee-gazebo.jpg')">
                 <View
                     className="z-index102 info-button"
                     ariaLabel="Info Button"
@@ -354,116 +368,129 @@ export function Hurricane1() {
                     onClick={()=>toggleBackpack()}>
                         <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png" />
                 </View>
+                {
+                   !isLeftBushOpen  ? (
+                       <View
+                           ariaLabel="left bush"
+                           className="left-bush"
+                           onClick={()=>toggleLeftBush()}>
+                           <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bush-left.png" />
+                       </View>
+                    ) : (
+                        <View
+                       ariaLabel="left bush"
+                       className="left-bush"
+                       onClick={()=>toggleSafe()}>
+                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bush-open-left.png" />
+                       </View>
+                   )
+                }
+                {
+                    !isRightBushOpen  ? (
                 <View
-                    ariaLabel="Hanging Sign"
-                    className="hanging-sign"
+                    ariaLabel="right bush"
+                    className="right-bush"
+                    onClick={()=>toggleRightBush()}>
+                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bush-right.png" />
+                </View>
+                    ) : (
+                <View
+                    ariaLabel="right bush"
+                    className="right-bush"
+                    onClick={()=>toggleUseKey()}>
+                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bush-open-right.png" />
+                </View>
+                    )
+                }
+                <View
+                    ariaLabel="words on string"
+                    className="words-on-string"
                     onClick={()=>toggleSign()}>
-                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/hanging-sign.png" />
-                </View>
-
-                <View
-                    ariaLabel="left picnic table"
-                    className="left-picnic-table"
-                >
-                    <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/left-picnic-table.png" />
+                    <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/03/words-small.png" />
                 </View>
                 <View
-                    ariaLabel="right picnic table"
-                    className="right-picnic-table"
-                >
-                    <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/right-picnic-table.png" />
+                    ariaLabel="bench"
+                    className="bench"
+                    onClick={()=>toggleBench()}>
+                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bench.png" />
                 </View>
                 <View
                     ariaLabel="sign info"
                     className={isSignVisible ? "all-screen show" : "hide"}>
                     <Button className="close-button" onClick={()=>toggleSign()}>X</Button>
-                    <br /><h3>Hanging Sign Says:</h3>
+                    <br /><h3>What Order for Letters in Words On String:</h3>
                     <br />
-                    <div>I am an odd number. Take away a letter and I become even.</div>
+                    <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/03/words-big.png" />
                 </View>
                 <View
-                    ariaLabel="Safe Shelter"
-                    className="safe-shelter"
-                    onClick={()=>toggleSafe()}>
-                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe-shelter.png"/>
+                    ariaLabel="bench info"
+                    className={isBenchVisible ? "all-screen show" : "hide"}>
+                    <Button className="close-button" onClick={()=>toggleBench()}>X</Button>
+                    <br /><h3>What numbers are these?</h3>
+                    <br />
+                    <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/03/piece-of-floor-big.png" />
                 </View>
-                <View className={isPrybarOn && !isCementSafeOpen && isWrong2? "cement-safe show" : "hide"}
-                      onClick={()=>toggleCementSafe()}>4
-                    <Image className="test" alt="test" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/03/cementsafe1.png" />
-                </View>
-                <View className={!isPrybarOn? "cement-safe show" : "hide"}>
-                    <Image className="test" alt="test" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/03/cementsafe1.png" />
-                </View>
-                <View className={isCementSafeOpen && isWrong2? "cement-safe show" : "hide"}
-                    onClick={()=>toggleCementSafeInfo()}>
-                    <Image className="test" alt="test" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/03/cementsafeopen.png" />
-                </View>
-                <View className={!isWrong2? "cement-safe show" : "hide"}
-                    onClick={()=>toggleSandbagMessages()}>
-                    <Image className="test" alt="test" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/03/cementsafeopensandbags.png" />
+                <View className={isKeyOn && isKeyUsed && !isWrong2 && !isWrong1? "cement-safe show" : "hide"}
+                      onClick={()=>toggleSandbagMessages()}>4
+                    <Image className="test" alt="test" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/03/sandbags2.png" />
                 </View>
             </View>
             <View className={isSafeInfoVisible ? "all-screen show" : "hide"}>
                 <Button className="close-button" onClick={()=>toggleSafe()}>X</Button>
+                <h3>Try to Open Safe</h3>
                 <TextField
-                    label="Try to Open Safe! (5 numbers)"
-                    value={guess1.numbers}
-                    onChange={(e) => setGuess1Numbers(e.currentTarget.value)}/>
+                    label="6 Letters"
+                    value={guess1.answer}
+                    onChange={(e) => setGuess1Function(e.currentTarget.value)}/>
                 {
                     haveGuessed1 && isWrong1  ? (
                         <span className="red"> Wrong Answer!</span>
                     ) : null
                 }
-
-                { !isWrong1 && haveGuessed1  ? (
+                {
+                    !isWrong1  ? (
+                        <span  className="right"> Right Answer!</span>
+                    ) : null
+                }
+                <TextField
+                    label="4 numbers"
+                    value={guess2.answer}
+                    onChange={(e) => setGuess2Function(e.currentTarget.value)}/>
+                {
+                    haveGuessed2 && isWrong2 ? (
+                        <span className="red"> This is wrong.</span>
+                    ) : null
+                }
+                {
+                    !isWrong2  ? (
+                        <span  className="right"> Right Answer!</span>
+                    ) : null
+                }
+                { !isWrong1 && !isWrong2 && haveGuessed1 && haveGuessed2  ? (
                <View>
-                    <span className="right"> Right Answer!</span><br />
-                   <View  className={isPrybarVisible ? "show" : "hide"}
-                          onClick={pryBar}>
-                       <Image className="test" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/03/prybar.png" />
+                   <View  className={isKeyVisible ? "show" : "hide"}
+                          onClick={keyFunction}>
+                       <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key.png" />
                    </View>
                </View>
                 ) : (
                 <div>
                     <br /><h3>Note Under Safe Says:</h3>
-                    As I sit here under <span className="bold-underline">this sign <span className="small">(#?)</span></span>,<br />
-                    I look South and see something near with <span className="bold-underline">vertical slots <span className="small">(#?)</span></span> that align,<br />
-                    I also collected the <span className="bold-underline">discs <span className="small">(#?)</span></span>, <span className="bold-underline">balls <span className="small">(#?)</span></span>,
-                    and <span className="bold-underline">water bottles <span className="small">(#?)</span></span> in record time.
+                    There are Letters on a String...<br />
+                    And you should ADD NUMBERS on Bench Thing.
                 </div>
                 )}
             </View>
-            <View className={isCementSafeInfoVisible ? "all-screen show" : "hide"}>
-                <Button className="close-button" onClick={()=>toggleCementSafeInfo()}>X</Button>
 
-                <TextField
-                    label="Try to Open Floor Safe! (4 numbers)"
-                    value={guess2.numbers}
-                    onChange={(e) => setGuess2Numbers(e.currentTarget.value)}/>
-                {
-                    haveGuessed2 && isWrong2  ? (
-                        <span className="red"> Wrong Answer!</span>
-                    ) : null
-                }
-
-                { !isWrong2 && haveGuessed2  ? (
-                    <View>
-                        <span className="right"> Right Answer!</span><br />
-
-                    </View>
-                ) : (
-                    <Image className="test" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/03/codeforcement.png" />
-                )}
+            <View className={isSandbagMessageVisible ? "all-screen show" : "hide"}>
+                <Button className="close-button" onClick={()=>toggleSandbagMessages()}>X</Button>
+                <h3>Good Job on Finding Sandbags!</h3>
+                <br />
+                You will need to find some way to transport these sandbags!
+                <br /><br />
+                Next stop is at the Exercise Areay<br /><br />
+                <Button className="button">Click here for picture of stop 3</Button>
             </View>
-            {(!isWrong1 && !isWrong2)?
-                (
-                    <View className="winner">
-                        <h3>Good Job on Finding Sandbags!</h3>
-                        But you need more.<br />
-                        Next stop is at Jaycee Park Gazebo - maybe you can find some there.<br /><br />
-                        <Button className="button" onClick={()=>goToStop2()}>Click here for picture of stop 2</Button>
-                    </View>
-                ): null }
 
             <View className="time">
                 <Button className="bottom-button" onClick={() => goHome()}>Home</Button>

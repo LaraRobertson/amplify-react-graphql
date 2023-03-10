@@ -1,53 +1,12 @@
 import React, {useEffect, useState} from "react"
-import data from "./gameConstants";
 import {NotesOpen} from "../../components/NotesOpen";
+import {shallowEqual} from "../../components/ShallowEqual";
 import {Button, Heading, View, Image, TextAreaField, TextField, Text, Alert, Flex} from '@aws-amplify/ui-react';
 import {useNavigate} from "react-router-dom";
 import {API} from "aws-amplify";
 import {gameStatsByGameID, gameStatsByUserEmail} from "../../graphql/queries";
 import {createGameStats as createGameStatsMutation, updateGameStats as updateGameStatsMutation} from "../../graphql/mutations";
 
-const shallowEqual = (object1, object2) => {
-    const keys1 = Object.keys(object1);
-    console.log("keys1: " + keys1.length);
-    const keys2 = Object.keys(object2);
-    console.log("keys2: " + keys2.length);
-    if (keys1.length !== keys2.length) {
-        return false;
-    }
-    for (let key of keys1) {
-        console.log("object1[key]: " + object1[key]);
-        console.log("object2[key]: " + object2[key]);
-        console.log("typeof object1[key]: " + typeof object1[key]);
-        console.log("typeof object2[key]: " + typeof object2[key]);
-        if (object1[key] !== object2[key]) {
-            console.log("false");
-            return false;
-        }
-    }
-    return true;
-}
-
-const shallowEqualLetters = (object1, object2) => {
-    const keys1 = Object.keys(object1);
-    console.log("keys1: " + keys1.length);
-    const keys2 = Object.keys(object2);
-    console.log("keys2: " + keys2.length);
-    if (keys1.length !== keys2.length) {
-        return false;
-    }
-    for (let key of keys1) {
-        console.log("object1[key]: " + object1[key]);
-        console.log("object2[key]: " + object2[key]);
-        console.log("typeof object1[key]: " + typeof object1[key]);
-        console.log("typeof object2[key]: " + typeof object2[key]);
-        if (object1[key].toLowerCase() !== object2[key].toLowerCase()) {
-            console.log("false");
-            return false;
-        }
-    }
-    return true;
-}
 
 export function Thief1() {
     const [gameStatsState, setGameStatsState] = useState({});
@@ -125,40 +84,6 @@ export function Thief1() {
     function goHome() {
         localStorage.setItem("gameName","");
         navigate('/');
-    }
-
-    function SetGuessGame1() {
-        const elementID1 = "game1Num1Page1";
-        const elementID2 = "game1Num2Page1";
-        var x = document.getElementById(elementID1).value;
-        var y = document.getElementById(elementID2).value;
-        console.log("x: " + x);
-        setGame1Num1Page1(x);
-        setGame1Num2Page1(y);
-        console.log("game1Num1Page1:" + game1Num1Page1);
-        console.log("game1Num2Page1:" + game1Num2Page1);
-        let updatedValue = {};
-        updatedValue = {Num1:x,Num2:y};
-        console.log("updatedValue.Num1: " + updatedValue.Num1);
-        console.log("updatedValue.Num2: " + updatedValue.Num2);
-        setGame1NumPage1guess(game1NumPage1guess => ({
-            ...game1NumPage1guess,
-            ...updatedValue
-        }));
-        //check if guess is right
-        if (shallowEqual(updatedValue, data.game1NumPage1)) {
-            console.log("right guess");
-            setHaveGuessedGame1Stop1(true);
-            localStorage.setItem("haveGuessedGame1Page1", true);
-            setIsGame1Page1Wrong(false);
-            localStorage.setItem("isGame1Page1Wrong", false);
-        } else {
-            console.log("wrong guess");
-            setHaveGuessedGame1Stop1(true);
-            localStorage.setItem("haveGuessedGame1Page1", true);
-            setIsGame1Page1Wrong(true);
-            localStorage.setItem("isGame1Page1Wrong", true);
-        }
     }
 
     async function getGameStats() {
@@ -424,7 +349,7 @@ export function Thief1() {
         setGame1Word1Page1ThiefGuess(guessObject);
         localStorage.setItem("game1Word1Page1ThiefLetters", x);
         //check if guess is right
-        if (shallowEqualLetters(x, game1Word1Page1ThiefAnswer.game1Word1Page1ThiefLetters)) {
+        if (shallowEqual(x, game1Word1Page1ThiefAnswer.game1Word1Page1ThiefLetters)) {
             setHaveGuessedGame1Word1Page1Thief(true);
             localStorage.setItem("haveGuessedGame1Word1Page1Thief", true);
             setIsGame1Word1Page1ThiefWrong(false);
@@ -445,7 +370,7 @@ export function Thief1() {
         setGame1Word2Page1ThiefGuess(guessObject);
         localStorage.setItem("game1Word2Page1ThiefLetters", x);
         //check if guess is right
-        if (shallowEqualLetters(x, game1Word2Page1ThiefAnswer.game1Word2Page1ThiefLetters)) {
+        if (shallowEqual(x, game1Word2Page1ThiefAnswer.game1Word2Page1ThiefLetters)) {
             setHaveGuessedGame1Word2Page1Thief(true);
             localStorage.setItem("haveGuessedGame1Word2Page1Thief", true);
             setIsGame1Word2Page1ThiefWrong(false);
@@ -465,7 +390,7 @@ export function Thief1() {
         setGame1Word3Page1ThiefGuess(guessObject);
         localStorage.setItem("game1Word3Page1ThiefLetters", x);
         //check if guess is right
-        if (shallowEqualLetters(x, game1Word3Page1ThiefAnswer.game1Word3Page1ThiefLetters)) {
+        if (shallowEqual(x, game1Word3Page1ThiefAnswer.game1Word3Page1ThiefLetters)) {
             setHaveGuessedGame1Word3Page1Thief(true);
             localStorage.setItem("haveGuessedGame1Word3Page1Thief", true);
             setIsGame1Word3Page1ThiefWrong(false);
@@ -485,7 +410,7 @@ export function Thief1() {
         setGame1Word4Page1ThiefGuess(guessObject);
         localStorage.setItem("game1Word4Page1ThiefLetters", x);
         //check if guess is right
-        if (shallowEqualLetters(x, game1Word4Page1ThiefAnswer.game1Word4Page1ThiefLetters)) {
+        if (shallowEqual(x, game1Word4Page1ThiefAnswer.game1Word4Page1ThiefLetters)) {
             setHaveGuessedGame1Word4Page1Thief(true);
             localStorage.setItem("haveGuessedGame1Word4Page1Thief", true);
             setIsGame1Word4Page1ThiefWrong(false);

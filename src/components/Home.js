@@ -120,7 +120,8 @@ export function Home() {
     async function goToGameSet(gameDetails) {
         let path = gameDetails.gameName.replace(/\s+/g, '-').toLowerCase();
         console.log("go to page: " + '/' + path + '-stop1');
-        navigate('/' + path);
+       // navigate('/' + path + '-stop1');
+        navigate('/hurricane-1-stop2');
     }
 
     async function goToGame(gameDetails) {
@@ -165,7 +166,7 @@ export function Home() {
                         localStorage.setItem("agreeToWaiver", true);
                         let path = gameDetails.gameName.replace(/\s+/g, '-').toLowerCase();
                         console.log("go to page: " + '/' + path + '-stop1');
-                        navigate('/' + path);
+                        navigate('/' + path + '-stop1');
                     } else {
                         navigate('/waiver');
                     }

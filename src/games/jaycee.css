@@ -56,3 +56,53 @@
     bottom: 5%;
   }
 }
+/* gazebo */
+.left-bush {
+  position:absolute;
+  bottom:0%;
+  left:13%;
+  z-index:22;
+}
+@media (max-width:480px) {
+  .left-bush {
+    left:0%;
+    max-width:40%;
+  }
+}
+.right-bush {
+  position:absolute;
+  bottom:0%;
+  right:13%;
+  z-index:22;
+}
+@media (max-width:480px) {
+  .right-bush {
+    right:0%;
+    max-width:40%;
+  }
+}
+.words-on-string {
+  position:absolute;
+  bottom:30%;
+  right:33%;
+  z-index:22;
+}
+@media (max-width:480px) {
+  .words-on-string  {
+    right:50%;
+    max-width:40%;
+  }
+}
+.bench {
+  position:absolute;
+  bottom:7%;
+  right:48%;
+  z-index:22;
+}
+@media (max-width:480px) {
+  .bench  {
+    right:40%;
+    max-width:40%;
+    bottom:8%;
+  }
+}

@@ -505,13 +505,14 @@ html {
 .winner {
   position:absolute;
   right:10%;
-  top:50px;
+  top:30px;
   width: 80%;
+  text-align: center;
   font-size: 16px;
   margin-bottom:20px;
-  background-color: white;
+  background-color: #58AAED;
   padding:20px;
-  border: 1px solid 3FB20F;
+  border: 2px solid #0D5189;
   z-index:102;
 }
 .safe-open {

@@ -11,13 +11,12 @@ import { Waiver } from './components/Waiver';
 
 /* Games */
 import { Thief1 } from './games/thief1/Thief1';
-import { Thief2 } from './games/thief2/Thief2';
-import { Thief3 } from './games/thief3/Thief3';
 import { Hurricane1 } from './games/hurricane1/Hurricane1';
+import { Hurricane1Stop2 } from './games/hurricane1/Hurricane1Stop2';
 
 
 import './App.css';
-import './jaycee.css';
+import './games/jaycee.css';
 
 
 function MyRoutes() {
@@ -35,7 +34,7 @@ function MyRoutes() {
                         }
                     />
                     <Route
-                        path="/thief-1"
+                        path="/thief-1-stop1"
                         element={
                             <RequireAuth>
                                 <Thief1 />
@@ -43,26 +42,18 @@ function MyRoutes() {
                         }
                     />
                     <Route
-                        path="/thief-2-(new)"
-                        element={
-                            <RequireAuth>
-                                <Thief2 />
-                            </RequireAuth>
-                        }
-                    />
-                    <Route
-                        path="/thief-3"
-                        element={
-                            <RequireAuth>
-                                <Thief3 />
-                            </RequireAuth>
-                        }
-                    />
-                    <Route
-                        path="/hurricane-1"
+                        path="/hurricane-1-stop1"
                         element={
                             <RequireAuth>
                                 <Hurricane1 />
+                            </RequireAuth>
+                        }
+                    />
+                    <Route
+                        path="/hurricane-1-stop2"
+                        element={
+                            <RequireAuth>
+                                <Hurricane1Stop2 />
                             </RequireAuth>
                         }
                     />
