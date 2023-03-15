@@ -153,7 +153,6 @@ html {
   position: absolute;
   top: 0;
   width: 100vw;
-  max-width: 1000px;
   min-height: calc(100vh - 60px);
   background-color: #699A7D;
   opacity: 1;
@@ -244,6 +243,9 @@ html {
   border: 1px solid black;
   padding: 3px;
   margin-bottom: 15px;
+}
+.bold {
+  font-weight:bold;
 }
 
 .bold-underline {
@@ -504,9 +506,9 @@ html {
 }
 .winner {
   position:absolute;
-  right:10%;
+  right:4%;
   top:30px;
-  width: 80%;
+  width: 92%;
   text-align: center;
   font-size: 16px;
   margin-bottom:20px;
@@ -531,11 +533,18 @@ html {
 .bottom-button {
   padding: 2px;
   font-size: 10px;
+  border: 1px solid black;
 }
 .play-button {
   font-size: 30px;
   width: 40%;
   margin-left: 30%;
+}
+.home-button {
+  font-size: 20px;
+  width: 30%;
+  margin-left: 35%;
+  border: 1px solid black;
 }
 .play-div {
   font-size: 20px;
@@ -543,11 +552,19 @@ html {
   margin-left: 30%;
   text-align:center;
 }
+.play-image {
+
+}
 @media (max-width:450px) {
   .play-button {
     font-size: 30px;
     width: 80%;
     margin-left: 10%;
+  }
+  .home-button {
+    font-size: 20px;
+    width: 60%;
+    margin-left:20%;
   }
   .play-div {
     font-size: 20px;

@@ -59,7 +59,6 @@ export function Home() {
 
     const GameDetailView = () => {
         console.log("gameIndex: " + gameIndex);
-        console.log("gameIndex - typeof: " + typeof gameIndex);
         let gameDetailClass = "all-screen hide-gradual";
         if (isGameDetailVisible) gameDetailClass = "all-screen show-gradual";
         let gameDescriptionH2 = "";
@@ -70,11 +69,11 @@ export function Home() {
         if (games.length > 0) {
             if (gameIndex || gameIndex === 0) {
                 let test = games[gameIndex];
-               console.log("test - gamename: " + JSON.stringify(test));
-                console.log("test - gamename: " + test.gameName);
-                for (const key in test) {
+                console.log("test - game info: " + JSON.stringify(test));
+                console.log("test - gameName: " + test.gameName);
+                /*for (const key in test) {
                     console.log(`${key}: ${test[key]}`);
-                }
+                }*/
                 gameDescriptionH2 = test.gameDescriptionH2;
                 gameDescriptionH3 = test.gameDescriptionH3;
                 gameDescriptionP = test.gameDescriptionP;
@@ -88,31 +87,37 @@ export function Home() {
                 <h2>{gameDescriptionH2}</h2>
                 <h3>{gameDescriptionH3}</h3>
                 <div>{gameDescriptionP}</div><br />
-                <strong>Game Details:</strong> This game has {gameStop}. You can tell if you are at the right stop by looking at the picture on the game.
-                The picture represents the playing area and contains some extra stuff on screen for you to use to find the thief's ill-begotten gains.
-                Once you are at the stop, you need click around on the game screen to
-                try and figure out the puzzles. You also need to use details from your surroundings.
-                <div className="italics">Game is best viewed in landscape mode. Please turn your phone horizontally for gameplay at stops.</div>
-                <br /><br /><strong>Fun Fact</strong>: The game can be played on one device or everyone can play together
-                on their own device - just click on appropriate link to access game, once you have loaded game you don't need the internet.
-                If you keep the window open gameplay will be saved over a long period of time.<br /><br />
+                <strong>Game Details:</strong> This game has {gameStop}. You can tell if you are at the right stop by looking at the picture on
+                the screen. The picture on the screen represents the playing area and contains some extra stuff on the screen for you to figure out
+                how to solve puzzles.<br /><br />
+                Once you are at the stop, click on "<strong>Play Game</strong>". <br /><br />Click around on the game screen to
+                try and figure out the puzzles. You will also need to use details from your surroundings such has North, South, East, West, Names of Shops, fields,
+                Names of Structures, etc.  Pay special attention to any historical sign.
+                <div className="italics">Game may be better viewed in landscape mode. Please turn your phone horizontally for better gameplay at stops.</div>
+                <br /><strong>Time / Score</strong>: Your Time is Your Score. The time starts when you hit "I Want To Play" at Each Stop. When you finish solving
+                puzzles at Stop, Time Stops.  It continues when you reach next Stop. Each Hint costs 5 minutes.
+                <br /><strong>Fun Fact</strong>: The game can be played on one device or everyone can play together
+                on their own device. To play together, start the game at the same time and talk to each other about the
+                puzzles. You will get your own score but the game will ask how many people are playing together.
+                <br /><br /><strong>You need the Internet to load the game</strong> but you can play it without the Internet if you load game before
+                going to stop. You can not save game unless you have internet. However, if you do not close the browser window all game stats,
+                including final score, will still be available. Simply <strong>Save</strong> game once you have Internet Access.<br /><br />
                 <strong>Helpful Hints:</strong>
                 <br /><br />
                 <Grid
                     templateColumns="1fr 4fr"
                     rowGap="0.5rem"
                 >
-                    <View><img className="test" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/info.png" /></View>
-                    <View><h3>Click on Info bubble for helpful information about game</h3></View>
-                    <View><img className="test" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/diary-50.png" /></View>
+                    <View><Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/help.png" /></View>
+                    <View><h3>Click on Help Sign for Hints and helpful information about game</h3></View>
+                    <View><Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/notes.png" /></View>
+                    <View><h3>Click on Notes Sign to save notes about game</h3></View>
+                    <View><Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/blacklight.png" /></View>
                     <View><h3>Clicking on objects will sometimes open a small window with information and sometimes put them in your backpack.</h3></View>
                     <View><Image width="50px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png" /></View>
-                    <View><h3>If an object is in your backpack it will be highlighted .</h3></View>
+                    <View><h3>If an object disappears from screen when you click on it, it may be in your backpack.</h3></View>
 
                 </Grid>
-
-                <h4>Start Playing when you are here</h4>
-
                 </div>
         )
     }
@@ -120,8 +125,9 @@ export function Home() {
     async function goToGameSet(gameDetails) {
         let path = gameDetails.gameName.replace(/\s+/g, '-').toLowerCase();
         console.log("go to page: " + '/' + path + '-stop1');
-       // navigate('/' + path + '-stop1');
-        navigate('/hurricane-1-stop2');
+        navigate('/' + path + '-stop1');
+        /* hard code when developing */
+        //navigate('/hurricane-1-stop2');
     }
 
     async function goToGame(gameDetails) {
@@ -160,7 +166,12 @@ export function Home() {
                 const gamesStatsFromAPI = apiGameStats.data.gameStatsByGameID.items[0];
                 console.log("gamesStatsFromAPI.gameStates: " + gamesStatsFromAPI.gameStates);
                 if (gamesStatsFromAPI.gameStates!= "") {
+
                     let gameStatsState =  JSON.parse(gamesStatsFromAPI.gameStates);
+                    /* set times, if any, in localhost */
+                    if (gameStatsState.numberOfTimes) {
+                        localStorage.setItem("numberOfTimes",gameStatsState.numberOfTimes);
+                    }
                     console.log("gameStatsState:" + gameStatsState);
                     if (gameStatsState !== null && gameStatsState.waiverSigned) {
                         localStorage.setItem("agreeToWaiver", true);
@@ -191,10 +202,9 @@ export function Home() {
                 username: user.username
             });
             localStorage.setItem("email",user?.signInUserSession?.idToken?.payload?.email);
-        })
-            .catch(err => {
-                console.log(err)
-            });
+        }).catch(err => {
+            console.log(err)
+        });
     }
 
     async function fetchGames() {
@@ -221,43 +231,52 @@ export function Home() {
         console.log("fetchUserDB - email: " + userAuth.email);
         console.log("fetchUserDB - username: " + userAuth.username);
         /* check if user in database, if not create user and games */
-        const apiUserDB =  await API.graphql({
-            query: usersByEmail,
-            variables: { email: userAuth.email}
-        });
-        console.log("apiUserDB: " + JSON.stringify(apiUserDB.data.usersByEmail.items[0]));
-        /* if nothing is returned (check if username changed??)  */
-        if (apiUserDB.data.usersByEmail.items.length === 0) {
-            console.log("need to add user");
-            const data = {
-                userName: userAuth.username,
-                email: userAuth.email,
-            };
-            await API.graphql({
-                query: createUserMutation,
-                variables: { input: data },
+        try {
+            const apiUserDB =  await API.graphql({
+                query: usersByEmail,
+                variables: { email: userAuth.email}
             });
+            console.log("apiUserDB: " + JSON.stringify(apiUserDB.data.usersByEmail.items[0]));
+            /* if nothing is returned (check if username changed??)  */
+            if (apiUserDB.data.usersByEmail.items.length === 0) {
+                console.log("need to add user");
+                const data = {
+                    userName: userAuth.username,
+                    email: userAuth.email,
+                };
+                await API.graphql({
+                    query: createUserMutation,
+                    variables: { input: data },
+                });
+            }
+            /* get userID */
+            const userFromAPI = apiUserDB.data.usersByEmail.items[0];
+            console.log("userFromAPI: " + userFromAPI);
+            setUserDB(userFromAPI);
+        } catch (err) {
+            console.log('error fetchUserDB..', err)
         }
-        /* get userID */
-        const userFromAPI = apiUserDB.data.usersByEmail.items[0];
-        setUserDB(userFromAPI);
-    }
+   }
 
-    async function fetchUserGamePlay() {
-        console.log("fetchUserGamePlay - userID: " + userDB.id);
-        /* check if user in database, if not create user and games */
-        const apiUserGamePlay =  await API.graphql({
-            query: userGamePlaysByUserId,
-            variables: { userId: userDB.id}
-        });
-        console.log("apiUserGamePlay: " + JSON.stringify(apiUserGamePlay.data.userGamePlaysByUserId.items));
-        /* create array of gameIDs */
-        const gameIDsUser = apiUserGamePlay.data.userGamePlaysByUserId.items;
-        const gameIDsUserArray = gameIDsUser.map(item => {
-            return item.gameId
-        })
-        console.log('gameIDsUserArray: ' + gameIDsUserArray);
-        setGamesIDUser(gameIDsUserArray);
+   async function fetchUserGamePlay() {
+       console.log("fetchUserGamePlay - userID: " + userDB.id);
+       /* check if user in database, if not create user and games */
+       try {
+            const apiUserGamePlay =  await API.graphql({
+                query: userGamePlaysByUserId,
+                variables: { userId: userDB.id}
+            });
+            console.log("apiUserGamePlay: " + JSON.stringify(apiUserGamePlay.data.userGamePlaysByUserId.items));
+            /* create array of gameIDs */
+            const gameIDsUser = apiUserGamePlay.data.userGamePlaysByUserId.items;
+            const gameIDsUserArray = gameIDsUser.map(item => {
+                return item.gameId
+            })
+            console.log('gameIDsUserArray: ' + gameIDsUserArray);
+            setGamesIDUser(gameIDsUserArray);
+       } catch (err) {
+           console.log('error fetchUserGamePlay..', err)
+       }
     }
 
     async function fetchGamesFree() {
@@ -336,14 +355,14 @@ export function Home() {
 
     const HeadingComponent = props => {
         console.log("props.userName: " + props);
-        for (const key in props) {
-            console.log(`${key}: ${ props[key]}`);
+        /*for (const key in props) {
+            console.log(`${key}: ${ props[key]}`);*/
             /* for (const key1 in dataTest[key]) {
                  console.log(`${key1}: ${dataTest[key][key1]}`);
              }*/
-        }
+        /*}*/
         return (
-            <Heading level={4} marginBottom="10px">Welcome {props.userName.username} | {props.userName.email}</Heading>
+            <View marginBottom="10px">Welcome {props.userName.username} | {props.userName.email}</View>
         )
     }
 
@@ -373,14 +392,14 @@ export function Home() {
                 >
                     {games.map((game,index) => (
                         <Card className="gameCard" variation="elevated"  key={game.id || game.gameName} >
-                            <Text>{game.gameName} <span className="small">({game.gameType})</span></Text>
-                            <Text>Location: {game.gameLocation}</Text>
+                            <Text className="bold">{game.gameName} <span className="small">({game.gameType})</span></Text>
+                            <Text><span class="italics">Location</span>: {game.gameLocationPlace}</Text>
+                            <Text><span className="italics">City</span>: {game.gameLocationCity}</Text>
                             {(gamesIDUser.includes(game.id) || game.gameType === "free") ?
                                 (<div>
                                     <Button onClick={() => goToGame({gameName:game.gameName,gameID:game.id})}>
                                         go to game
                                     </Button>
-                                    <Button className={buttonDetailClassShow} onClick={() => showGameDetail(index)} >Show My Stats</Button>
                                 </div>) :
                                 (<div></div>)
                             }
@@ -414,8 +433,9 @@ export function Home() {
                 >
                     {games.map((game,index) => (
                         <Card className="gameCard" variation="elevated" key={game.id || game.gameName}>
-                            <Text>{game.gameName} <span className="small"> ({game.gameType})</span></Text>
-                            <Text>Location: {game.gameLocation}</Text>
+                            <Text className="bold">{game.gameName} <span className="small"> ({game.gameType})</span></Text>
+                            <Text><span class="italics">Location</span>: {game.gameLocationPlace}</Text>
+                            <Text><span className="italics">City</span>: {game.gameLocationCity}</Text>
                             <Button className={buttonDetailClassShow} onClick={() => showGameDetail(index)} >Show Game Details</Button>
                         </Card>
 

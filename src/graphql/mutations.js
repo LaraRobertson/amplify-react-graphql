@@ -126,7 +126,8 @@ export const createGame = /* GraphQL */ `
       gameDescriptionH2
       gameDescriptionH3
       gameDescriptionP
-      gameLocation
+      gameLocationPlace
+      gameLocationCity
       gameType
       gameStop
       type
@@ -156,7 +157,8 @@ export const updateGame = /* GraphQL */ `
       gameDescriptionH2
       gameDescriptionH3
       gameDescriptionP
-      gameLocation
+      gameLocationPlace
+      gameLocationCity
       gameType
       gameStop
       type
@@ -186,7 +188,8 @@ export const deleteGame = /* GraphQL */ `
       gameDescriptionH2
       gameDescriptionH3
       gameDescriptionP
-      gameLocation
+      gameLocationPlace
+      gameLocationCity
       gameType
       gameStop
       type
@@ -295,7 +298,8 @@ export const createUserGamePlay = /* GraphQL */ `
         gameDescriptionH2
         gameDescriptionH3
         gameDescriptionP
-        gameLocation
+        gameLocationPlace
+        gameLocationCity
         gameType
         gameStop
         type
@@ -336,7 +340,8 @@ export const updateUserGamePlay = /* GraphQL */ `
         gameDescriptionH2
         gameDescriptionH3
         gameDescriptionP
-        gameLocation
+        gameLocationPlace
+        gameLocationCity
         gameType
         gameStop
         type
@@ -377,7 +382,8 @@ export const deleteUserGamePlay = /* GraphQL */ `
         gameDescriptionH2
         gameDescriptionH3
         gameDescriptionP
-        gameLocation
+        gameLocationPlace
+        gameLocationCity
         gameType
         gameStop
         type

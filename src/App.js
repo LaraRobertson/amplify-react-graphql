@@ -11,6 +11,7 @@ import { Waiver } from './components/Waiver';
 
 /* Games */
 import { Thief1 } from './games/thief1/Thief1';
+import { Hurricane1Easy } from './games/hurricane1Easy/Hurricane1Easy';
 import { Hurricane1 } from './games/hurricane1/Hurricane1';
 import { Hurricane1Stop2 } from './games/hurricane1/Hurricane1Stop2';
 
@@ -38,6 +39,14 @@ function MyRoutes() {
                         element={
                             <RequireAuth>
                                 <Thief1 />
+                            </RequireAuth>
+                        }
+                    />
+                    <Route
+                        path="/hurricane-1-Easy-stop1"
+                        element={
+                            <RequireAuth>
+                                <Hurricane1Easy />
                             </RequireAuth>
                         }
                     />

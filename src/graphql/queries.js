@@ -87,7 +87,8 @@ export const getGame = /* GraphQL */ `
       gameDescriptionH2
       gameDescriptionH3
       gameDescriptionP
-      gameLocation
+      gameLocationPlace
+      gameLocationCity
       gameType
       gameStop
       type
@@ -119,7 +120,8 @@ export const listGames = /* GraphQL */ `
         gameDescriptionH2
         gameDescriptionH3
         gameDescriptionP
-        gameLocation
+        gameLocationPlace
+        gameLocationCity
         gameType
         gameStop
         type
@@ -189,7 +191,8 @@ export const getUserGamePlay = /* GraphQL */ `
         gameDescriptionH2
         gameDescriptionH3
         gameDescriptionP
-        gameLocation
+        gameLocationPlace
+        gameLocationCity
         gameType
         gameStop
         type
@@ -232,7 +235,8 @@ export const listUserGamePlays = /* GraphQL */ `
           gameDescriptionH2
           gameDescriptionH3
           gameDescriptionP
-          gameLocation
+          gameLocationPlace
+          gameLocationCity
           gameType
           gameStop
           type
@@ -405,7 +409,8 @@ export const gamesByGameNameAndType = /* GraphQL */ `
         gameDescriptionH2
         gameDescriptionH3
         gameDescriptionP
-        gameLocation
+        gameLocationPlace
+        gameLocationCity
         gameType
         gameStop
         type
@@ -442,7 +447,8 @@ export const gamesByDate = /* GraphQL */ `
         gameDescriptionH2
         gameDescriptionH3
         gameDescriptionP
-        gameLocation
+        gameLocationPlace
+        gameLocationCity
         gameType
         gameStop
         type
@@ -511,7 +517,8 @@ export const userGamePlaysByGameId = /* GraphQL */ `
           gameDescriptionH2
           gameDescriptionH3
           gameDescriptionP
-          gameLocation
+          gameLocationPlace
+          gameLocationCity
           gameType
           gameStop
           type
@@ -558,7 +565,8 @@ export const userGamePlaysByUserId = /* GraphQL */ `
           gameDescriptionH2
           gameDescriptionH3
           gameDescriptionP
-          gameLocation
+          gameLocationPlace
+          gameLocationCity
           gameType
           gameStop
           type

@@ -9,8 +9,8 @@ import {createGameStats as createGameStatsMutation, updateGameStats as updateGam
 
 
 export function Thief1() {
+    /* for all games */
     const [gameStatsState, setGameStatsState] = useState({});
-    /* all games */
     const [areNotesVisible, setAreNotesVisible] = useState(false);
     const [isInfoVisible, setIsInfoVisible] = useState(false);
     const [isHint1Visible, setIsHint1Visible] = useState(false);
@@ -27,115 +27,13 @@ export function Thief1() {
     const [isGamePlaying, setIsGamePlaying] = useState(true);
     const [isGamePaused, setIsGamePaused] = useState(false);
 
-    /* game specific */
-    /* stop 1 */
-    const [isLightVisible, setIsLightVisible] = useState(true);
-    const [isDiaryVisible, setIsDiaryVisible] = useState(false);
-    const [isTornDiaryVisible, setIsTornDiaryVisible] = useState(false);
-    const [isSignVisible, setIsSignVisible] = useState(false);
-    const [isLegsAvailable, setIsLegsAvailable] = useState(false);
-    const [isLegsVisible, setIsLegsVisible] = useState(false);
-    const [isLightOn, setIsLightOn] = useState(false);
-    const [isNumBusAvailable, setIsNumBusAvailable] = useState(false);
-    const [isNumBusVisible, setIsNumBusVisible] = useState(false);
-    const [isKnobMessageAvailable, setIsKnobMessageAvailable] = useState(false);
-    const [isKnobMessageVisible, setIsKnobMessageVisible] = useState(false);
-    const [clickTimeNow,setClickTimeNow] = useState();
-    const [clickTimeThen,setClickTimeThen] = useState();
-    const [clickCount,setClickCount] = useState();
-    const [isSafeVisible, setIsSafeVisible] = useState(false);
-    const [isSafeInfoVisible, setIsSafeInfoVisible] = useState(false);
-
-    /* guessing states and answers for safe - 4 words */
-    const [game1Word1Page1ThiefGuess,setGame1Word1Page1ThiefGuess]= useState({'game1Word1Page1ThiefLetters':''});
-    const [haveGuessedGame1Word1Page1Thief,setHaveGuessedGame1Word1Page1Thief] = useState();
-    const [isGame1Word1Page1ThiefWrong, setIsGame1Word1Page1ThiefWrong] = useState(true);
-
-    const [game1Word2Page1ThiefGuess,setGame1Word2Page1ThiefGuess]= useState({'game1Word2Page1ThiefLetters':''});
-    const [haveGuessedGame1Word2Page1Thief,setHaveGuessedGame1Word2Page1Thief] = useState();
-    const [isGame1Word2Page1ThiefWrong, setIsGame1Word2Page1ThiefWrong] = useState(true);
-
-    const [game1Word3Page1ThiefGuess,setGame1Word3Page1ThiefGuess]= useState({'game1Word3Page1ThiefLetters':''});
-    const [haveGuessedGame1Word3Page1Thief,setHaveGuessedGame1Word3Page1Thief] = useState();
-    const [isGame1Word3Page1ThiefWrong, setIsGame1Word3Page1ThiefWrong] = useState(true);
-
-    const [game1Word4Page1ThiefGuess,setGame1Word4Page1ThiefGuess]= useState({'game1Word4Page1ThiefLetters':''});
-    const [haveGuessedGame1Word4Page1Thief,setHaveGuessedGame1Word4Page1Thief] = useState();
-    const [isGame1Word4Page1ThiefWrong, setIsGame1Word4Page1ThiefWrong] = useState(true);
-
-    const game1Word1Page1ThiefAnswer = {'game1Word1Page1ThiefLetters':'bean'};
-    const game1Word2Page1ThiefAnswer = {'game1Word2Page1ThiefLetters':'math'};
-    const game1Word3Page1ThiefAnswer = {'game1Word3Page1ThiefLetters':'ghirardelli'};
-    const game1Word4Page1ThiefAnswer= {'game1Word4Page1ThiefLetters':'inferno'};
-    /* end guessing states and answers for safe - 4 words */
-
-    /* not used */
-    const [game1Num1Page1,setGame1Num1Page1] = useState('');
-    const [game1Num2Page1,setGame1Num2Page1] = useState('');
-    const [game1NumPage1guess,setGame1NumPage1guess] = useState( {Num1:"",Num2:""});
-    const [haveGuessedGame1Stop1,setHaveGuessedGame1Stop1] = useState(false);
-    const [isGame1Page1Wrong, setIsGame1Page1Wrong] = useState(true);
-    /* end not used */
-
-    const gamePage = "Tybean Lower Porch (thief)";
-
     const navigate = useNavigate();
-
     function goHome() {
         localStorage.setItem("gameName","");
         navigate('/');
     }
 
-    async function getGameStats() {
-        console.log ("get Game Stats");
-        /* Waiver Signed, haveGuessedGame1Stop1 */
-        /* check local host */
-        var haveGuessedGame1Stop1Local = localStorage.getItem("haveGuessedGame1Stop1");
-        if (haveGuessedGame1Stop1Local) {
-            setHaveGuessedGame1Stop1(haveGuessedGame1Stop1Local);
-        } else {
-            /* check database */
-
-            /* check if gameStats entry */
-            const userEmail = localStorage.getItem("email");
-            const gameName = localStorage.getItem("gameName");
-            let filter = {
-                gameName: {
-                    eq: gameName
-                }
-            };
-            const apiGameStats =  await API.graphql({
-                query: gameStatsByUserEmail,
-                variables: { filter: filter, userEmail: userEmail}
-            });
-            const gamesStatsFromAPI = apiGameStats.data.gameStatsByUserEmail.items[0];
-            let gameStatsState =  JSON.parse(gamesStatsFromAPI.gameStates);
-            console.log("*** gameStatsState - state object below ***")
-                for (const key in gameStatsState) {
-                    console.log(`${key}: ${gameStatsState[key]}`);
-                }
-            console.log("*** gameStatsState - end state object ***")
-        }
-        /* localhost beats saved stats */
-
-    }
-
-    /* get gamestats and set localstorage */
-    /* need to useEffect */
-    useEffect(() => {
-        console.log("***useEffect***: getGameStats() - just localhost");
-        /* get gamestats */
-        getGameStats();
-    }, []);
-
-    useEffect(() => {
-        console.log("***useEffect***: gameStatsState: " + gameStatsState);
-        for (const key in gameStatsState) {
-            console.log(`${key}: ${gameStatsState[key]}`);
-        }
-    });
-
-        /* hint functions */
+    /* hint functions */
     function toggleHint1() {
         isHint1Visible ? setIsHint1Visible(false) : setIsHint1Visible(true);
     }
@@ -162,34 +60,235 @@ export function Thief1() {
         setGameNotes(notes);
     }
     /* end notes functions */
-    /* backpack functions */
-    function toggleBackpack() {
-        isBackpackVisible ? setIsBackpackVisible(false) : setIsBackpackVisible(true);
+
+    /* game time/scoring */
+    const [haveGuessedGame1Stop1Local, setHaveGuessedGame1Stop1Local] = useState();
+    async function getGameStats() {
+        console.log ("get Game Stats");
+        /* Waiver Signed, haveGuessedGame1Stop1 */
+        /* check local host */
+        var haveGuessedGame1Stop1Local = localStorage.getItem("haveGuessedGame1Stop1");
+        if (haveGuessedGame1Stop1Local) {
+            setHaveGuessedGame1Stop1Local(haveGuessedGame1Stop1Local);
+        } else {
+            /* check database */
+
+            /* check if gameStats entry */
+            const userEmail = localStorage.getItem("email");
+            const gameName = localStorage.getItem("gameName");
+            let filter = {
+                gameName: {
+                    eq: gameName
+                }
+            };
+            const apiGameStats =  await API.graphql({
+                query: gameStatsByUserEmail,
+                variables: { filter: filter, userEmail: userEmail}
+            });
+            const gamesStatsFromAPI = apiGameStats.data.gameStatsByUserEmail.items[0];
+            let gameStatsState =  JSON.parse(gamesStatsFromAPI.gameStates);
+            console.log("*** gameStatsState - state object below ***")
+            for (const key in gameStatsState) {
+                console.log(`${key}: ${gameStatsState[key]}`);
+            }
+            console.log("*** gameStatsState - end state object ***")
+        }
+        /* localhost beats saved stats */
+
     }
+
+    /* get gamestats and set localstorage */
+    /* need to useEffect */
+    useEffect(() => {
+        console.log("***useEffect***: getGameStats() - just localhost");
+        /* get gamestats */
+        getGameStats();
+    }, []);
+    useEffect(() => {
+        console.log("***useEffect***: gameStatsState: " + gameStatsState);
+        for (const key in gameStatsState) {
+            console.log(`${key}: ${gameStatsState[key]}`);
+        }
+    });
+    const [clickTimeNow,setClickTimeNow] = useState();
+    const [clickTimeThen,setClickTimeThen] = useState();
+    const [clickCount,setClickCount] = useState();
+    useEffect(() => {
+        console.log("***useEffect***: gameTime: " + gameTime);
+    });
+    useEffect(() => {
+        console.log("***useEffect***: isGamePaused: " + isGamePaused);
+    });
+    function pauseGame() {
+        setIsGamePaused(true);
+        setIsGamePlaying(false);
+    }
+    function playGame() {
+        setIsGamePaused(false);
+        setIsGamePlaying(true);
+    }
+    /* 60000 miliseconds = 1 minute */
+    const MINUTE_MS = 30000;
+    useEffect(() => {
+        const interval = setInterval(() => {
+            console.log('Logs every 30 seconds');
+            console.log('pause game: ' + isGamePaused);
+            console.log('game time: ' + gameTime);
+            if (gameTime) {
+                /* add 1 minute */
+                if (!isGamePaused) setGameTimeFunction(gameTime + .5);
+            } else {
+                if (!isGamePaused) setGameTimeFunction(.5);
+            }
+            setGameTimeTotal(gameTime + .5);
+        }, MINUTE_MS);
+
+        return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+    }, [gameTime,isGamePaused])
+    function setGameTimeFunction(time) {
+        console.log("gametimefunction: " + time);
+        setGameTime(time);
+    }
+    function countClicks() {
+        var secondBetweenTwoDate = Math.abs((new Date().getTime() - clickTimeThen) / 1000);
+        console.log("diff: " + secondBetweenTwoDate);
+        let newDate = new Date();
+        setClickTimeNow(newDate);
+        if (clickCount === 0) {
+            // start timing
+            setClickTimeThen(new Date().getTime());
+            console.log("time now: " + clickTimeNow);
+            setClickCount(1);
+        } else if (secondBetweenTwoDate<5 && clickCount > 0) {
+            console.log("add click");
+            setClickTimeThen(clickTimeNow);
+            setClickCount(clickCount + 1);
+        } else {
+            setClickCount(0);
+        }
+        if (clickCount > 4) {
+            setIsSafeVisible(!isSafeVisible);
+            setClickCount(0);
+        }
+        console.log("count Clicks: " + clickCount);
+    }
+    /* end for all games */
+
+
+
+
+    /* stop 1 - game specific */
+    const gamePage = "Tybean Lower Porch (thief)";
+    /* guessing states and answers for safe - 4 words */
+    const [game1Word1Page1ThiefGuess,setGame1Word1Page1ThiefGuess]= useState({'game1Word1Page1ThiefLetters':''});
+    const [haveGuessedGame1Word1Page1Thief,setHaveGuessedGame1Word1Page1Thief] = useState();
+    const [isGame1Word1Page1ThiefWrong, setIsGame1Word1Page1ThiefWrong] = useState(true);
+
+    const [game1Word2Page1ThiefGuess,setGame1Word2Page1ThiefGuess]= useState({'game1Word2Page1ThiefLetters':''});
+    const [haveGuessedGame1Word2Page1Thief,setHaveGuessedGame1Word2Page1Thief] = useState();
+    const [isGame1Word2Page1ThiefWrong, setIsGame1Word2Page1ThiefWrong] = useState(true);
+
+    const [game1Word3Page1ThiefGuess,setGame1Word3Page1ThiefGuess]= useState({'game1Word3Page1ThiefLetters':''});
+    const [haveGuessedGame1Word3Page1Thief,setHaveGuessedGame1Word3Page1Thief] = useState();
+    const [isGame1Word3Page1ThiefWrong, setIsGame1Word3Page1ThiefWrong] = useState(true);
+
+    const [game1Word4Page1ThiefGuess,setGame1Word4Page1ThiefGuess]= useState({'game1Word4Page1ThiefLetters':''});
+    const [haveGuessedGame1Word4Page1Thief,setHaveGuessedGame1Word4Page1Thief] = useState();
+    const [isGame1Word4Page1ThiefWrong, setIsGame1Word4Page1ThiefWrong] = useState(true);
+
+    const game1Word1Page1ThiefAnswer = {'game1Word1Page1ThiefLetters':'bean'};
+    const game1Word2Page1ThiefAnswer = {'game1Word2Page1ThiefLetters':'math'};
+    const game1Word3Page1ThiefAnswer = {'game1Word3Page1ThiefLetters':'ghirardelli'};
+    const game1Word4Page1ThiefAnswer= {'game1Word4Page1ThiefLetters':'inferno'};
+    /* end guessing states and answers for safe - 4 words */
+
+
+    const [isLightVisible, setIsLightVisible] = useState(true);
+    const [isDiaryVisible, setIsDiaryVisible] = useState(false);
     function toggleDiary() {
         isDiaryVisible ? setIsDiaryVisible(false) : setIsDiaryVisible(true);
     }
+    const [isTornDiaryVisible, setIsTornDiaryVisible] = useState(false);
     function toggleTornDiary() {
         isTornDiaryVisible ? setIsTornDiaryVisible(false) : setIsTornDiaryVisible(true);
     }
+    const [isSignVisible, setIsSignVisible] = useState(false);
     function toggleSign() {
         isSignVisible ? setIsSignVisible(false) : setIsSignVisible(true);
     }
-    function toggleKnobMessage() {
-        isKnobMessageVisible ? setIsKnobMessageVisible(false) : setIsKnobMessageVisible(true);
-        console.log("toggleKnobMessage: " + isKnobMessageVisible);
-    }
+    const [isLegsAvailable, setIsLegsAvailable] = useState(false);
+    const [isLegsVisible, setIsLegsVisible] = useState(false);
     function toggleLegs() {
         isLegsVisible ? setIsLegsVisible(false) : setIsLegsVisible(true);
         console.log("toggleLegs: " + isLegsVisible);
     }
+    const [isNumBusAvailable, setIsNumBusAvailable] = useState(false);
+    const [isNumBusVisible, setIsNumBusVisible] = useState(false);
     function toggleNumBus() {
         isNumBusVisible ? setIsNumBusVisible(false) : setIsNumBusVisible(true);
         console.log("toggleNumBus: " + isNumBusVisible);
     }
+    const [isKnobMessageAvailable, setIsKnobMessageAvailable] = useState(false);
+    useEffect(() => {
+        console.log("***useEffect***: knobMessage: " + isKnobMessageAvailable);
+    });
+    const [isKnobMessageVisible, setIsKnobMessageVisible] = useState(false);
+    function toggleKnobMessage() {
+        isKnobMessageVisible ? setIsKnobMessageVisible(false) : setIsKnobMessageVisible(true);
+        console.log("toggleKnobMessage: " + isKnobMessageVisible);
+    }
+    const [isSafeVisible, setIsSafeVisible] = useState(false);
+    useEffect(() => {
+        console.log("***useEffect***: isSafeVisible: " + isSafeVisible);
+    });
+    const [isSafeInfoVisible, setIsSafeInfoVisible] = useState(false);
     function toggleSafe() {
         isSafeInfoVisible ? setIsSafeInfoVisible(false) : setIsSafeInfoVisible(true);
         console.log("toggleSafe: " + isSafeVisible);
+    }
+    /* backpack functions */
+    function toggleBackpack() {
+        isBackpackVisible ? setIsBackpackVisible(false) : setIsBackpackVisible(true);
+    }
+    const [isLightOn, setIsLightOn] = useState(false);
+    function showItemContents(value) {
+        console.log("show contents value: " + value);
+        switch (value) {
+            case 'light':
+                console.log("isLightOn 1: " + isLightOn);
+                setIsLightOn(!isLightOn);
+                lightFunctions(!isLightOn);
+                // change image
+                for (var i = 0; i < gameBackpack.length; i++) {
+                    if (gameBackpack[i].key === "light") {
+                        console.log("turn on/off light - state");
+                        if (!isLightOn) {
+                            gameBackpack[i].src = "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/blacklight-on.png"
+                            localStorage.setItem("light", "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/04/blacklight-on.png");
+                        } else {
+                            gameBackpack[i].src = "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/04/blacklight-off.png"
+                            localStorage.setItem("light", "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/04/blacklight-off.png");
+                        }
+                    }
+                }
+                break;
+            default:
+        }
+    }
+    function lightFunctions(lightState) {
+        console.log("turn on/off light: " + isLightOn);
+        console.log("turn on/off lightstate: " + lightState);
+        if (lightState) {
+            console.log("Light is ON");
+            setIsLegsAvailable(true);
+            setIsNumBusAvailable(true);
+            setIsKnobMessageAvailable(true);
+        } else {
+            console.log("Light is Off");
+            setIsLegsAvailable(false);
+            setIsNumBusAvailable(false);
+            setIsKnobMessageAvailable(false);
+        }
     }
     function backpackLight() {
         setIsLightVisible(false);
@@ -230,117 +329,8 @@ export function Thief1() {
         }
     });
     useEffect(() => {
-        console.log("***useEffect***: knobMessage: " + isKnobMessageAvailable);
-    });
-    useEffect(() => {
         console.log("***useEffect***: isLightOn: " + isLightOn);
     });
-    useEffect(() => {
-        console.log("***useEffect***: isSafeVisible: " + isSafeVisible);
-    });
-    useEffect(() => {
-        console.log("***useEffect***: game1Word1Page1ThiefGuess: " + game1Word1Page1ThiefGuess.game1Word1Page1ThiefLetters);
-    });
-    useEffect(() => {
-        console.log("***useEffect***: gameTime: " + gameTime);
-    });
-    useEffect(() => {
-        console.log("***useEffect***: isGamePaused: " + isGamePaused);
-    });
-    function pauseGame() {
-        setIsGamePaused(true);
-        setIsGamePlaying(false);
-    }
-    function playGame() {
-        setIsGamePaused(false);
-        setIsGamePlaying(true);
-    }
-    /* 60000 miliseconds = 1 minute */
-    const MINUTE_MS = 30000;
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            console.log('Logs every 30 seconds');
-            console.log('pause game: ' + isGamePaused);
-            console.log('game time: ' + gameTime);
-            if (gameTime) {
-                /* add 1 minute */
-                if (!isGamePaused) setGameTimeFunction(gameTime + .5);
-            } else {
-                if (!isGamePaused) setGameTimeFunction(.5);
-            }
-            setGameTimeTotal(gameTime + .5);
-        }, MINUTE_MS);
-
-        return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
-    }, [gameTime,isGamePaused])
-
-    function setGameTimeFunction(time) {
-        console.log("gametimefunction: " + time);
-        setGameTime(time);
-    }
-    function showItemContents(value) {
-        console.log("show contents value: " + value);
-        switch (value) {
-            case 'light':
-                console.log("isLightOn 1: " + isLightOn);
-                setIsLightOn(!isLightOn);
-                lightFunctions(!isLightOn);
-                // change image
-                for (var i = 0; i < gameBackpack.length; i++) {
-                    if (gameBackpack[i].key === "light") {
-                        console.log("turn on/off light - state");
-                        if (!isLightOn) {
-                            gameBackpack[i].src = "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/blacklight-on.png"
-                            localStorage.setItem("light", "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/04/blacklight-on.png");
-                        } else {
-                            gameBackpack[i].src = "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/04/blacklight-off.png"
-                            localStorage.setItem("light", "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/04/blacklight-off.png");
-                        }
-                    }
-                }
-                break;
-            default:
-        }
-    }
-    function lightFunctions(lightState) {
-        console.log("turn on/off light: " + isLightOn);
-        console.log("turn on/off lightstate: " + lightState);
-        if (lightState) {
-            console.log("Light is ON");
-            setIsLegsAvailable(true);
-            setIsNumBusAvailable(true);
-            setIsKnobMessageAvailable(true);
-        } else {
-            console.log("Light is Off");
-            setIsLegsAvailable(false);
-            setIsNumBusAvailable(false);
-            setIsKnobMessageAvailable(false);
-        }
-    }
-    function countClicks() {
-        var secondBetweenTwoDate = Math.abs((new Date().getTime() - clickTimeThen) / 1000);
-        console.log("diff: " + secondBetweenTwoDate);
-        let newDate = new Date();
-        setClickTimeNow(newDate);
-        if (clickCount === 0) {
-            // start timing
-            setClickTimeThen(new Date().getTime());
-            console.log("time now: " + clickTimeNow);
-            setClickCount(1);
-        } else if (secondBetweenTwoDate<5 && clickCount > 0) {
-            console.log("add click");
-            setClickTimeThen(clickTimeNow);
-            setClickCount(clickCount + 1);
-        } else {
-            setClickCount(0);
-        }
-        if (clickCount > 4) {
-            setIsSafeVisible(!isSafeVisible);
-            setClickCount(0);
-        }
-        console.log("count Clicks: " + clickCount);
-    }
 
     function setGame1Word1Page1ThiefLetters(guess) {
         var x = guess;
@@ -423,6 +413,10 @@ export function Thief1() {
             localStorage.setItem("isGame1Word4Page1ThiefWrong", true);
         }
     }
+    useEffect(() => {
+        console.log("***useEffect***: game1Word1Page1ThiefGuess: " + game1Word1Page1ThiefGuess.game1Word1Page1ThiefLetters);
+    });
+    /* end stop 1 - game specific */
     return (
         <View
               ariaLabel="Main Container"

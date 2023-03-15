@@ -8,8 +8,8 @@ import {gameStatsByGameID, gameStatsByUserEmail} from "../../graphql/queries";
 import {createGameStats as createGameStatsMutation, updateGameStats as updateGameStatsMutation} from "../../graphql/mutations";
 
 export function Hurricane1() {
+    /* for all games */
     const [gameStatsState, setGameStatsState] = useState({});
-    /* all games */
     const [areNotesVisible, setAreNotesVisible] = useState(false);
     const [isInfoVisible, setIsInfoVisible] = useState(false);
     const [isHint1Visible, setIsHint1Visible] = useState(false);
@@ -25,105 +25,12 @@ export function Hurricane1() {
     const [gameTimeTotal, setGameTimeTotal] = useState(0);
     const [isGamePlaying, setIsGamePlaying] = useState(true);
     const [isGamePaused, setIsGamePaused] = useState(false);
-    const [clickTimeNow,setClickTimeNow] = useState();
-    const [clickTimeThen,setClickTimeThen] = useState();
-    const [clickCount,setClickCount] = useState();
 
     const navigate = useNavigate();
     function goHome() {
         localStorage.setItem("gameName","");
         navigate('/');
     }
-    function goToStop2() {
-        console.log("go to stop2: hurricane-stop2");
-        navigate("/hurricane-stop2");
-    }
-    /* TODO: get gamestats and set localstorage */
-    async function getGameStats() {
-        console.log ("get Game Stats");
-        /* Waiver Signed, haveGuessedGame1Stop1 */
-        /* check local host */
-        var haveGuessed1 = localStorage.getItem("haveGuessedGame1Stop1");
-        if (haveGuessed1) {
-            setHaveGuessed1(haveGuessed1);
-        } else {
-            /* check database */
-
-            /* check if gameStats entry */
-            const userEmail = localStorage.getItem("email");
-            const gameName = localStorage.getItem("gameName");
-            let filter = {
-                gameName: {
-                    eq: gameName
-                }
-            };
-            const apiGameStats =  await API.graphql({
-                query: gameStatsByUserEmail,
-                variables: { filter: filter, userEmail: userEmail}
-            });
-            const gamesStatsFromAPI = apiGameStats.data.gameStatsByUserEmail.items[0];
-            let gameStatsState =  JSON.parse(gamesStatsFromAPI.gameStates);
-            console.log("*** gameStatsState - state object below ***")
-                for (const key in gameStatsState) {
-                    console.log(`${key}: ${gameStatsState[key]}`);
-                }
-            console.log("*** gameStatsState - end state object ***")
-        }
-        /* localhost beats saved stats */
-
-    }
-
-    /* need to useEffect */
-    useEffect(() => {
-        console.log("***useEffect***: getGameStats() - just localhost");
-        /* get gamestats */
-       // getGameStats();
-    }, []);
-
-    useEffect(() => {
-        console.log("***useEffect***: gameStatsState: " + gameStatsState);
-        for (const key in gameStatsState) {
-            console.log(`${key}: ${gameStatsState[key]}`);
-        }
-    });
-    function pauseGame() {
-        setIsGamePaused(true);
-        setIsGamePlaying(false);
-    }
-    function playGame() {
-        setIsGamePaused(false);
-        setIsGamePlaying(true);
-    }
-    /* 60000 miliseconds = 1 minute, timer shows 30 second intervals, should change */
-    const MINUTE_MS = 30000;
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            console.log('Logs every 30 seconds');
-            console.log('pause game: ' + isGamePaused);
-            console.log('game time: ' + gameTime);
-            if (gameTime) {
-                /* add 1 minute */
-                if (!isGamePaused) setGameTimeFunction(gameTime + .5);
-            } else {
-                if (!isGamePaused) setGameTimeFunction(.5);
-            }
-            setGameTimeTotal(gameTime + .5);
-        }, MINUTE_MS);
-
-        return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
-    }, [gameTime,isGamePaused])
-
-    function setGameTimeFunction(time) {
-        console.log("gametimefunction: " + time);
-        setGameTime(time);
-    }
-    useEffect(() => {
-        console.log("***useEffect***: gameTime: " + gameTime);
-    });
-    useEffect(() => {
-        console.log("***useEffect***: isGamePaused: " + isGamePaused);
-    });
 
     /* hint functions */
     function toggleHint1() {
@@ -153,16 +60,101 @@ export function Hurricane1() {
     }
     /* end notes functions */
 
-    /* backpack functions */
-    function toggleBackpack() {
-        isBackpackVisible ? setIsBackpackVisible(false) : setIsBackpackVisible(true);
+    /* game time/scoring */
+    const [haveGuessedGame1Stop1Local, setHaveGuessedGame1Stop1Local] = useState();
+    async function getGameStats() {
+        console.log ("get Game Stats");
+        /* Waiver Signed, haveGuessedGame1Stop1 */
+        /* check local host */
+        var haveGuessedGame1Stop1Local = localStorage.getItem("haveGuessedGame1Stop1");
+        if (haveGuessedGame1Stop1Local) {
+            setHaveGuessedGame1Stop1Local(haveGuessedGame1Stop1Local);
+        } else {
+            /* check database */
+
+            /* check if gameStats entry */
+            const userEmail = localStorage.getItem("email");
+            const gameName = localStorage.getItem("gameName");
+            let filter = {
+                gameName: {
+                    eq: gameName
+                }
+            };
+            const apiGameStats =  await API.graphql({
+                query: gameStatsByUserEmail,
+                variables: { filter: filter, userEmail: userEmail}
+            });
+            const gamesStatsFromAPI = apiGameStats.data.gameStatsByUserEmail.items[0];
+            let gameStatsState =  JSON.parse(gamesStatsFromAPI.gameStates);
+            console.log("*** gameStatsState - state object below ***")
+            for (const key in gameStatsState) {
+                console.log(`${key}: ${gameStatsState[key]}`);
+            }
+            console.log("*** gameStatsState - end state object ***")
+        }
+        /* localhost beats saved stats */
+
     }
-    /* end backpack functions */
+
+    /* get gamestats and set localstorage */
+    /* need to useEffect */
+    useEffect(() => {
+        console.log("***useEffect***: getGameStats() - just localhost");
+        /* get gamestats */
+        getGameStats();
+    }, []);
+    useEffect(() => {
+        console.log("***useEffect***: gameStatsState: " + gameStatsState);
+        for (const key in gameStatsState) {
+            console.log(`${key}: ${gameStatsState[key]}`);
+        }
+    });
+    const [clickTimeNow,setClickTimeNow] = useState();
+    const [clickTimeThen,setClickTimeThen] = useState();
+    const [clickCount,setClickCount] = useState();
+    useEffect(() => {
+        console.log("***useEffect***: gameTime: " + gameTime);
+    });
+    useEffect(() => {
+        console.log("***useEffect***: isGamePaused: " + isGamePaused);
+    });
+    function pauseGame() {
+        setIsGamePaused(true);
+        setIsGamePlaying(false);
+    }
+    function playGame() {
+        setIsGamePaused(false);
+        setIsGamePlaying(true);
+    }
+    /* 60000 miliseconds = 1 minute */
+    const MINUTE_MS = 30000;
+    useEffect(() => {
+        const interval = setInterval(() => {
+            console.log('Logs every 30 seconds');
+            console.log('pause game: ' + isGamePaused);
+            console.log('game time: ' + gameTime);
+            if (gameTime) {
+                /* add 1 minute */
+                if (!isGamePaused) setGameTimeFunction(gameTime + .5);
+            } else {
+                if (!isGamePaused) setGameTimeFunction(.5);
+            }
+            setGameTimeTotal(gameTime + .5);
+        }, MINUTE_MS);
+
+        return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+    }, [gameTime,isGamePaused])
+    function setGameTimeFunction(time) {
+        console.log("gametimefunction: " + time);
+        setGameTime(time);
+    }
+    /* end for all games */
 
 
-    /* game/stop specific */
+
+
+    /* stop 1 - game specific */
     const gamePage = "Jaycee Park Shelter (Hurricane)";
-
     /* guessing states and answers for first safe - 5 numbers */
     const [guess1,setGuess1] = useState({'numbers':''});
     const [haveGuessed1,setHaveGuessed1] = useState();
@@ -226,11 +218,12 @@ export function Hurricane1() {
     }
     /* end guessing states and answers for 2nd safe - 5 numbers */
 
+    /* sign is hanging */
     const [isSignVisible, setIsSignVisible] = useState(false);
     function toggleSign() {
         isSignVisible ? setIsSignVisible(false) : setIsSignVisible(true);
     }
-
+    /* need to click on safe */
     const [isSafeInfoVisible, setIsSafeInfoVisible] = useState(false);
     function toggleSafe() {
         isSafeInfoVisible ? setIsSafeInfoVisible(false) : setIsSafeInfoVisible(true);
@@ -238,10 +231,12 @@ export function Hurricane1() {
     useEffect(() => {
         console.log("***useEffect***: isSafeInfoVisible: " + isSafeInfoVisible);
     });
+    /* need to select prybar and then click on cement marking */
     const [isCementSafeInfoVisible, setIsCementSafeInfoVisible] = useState(false);
     function toggleCementSafeInfo() {
         isCementSafeInfoVisible ? setIsCementSafeInfoVisible(false) : setIsCementSafeInfoVisible(true);
     }
+    /* show 2nd safe and message */
     const [isCementSafeOpen, setIsCementSafeOpen] = useState(false);
     function toggleCementSafe() {
         isCementSafeOpen ? setIsCementSafeOpen(false) : setIsCementSafeOpen(true);
@@ -256,8 +251,11 @@ export function Hurricane1() {
         console.log("go to stop 2");
         navigate('/hurricane-1-stop2');
     }
-
+    /* backpack functions */
     /* backpack items: prybar */
+    function toggleBackpack() {
+        isBackpackVisible ? setIsBackpackVisible(false) : setIsBackpackVisible(true);
+    }
     const [isPrybarOn, setIsPrybarOn] = useState(false);
     useEffect(() => {
         console.log("***useEffect***: isPrybarOn: " + isPrybarOn);
@@ -325,7 +323,7 @@ export function Hurricane1() {
             default:
         }
     }
-
+    /* end stop 1 - game specific */
 
 
     return (

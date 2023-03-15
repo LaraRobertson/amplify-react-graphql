@@ -16,7 +16,11 @@ export function Layout() {
 
     async function logOut() {
         console.log("logout");
-        localStorage.setItem("gameName","");
+        /* save everything for game */
+        localStorage.removeItem("gameName");
+        localStorage.removeItem("email");
+        localStorage.removeItem("agreeToWaiver");
+        localStorage.removeItem("GameStatsID");
         /* update game state */
         /* get values from local variables - need gamename */
         const gameStatID = localStorage.getItem("GameStatsID");
@@ -138,7 +142,7 @@ export function Layout() {
                         </header>
                         <View padding=".5rem 0">
                             <Button onClick={() => goHome()}>Home</Button> | <Button
-                            onClick={() => signOut()}>Logout</Button> | <Button
+                            onClick={() => logOut()}>Logout</Button> | <Button
                             onClick={() => localStorage.clear()}>Clear</Button>
                         </View>
                 </View>) : null}

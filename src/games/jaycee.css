@@ -7,6 +7,32 @@
   left: 50%;
   z-index: 23;
 }
+.torn-diary-jaycee{
+  position: absolute;
+  bottom: 0%;
+  left: 25%;
+  z-index: 23;
+
+}
+.torn-diary-big-jaycee {
+  background: url("https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/diarypage-big.png") #699A7D top left / contain no-repeat;
+  height:calc(100vh - 60px);
+  padding-top: 40px;
+  padding-left: 30px;
+}
+@media (max-width:480px) {
+  .torn-diary-big-jaycee {
+    padding-top: 60px;
+    padding-left: 50px;
+  }
+}
+
+.diary-jaycee{
+  position: absolute;
+  bottom: 25%;
+  right: 35%;
+  z-index: 23;
+}
 .right-picnic-table {
   position:absolute;
   top:63%;
@@ -47,7 +73,7 @@
   position:absolute;
   bottom:0%;
   left:43%;
-  width:100px;
+  width:80px;
   z-index:22;
 }
 @media (max-width:480px) {

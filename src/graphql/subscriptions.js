@@ -111,7 +111,8 @@ export const onCreateGame = /* GraphQL */ `
       gameDescriptionH2
       gameDescriptionH3
       gameDescriptionP
-      gameLocation
+      gameLocationPlace
+      gameLocationCity
       gameType
       gameStop
       type
@@ -138,7 +139,8 @@ export const onUpdateGame = /* GraphQL */ `
       gameDescriptionH2
       gameDescriptionH3
       gameDescriptionP
-      gameLocation
+      gameLocationPlace
+      gameLocationCity
       gameType
       gameStop
       type
@@ -165,7 +167,8 @@ export const onDeleteGame = /* GraphQL */ `
       gameDescriptionH2
       gameDescriptionH3
       gameDescriptionP
-      gameLocation
+      gameLocationPlace
+      gameLocationCity
       gameType
       gameStop
       type
@@ -264,7 +267,8 @@ export const onCreateUserGamePlay = /* GraphQL */ `
         gameDescriptionH2
         gameDescriptionH3
         gameDescriptionP
-        gameLocation
+        gameLocationPlace
+        gameLocationCity
         gameType
         gameStop
         type
@@ -304,7 +308,8 @@ export const onUpdateUserGamePlay = /* GraphQL */ `
         gameDescriptionH2
         gameDescriptionH3
         gameDescriptionP
-        gameLocation
+        gameLocationPlace
+        gameLocationCity
         gameType
         gameStop
         type
@@ -344,7 +349,8 @@ export const onDeleteUserGamePlay = /* GraphQL */ `
         gameDescriptionH2
         gameDescriptionH3
         gameDescriptionP
-        gameLocation
+        gameLocationPlace
+        gameLocationCity
         gameType
         gameStop
         type

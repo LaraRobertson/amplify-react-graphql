@@ -2,8 +2,8 @@ import React, {useEffect, useState} from "react"
 import {Button, Heading, View, Image, TextAreaField, Text, Alert, Flex} from '@aws-amplify/ui-react';
 import {useNavigate} from "react-router-dom";
 import {API} from "aws-amplify";
-import {gameStatsByGameID, gameStatsByUserEmail} from "../graphql/queries";
-import {createGameStats as createGameStatsMutation, updateGameStats as updateGameStatsMutation} from "../graphql/mutations";
+import {gameStatsByUserEmail} from "../graphql/queries";
+import {updateGameStats as updateGameStatsMutation} from "../graphql/mutations";
 
 export function Waiver() {
 
@@ -28,8 +28,7 @@ export function Waiver() {
         const gamesStatsFromAPI = apiGameStats.data.gameStatsByUserEmail.items[0];
 
         const gameStatsValues = {
-            waiverSigned: true,
-            haveGuessedGame1Stop1: false
+            waiverSigned: true
         }
         const newGameStats = {
             id: gamesStatsFromAPI.id,
@@ -38,12 +37,12 @@ export function Waiver() {
         localStorage.setItem("GameStatsID",gamesStatsFromAPI.id);
         const apiGameStatsUpdate = await API.graphql({ query: updateGameStatsMutation, variables: {input: newGameStats}});
         let path = gameName.replace(/\s+/g, '-').toLowerCase();
-        console.log("go to page: " + '/' + path);
-        navigate('/' + path);
+        console.log("go to page: " + '/' + path + '-stop1');
+        navigate('/' + path + '-stop1');
     }
 
     function goHome() {
-        localStorage.setItem("gameName","");
+        localStorage.removeItem("gameName");
         navigate('/');
     }
 

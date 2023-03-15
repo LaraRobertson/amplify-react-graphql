@@ -211,7 +211,8 @@ export function Admin() {
             gameName: form.get("GameName"),
             gameType: form.get("GameType"),
             gameStop: form.get("GameStop"),
-            gameLocation: form.get("GameLocation"),
+            gameLocationPlace: form.get("GameLocationPlace"),
+            gameLocationCity: form.get("GameLocationCity"),
             type: "game",
             gameDescriptionH2: form.get("GameDescriptionH2"),
             gameDescriptionH3: form.get("GameDescriptionH3"),
@@ -386,9 +387,17 @@ export function Admin() {
                                     required
                                 />
                                 <TextField
-                                    name="GameLocation"
-                                    placeholder="Game Location"
-                                    label="Game Location"
+                                    name="GameLocationPlace"
+                                    placeholder="Place"
+                                    label="Game Location Place"
+                                    labelHidden
+                                    variation="quiet"
+                                    required
+                                />
+                                <TextField
+                                    name="GameLocationCity"
+                                    placeholder="City"
+                                    label="Game Location City"
                                     labelHidden
                                     variation="quiet"
                                     required
@@ -450,7 +459,8 @@ export function Admin() {
                             <View>
                                 {games.map((game) => (
                                     <div><strong>game id</strong>: {game.id} | <strong>game name</strong>: {game.gameName} | <strong>type</strong>: {game.gameType} <br />
-                                   <strong>gameDescriptionH2</strong>: {game.gameDescriptionH2} <br />
+                                   <strong>gameLocationPlace</strong>: {game.gameLocationPlace} | <strong>gameLocationCity</strong>: {game.gameLocationCity}<br />
+                                        <strong>gameDescriptionH2</strong>: {game.gameDescriptionH2} <br />
                                     <strong>gameDescriptionH3</strong>: {game.gameDescriptionH3} <br />
                                    <strong>gameDescriptionP</strong> {game.gameDescriptionP} <br />
                                         <hr />
