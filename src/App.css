@@ -176,6 +176,7 @@ html {
 }
 
 :root, [data-amplify-theme] {
+  --amplify-components-fieldcontrol-border-color: #000 !important;
   --amplify-components-textfield-border-color: #000 !important;
   --amplify-components-field-label-color: #000 !important;
   --amplify-components-button-primary-background-color: #0D5189 !important;
@@ -253,7 +254,10 @@ html {
   text-decoration: underline;
   font-weight:bold;
 }
-
+.num-Player {
+  width:200px;
+  margin: 0 auto;
+}
 /* backpack, info, notes */
 .info-button {
   position:absolute;

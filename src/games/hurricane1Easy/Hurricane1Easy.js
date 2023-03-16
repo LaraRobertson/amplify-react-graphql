@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react"
 import {NotesOpen} from "../../components/NotesOpen";
 import {shallowEqual} from "../../components/ShallowEqual";
-import {Button, Heading, View, Image, TextAreaField, TextField, Text, Alert, Flex} from '@aws-amplify/ui-react';
+import {Button, Heading, View, Image, TextAreaField, TextField, Text, Alert, Flex,  SelectField} from '@aws-amplify/ui-react';
 import {useNavigate} from "react-router-dom";
 import {API} from "aws-amplify";
 import {gameStatsByGameID, gameStatsByUserEmail} from "../../graphql/queries";
@@ -26,6 +26,12 @@ export function Hurricane1Easy() {
     const [gameTimeTotal, setGameTimeTotal] = useState(0);
     const [isGamePlaying, setIsGamePlaying] = useState(true);
     const [isGamePaused, setIsGamePaused] = useState(false);
+    const [numberOfPlayer, setNumberOfPlayer] = useState('');
+    const [numberOfPlayerError, setNumberOfPlayerError] = useState('');
+    const [hintTime1,setHintTime1] = useState(0);
+    const [hintTime2,setHintTime2] = useState(0);
+    const [hintTime3,setHintTime3] = useState(0);
+    const [hintTime4,setHintTime4] = useState(0);
 
     const navigate = useNavigate();
     function goHomeQuit() {
@@ -52,6 +58,7 @@ export function Hurricane1Easy() {
         localStorage.removeItem("gameTimeTotal");
         localStorage.removeItem("gameStop");
         localStorage.removeItem("numberOfTimes");
+        localStorage.removeItem("numPlayerValue");
         localStorage.removeItem("key");
         localStorage.removeItem("game1Word1Stop1HurricaneLetters");
         localStorage.removeItem("haveGuessedGame1Word1Stop1Hurricane");
@@ -69,19 +76,29 @@ export function Hurricane1Easy() {
     }
     const [isIntroVisible, setIsIntroVisible] = useState(true);
     function toggleIntro() {
-        isIntroVisible ? setIsIntroVisible(false) : setIsIntroVisible(true);
+        /* check numberOfPlayers */
+        if (numberOfPlayer != '') {
+            isIntroVisible ? setIsIntroVisible(false) : setIsIntroVisible(true);
+        } else {
+            setNumberOfPlayerError("Please choose number of players");
+        }
+
     }
     /* hint functions */
     function toggleHint1() {
+        setHintTime1(5);
         isHint1Visible ? setIsHint1Visible(false) : setIsHint1Visible(true);
     }
     function toggleHint2() {
+        setHintTime2(5);
         isHint2Visible ? setIsHint2Visible(false) : setIsHint2Visible(true);
     }
     function toggleHint3() {
+        setHintTime3(5);
         isHint3Visible ? setIsHint3Visible(false) : setIsHint3Visible(true);
     }
     function toggleHint4() {
+        setHintTime4(5);
         isHint4Visible ? setIsHint4Visible(false) : setIsHint4Visible(true);
     }
     /* info functions */
@@ -102,6 +119,11 @@ export function Hurricane1Easy() {
         console.log('comments: ' + notes);
         /* set localhost variable */
         setGameComments(notes);
+    }
+    function setNumPlayerFunction(numPlayerValue) {
+        console.log("numPlayerFunction: " + numPlayerValue);
+        localStorage.setItem("numPlayerValue",numPlayerValue);
+        setNumberOfPlayer(numPlayerValue);
     }
     /* game time/scoring */
 
@@ -126,9 +148,12 @@ export function Hurricane1Easy() {
                 console.log('game time: ' + gameTimeNum.toFixed(2));
                 /* add 1 minute */
                 if (!isIntroVisible && isWrong1) {
-                    setGameTimeFunction(gameTimeNum.toFixed(2));
+                    localStorage.setItem("gameTime",gameTimeNum.toFixed(2));
                     let GameTimeTotalNum = Number(gameTimeNum.toFixed(2));
-                    setGameTimeTotal(GameTimeTotalNum);
+                    setGameTime(GameTimeTotalNum);
+                    let hintTimeTotalNum = hintTime1 + hintTime2 + hintTime3 + hintTime4;
+                    setGameTimeTotal(GameTimeTotalNum + hintTimeTotalNum);
+                    setGameTimeHint(hintTimeTotalNum);
                     localStorage.setItem("gameTimeTotal", gameTimeNum.toFixed(2));
                 }
                 if (!isWrong1) winGameFunction(interval);
@@ -172,7 +197,8 @@ export function Hurricane1Easy() {
         /* gameTime is an array */
         let gameTimeArray = [];
         let gameTimeTotalArray = [];
-        let gameStatsGameTimeValues = '{"numberOfTimes":1,"gameTime":' + gameTimeArray + ',"gameTimeTotal":' + gameTimeTotalArray + '}';
+        let numberOfPlayerArray = [];
+        let gameStatsGameTimeValues = '';
         console.log("gameStop (values): " + gameStop);
         let gameStatsGameStateValues = '{"waiverSigned":true,"gameStop":"' + gameStop + '"}';
         /* need to get stats and update */
@@ -190,15 +216,18 @@ export function Hurricane1Easy() {
             console.log("gameStatsGameTime.gameTime typeof: " + typeof gameStatsGameTime.gameTime);
             gameTimeArray = [...gameStatsGameTime.gameTime];
             gameTimeTotalArray = [...gameStatsGameTime.gameTimeTotal]
+            numberOfPlayerArray = [...gameStatsGameTime.numberOfPlayer]
             gameTimeArray[oldNumberOfTimes] = gameTime;
             gameTimeTotalArray[oldNumberOfTimes] = gameTimeTotal;
+            numberOfPlayerArray[oldNumberOfTimes] = numberOfPlayer;
             console.log("gameTimeArray: " + JSON.stringify(gameTimeArray));
-            gameStatsGameTimeValues = '{"numberOfTimes":' + numberOfTimes +',"gameTime":' + JSON.stringify(gameTimeArray) + ',"gameTimeTotal":' + JSON.stringify(gameTimeTotalArray) + '}';
+            gameStatsGameTimeValues = '{"numberOfTimes":' + numberOfTimes +',"numberOfPlayers":' + JSON.stringify(numberOfPlayerArray) + ',"gameTime":' + JSON.stringify(gameTimeArray) + ',"gameTimeTotal":' + JSON.stringify(gameTimeTotalArray) + '}';
         } else {
             console.log("no gameTime data");
             gameTimeArray[0] = gameTime;
             gameTimeTotalArray[0] = gameTimeTotal;
-            gameStatsGameTimeValues = '{"numberOfTimes":1,"gameTime":' + JSON.stringify(gameTimeArray) + ',"gameTimeTotal":' + JSON.stringify(gameTimeTotalArray) + '}';
+            numberOfPlayerArray[0] = numberOfPlayer;
+            gameStatsGameTimeValues = '{"numberOfTimes":1,"numberOfPlayers":' + JSON.stringify(numberOfPlayerArray) + ',"gameTime":' + JSON.stringify(gameTimeArray) + ',"gameTimeTotal":' + JSON.stringify(gameTimeTotalArray) + '}';
         }
         const newGameStats = {
             id: gamesStatsFromAPI.id,
@@ -559,7 +588,7 @@ export function Hurricane1Easy() {
                 </View>
                 <View className={(!isWrong1)? "cement-safe show" : "hide"}
                     onClick={()=>toggleSandbagMessages()}>
-                    <Image className="test" alt="test" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/03/cementsafeopensandbags.png" />
+                    <Image className="test" alt="test" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/cementsafe-shelter-easy-discs.png" />
                 </View>
             </View>
             <View className={isSafeInfoVisible ? "all-screen show" : "hide"}>
@@ -676,40 +705,38 @@ export function Hurricane1Easy() {
                         <View paddingBottom="10px">
                             <strong>Goal for this stop:</strong> Find the Discs!  Use Hints if you really need them.
                         </View>
-                        <Button className="button small" onClick={() => toggleHint3()}>Open Hint (light)</Button>
-                        <Button className="button small" onClick={() => toggleHint4()}>Open Hint (order of words)</Button>
-                        <Button className="button small" onClick={() => toggleHint2()}>Open Hint (game)</Button>
-                        <Button className="button small" onClick={() => toggleHint1()}>Open Hint (shops)</Button>
+                        <Button className="button small" onClick={() => toggleHint3()}>Open Hint (sport)</Button>
+                        <Button className="button small" onClick={() => toggleHint4()}>Open Hint (name of field)</Button>
+                        <Button className="button small" onClick={() => toggleHint2()}>Open Hint (name of house)</Button>
+                        <Button className="button small" onClick={() => toggleHint1()}>Open Hint (engraved on panel)</Button>
 
                         <br /><br />
                         <div className={isHint4Visible ? "all-screen show-gradual" : "all-screen hide-gradual"}>
                             <Button className="close-button" onClick={() => toggleHint4()}>X</Button>
-                            <strong>Hint for somewhere order of numbers for safe:</strong>
-                            <br /><br />The diary had a little rhyme.  This rhyme tells you the order of the numbers.
+                            <strong>Hint for name of field</strong>
+                            <br /><br />There is a large sign on the fence at the field with the name.
                             <br /><br />
 
                         </div>
                         <div className={isHint3Visible ? "all-screen show-gradual" : "all-screen hide-gradual"}>
                             <Button className="close-button" onClick={() => toggleHint3()}>X</Button>
-                            <strong>Hint for light (in backpack):</strong>
-                            <br /><br />Once you click on light it should go into your backpack. This is a blacklight and when you
-                            use it (click it in backpack to turn on) and click on objects you will see more clues.
+                            <strong>Hint for Sport:</strong>
+                            <br /><br />People do play soccer and disc golf but the closest field to the shelter is the baseball field.
                             <br /><br />
 
                         </div>
                         <div className={isHint2Visible ? "all-screen show-gradual" : "all-screen hide-gradual"}>
                             <Button className="close-button" onClick={() => toggleHint2()}>X</Button>
-                            <strong>Hint for game clue:</strong> <br /><br />You may have to ask someone about this contest.
-                            It happened in July of 2021. Or you can look on their facebook/instagram feed.
-                            <br /><br />OR if you
-                            happen to know the name of the animal prowling around then you know the answer to this puzzle.<br /><br />
+                            <strong>Hint for name of house:</strong> <br /><br />
+                            Near the intersection of Solomon and N. Campbell there is a house that people use for events.<br /><br />
+                            Go over there and look for the name.
 
                         </div>
                         <div className={isHint1Visible ? "all-screen show-gradual" : "all-screen hide-gradual"}>
                             <Button className="close-button" onClick={() => toggleHint1()}>X</Button>
-                            <strong>Hint for shops clue:</strong> <br /><br />There are many little shops along the west side of the Tybee Oaks area - Inferno, Glazed and Confused are in the north part.
-                            The southern most shop on the west side is "Tipsy Mermaid Art", then "granny flounders", then "The Tybee Gallery", then "Rachel Vogel Designs".
-                            The 6th letter of the first (most southern) shop is "M".<br /><br />
+                            <strong>Hint for engraved on panel:</strong> <br /><br />
+                            The <span className="bold-underline">first</span> is in reference to the first letter of the named field.<br />
+                            <br />And the pattern continues with name of house and name of sport.<br />
 
                         </div>
                         <Button className="button small" onClick={() => goHomeQuit()}>Quit Game and Go Home</Button> | <Button className="button small" onClick={() => toggleHelp()}>Close Help and Play</Button>
@@ -733,6 +760,25 @@ export function Hurricane1Easy() {
                 textAlign="center"
                 className={isIntroVisible ? "all-screen show" : "hide"}>
                 <h3>Game Goals: Find more Discs!</h3>
+                {numberOfPlayerError}
+                <SelectField
+                    label="numberOfPlayer"
+                    className="num-Player"
+                    isRequired
+                    labelHidden
+                    size="small"
+                    width="200px"
+                    placeholder="How Many Players?"
+                    value={numberOfPlayer}
+                    onChange={(e) => setNumPlayerFunction(e.target.value)}
+                >
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </SelectField>
                 {localStorage.getItem("numberOfTimes") !== null ? (
                     <div> You have played {localStorage.getItem("numberOfTimes")} time(s) before - good luck this time! </div>
                 ) : null}
