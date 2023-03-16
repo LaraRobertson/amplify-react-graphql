@@ -87,20 +87,20 @@ export function Home() {
                 <h2>{gameDescriptionH2}</h2>
                 <h3>{gameDescriptionH3}</h3>
                 <div>{gameDescriptionP}</div><br />
-                <strong>Game Details:</strong> This game has {gameStop}. You can tell if you are at the right stop by looking at the picture on
+                <strong>Game Details:</strong> This game has {gameStop}. You can tell if you are at the right Stop by looking at the picture on
                 the screen. The picture on the screen represents the playing area and contains some extra stuff on the screen for you to figure out
                 how to solve puzzles.<br /><br />
-                Once you are at the stop, click on "<strong>Play Game</strong>". <br /><br />Click around on the game screen to
+                <strong>How to Play</strong>: Click around on the game screen to
                 try and figure out the puzzles. You will also need to use details from your surroundings such has North, South, East, West, Names of Shops, fields,
                 Names of Structures, etc.  Pay special attention to any historical sign.
                 <div className="italics">Game may be better viewed in landscape mode. Please turn your phone horizontally for better gameplay at stops.</div>
                 <br /><strong>Time / Score</strong>: Your Time is Your Score. The time starts when you hit "I Want To Play" at Each Stop. When you finish solving
-                puzzles at Stop, Time Stops.  It continues when you reach next Stop. Each Hint costs 5 minutes.
-                <br /><strong>Fun Fact</strong>: The game can be played on one device or everyone can play together
+                puzzles at the Stop, Time stops.  It continues when you reach next Stop and hit "I want to Play". Each Hint costs 5 minutes.
+                <br /><br /><strong>Fun Fact</strong>: The game can be played on one device or everyone can play together
                 on their own device. To play together, start the game at the same time and talk to each other about the
-                puzzles. You will get your own score but the game will ask how many people are playing together.
+                puzzles. You will get your own score on your own device but may get a better score if you work together.
                 <br /><br /><strong>You need the Internet to load the game</strong> but you can play it without the Internet if you load game before
-                going to stop. You can not save game unless you have internet. However, if you do not close the browser window all game stats,
+                going to Stop. You can not save game unless you have internet. However, if you do not close the browser window all game stats,
                 including final score, will still be available. Simply <strong>Save</strong> game once you have Internet Access.<br /><br />
                 <strong>Helpful Hints:</strong>
                 <br /><br />
@@ -109,9 +109,9 @@ export function Home() {
                     rowGap="0.5rem"
                 >
                     <View><Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/help.png" /></View>
-                    <View><h3>Click on Help Sign for Hints and helpful information about game</h3></View>
+                    <View><h3>Click on Help Sign for Hints and helpful information about game.</h3></View>
                     <View><Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/notes.png" /></View>
-                    <View><h3>Click on Notes Sign to save notes about game</h3></View>
+                    <View><h3>Click on Notes Sign to save notes about game.</h3></View>
                     <View><Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/blacklight.png" /></View>
                     <View><h3>Clicking on objects will sometimes open a small window with information and sometimes put them in your backpack.</h3></View>
                     <View><Image width="50px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png" /></View>
@@ -161,16 +161,18 @@ export function Home() {
         } else {
             console.log("go to page: " + gameDetails.gameName);
             /* check if waiver signed */
-            if (apiGameStats.data.gameStatsByGameID.items[0].gameStates !== "" || apiGameStats.data.gameStatsByGameID.items[0].gameStates !== null ) {
+            if (apiGameStats.data.gameStatsByGameID.items[0].gameStates != "" || apiGameStats.data.gameStatsByGameID.items[0].gameStates !== null ) {
                 console.log("check waiver");
                 const gamesStatsFromAPI = apiGameStats.data.gameStatsByGameID.items[0];
                 console.log("gamesStatsFromAPI.gameStates: " + gamesStatsFromAPI.gameStates);
-                if (gamesStatsFromAPI.gameStates!= "") {
-
+                /* TODO */
+                /* gameTime will have the time info */
+                if (gamesStatsFromAPI.gameStates != "") {
                     let gameStatsState =  JSON.parse(gamesStatsFromAPI.gameStates);
+                    let gameStatsGameTime =  JSON.parse(gamesStatsFromAPI.gameTime);
                     /* set times, if any, in localhost */
-                    if (gameStatsState.numberOfTimes) {
-                        localStorage.setItem("numberOfTimes",gameStatsState.numberOfTimes);
+                    if (gameStatsGameTime) {
+                        localStorage.setItem("numberOfTimes",gameStatsGameTime.numberOfTimes);
                     }
                     console.log("gameStatsState:" + gameStatsState);
                     if (gameStatsState !== null && gameStatsState.waiverSigned) {
@@ -367,12 +369,12 @@ export function Home() {
     }
 
     return (
-        <div>
+        <View
+            maxWidth="900px"
+            margin="10px auto 10px auto">
             <GameDetailView />
         {route === 'authenticated' ? (
-            <View margin="1rem 0"
-                  maxWidth="800px"
-                  margin="10px auto 10px auto">
+            <View padding="0 10px">
                 <HeadingComponent userName = {userAuth} />
                 {gameNameLink ?
                     <div>currently playing {gameName}: <Button style={{display:'inline'}} className={buttonDetailClassShow} onClick={() => goToGameSet({gameName:gameName,gameID:''})}>
@@ -393,8 +395,9 @@ export function Home() {
                     {games.map((game,index) => (
                         <Card className="gameCard" variation="elevated"  key={game.id || game.gameName} >
                             <Text className="bold">{game.gameName} <span className="small">({game.gameType})</span></Text>
-                            <Text><span class="italics">Location</span>: {game.gameLocationPlace}</Text>
+                            <Text><span className="italics">Location</span>: {game.gameLocationPlace}</Text>
                             <Text><span className="italics">City</span>: {game.gameLocationCity}</Text>
+                            <Text><span className="italics">{game.gameStop}</span></Text>
                             {(gamesIDUser.includes(game.id) || game.gameType === "free") ?
                                 (<div>
                                     <Button onClick={() => goToGame({gameName:game.gameName,gameID:game.id})}>
@@ -418,8 +421,7 @@ export function Home() {
                 }
             </View>
             ): (
-            <View margin="1rem 0" maxWidth="800px"
-                  margin="10px auto 10px auto">
+            <View padding="0 10px">
                 <Heading level={"5"}>
                     Games:
                 </Heading>
@@ -434,16 +436,16 @@ export function Home() {
                     {games.map((game,index) => (
                         <Card className="gameCard" variation="elevated" key={game.id || game.gameName}>
                             <Text className="bold">{game.gameName} <span className="small"> ({game.gameType})</span></Text>
-                            <Text><span class="italics">Location</span>: {game.gameLocationPlace}</Text>
+                            <Text><span className="italics">Location</span>: {game.gameLocationPlace}</Text>
                             <Text><span className="italics">City</span>: {game.gameLocationCity}</Text>
+                            <Text><span className="italics">{game.gameStop}</span></Text>
                             <Button className={buttonDetailClassShow} onClick={() => showGameDetail(index)} >Show Game Details</Button>
                         </Card>
 
                     ))}
                 </Flex>
-
             </View>
         )}
-        </div>
+        </View>
     );
 }

@@ -58,7 +58,7 @@ export const onCreateGameStats = /* GraphQL */ `
       gameID
       userEmail
       gameName
-      gameScore
+      gameComments
       gameStates
       gameTime
       type
@@ -76,7 +76,7 @@ export const onUpdateGameStats = /* GraphQL */ `
       gameID
       userEmail
       gameName
-      gameScore
+      gameComments
       gameStates
       gameTime
       type
@@ -94,7 +94,7 @@ export const onDeleteGameStats = /* GraphQL */ `
       gameID
       userEmail
       gameName
-      gameScore
+      gameComments
       gameStates
       gameTime
       type

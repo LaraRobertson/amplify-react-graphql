@@ -47,7 +47,7 @@ export const getGameStats = /* GraphQL */ `
       gameID
       userEmail
       gameName
-      gameScore
+      gameComments
       gameStates
       gameTime
       type
@@ -68,7 +68,7 @@ export const listGameStats = /* GraphQL */ `
         gameID
         userEmail
         gameName
-        gameScore
+        gameComments
         gameStates
         gameTime
         type
@@ -278,7 +278,7 @@ export const gameStatsByGameID = /* GraphQL */ `
         gameID
         userEmail
         gameName
-        gameScore
+        gameComments
         gameStates
         gameTime
         type
@@ -309,7 +309,7 @@ export const gameStatsByUserEmail = /* GraphQL */ `
         gameID
         userEmail
         gameName
-        gameScore
+        gameComments
         gameStates
         gameTime
         type
@@ -342,7 +342,7 @@ export const gameStatsByGameNameAndType = /* GraphQL */ `
         gameID
         userEmail
         gameName
-        gameScore
+        gameComments
         gameStates
         gameTime
         type
@@ -375,7 +375,7 @@ export const gameStatsByDate = /* GraphQL */ `
         gameID
         userEmail
         gameName
-        gameScore
+        gameComments
         gameStates
         gameTime
         type

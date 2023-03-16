@@ -132,12 +132,10 @@ export function Layout() {
             maxWidth="900px"
             margin="10px auto 10px auto">
             {(route === 'authenticated') && (location.pathname === '/') ? (
-                <View>
+                <View padding="0 10px">
                         <header>
                             <View>
-                                <div className="wp-block-columns">
-                                    <div><Image className="test" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/logo-escapeout.png" /></div>
-                                </div>
+                               <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/logo-escapeout.png" />
                             </View>
                         </header>
                         <View padding=".5rem 0">
@@ -147,12 +145,10 @@ export function Layout() {
                         </View>
                 </View>) : null}
             {(route !== 'authenticated') && (location.pathname === '/')||(location.pathname === '/login') ? (
-                <View>
+                <View padding="0 10px">
                     <header>
                         <View>
-                            <div className="wp-block-columns">
-                                <div><Image className="test" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/logo-escapeout.png" /></div>
-                            </div>
+                            <Image className="test" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/logo-escapeout.png" />
                         </View>
                     </header>
                     <div>
@@ -186,7 +182,7 @@ export function Layout() {
             <ErrorComponent />
             <Outlet />
             {(location.pathname === '/')||(location.pathname === '/login') ? (
-                <View paddingTop="40px"> © 2023 EscapeOut.Games</View>
+                <View padding="40px 10px 0 10px"> © 2023 EscapeOut.Games</View>
             ) : null}
         </View>
     );

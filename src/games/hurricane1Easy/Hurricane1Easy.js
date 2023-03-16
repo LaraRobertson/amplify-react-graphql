@@ -9,7 +9,6 @@ import {createGameStats as createGameStatsMutation, updateGameStats as updateGam
 
 export function Hurricane1Easy() {
     /* for all games */
-    const [gameStatsState, setGameStatsState] = useState({});
     const [areNotesVisible, setAreNotesVisible] = useState(false);
     const [isHelpVisible, setIsHelpVisible] = useState(false);
     const [isHint1Visible, setIsHint1Visible] = useState(false);
@@ -18,6 +17,7 @@ export function Hurricane1Easy() {
     const [isHint4Visible, setIsHint4Visible] = useState(false);
     const [gameNotes,setGameNotes] = useState('');
     const [gameComments,setGameComments] = useState('');
+    const [gameCommentsOld,setGameCommentsOld] = useState([]);
     const [isBackpackVisible, setIsBackpackVisible] = useState(false);
     const [gameBackpack, setGameBackpack] = useState([]);
     const [gameBackpackHasItems, setGameBackpackHasItems] = useState(false);
@@ -28,15 +28,31 @@ export function Hurricane1Easy() {
     const [isGamePaused, setIsGamePaused] = useState(false);
 
     const navigate = useNavigate();
-    function goHome() {
+    function goHomeQuit() {
         navigate('/');
     }
-    function goHomeQuit() {
+    async function goHome() {
+        /* get number of games */
+        /* gameCommentsOld is parsed value of gameComments */
+        console.log("gameCommentsOld: " + gameCommentsOld);
+        if (gameCommentsOld) {
+            console.log ("length of gameComments: " + gameCommentsOld.length);
+            gameCommentsOld[gameCommentsOld.length] = gameComments;
+        }
+        console.log("JSON.stringify(gameCommentsOld)" + JSON.stringify(gameCommentsOld));
+        const newGameStats = {
+            id: localStorage.getItem("GameStatsID"),
+            gameComments: JSON.stringify(gameCommentsOld)
+        };
+        const apiGameStatsUpdate = await API.graphql({ query: updateGameStatsMutation, variables: {input: newGameStats}});
         localStorage.removeItem("agreeToWaiver");
         localStorage.removeItem("GameStatsID");
-        localStorage.removeItem("gameTimeTotal");
+        localStorage.removeItem("gameName");
+        localStorage.removeItem("gameTime");
         localStorage.removeItem("gameTimeTotal");
         localStorage.removeItem("gameStop");
+        localStorage.removeItem("numberOfTimes");
+        localStorage.removeItem("key");
         localStorage.removeItem("game1Word1Stop1HurricaneLetters");
         localStorage.removeItem("haveGuessedGame1Word1Stop1Hurricane");
         localStorage.removeItem("isGame1Word1Stop1HurricaneWrong");
@@ -83,20 +99,17 @@ export function Hurricane1Easy() {
     }
     /* end notes functions */
     function setCommentsFunction(notes) {
-        console.log('comemennts: ' + notes);
+        console.log('comments: ' + notes);
         /* set localhost variable */
         setGameComments(notes);
     }
     /* game time/scoring */
 
     useEffect(() => {
-        console.log("***useEffect***: gameStatsState: " + gameStatsState);
-        for (const key in gameStatsState) {
-            console.log(`${key}: ${gameStatsState[key]}`);
-        }
+        console.log("***useEffect***: gameTime: " + gameTime);
     });
     useEffect(() => {
-        console.log("***useEffect***: gameTime: " + gameTime);
+        console.log("***useEffect***: gameStop: " + gameStop);
     });
     useEffect(() => {
         console.log("***useEffect***: isIntroVisible: " + isIntroVisible);
@@ -106,22 +119,25 @@ export function Hurricane1Easy() {
     const MINUTE_MS = 3000;
     useEffect(() => {
         const interval = setInterval(() => {
-            console.log('Logs every 30 seconds');
-            console.log('game time: ' + gameTime);
+            console.log('Logs every 3 seconds');
             if (gameTime) {
+                let gameTimeNum = Number(gameTime);
+                gameTimeNum = gameTimeNum + .05;
+                console.log('game time: ' + gameTimeNum.toFixed(2));
                 /* add 1 minute */
                 if (!isIntroVisible && isWrong1) {
-                    setGameTimeFunction(gameTime + .5);
-                    setGameTimeTotal(gameTime + .5);
-                    localStorage.setItem("gameTimeTotal", gameTime + .5);
+                    setGameTimeFunction(gameTimeNum.toFixed(2));
+                    let GameTimeTotalNum = Number(gameTimeNum.toFixed(2));
+                    setGameTimeTotal(GameTimeTotalNum);
+                    localStorage.setItem("gameTimeTotal", gameTimeNum.toFixed(2));
                 }
                 if (!isWrong1) winGameFunction(interval);
 
             } else {
                 if (!isIntroVisible) {
-                    setGameTimeFunction(.5);
-                    setGameTimeTotal(.5);
-                    localStorage.setItem("gameTimeTotal", .5);
+                    setGameTimeFunction(.05);
+                    setGameTimeTotal(.05);
+                    localStorage.setItem("gameTimeTotal", .05);
                 }
             }
 
@@ -129,6 +145,12 @@ export function Hurricane1Easy() {
         return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
     }, [gameTime,isIntroVisible])
 
+    function setGameTimeFunction(gameTime) {
+        let gameTimeNum = Number(gameTime);
+        console.log("gametimefunction: " + gameTimeNum.toFixed(2));
+        localStorage.setItem("gameTime",gameTimeNum.toFixed(2));
+        setGameTime(gameTimeNum);
+    }
     async function winGameFunction(interval) {
         clearInterval(interval);
         console.log("game has been won");
@@ -146,43 +168,47 @@ export function Hurricane1Easy() {
             variables: { filter: filter, userEmail: userEmail}
         });
         const gamesStatsFromAPI = apiGameStats.data.gameStatsByUserEmail.items[0];
-        const gameStatsState = JSON.parse(gamesStatsFromAPI.gameStates);
+
         /* gameTime is an array */
-        let gameTimeArray = [gameTime];
-        let gameTimeTotalArray = [gameTimeTotal];
-        let gameStatsValues = '{"waiverSigned":true,"numberOfTimes":1,"gameTime":' + gameTimeArray + ',"gameTimeTotal1":' + gameTimeTotalArray + '}';
+        let gameTimeArray = [];
+        let gameTimeTotalArray = [];
+        let gameStatsGameTimeValues = '{"numberOfTimes":1,"gameTime":' + gameTimeArray + ',"gameTimeTotal":' + gameTimeTotalArray + '}';
+        console.log("gameStop (values): " + gameStop);
+        let gameStatsGameStateValues = '{"waiverSigned":true,"gameStop":"' + gameStop + '"}';
         /* need to get stats and update */
-        /* TODO */
+
         let numberOfTimes = 1;
-        if (gameStatsState.numberOfTimes) {
-            numberOfTimes = gameStatsState.numberOfTimes + 1;
-            /* push to array */
-            gameStatsState.gameTime.push("gameTime");
-            gameStatsState.gameTimeTotal.push("gameTimetotal");
-            let gameStatsValues = '{"waiverSigned":true,"numberOfTimes":1,"gameTime":' + gameStatsState.gameTime + ',"gameTimeTotal1":' + gameStatsState.gameTimeTotal + '}';
+        if (gamesStatsFromAPI.gameTime) {
+            setGameCommentsOld(JSON.parse(gamesStatsFromAPI.gameComments));
+            const gameStatsGameTime = JSON.parse(gamesStatsFromAPI.gameTime);
+            console.log("some gameTime data");
+            numberOfTimes = Number(gameStatsGameTime.numberOfTimes + 1);
+            let oldNumberOfTimes = numberOfTimes-1;
+            /* is this an array? */
+            console.log("gameStatsGameTime.gameTime: " + gameStatsGameTime.gameTime);
+            console.log("gameStatsGameTime.gameTime isarray: " + Array.isArray(gameStatsGameTime.gameTime));
+            console.log("gameStatsGameTime.gameTime typeof: " + typeof gameStatsGameTime.gameTime);
+            gameTimeArray = [...gameStatsGameTime.gameTime];
+            gameTimeTotalArray = [...gameStatsGameTime.gameTimeTotal]
+            gameTimeArray[oldNumberOfTimes] = gameTime;
+            gameTimeTotalArray[oldNumberOfTimes] = gameTimeTotal;
+            console.log("gameTimeArray: " + JSON.stringify(gameTimeArray));
+            gameStatsGameTimeValues = '{"numberOfTimes":' + numberOfTimes +',"gameTime":' + JSON.stringify(gameTimeArray) + ',"gameTimeTotal":' + JSON.stringify(gameTimeTotalArray) + '}';
+        } else {
+            console.log("no gameTime data");
+            gameTimeArray[0] = gameTime;
+            gameTimeTotalArray[0] = gameTimeTotal;
+            gameStatsGameTimeValues = '{"numberOfTimes":1,"gameTime":' + JSON.stringify(gameTimeArray) + ',"gameTimeTotal":' + JSON.stringify(gameTimeTotalArray) + '}';
         }
-       /* {"waiverSigned":true,"numberOfTimes":1,"gameTime1":4,"gameTimeTotal1":4} */
-        var gameTimeKey = "gameTime" + numberOfTimes;
-        var gameTimeTotalKey = "gameTimeTotal" + numberOfTimes;
-        /*const gameStatsValues = {
-            waiverSigned: true,
-            numberOfTimes: numberOfTimes,
-            [gameTimeKey]: gameTime,
-            [gameTimeTotalKey]: gameTimeTotal
-        }*/
         const newGameStats = {
             id: gamesStatsFromAPI.id,
-            gameStates: gameStatsValues
+            gameStates: gameStatsGameStateValues,
+            gameTime: gameStatsGameTimeValues
         };
         localStorage.setItem("GameStatsID",gamesStatsFromAPI.id);
         const apiGameStatsUpdate = await API.graphql({ query: updateGameStatsMutation, variables: {input: newGameStats}});
     }
 
-    function setGameTimeFunction(time) {
-        console.log("gametimefunction: " + time);
-        localStorage.setItem("gameTime", .5);
-        setGameTime(time);
-    }
     /* end for all games */
 
 
@@ -190,54 +216,15 @@ export function Hurricane1Easy() {
     /* get gamestats and set localstorage */
     useEffect(() => {
         console.log("***useEffect***: getGameStats() - just localhost");
-        /* get gamestats */
-        getGameStats("Jaycee Park Shelter (Hurricane Easy)");
+       /* set local storage for gameStop */
+        setGameStopFunction();
     }, []);
 
-    const [haveGuessedGame1Stop1Local, setHaveGuessedGame1Stop1Local] = useState();
+    const [gameStop,setGameStop] = useState("Jaycee Park Shelter (Hurricane Easy)");
 
-    const [gameStop,setGameStop] = useState();
-    async function getGameStats(gameStop1) {
-        console.log ("get Game Stats");
-        /* check GameStop */
-
-        const gameStopLocal = (localStorage.getItem('gameStop') !== null);
-        if (gameStopLocal) {
-            setGameStop(gameStopLocal);
-        } else {
-            localStorage.setItem("gameStop",gameStop1);
-            setGameStop(gameStop1);
-        }
-
-
-        var haveGuessedGame1Stop1Local = localStorage.getItem("haveGuessedGame1Stop1");
-        if (haveGuessedGame1Stop1Local) {
-            setHaveGuessedGame1Stop1Local(haveGuessedGame1Stop1Local);
-        } else {
-            /* check database */
-
-            /* check if gameStats entry */
-            const userEmail = localStorage.getItem("email");
-            const gameName = localStorage.getItem("gameName");
-            let filter = {
-                gameName: {
-                    eq: gameName
-                }
-            };
-            const apiGameStats =  await API.graphql({
-                query: gameStatsByUserEmail,
-                variables: { filter: filter, userEmail: userEmail}
-            });
-            const gamesStatsFromAPI = apiGameStats.data.gameStatsByUserEmail.items[0];
-            let gameStatsState =  JSON.parse(gamesStatsFromAPI.gameStates);
-            console.log("*** gameStatsState - state object below ***")
-            for (const key in gameStatsState) {
-                console.log(`${key}: ${gameStatsState[key]}`);
-            }
-            console.log("*** gameStatsState - end state object ***")
-        }
-        /* localhost beats saved stats */
-
+    function setGameStopFunction() {
+        console.log ("set Game Stop: " + gameStop);
+        localStorage.setItem("gameStop",gameStop);
     }
 
     /* guessing states and answers for safe - 4 words */
@@ -328,7 +315,7 @@ export function Hurricane1Easy() {
     const [isWrong1, setIsWrong1] = useState(true);
     const answer1 = {'answer':'wus'};
     useEffect(() => {
-        console.log("***useEffect***: guess1.numbers: " + guess1.answer);
+        console.log("***useEffect***: guess1.answer: " + guess1.answer);
     });
     function setGuess1Numbers(guess) {
         var x = guess;
@@ -755,7 +742,7 @@ export function Hurricane1Easy() {
                 </View>
                 <Button className="button" onClick={() => toggleIntro()}>I Want To Play!</Button>
                 |
-                <Button className="button" onClick={() => goHome()}>Back Home</Button>
+                <Button className="button" onClick={() => goHomeQuit()}>Back Home</Button>
             </View>
         </View>
     )
