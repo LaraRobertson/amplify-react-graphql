@@ -154,6 +154,7 @@ html {
   top: 0;
   left:0;
   width: 100vw;
+  max-width:900px;
   min-height: calc(100vh - 60px);
   background-color: #699A7D;
   opacity: 1;
