@@ -124,8 +124,8 @@ export function Home() {
 
     async function goToGameSet(gameDetails) {
         let path = gameDetails.gameName.replace(/\s+/g, '-').toLowerCase();
-        console.log("go to page: " + '/' + path + '-stop1');
-        navigate('/' + path + '-stop1');
+        console.log("go to page: " + '/' + path);
+        navigate('/' + path);
         /* hard code when developing */
         //navigate('/hurricane-1-stop2');
     }
@@ -167,7 +167,7 @@ export function Home() {
                 console.log("gamesStatsFromAPI.gameStates: " + gamesStatsFromAPI.gameStates);
                 /* TODO */
                 /* gameTime will have the time info */
-                if (gamesStatsFromAPI.gameStates != "") {
+                if (gamesStatsFromAPI.gameStates != "" && gamesStatsFromAPI.gameTime != "") {
                     let gameStatsState =  JSON.parse(gamesStatsFromAPI.gameStates);
                     let gameStatsGameTime =  JSON.parse(gamesStatsFromAPI.gameTime);
                     /* set times, if any, in localhost */
@@ -178,8 +178,8 @@ export function Home() {
                     if (gameStatsState !== null && gameStatsState.waiverSigned) {
                         localStorage.setItem("agreeToWaiver", true);
                         let path = gameDetails.gameName.replace(/\s+/g, '-').toLowerCase();
-                        console.log("go to page: " + '/' + path + '-stop1');
-                        navigate('/' + path + '-stop1');
+                        console.log("go to page: " + '/' + path);
+                        navigate('/' + path);
                     } else {
                         navigate('/waiver');
                     }

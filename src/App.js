@@ -35,7 +35,7 @@ function MyRoutes() {
                         }
                     />
                     <Route
-                        path="/thief-1-stop1"
+                        path="/thief-1"
                         element={
                             <RequireAuth>
                                 <Thief1 />
@@ -43,7 +43,7 @@ function MyRoutes() {
                         }
                     />
                     <Route
-                        path="/hurricane-1-Easy-stop1"
+                        path="/hurricane-1-Easy"
                         element={
                             <RequireAuth>
                                 <Hurricane1Easy />
@@ -51,18 +51,10 @@ function MyRoutes() {
                         }
                     />
                     <Route
-                        path="/hurricane-1-stop1"
+                        path="/hurricane-1"
                         element={
                             <RequireAuth>
                                 <Hurricane1 />
-                            </RequireAuth>
-                        }
-                    />
-                    <Route
-                        path="/hurricane-1-stop2"
-                        element={
-                            <RequireAuth>
-                                <Hurricane1Stop2 />
                             </RequireAuth>
                         }
                     />

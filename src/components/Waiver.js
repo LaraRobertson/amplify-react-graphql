@@ -37,8 +37,8 @@ export function Waiver() {
         localStorage.setItem("GameStatsID",gamesStatsFromAPI.id);
         const apiGameStatsUpdate = await API.graphql({ query: updateGameStatsMutation, variables: {input: newGameStats}});
         let path = gameName.replace(/\s+/g, '-').toLowerCase();
-        console.log("go to page: " + '/' + path + '-stop1');
-        navigate('/' + path + '-stop1');
+        console.log("go to page: " + '/' + path);
+        navigate('/' + path);
     }
 
     function goHome() {
