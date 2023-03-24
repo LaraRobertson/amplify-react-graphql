@@ -345,7 +345,7 @@ export function Hurricane1() {
     const [guess1,setGuess1] = useState({'numbers':''});
     const [haveGuessed1,setHaveGuessed1] = useState();
     const [isWrong1, setIsWrong1] = useState(true);
-    const answer1 = {'numbers':'78594'};
+    const answer1 = {'numbers':'78493'};
    /* useEffect(() => {
         console.log("***useEffect***: guess1.numbers: " + guess1.numbers);
     });*/
@@ -1055,11 +1055,11 @@ export function Hurricane1() {
                             I look South and see something near with <span
                             className="bold-underline">vertical slots <span className="small">(#?)</span></span> that
                             align,<br/>
-                            I also collected the <span className="bold-underline">discs <span
+                            I also see on the screen <span className="bold-underline">discs <span
                             className="small">(#?)</span></span>, <span className="bold-underline">balls <span
                             className="small">(#?)</span></span>,
                             and <span className="bold-underline">water bottles <span
-                            className="small">(#?)</span></span> in record time.
+                            className="small">(#?)</span></span> and count in record time.
                         </div>
                     )}
                 </View>
@@ -1111,44 +1111,39 @@ export function Hurricane1() {
                         <View paddingBottom="10px">
                             <strong>Goal for this stop:</strong> Find the Discs! Use Hints if you really need them.
                         </View>
-                        <Button className="button small" onClick={() => toggleHint3()}>Open Hint (sport)</Button>
-                        <Button className="button small" onClick={() => toggleHint4()}>Open Hint (name of
-                            field)</Button>
-                        <Button className="button small" onClick={() => toggleHint2()}>Open Hint (name of
-                            house)</Button>
-                        <Button className="button small" onClick={() => toggleHint1()}>Open Hint (engraved on
-                            panel)</Button>
+                        <Button className="button small" onClick={() => toggleHint3()}>Open Hint (this sign)</Button>
+                        <Button className="button small" onClick={() => toggleHint1()}>Open Hint (vertical slots)</Button>
+                        <Button className="button small" onClick={() => toggleHint2()}>Open Hint (discs, water bottles, balls)</Button>
+                        <Button className="button small" onClick={() => toggleHint4()}>Open Hint (#slides, #swings, etc)</Button>
 
                         <br/><br/>
                         <div className={isHint4Visible ? "all-screen show" : "all-screen hide"}>
                             <Button className="close-button" onClick={() => toggleHint4()}>X</Button>
-                            <strong>Hint for name of field</strong>
-                            <br/><br/>There is a large sign on the fence at the field with the name.
+                            <strong>#slides, #swings, etc</strong>
+                            <br/><br/>These things are all around - you can see them - count the swings and slides in playground, count the
+                            windows on the building that has the bathrooms, and get number of closest disc golf hole to the shelter.
                             <br/><br/>
 
                         </div>
                         <div className={isHint3Visible ? "all-screen show" : "all-screen hide"}>
                             <Button className="close-button" onClick={() => toggleHint3()}>X</Button>
-                            <strong>Hint for Sport:</strong>
-                            <br/><br/>People do play soccer and disc golf but the closest field to the shelter is the
-                            baseball field.
+                            <strong>this sign:</strong>
+                            <br/><br/>It's a riddle but think about how you spell the odd number. It's spelling not math.
                             <br/><br/>
 
                         </div>
                         <div className={isHint2Visible ? "all-screen show" : "all-screen hide"}>
                             <Button className="close-button" onClick={() => toggleHint2()}>X</Button>
-                            <strong>Hint for name of house:</strong> <br/><br/>
-                            Near the intersection of Solomon and N. Campbell there is a house that people use for
-                            events.<br/><br/>
-                            Go over there and look for the name.
+                            <strong>discs, water bottles, balls:</strong> <br/><br/>
+                            These items are ONLY on the game screen - count them there.
 
                         </div>
                         <div className={isHint1Visible ? "all-screen show" : "all-screen hide"}>
                             <Button className="close-button" onClick={() => toggleHint1()}>X</Button>
-                            <strong>Hint for engraved on panel:</strong> <br/><br/>
-                            The <span className="bold-underline">first</span> is in reference to the first letter of the
-                            named field.<br/>
-                            <br/>And the pattern continues with name of house and name of sport.<br/>
+                            <strong>Vertical Slots:</strong> <br/><br/>
+                            There is a grill to the south (in direction of parking lot) it has slots on the sides:
+                            <Image className="test" alt="test" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/slot-pic.jpg"/>
+
 
                         </div>
                         <Button className="button small" onClick={() => toggleHelp()}>Close Help and

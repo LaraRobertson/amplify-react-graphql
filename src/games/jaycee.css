@@ -41,8 +41,9 @@
 .right-picnic-table {
   position:absolute;
   top:63%;
-  right:23%;
+  right:20%;
   z-index:22;
+  max-width:240px;
 }
 @media (max-width:480px) {
   .right-picnic-table {
@@ -64,8 +65,10 @@
 .left-picnic-table {
   position:absolute;
   top:62%;
-  left:18%;
+  left:16%;
   z-index:22;
+  max-width:260px;
+
 }
 @media (max-width:480px) {
   .left-picnic-table {
