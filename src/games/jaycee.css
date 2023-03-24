@@ -33,6 +33,11 @@
   right: 35%;
   z-index: 23;
 }
+@media (max-width:480px) {
+  .diary-jaycee{
+    right: 20%;
+  }
+}
 .right-picnic-table {
   position:absolute;
   top:63%;
@@ -115,20 +120,22 @@
 }
 @media (max-width:480px) {
   .words-on-string  {
-    right:50%;
-    max-width:40%;
+    right: 60%;
+    max-width: 40%;
+    bottom: 40%;
   }
 }
 .bench {
   position:absolute;
   bottom:7%;
-  right:48%;
+  right:45%;
+  max-width: 100px;
   z-index:22;
 }
 @media (max-width:480px) {
   .bench  {
     right:40%;
-    max-width:40%;
-    bottom:8%;
+    max-width: 90px;
+    bottom: 15%;
   }
 }

@@ -58,10 +58,20 @@ export const onCreateGameStats = /* GraphQL */ `
       gameID
       userEmail
       gameName
-      gameComments
       gameStates
-      gameTime
-      type
+      gameScore {
+        items {
+          id
+          gameStatsID
+          numberOfPlayers
+          gameComments
+          gameTotalTime
+          completed
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -76,10 +86,20 @@ export const onUpdateGameStats = /* GraphQL */ `
       gameID
       userEmail
       gameName
-      gameComments
       gameStates
-      gameTime
-      type
+      gameScore {
+        items {
+          id
+          gameStatsID
+          numberOfPlayers
+          gameComments
+          gameTotalTime
+          completed
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -94,10 +114,254 @@ export const onDeleteGameStats = /* GraphQL */ `
       gameID
       userEmail
       gameName
-      gameComments
       gameStates
-      gameTime
-      type
+      gameScore {
+        items {
+          id
+          gameStatsID
+          numberOfPlayers
+          gameComments
+          gameTotalTime
+          completed
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateGameScore = /* GraphQL */ `
+  subscription OnCreateGameScore(
+    $filter: ModelSubscriptionGameScoreFilterInput
+  ) {
+    onCreateGameScore(filter: $filter) {
+      id
+      gameStatsID
+      numberOfPlayers
+      gameComments
+      gameTotalTime
+      completed
+      gameStopTime {
+        items {
+          id
+          gameScoreID
+          gameStopTime
+          gameStop
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      gameHintTime {
+        items {
+          id
+          gameScoreID
+          gameHintTime
+          gameStop
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateGameScore = /* GraphQL */ `
+  subscription OnUpdateGameScore(
+    $filter: ModelSubscriptionGameScoreFilterInput
+  ) {
+    onUpdateGameScore(filter: $filter) {
+      id
+      gameStatsID
+      numberOfPlayers
+      gameComments
+      gameTotalTime
+      completed
+      gameStopTime {
+        items {
+          id
+          gameScoreID
+          gameStopTime
+          gameStop
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      gameHintTime {
+        items {
+          id
+          gameScoreID
+          gameHintTime
+          gameStop
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteGameScore = /* GraphQL */ `
+  subscription OnDeleteGameScore(
+    $filter: ModelSubscriptionGameScoreFilterInput
+  ) {
+    onDeleteGameScore(filter: $filter) {
+      id
+      gameStatsID
+      numberOfPlayers
+      gameComments
+      gameTotalTime
+      completed
+      gameStopTime {
+        items {
+          id
+          gameScoreID
+          gameStopTime
+          gameStop
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      gameHintTime {
+        items {
+          id
+          gameScoreID
+          gameHintTime
+          gameStop
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateGameHintTime = /* GraphQL */ `
+  subscription OnCreateGameHintTime(
+    $filter: ModelSubscriptionGameHintTimeFilterInput
+  ) {
+    onCreateGameHintTime(filter: $filter) {
+      id
+      gameScoreID
+      gameHintTime
+      gameStop
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateGameHintTime = /* GraphQL */ `
+  subscription OnUpdateGameHintTime(
+    $filter: ModelSubscriptionGameHintTimeFilterInput
+  ) {
+    onUpdateGameHintTime(filter: $filter) {
+      id
+      gameScoreID
+      gameHintTime
+      gameStop
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteGameHintTime = /* GraphQL */ `
+  subscription OnDeleteGameHintTime(
+    $filter: ModelSubscriptionGameHintTimeFilterInput
+  ) {
+    onDeleteGameHintTime(filter: $filter) {
+      id
+      gameScoreID
+      gameHintTime
+      gameStop
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateGameStopTime = /* GraphQL */ `
+  subscription OnCreateGameStopTime(
+    $filter: ModelSubscriptionGameStopTimeFilterInput
+  ) {
+    onCreateGameStopTime(filter: $filter) {
+      id
+      gameScoreID
+      gameStopTime
+      gameStop
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateGameStopTime = /* GraphQL */ `
+  subscription OnUpdateGameStopTime(
+    $filter: ModelSubscriptionGameStopTimeFilterInput
+  ) {
+    onUpdateGameStopTime(filter: $filter) {
+      id
+      gameScoreID
+      gameStopTime
+      gameStop
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteGameStopTime = /* GraphQL */ `
+  subscription OnDeleteGameStopTime(
+    $filter: ModelSubscriptionGameStopTimeFilterInput
+  ) {
+    onDeleteGameStopTime(filter: $filter) {
+      id
+      gameScoreID
+      gameStopTime
+      gameStop
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateGameStop = /* GraphQL */ `
+  subscription OnCreateGameStop($filter: ModelSubscriptionGameStopFilterInput) {
+    onCreateGameStop(filter: $filter) {
+      id
+      gameID
+      gameStopName
+      order
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateGameStop = /* GraphQL */ `
+  subscription OnUpdateGameStop($filter: ModelSubscriptionGameStopFilterInput) {
+    onUpdateGameStop(filter: $filter) {
+      id
+      gameID
+      gameStopName
+      order
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteGameStop = /* GraphQL */ `
+  subscription OnDeleteGameStop($filter: ModelSubscriptionGameStopFilterInput) {
+    onDeleteGameStop(filter: $filter) {
+      id
+      gameID
+      gameStopName
+      order
       createdAt
       updatedAt
     }
@@ -114,7 +378,18 @@ export const onCreateGame = /* GraphQL */ `
       gameLocationPlace
       gameLocationCity
       gameType
-      gameStop
+      gameStopString
+      gameStop {
+        items {
+          id
+          gameID
+          gameStopName
+          order
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       type
       createdAt
       user {
@@ -142,7 +417,18 @@ export const onUpdateGame = /* GraphQL */ `
       gameLocationPlace
       gameLocationCity
       gameType
-      gameStop
+      gameStopString
+      gameStop {
+        items {
+          id
+          gameID
+          gameStopName
+          order
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       type
       createdAt
       user {
@@ -170,7 +456,18 @@ export const onDeleteGame = /* GraphQL */ `
       gameLocationPlace
       gameLocationCity
       gameType
-      gameStop
+      gameStopString
+      gameStop {
+        items {
+          id
+          gameID
+          gameStopName
+          order
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       type
       createdAt
       user {
@@ -270,7 +567,10 @@ export const onCreateUserGamePlay = /* GraphQL */ `
         gameLocationPlace
         gameLocationCity
         gameType
-        gameStop
+        gameStopString
+        gameStop {
+          nextToken
+        }
         type
         createdAt
         user {
@@ -311,7 +611,10 @@ export const onUpdateUserGamePlay = /* GraphQL */ `
         gameLocationPlace
         gameLocationCity
         gameType
-        gameStop
+        gameStopString
+        gameStop {
+          nextToken
+        }
         type
         createdAt
         user {
@@ -352,7 +655,10 @@ export const onDeleteUserGamePlay = /* GraphQL */ `
         gameLocationPlace
         gameLocationCity
         gameType
-        gameStop
+        gameStopString
+        gameStop {
+          nextToken
+        }
         type
         createdAt
         user {

@@ -3,7 +3,7 @@ import {Button, Heading, View, Image, TextAreaField, Text, Alert, Flex} from '@a
 import {useNavigate} from "react-router-dom";
 import {API} from "aws-amplify";
 import {gameStatsByUserEmail} from "../graphql/queries";
-import {updateGameStats as updateGameStatsMutation} from "../graphql/mutations";
+import {createGameStats, createGameScore, updateGameStats as updateGameStatsMutation} from "../graphql/mutations";
 
 export function Waiver() {
 
@@ -34,8 +34,17 @@ export function Waiver() {
             id: gamesStatsFromAPI.id,
             gameStates: JSON.stringify(gameStatsValues)
         };
-        localStorage.setItem("GameStatsID",gamesStatsFromAPI.id);
+        localStorage.setItem("gameStatsID",gamesStatsFromAPI.id);
         const apiGameStatsUpdate = await API.graphql({ query: updateGameStatsMutation, variables: {input: newGameStats}});
+        /* create gameScore */
+        const data = {
+            gameStatsID: gamesStatsFromAPI.id,
+            completed: false,
+        };
+        await API.graphql({
+            query: createGameScore,
+            variables: { input: data },
+        });
         let path = gameName.replace(/\s+/g, '-').toLowerCase();
         console.log("go to page: " + '/' + path);
         navigate('/' + path);

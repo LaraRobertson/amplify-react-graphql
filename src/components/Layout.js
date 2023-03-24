@@ -7,7 +7,7 @@ import {updateGameStats as updateGameStatsMutation} from "../graphql/mutations";
 
 export function Layout() {
     const [userAuth, setUserAuth] = useState({});
-    const [error, setError] = useState(false);
+    const [errorInternet, setErrorInternet] = useState(false);
 
     const { route, signOut } = useAuthenticator((context) => [
         context.route,
@@ -20,10 +20,10 @@ export function Layout() {
         localStorage.removeItem("gameName");
         localStorage.removeItem("email");
         localStorage.removeItem("agreeToWaiver");
-        localStorage.removeItem("GameStatsID");
+        localStorage.removeItem("gameStatsID");
         /* update game state */
         /* get values from local variables - need gamename */
-        const gameStatID = localStorage.getItem("GameStatsID");
+        const gameStatID = localStorage.getItem("gameStatsID");
         const waiverSigned = localStorage.getItem("agreeToWaiver");
         /* update game state */
         /* don't save game stats from home page */
@@ -54,7 +54,7 @@ export function Layout() {
         try {
         /* update game state */
         /* get values from local variables - need gamename */
-        const gameStatID = localStorage.getItem("GameStatsID");
+        const gameStatID = localStorage.getItem("gameStatsID");
         const waiverSigned = localStorage.getItem("agreeToWaiver");
         /* update game state */
         /* get values from local variables - need gamename and email */
@@ -67,16 +67,16 @@ export function Layout() {
         };
 
         const apiGameStatsUpdate= await API.graphql({ query: updateGameStatsMutation, variables: {input: newGameStats}});
-            setError(false);
+            setErrorInternet(false);
         } catch (err) {
-            console.log('error: ', err);
-            setError(true);
+            console.log('errorInternet: ', err);
+            setErrorInternet(true);
         }
     }
     const ErrorComponent = () => {
-        console.log("error in component: " + error);
+        console.log("error in component: " + errorInternet);
         let className = "hide";
-        error ? className ="show" : className="hide";
+        errorInternet ? className ="show" : className="hide";
         return (
             <View className={className} >
                 <div>There are errors (probably no internet) and your data did not save.

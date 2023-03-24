@@ -7,7 +7,21 @@ import reportWebVitals from './reportWebVitals';
 import awsExports from "./aws-exports";
 
 Amplify.configure(awsExports);
+/* can run this to check timing - places timestamp on each console.log comment */
+console.log = (function() {
+    var console_log = console.log;
+    var timeStart = new Date().getTime();
 
+    return function() {
+        var delta = new Date().getTime() - timeStart;
+        var args = [];
+        args.push((delta / 1000).toFixed(2) + ':');
+        for(var i = 0; i < arguments.length; i++) {
+            args.push(arguments[i]);
+        }
+        console_log.apply(console, args);
+    };
+})();
 /* use for changing things in theme like fonts, colors, etc */
 /* if used tokes but disabled for now */
 const theme: Theme = {

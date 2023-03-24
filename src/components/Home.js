@@ -13,12 +13,22 @@ import {
     useAuthenticator
 } from '@aws-amplify/ui-react';
 import {API, Auth} from "aws-amplify";
-import {listGames, gamesByDate, usersByEmail, userGamePlaysByUserId,gameStatsByGameID} from "../graphql/queries";
 import {
-    createGame as createGameMutation, createGameStats,
-    createUser as createUserMutation,
-    createUserGamePlay as createUserGamePlayMutation,
-    createGameStats as createGameStatsMutation
+    listGames,
+    gamesByDate,
+    usersByEmail,
+    userGamePlaysByUserId,
+    gameStatsByGameID,
+    gameStopByGameID,
+    gameScoreByGameStatsID,
+    gameStopByGameStatsID,
+    getGameStop
+} from "../graphql/queries";
+import {
+    createGame, createGameScore,
+    createGameStats,
+    createUser,
+    createUserGamePlay
 } from "../graphql/mutations";
 import { useNavigate } from 'react-router-dom';
 import { format } from 'date-fns'
@@ -64,7 +74,8 @@ export function Home() {
         let gameDescriptionH2 = "";
         let gameDescriptionH3 = "";
         let gameDescriptionP = "";
-        let gameStop = "";
+        let gameStopDetail = "";
+        let gameStopWord = "Stops";
         console.log("length of games: " + games.length);
         if (games.length > 0) {
             if (gameIndex || gameIndex === 0) {
@@ -77,7 +88,8 @@ export function Home() {
                 gameDescriptionH2 = test.gameDescriptionH2;
                 gameDescriptionH3 = test.gameDescriptionH3;
                 gameDescriptionP = test.gameDescriptionP;
-                gameStop = test.gameStop;
+                gameStopDetail = test.gameStop.items.length;
+                if (gameStopDetail < 2) gameStopWord = "Stop";
             }
         }
         return (
@@ -87,7 +99,7 @@ export function Home() {
                 <h2>{gameDescriptionH2}</h2>
                 <h3>{gameDescriptionH3}</h3>
                 <div>{gameDescriptionP}</div><br />
-                <strong>Game Details:</strong> This game has {gameStop}. You can tell if you are at the right Stop by looking at the picture on
+                <strong>Game Details:</strong> This game has {gameStopDetail} {gameStopWord}. You can tell if you are at the right Stop by looking at the picture on
                 the screen. The picture on the screen represents the playing area and contains some extra stuff on the screen for you to figure out
                 how to solve puzzles.<br /><br />
                 <strong>How to Play</strong>: Click around on the game screen to
@@ -96,6 +108,7 @@ export function Home() {
                 <div className="italics">Game may be better viewed in landscape mode. Please turn your phone horizontally for better gameplay at stops.</div>
                 <br /><strong>Time / Score</strong>: Your Time is Your Score. The time starts when you hit "I Want To Play" at Each Stop. When you finish solving
                 puzzles at the Stop, Time stops.  It continues when you reach next Stop and hit "I want to Play". Each Hint costs 5 minutes.
+                <strong>Clock does not stop until you complete stop!</strong>
                 <br /><br /><strong>Fun Fact</strong>: The game can be played on one device or everyone can play together
                 on their own device. To play together, start the game at the same time and talk to each other about the
                 puzzles. You will get your own score on your own device but may get a better score if you work together.
@@ -126,12 +139,12 @@ export function Home() {
         let path = gameDetails.gameName.replace(/\s+/g, '-').toLowerCase();
         console.log("go to page: " + '/' + path);
         navigate('/' + path);
-        /* hard code when developing */
-        //navigate('/hurricane-1-stop2');
     }
 
     async function goToGame(gameDetails) {
         localStorage.setItem("gameName",gameDetails.gameName);
+        localStorage.setItem("gameID",gameDetails.gameID);
+        localStorage.setItem("gameStop",1);
         /* check if gameStats entry */
         let filter = {
             userEmail: {
@@ -147,14 +160,17 @@ export function Home() {
             const data = {
                 gameID: gameDetails.gameID,
                 userEmail: userDB.email,
-                gameName: gameDetails.gameName,
-                type: "gamestat",
+                gameName: gameDetails.gameName
             };
-            await API.graphql({
-                query: createGameStatsMutation,
-                variables: { input: data },
-            });
-
+            console.log("data for createGameStats: " + JSON.stringify(data));
+            try {
+                await API.graphql({
+                    query: createGameStats,
+                    variables: { input: data },
+                });
+            } catch (err) {
+                console.log('error createGameStats..', err)
+            }
             /* no waiver */
             console.log("go to waiver then page: " + gameDetails.gameName);
             navigate('/waiver');
@@ -165,23 +181,66 @@ export function Home() {
                 console.log("check waiver");
                 const gamesStatsFromAPI = apiGameStats.data.gameStatsByGameID.items[0];
                 console.log("gamesStatsFromAPI.gameStates: " + gamesStatsFromAPI.gameStates);
-                /* TODO */
-                /* gameTime will have the time info */
-                if (gamesStatsFromAPI.gameStates != "" && gamesStatsFromAPI.gameTime != "") {
+                if (gamesStatsFromAPI.gameStates != "") {
                     let gameStatsState =  JSON.parse(gamesStatsFromAPI.gameStates);
-                    let gameStatsGameTime =  JSON.parse(gamesStatsFromAPI.gameTime);
-                    /* set times, if any, in localhost */
-                    if (gameStatsGameTime) {
-                        localStorage.setItem("numberOfTimes",gameStatsGameTime.numberOfTimes);
+                    /* check how many times played game */
+
+                    /* how many "completed" entries in "GameScore" table by gameStatsID */
+                    console.log("gameStatsID (home): " + gamesStatsFromAPI.id);
+                    let filter = {
+                        completed: {
+                            eq: true
+                        }
+                    };
+                    const apiGameScore = await API.graphql({
+                        query: gameScoreByGameStatsID,
+                        variables: { filter: filter, gameStatsID: gamesStatsFromAPI.id}
+                    });
+                    if (apiGameScore) {
+                        const gamesScoreFromAPI = apiGameScore.data.gameScoreByGameStatsID.items;
+                        console.log("gamesScoreFromAPI (home): " + gamesScoreFromAPI.length);
+                        if (Array.isArray(gamesScoreFromAPI)) {
+                            localStorage.setItem("numberOfTimes", gamesScoreFromAPI.length);
+                        } else {
+                            localStorage.setItem("numberOfTimes", 0);
+                        }
                     }
+                    /* end check number of times */
+
+                    /* check if "not completed" */
+                    let filter2 = {
+                        completed: {
+                            eq: false
+                        }
+                    };
+                    const apiGameScoreNotCompleted = await API.graphql({
+                        query: gameScoreByGameStatsID,
+                        variables: { filter: filter2, gameStatsID: gamesStatsFromAPI.id}
+                    });
+                    if (apiGameScoreNotCompleted) {
+                        if (apiGameScoreNotCompleted.data.gameScoreByGameStatsID.items.length === 0) {
+                            /* add new game score */
+                            const data = {
+                                gameStatsID: gamesStatsFromAPI.id,
+                                completed: false
+                            };
+                            await API.graphql({
+                                query: createGameScore,
+                                variables: {input: data},
+                            });
+                        }
+                    }
+                    /* end game score */
                     console.log("gameStatsState:" + gameStatsState);
+                    /* waiver signed and go to game */
                     if (gameStatsState !== null && gameStatsState.waiverSigned) {
                         localStorage.setItem("agreeToWaiver", true);
+                        localStorage.setItem("gameStatsID",gamesStatsFromAPI.id);
                         let path = gameDetails.gameName.replace(/\s+/g, '-').toLowerCase();
                         console.log("go to page: " + '/' + path);
-                        navigate('/' + path);
+                       navigate('/' + path);
                     } else {
-                        navigate('/waiver');
+                       navigate('/waiver');
                     }
                 } else {
                     navigate('/waiver');
@@ -247,7 +306,7 @@ export function Home() {
                     email: userAuth.email,
                 };
                 await API.graphql({
-                    query: createUserMutation,
+                    query: createUser,
                     variables: { input: data },
                 });
             }
@@ -302,12 +361,12 @@ export function Home() {
     /* useEffects */
     /*
     So if you want to perform an action immediately after setting state on a state variable,
-    we need to pass a callback function to the setState function.
+    we need to pass a callback function to the setState function (use [state variable] at end).
     But in a functional component no such callback is allowed with useState hook.
     In that case we can use the useEffect hook to achieve it.
      */
     useEffect(() => {
-        console.log("***useEffect***:  navigate to game from localstorage");
+        console.log("***useEffect***:  navigate to game from localstorage - only on mount because empty []");
         const gameNameSaved = localStorage.getItem("gameName");
         if (gameNameSaved !== null && gameNameSaved != '') {
             console.log("go to page: " + gameNameSaved);
@@ -368,6 +427,7 @@ export function Home() {
         )
     }
 
+
     return (
         <View
             maxWidth="900px"
@@ -397,7 +457,8 @@ export function Home() {
                             <Text className="bold">{game.gameName} <span className="small">({game.gameType})</span></Text>
                             <Text><span className="italics">Location</span>: {game.gameLocationPlace}</Text>
                             <Text><span className="italics">City</span>: {game.gameLocationCity}</Text>
-                            <Text><span className="italics">{game.gameStop}</span></Text>
+                            <Text><span className="italics">Stops</span>: {game.gameStop.items.length}</Text>
+
                             {(gamesIDUser.includes(game.id) || game.gameType === "free") ?
                                 (<div>
                                     <Button onClick={() => goToGame({gameName:game.gameName,gameID:game.id})}>
@@ -438,7 +499,7 @@ export function Home() {
                             <Text className="bold">{game.gameName} <span className="small"> ({game.gameType})</span></Text>
                             <Text><span className="italics">Location</span>: {game.gameLocationPlace}</Text>
                             <Text><span className="italics">City</span>: {game.gameLocationCity}</Text>
-                            <Text><span className="italics">{game.gameStop}</span></Text>
+                            <Text><span className="italics">Stops</span>: {game.gameStop.items.length}</Text>
                             <Button className={buttonDetailClassShow} onClick={() => showGameDetail(index)} >Show Game Details</Button>
                         </Card>
 

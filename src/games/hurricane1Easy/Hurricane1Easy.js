@@ -4,89 +4,193 @@ import {shallowEqual} from "../../components/ShallowEqual";
 import {Button, Heading, View, Image, TextAreaField, TextField, Text, Alert, Flex,  SelectField} from '@aws-amplify/ui-react';
 import {useNavigate} from "react-router-dom";
 import {API} from "aws-amplify";
-import {gameStatsByUserEmail} from "../../graphql/queries";
-import {updateGameStats as updateGameStatsMutation} from "../../graphql/mutations";
+import { gameScoreByGameStatsID, gameStopByGameID } from "../../graphql/queries";
+import { updateGameScore, createGameHintTime, createGameStopTime } from "../../graphql/mutations";
 
 export function Hurricane1Easy() {
     /* for all games */
     const [areNotesVisible, setAreNotesVisible] = useState(false);
     const [isHelpVisible, setIsHelpVisible] = useState(false);
+    const [gameNotes,setGameNotes] = useState('');
+    const [gameComments,setGameComments] = useState('');
+    const [isBackpackVisible, setIsBackpackVisible] = useState(false);
+    const [gameBackpack, setGameBackpack] = useState([]);
+    const [gameBackpackHasItems, setGameBackpackHasItems] = useState(false);
+    /* set in local storage too */
+    const [gameTime, setGameTime] = useState(0);
+    const [gameTimeHint, setGameTimeHint] = useState(0);
+    const [gameTimeTotal, setGameTimeTotal] = useState(0);
+    const [gameStatsID, setGameStatsID] = useState('');
+    const [gameScoreID, setGameScoreID] = useState('');
+    const [gameID, setGameID] = useState('');
+    const [numberOfTimes, setNumberOfTimes] = useState(0);
+    const [gameStop,setGameStop] = useState(0);
+    const [gameStopNameArray,setGameStopNameArray] = useState('');
+    const [gameComplete, setGameComplete] = useState(false);
+    /* end set in local storage too */
+
+    const [stopClock, setStopClock] = useState(false);
+    const [numberOfPlayers, setNumberOfPlayers] = useState('');
+    const [numberOfPlayersError, setNumberOfPlayersError] = useState('');
     const [isHint1Visible, setIsHint1Visible] = useState(false);
     const [isHint2Visible, setIsHint2Visible] = useState(false);
     const [isHint3Visible, setIsHint3Visible] = useState(false);
     const [isHint4Visible, setIsHint4Visible] = useState(false);
-    const [gameNotes,setGameNotes] = useState('');
-    const [gameComments,setGameComments] = useState('');
-    const [gameCommentsOld,setGameCommentsOld] = useState([]);
-    const [isBackpackVisible, setIsBackpackVisible] = useState(false);
-    const [gameBackpack, setGameBackpack] = useState([]);
-    const [gameBackpackHasItems, setGameBackpackHasItems] = useState(false);
-    const [gameTime, setGameTime] = useState(0);
-    const [gameTimeHint, setGameTimeHint] = useState(0);
-    const [gameTimeTotal, setGameTimeTotal] = useState(0);
-    const [stopClock, setStopClock] = useState(false);
-    const [numberOfPlayers, setNumberOfPlayers] = useState('');
-    const [numberOfPlayersError, setNumberOfPlayersError] = useState('');
     const [hintTime1,setHintTime1] = useState(0);
     const [hintTime2,setHintTime2] = useState(0);
     const [hintTime3,setHintTime3] = useState(0);
     const [hintTime4,setHintTime4] = useState(0);
-
-    const navigate = useNavigate();
-    function goHomeQuit() {
-        navigate('/');
-    }
-    async function goHome() {
-        /* get number of games */
-        /* gameCommentsOld is parsed value of gameComments */
-        let gameCommentsArray = [];
-        console.log("gameCommentsOld: " + gameCommentsOld);
-        if (gameCommentsOld) {
-            console.log ("length of gameComments: " + gameCommentsOld.length);
-            gameCommentsOld[gameCommentsOld.length] = gameComments;
-            gameCommentsArray = [...gameCommentsOld];
-        } else {
-            gameCommentsArray = [gameComments];
-        }
-        console.log("JSON.stringify(gameCommentsOld): " + JSON.stringify(gameCommentsArray));
-        const newGameStats = {
-            id: localStorage.getItem("GameStatsID"),
-            gameComments: JSON.stringify(gameCommentsArray)
-        };
-        const apiGameStatsUpdate = await API.graphql({ query: updateGameStatsMutation, variables: {input: newGameStats}});
-        localStorage.removeItem("agreeToWaiver");
-        localStorage.removeItem("GameStatsID");
-        localStorage.removeItem("gameName");
-        localStorage.removeItem("gameTime");
-        localStorage.removeItem("gameTimeTotal");
-        localStorage.removeItem("gameStop");
-        localStorage.removeItem("numberOfTimes");
-        localStorage.removeItem("numPlayerValue");
-        localStorage.removeItem("key");
-        localStorage.removeItem("game1Word1Stop1HurricaneLetters");
-        localStorage.removeItem("haveGuessedGame1Word1Stop1Hurricane");
-        localStorage.removeItem("isGame1Word1Stop1HurricaneWrong");
-        localStorage.removeItem("game1Word2Stop1HurricaneLetters");
-        localStorage.removeItem("haveGuessedGame1Word2Stop1Hurricane");
-        localStorage.removeItem("isGame1Word2Stop1HurricaneWrong");
-        localStorage.removeItem("game1Word3Stop1HurricaneLetters");
-        localStorage.removeItem("haveGuessedGame1Word3Stop1Hurricane");
-        localStorage.removeItem("isGame1Word3Stop1HurricaneWrong");
-        localStorage.removeItem("guess1");
-        localStorage.removeItem("haveGuessed1");
-        localStorage.removeItem("isWrong1");
-        navigate('/');
-    }
     const [isIntroVisible, setIsIntroVisible] = useState(true);
     function toggleIntro() {
+        console.log("gameTime: " + gameTime);
+        console.log("gameTimeTotal: " + gameTimeTotal);
         /* check numberOfPlayers */
         if (numberOfPlayers != '') {
             isIntroVisible ? setIsIntroVisible(false) : setIsIntroVisible(true);
+            setStopClock(false);
         } else {
             setNumberOfPlayersError("Please choose number of players");
         }
 
     }
+    function goToStop() {
+        setGameStop(Number(gameStop) + 1);
+        localStorage.setItem("gameStop",Number(gameStop) + 1);
+        console.log("go to stop:" + (Number(gameStop) + 1));
+        setGameTimeTotal(gameTimeTotal + gameTime + gameTimeHint);
+        /* reset time */
+        setHintTime1(0);
+        setHintTime2(0);
+        setHintTime3(0);
+        setHintTime4(0);
+        setGameTime(0);
+        setGameTimeHint(0);
+        setIsIntroVisible(true);
+    }
+    const navigate = useNavigate();
+    function goHomeQuit() {
+        navigate('/');
+    }
+    async function goHome() {
+        console.log("game comments: " + gameComments);
+        const newGameStats = {
+            id: localStorage.getItem("gameScoreID"),
+            gameComments: gameComments
+        };
+        const apiGameScoreUpdate = await API.graphql({ query: updateGameScore, variables: {input: newGameStats}});
+        localStorage.removeItem("agreeToWaiver");
+        localStorage.removeItem("gameStatsID");
+        localStorage.removeItem("gameScoreID");
+        localStorage.removeItem("gameName");
+        localStorage.removeItem("gameTime");
+        localStorage.removeItem("gameTimeTotal");
+        localStorage.removeItem("gameStop");
+        localStorage.removeItem("gameStopNameArray");
+        localStorage.removeItem("numberOfTimes");
+        localStorage.removeItem("numberOfPlayers");
+        localStorage.removeItem("key");
+        localStorage.removeItem("prybar");
+        localStorage.removeItem("shovel");
+        localStorage.removeItem("key2");
+        navigate('/');
+    }
+
+    /* 60000 milliseconds = 1 minute */
+    const MINUTE_MS = 3000;
+    useEffect(() => {
+        const interval = setInterval(() => {
+            console.log('Logs every 3 seconds');
+            if (gameTime) {
+                let gameTimeNum = Number((gameTime + .05).toFixed(2));
+                console.log('game time: ' + gameTimeNum);
+                if (!stopClock) {
+                    localStorage.setItem("gameTime", gameTimeNum);
+                    setGameTime(gameTimeNum);
+                    let hintTimeTotalNum = Number(hintTime1 + hintTime2 + hintTime3 + hintTime4);
+                    console.log("hint time total: " + hintTimeTotalNum);
+                    localStorage.setItem("gameTimeHint", hintTimeTotalNum);
+                    setGameTimeHint(hintTimeTotalNum);
+                }
+                console.log("stopClock: " + stopClock);
+
+            } else {
+                console.log("no gameTime");
+                if (!isIntroVisible) {
+                    setGameTimeFunction(.05);
+                }
+            }
+
+        }, MINUTE_MS);
+        return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+    }, [gameTime,isIntroVisible])
+
+    function setGameTimeFunction(gameTime) {
+        let gameTimeNum = Number(gameTime);
+        console.log("gametimefunction: " + gameTimeNum.toFixed(2));
+        localStorage.setItem("gameTime",gameTimeNum.toFixed(2));
+        setGameTime(gameTimeNum);
+    }
+
+    useEffect(() => {
+        console.log("***useEffect***: stopClock: " + stopClock);
+    });
+    async function winGameFunction(props) {
+        console.log("props: " + props);
+
+        console.log("winGameFunction");
+        /* for end of game: clearInterval(interval);*/
+        console.log("stop has been won");
+        /* update gameScore based on stop - */
+        updateGameScoreFunction(props);
+        createGameStopFunction();
+        createGameHintFunction();
+    }
+    async function createGameStopFunction() {
+        const data = {
+            gameScoreID: gameScoreID,
+            gameStopTime: gameTime,
+            gameStop: gameStop
+        };
+        await API.graphql({
+            query: createGameStopTime,
+            variables: { input: data },
+        });
+    }
+    async function createGameHintFunction() {
+        const data = {
+            gameScoreID: gameScoreID,
+            gameHintTime: gameTimeHint,
+            gameStop: gameStop
+        };
+        await API.graphql({
+            query: createGameHintTime,
+            variables: { input: data },
+        });
+    }
+    async function updateGameScoreFunction(props) {
+        console.log("gameScoreID (update):" + gameScoreID);
+        let GameTimeTotalVar = gameTimeTotal + gameTime + gameTimeHint;
+        const data = {
+            id: gameScoreID,
+            numberOfPlayers: numberOfPlayers,
+            gameTotalTime: GameTimeTotalVar,
+            completed: props
+        };
+        const apiUpdateGameScore = await API.graphql({
+            query: updateGameScore,
+            variables: { input: data },
+        }).then(response => {
+            console.log(response);
+            return(response);
+        }).catch(e => {
+            console.log("catch apiUpdateGameScore");
+            console.log(e);
+            return null;
+        });
+
+        return(apiUpdateGameScore);
+    }
+
     /* hint functions */
     function toggleHint1() {
         setHintTime1(5);
@@ -125,138 +229,84 @@ export function Hurricane1Easy() {
     }
     function setNumPlayerFunction(numPlayerValue) {
         console.log("numPlayerFunction: " + numPlayerValue);
-        localStorage.setItem("numPlayerValue",numPlayerValue);
+        localStorage.setItem("numberOfPlayers", numPlayerValue);
         setNumberOfPlayers(numPlayerValue);
     }
-    /* game time/scoring */
-
-    useEffect(() => {
-        console.log("***useEffect***: gameTime: " + gameTime);
-    });
-    useEffect(() => {
-        console.log("***useEffect***: gameStop: " + gameStop);
-    });
-    useEffect(() => {
-        console.log("***useEffect***: isIntroVisible: " + isIntroVisible);
-    });
-    /* 60000 milliseconds = 1 minute */
-    const MINUTE_MS = 3000;
-    useEffect(() => {
-        const interval = setInterval(() => {
-            console.log('Logs every 3 seconds');
-            if (gameTime) {
-                let gameTimeNum = Number(gameTime);
-                gameTimeNum = gameTimeNum + .05;
-                console.log('game time: ' + gameTimeNum.toFixed(2));
-                /* add 1 minute */
-                if (!isIntroVisible && !stopClock) {
-                    localStorage.setItem("gameTime",gameTimeNum.toFixed(2));
-                    let GameTimeTotalNum = Number(gameTimeNum.toFixed(2));
-                    setGameTime(GameTimeTotalNum);
-                    let hintTimeTotalNum = hintTime1 + hintTime2 + hintTime3 + hintTime4;
-                    setGameTimeTotal(GameTimeTotalNum + hintTimeTotalNum);
-                    setGameTimeHint(hintTimeTotalNum);
-                    localStorage.setItem("gameTimeTotal", gameTimeNum.toFixed(2));
-                }
-                if (stopClock) winGameFunction(interval);
-
-            } else {
-                if (!isIntroVisible) {
-                    setGameTimeFunction(.05);
-                    setGameTimeTotal(.05);
-                    localStorage.setItem("gameTimeTotal", .05);
-                }
-            }
-
-        }, MINUTE_MS);
-        return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
-    }, [gameTime,isIntroVisible])
-
-    function setGameTimeFunction(gameTime) {
-        let gameTimeNum = Number(gameTime);
-        console.log("gametimefunction: " + gameTimeNum.toFixed(2));
-        localStorage.setItem("gameTime",gameTimeNum.toFixed(2));
-        setGameTime(gameTimeNum);
-    }
-    async function winGameFunction(interval) {
-        clearInterval(interval);
-        console.log("game has been won");
-        /* push stats to database */
-        /* gameTime, gameTimeTotal, hintTime */
-        const userEmail = localStorage.getItem("email");
-        const gameName = localStorage.getItem("gameName");
-        let filter = {
-            gameName: {
-                eq: gameName
-            }
-        };
-        const apiGameStats = await API.graphql({
-            query: gameStatsByUserEmail,
-            variables: { filter: filter, userEmail: userEmail}
-        });
-        const gamesStatsFromAPI = apiGameStats.data.gameStatsByUserEmail.items[0];
-
-        /* gameTime is an array */
-        let gameTimeArray = [];
-        let gameTimeTotalArray = [];
-        let numberOfPlayersArray = [];
-        let gameStatsGameTimeValues = '';
-        console.log("gameStop (values): " + gameStop);
-        let gameStatsGameStateValues = '{"waiverSigned":true,"gameStop":"' + gameStop + '"}';
-        /* need to get stats and update */
-
-        let numberOfTimes = 1;
-        if (gamesStatsFromAPI.gameTime) {
-            setGameCommentsOld(JSON.parse(gamesStatsFromAPI.gameComments));
-            const gameStatsGameTime = JSON.parse(gamesStatsFromAPI.gameTime);
-            console.log("some gameTime data");
-            numberOfTimes = Number(gameStatsGameTime.numberOfTimes + 1);
-            let oldNumberOfTimes = numberOfTimes-1;
-            /* is this an array? */
-            console.log("gameStatsGameTime.gameTime: " + gameStatsGameTime.gameTime);
-            console.log("gameStatsGameTime.gameTime isarray: " + Array.isArray(gameStatsGameTime.gameTime));
-            console.log("gameStatsGameTime.gameTime typeof: " + typeof gameStatsGameTime.gameTime);
-            gameTimeArray = [...gameStatsGameTime.gameTime];
-            gameTimeTotalArray = [...gameStatsGameTime.gameTimeTotal]
-            numberOfPlayersArray = [...gameStatsGameTime.numberOfPlayers]
-            gameTimeArray[oldNumberOfTimes] = gameTime;
-            gameTimeTotalArray[oldNumberOfTimes] = gameTimeTotal;
-            numberOfPlayersArray[oldNumberOfTimes] = numberOfPlayers;
-            console.log("gameTimeArray: " + JSON.stringify(gameTimeArray));
-            gameStatsGameTimeValues = '{"numberOfTimes":' + numberOfTimes +',"numberOfPlayers":' + JSON.stringify(numberOfPlayersArray) + ',"gameTime":' + JSON.stringify(gameTimeArray) + ',"gameTimeTotal":' + JSON.stringify(gameTimeTotalArray) + '}';
-        } else {
-            console.log("no gameTime data");
-            gameTimeArray[0] = gameTime;
-            gameTimeTotalArray[0] = gameTimeTotal;
-            numberOfPlayersArray[0] = numberOfPlayers;
-            gameStatsGameTimeValues = '{"numberOfTimes":1,"numberOfPlayers":' + JSON.stringify(numberOfPlayersArray) + ',"gameTime":' + JSON.stringify(gameTimeArray) + ',"gameTimeTotal":' + JSON.stringify(gameTimeTotalArray) + '}';
-        }
-        const newGameStats = {
-            id: gamesStatsFromAPI.id,
-            gameStates: gameStatsGameStateValues,
-            gameTime: gameStatsGameTimeValues
-        };
-        localStorage.setItem("GameStatsID",gamesStatsFromAPI.id);
-        const apiGameStatsUpdate = await API.graphql({ query: updateGameStatsMutation, variables: {input: newGameStats}});
-    }
-    /* end for all games */
-
-
-    /* stop 1 - game specific */
     /* get gamestats and set localstorage */
     useEffect(() => {
-        console.log("***useEffect***: setGameStop");
-       /* set local storage for gameStop */
+        console.log("***useEffect***: setGameStop (only on mount)");
+        /* set local storage for gameStop - only on mount */
         setGameStopFunction();
     }, []);
 
-    const [gameStop,setGameStop] = useState("Jaycee Park Shelter (Hurricane Easy)");
 
-    function setGameStopFunction() {
-        console.log ("set Game Stop: " + gameStop);
-        localStorage.setItem("gameStop",gameStop);
+    async function setGameStopFunction() {
+        console.log("setGameStopFunction - only on mount");
+        console.log ("get Game Stop: " + localStorage.getItem("gameStop"));
+        console.log ("get GameID: " + localStorage.getItem("gameID"));
+        console.log ("get GameStatsID: " + localStorage.getItem("gameStatsID"));
+        setGameStop(localStorage.getItem("gameStop"))
+        setNumberOfTimes(localStorage.getItem("numberOfTimes"));
+        setGameID(localStorage.getItem("gameID"));
+        setGameStatsID(localStorage.getItem("gameStatsID"));
+        /* get gameStop name */
+        const gameStopFromAPI = await getGameStopName();
+        let gameStopNameArray = gameStopFromAPI.data.gameStopByGameID.items;
+        /* get gameScore Id */
+        const gameScoreFromAPI = await getGameScoreID();
+        let gameScoreID = gameScoreFromAPI.data.gameScoreByGameStatsID.items[0].id;
+        /*let testObject = gameStopNameArray[0];
+        for (const key in testObject) {
+    console.log(`${key}: ${ testObject[key]}`);
+        for (const key1 in testObject[key]) {
+             //console.log(`${key1}: ${testObject[key][key1]}`);
+         }
+        }*/
+        setGameStopNameArray(gameStopFromAPI.data.gameStopByGameID.items);
+        localStorage.setItem("gameStopNameArray", gameStopFromAPI.data.gameStopByGameID.items);
+        setGameScoreID(gameScoreID);
+        localStorage.setItem("gameScoreID", gameScoreID);
     }
 
+    async function getGameScoreID() {
+        let filter = {
+            completed: {
+                eq: false
+            }
+        };
+        const apiGameScore = await API.graphql({
+            query: gameScoreByGameStatsID,
+            variables: { filter: filter, gameStatsID: localStorage.getItem("gameStatsID")}
+        }).then(response => {
+            console.log(response);
+            return(response);
+        }).catch(e => {
+            console.log("catch");
+            console.log(e);
+            return null;
+        });
+
+        return(apiGameScore);
+    }
+
+    async function getGameStopName() {
+        const apiGameStop = await API.graphql({
+            query: gameStopByGameID,
+            variables: { gameID: localStorage.getItem("gameID")}
+        }).then(response => {
+            console.log(response);
+            return(response);
+        }).catch(e => {
+            console.log("catch");
+            console.log(e);
+            return null;
+        });
+
+        return(apiGameStop);
+    }
+    /* end for all games */
+
+    /* STOP 1 */
     /* guessing states and answers for 1st safe - 3 words */
     const [game1Word1Stop1HurricaneGuess,setGame1Word1Stop1HurricaneGuess]= useState({'game1Word1Stop1HurricaneLetters':''});
     const [haveGuessedGame1Word1Stop1Hurricane,setHaveGuessedGame1Word1Stop1Hurricane] = useState();
@@ -282,19 +332,14 @@ export function Hurricane1Easy() {
         console.log("game1 word1 x: " + x);
         let guessObject = {"game1Word1Stop1HurricaneLetters":x};
         setGame1Word1Stop1HurricaneGuess(guessObject);
-        localStorage.setItem("game1Word1Stop1HurricaneLetters", x);
         //check if guess is right
         if (shallowEqual(x, game1Word1Stop1HurricaneAnswer.game1Word1Stop1HurricaneLetters)) {
             setHaveGuessedGame1Word1Stop1Hurricane(true);
-            localStorage.setItem("haveGuessedGame1Word1Stop1Hurricane", true);
             setIsGame1Word1Stop1HurricaneWrong(false);
-            localStorage.setItem("isGame1Word1Stop1HurricaneWrong", false);
         } else {
             console.log("wrong guess");
             setHaveGuessedGame1Word1Stop1Hurricane(true);
-            localStorage.setItem("haveGuessedGame1Word1Stop1Hurricane", true);
             setIsGame1Word1Stop1HurricaneWrong(true);
-            localStorage.setItem("isGame1Word1Stop1HurricaneWrong", true);
         }
 
     }
@@ -303,19 +348,14 @@ export function Hurricane1Easy() {
         console.log("game1 word2 x: " + x);
         let guessObject = {"game1Word2Stop1HurricaneLetters":x};
         setGame1Word2Stop1HurricaneGuess(guessObject);
-        localStorage.setItem("game1Word2Stop1HurricaneLetters", x);
         //check if guess is right
         if (shallowEqual(x, game1Word2Stop1HurricaneAnswer.game1Word2Stop1HurricaneLetters)) {
             setHaveGuessedGame1Word2Stop1Hurricane(true);
-            localStorage.setItem("haveGuessedGame1Word2Stop1Hurricane", true);
             setIsGame1Word2Stop1HurricaneWrong(false);
-            localStorage.setItem("isGame1Word2Stop1HurricaneWrong", false);
         } else {
             console.log("wrong guess");
             setHaveGuessedGame1Word2Stop1Hurricane(true);
-            localStorage.setItem("haveGuessedGame1Word2Stop1Hurricane", true);
             setIsGame1Word2Stop1HurricaneWrong(true);
-            localStorage.setItem("isGame1Word2Stop1HurricaneWrong", true);
         }
     }
     function setGame1Word3Stop1HurricaneLetters(guess) {
@@ -323,19 +363,14 @@ export function Hurricane1Easy() {
         console.log("game1 word3 x: " + x);
         let guessObject = {"game1Word3Stop1HurricaneLetters":x};
         setGame1Word3Stop1HurricaneGuess(guessObject);
-        localStorage.setItem("game1Word3Stop1HurricaneLetters", x);
         //check if guess is right
         if (shallowEqual(x, game1Word3Stop1HurricaneAnswer.game1Word3Stop1HurricaneLetters)) {
             setHaveGuessedGame1Word3Stop1Hurricane(true);
-            localStorage.setItem("haveGuessedGame1Word3Stop1Hurricane", true);
             setIsGame1Word3Stop1HurricaneWrong(false);
-            localStorage.setItem("isGame1Word3Stop1HurricaneWrong", false);
         } else {
             console.log("wrong guess");
             setHaveGuessedGame1Word3Stop1Hurricane(true);
-            localStorage.setItem("haveGuessedGame1Word3Stop1Hurricane", true);
             setIsGame1Word3Stop1HurricaneWrong(true);
-            localStorage.setItem("isGame1Word3Stop1HurricaneWrong", true);
         }
     }
     /* end guessing states and answers for 1st  safe - 3 words */
@@ -357,16 +392,16 @@ export function Hurricane1Easy() {
         //check if guess is right
         if (shallowEqual(x,answer1.answer)) {
             setHaveGuessed1(true);
-            localStorage.setItem("haveGuessed1", true);
             setIsWrong1(false);
+            /* completing stop 1 */
+            console.log("stop 1 win game");
             setStopClock(true);
-            localStorage.setItem("isWrong1", false);
+            setGameComplete(true);
+            winGameFunction(true);
         } else {
             console.log("wrong guess");
             setHaveGuessed1(true);
-            localStorage.setItem("haveGuessed1", true);
             setIsWrong1(true);
-            localStorage.setItem("isWrong1", true);
         }
 
     }
@@ -514,7 +549,7 @@ export function Hurricane1Easy() {
                     onClick={()=>toggleBackpack()}>
                         <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png" />
                 </View>
-                <View className={isBackpackVisible ? "all-screen zIndex103 show-gradual" : "all-screen hide-gradual"} >
+                <View className={isBackpackVisible ? "all-screen zIndex103 show" : "all-screen hide"} >
                     <Button className="close-button" onClick={() => toggleBackpack()}>X</Button>
                     <h3>Backpack Contents</h3><br />
                     {gameBackpack.map((item) => {
@@ -701,15 +736,18 @@ export function Hurricane1Easy() {
                             onChange={(e) => setCommentsFunction(e.currentTarget.value)}
                             descriptiveText="Thank you for playing. Please let us know any and all comments you have about the game."
                         />
-                        <span className="small"> time: hint: {gameTimeHint} mins | real: {gameTime} mins | total: {gameTimeTotal} min</span><br />
+                        <span className="small">hint time: {gameTimeHint} mins | real time: {gameTime} mins |
+                        tot: time: { Number((gameTime + gameTimeHint + gameTimeTotal).toFixed(2))} min</span>
+                        <br />
                         <Button className="button small" onClick={() => goHome()}>Go Home - Play another Game!</Button>
                     </View>
                 ): null }
 
             <View className="time">
-                <span className="small"> time: hint: {gameTimeHint} mins | real: {gameTime} mins | total: {gameTimeTotal} min</span>
+                       <span className="small">hint time: {gameTimeHint} mins | real time: {gameTime} mins |
+                        tot: time: { Number((gameTime + gameTimeHint + gameTimeTotal).toFixed(2))} min</span>
             </View>
-            <View className={isHelpVisible ? "all-screen show-gradual" : "all-screen hide-gradual"}>
+            <View className={isHelpVisible ? "all-screen show" : "all-screen hide"}>
                 <Button className="close-button" onClick={() => toggleHelp()}>X</Button>
                     <View width="100%" padding="10px">
                         <View paddingBottom="10px">
@@ -727,35 +765,35 @@ export function Hurricane1Easy() {
                         <Button className="button small" onClick={() => toggleHint1()}>Open Hint (engraved on panel)</Button>
 
                         <br /><br />
-                        <div className={isHint4Visible ? "all-screen show-gradual" : "all-screen hide-gradual"}>
+                        <div className={isHint4Visible ? "all-screen show" : "all-screen hide"}>
                             <Button className="close-button" onClick={() => toggleHint4()}>X</Button>
                             <strong>Hint for name of field</strong>
                             <br /><br />There is a large sign on the fence at the field with the name.
                             <br /><br />
 
                         </div>
-                        <div className={isHint3Visible ? "all-screen show-gradual" : "all-screen hide-gradual"}>
+                        <div className={isHint3Visible ? "all-screen show" : "all-screen hide"}>
                             <Button className="close-button" onClick={() => toggleHint3()}>X</Button>
                             <strong>Hint for Sport:</strong>
                             <br /><br />People do play soccer and disc golf but the closest field to the shelter is the baseball field.
                             <br /><br />
 
                         </div>
-                        <div className={isHint2Visible ? "all-screen show-gradual" : "all-screen hide-gradual"}>
+                        <div className={isHint2Visible ? "all-screen show" : "all-screen hide"}>
                             <Button className="close-button" onClick={() => toggleHint2()}>X</Button>
                             <strong>Hint for name of house:</strong> <br /><br />
                             Near the intersection of Solomon and N. Campbell there is a house that people use for events.<br /><br />
                             Go over there and look for the name.
 
                         </div>
-                        <div className={isHint1Visible ? "all-screen show-gradual" : "all-screen hide-gradual"}>
+                        <div className={isHint1Visible ? "all-screen show" : "all-screen hide"}>
                             <Button className="close-button" onClick={() => toggleHint1()}>X</Button>
                             <strong>Hint for engraved on panel:</strong> <br /><br />
                             The <span className="bold-underline">first</span> is in reference to the first letter of the named field.<br />
                             <br />And the pattern continues with name of house and name of sport.<br />
 
                         </div>
-                        <Button className="button small" onClick={() => goHomeQuit()}>Quit Game and Go Home</Button> | <Button className="button small" onClick={() => toggleHelp()}>Close Help and Play</Button>
+                     <Button className="button small" onClick={() => toggleHelp()}>Close Help and Play</Button>
                 </View>
             </View>
             <View
@@ -789,6 +827,9 @@ export function Hurricane1Easy() {
                 <View>
                 <Image maxHeight="150px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/game-picture-jaycee-shelter.jpg" />
                 </View>
+                <View>
+                    <span className="small"> <strong>Remember, clock doesn't stop until you complete the stop.</strong></span></View>
+
                 <Button className="button" onClick={() => toggleIntro()}>I Want To Play!</Button>
                 |
                 <Button className="button" onClick={() => goHomeQuit()}>Back Home</Button>

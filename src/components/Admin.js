@@ -16,9 +16,11 @@ import {API, Auth} from "aws-amplify";
 import {listGames, gamesByDate, usersByEmail, listUsers} from "../graphql/queries";
 import { format } from 'date-fns'
 import {
-    createGame as createGameMutation,
-    createUser as createUserMutation,
-    createUserGamePlay as createUserGamePlayMutation
+    createGame,
+    createUser,
+    createUserGamePlay,
+    updateGameStats,
+    createGameStop
 } from "../graphql/mutations";
 import { useNavigate } from 'react-router-dom';
 
@@ -28,7 +30,9 @@ export function Admin() {
     const [userID, setUserID] = useState('');
     const [isGameDetailVisible, setIsGameDetailVisible] = useState(true);
     const [userAuth, setUserAuth] = useState({});
-
+    const [isAddStopVisible, setIsAddStopVisible] = useState(false);
+    const [gameID, setGameID] = useState();
+    const [gameName, setGameName] = useState();
     const {tokens} = useTheme();
     const { route } = useAuthenticator((context) => [context.route]);
     const navigate = useNavigate();
@@ -165,7 +169,7 @@ export function Admin() {
                 email: userAuth.email,
             };
             await API.graphql({
-                query: createUserMutation,
+                query: createUser,
                 variables: { input: data },
             });
         }
@@ -219,7 +223,7 @@ export function Admin() {
             gameDescriptionP: form.get("GameDescriptionP"),
         };
         await API.graphql({
-            query: createGameMutation,
+            query: createGame,
             variables: { input: data },
         });
         fetchGames();
@@ -235,7 +239,7 @@ export function Admin() {
             email: form.get("Email"),
         };
         await API.graphql({
-            query: createUserMutation,
+            query: createUser,
             variables: { input: data },
         });
         fetchUsers();
@@ -251,7 +255,7 @@ export function Admin() {
             userId: form.get("UserID"),
         };
         await API.graphql({
-            query: createUserGamePlayMutation,
+            query: createUserGamePlay,
             variables: { input: data },
         });
         event.target.reset();
@@ -301,6 +305,74 @@ export function Admin() {
         }
         return (
             <Heading level={4} marginBottom="10px">Welcome {props.userName.username} | {props.userName.email}</Heading>
+        )
+    }
+    //create item in createAddStop
+
+    async function createAddStop(event) {
+        event.preventDefault();
+        const form = new FormData(event.target);
+        console.log("gameID: " + gameID);
+        const data = {
+            gameID: gameID,
+            gameStopName: form.get("gameStopName"),
+            order: Number(form.get("order"))
+        };
+        console.log("data: " + JSON.stringify(data));
+        await API.graphql({
+            query: createGameStop,
+            variables: { input: data },
+        });
+        event.target.reset();
+        setIsAddStopVisible(false);
+        console.log("isAddStopVisible: " + isAddStopVisible);
+        AddStopView();
+    }
+    function showAddStop(prop) {
+        console.log("prop.gameID: " + prop.gameID);
+        setIsAddStopVisible(true);
+        setGameID(prop.gameID);
+        setGameName(prop.gameName);
+        AddStopView();
+    }
+
+    function hideAddStop() {
+        setIsAddStopVisible(false);
+        console.log("isAddStopVisible: " + isAddStopVisible);
+        AddStopView();
+    }
+
+    const AddStopView = () => {
+        let gameDetailClass = "all-screen hide-gradual";
+        if (isAddStopVisible) gameDetailClass = "all-screen show-gradual";
+        return (
+            <div className={gameDetailClass}>
+                <Button className="close-button" onClick={() => hideAddStop()}>X</Button>
+                <Heading level={3}>{gameName}</Heading>
+                <View as="form" margin="3rem 0" onSubmit={createAddStop}>
+                    <Flex direction="row" justifyContent="center" gap="1rem">
+                        <TextField
+                            name="gameStopName"
+                            placeholder="Game Stop Name"
+                            label="Game Stop Name"
+                            labelHidden
+                            variation="quiet"
+                            required
+                        />
+                        <TextField
+                            name="order"
+                            placeholder="order"
+                            label="Game Stop Order"
+                            labelHidden
+                            variation="quiet"
+                            required
+                        />
+                        <Button type="submit" variation="primary">
+                            Create Add Stop
+                        </Button>
+                    </Flex>
+                </View>
+            </div>
         )
     }
     return (
@@ -455,6 +527,7 @@ export function Admin() {
                                     Create Game
                                 </Button>
                             </Flex>
+
                             <Heading level={3}>Games</Heading>
                             <View>
                                 {games.map((game) => (
@@ -463,6 +536,7 @@ export function Admin() {
                                         <strong>gameDescriptionH2</strong>: {game.gameDescriptionH2} <br />
                                     <strong>gameDescriptionH3</strong>: {game.gameDescriptionH3} <br />
                                    <strong>gameDescriptionP</strong> {game.gameDescriptionP} <br />
+                                        <Button className="button" onClick={() => showAddStop({"gameID": game.id, "gameName": game.gameName})}>add stop</Button>
                                         <hr />
                                     </div>
 
@@ -474,7 +548,9 @@ export function Admin() {
                                     <div><strong>user id</strong>: {user.id} | <strong>email</strong>: {user.email} | <strong>userName</strong>: {user.userName}</div>
                                 ))}
                             </View>
+
                         </View>
+                        <AddStopView />
                     </View>) : (<div></div>)
                 }
             </View>

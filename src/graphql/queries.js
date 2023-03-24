@@ -47,10 +47,20 @@ export const getGameStats = /* GraphQL */ `
       gameID
       userEmail
       gameName
-      gameComments
       gameStates
-      gameTime
-      type
+      gameScore {
+        items {
+          id
+          gameStatsID
+          numberOfPlayers
+          gameComments
+          gameTotalTime
+          completed
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -68,10 +78,166 @@ export const listGameStats = /* GraphQL */ `
         gameID
         userEmail
         gameName
-        gameComments
         gameStates
-        gameTime
-        type
+        gameScore {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getGameScore = /* GraphQL */ `
+  query GetGameScore($id: ID!) {
+    getGameScore(id: $id) {
+      id
+      gameStatsID
+      numberOfPlayers
+      gameComments
+      gameTotalTime
+      completed
+      gameStopTime {
+        items {
+          id
+          gameScoreID
+          gameStopTime
+          gameStop
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      gameHintTime {
+        items {
+          id
+          gameScoreID
+          gameHintTime
+          gameStop
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listGameScores = /* GraphQL */ `
+  query ListGameScores(
+    $filter: ModelGameScoreFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listGameScores(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        gameStatsID
+        numberOfPlayers
+        gameComments
+        gameTotalTime
+        completed
+        gameStopTime {
+          nextToken
+        }
+        gameHintTime {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getGameHintTime = /* GraphQL */ `
+  query GetGameHintTime($id: ID!) {
+    getGameHintTime(id: $id) {
+      id
+      gameScoreID
+      gameHintTime
+      gameStop
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listGameHintTimes = /* GraphQL */ `
+  query ListGameHintTimes(
+    $filter: ModelGameHintTimeFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listGameHintTimes(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        gameScoreID
+        gameHintTime
+        gameStop
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getGameStopTime = /* GraphQL */ `
+  query GetGameStopTime($id: ID!) {
+    getGameStopTime(id: $id) {
+      id
+      gameScoreID
+      gameStopTime
+      gameStop
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listGameStopTimes = /* GraphQL */ `
+  query ListGameStopTimes(
+    $filter: ModelGameStopTimeFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listGameStopTimes(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        gameScoreID
+        gameStopTime
+        gameStop
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getGameStop = /* GraphQL */ `
+  query GetGameStop($id: ID!) {
+    getGameStop(id: $id) {
+      id
+      gameID
+      gameStopName
+      order
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listGameStops = /* GraphQL */ `
+  query ListGameStops(
+    $filter: ModelGameStopFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listGameStops(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        gameID
+        gameStopName
+        order
         createdAt
         updatedAt
       }
@@ -90,7 +256,18 @@ export const getGame = /* GraphQL */ `
       gameLocationPlace
       gameLocationCity
       gameType
-      gameStop
+      gameStopString
+      gameStop {
+        items {
+          id
+          gameID
+          gameStopName
+          order
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       type
       createdAt
       user {
@@ -123,7 +300,10 @@ export const listGames = /* GraphQL */ `
         gameLocationPlace
         gameLocationCity
         gameType
-        gameStop
+        gameStopString
+        gameStop {
+          nextToken
+        }
         type
         createdAt
         user {
@@ -194,7 +374,10 @@ export const getUserGamePlay = /* GraphQL */ `
         gameLocationPlace
         gameLocationCity
         gameType
-        gameStop
+        gameStopString
+        gameStop {
+          nextToken
+        }
         type
         createdAt
         user {
@@ -238,7 +421,7 @@ export const listUserGamePlays = /* GraphQL */ `
           gameLocationPlace
           gameLocationCity
           gameType
-          gameStop
+          gameStopString
           type
           createdAt
           updatedAt
@@ -278,10 +461,10 @@ export const gameStatsByGameID = /* GraphQL */ `
         gameID
         userEmail
         gameName
-        gameComments
         gameStates
-        gameTime
-        type
+        gameScore {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -309,10 +492,10 @@ export const gameStatsByUserEmail = /* GraphQL */ `
         gameID
         userEmail
         gameName
-        gameComments
         gameStates
-        gameTime
-        type
+        gameScore {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -320,50 +503,17 @@ export const gameStatsByUserEmail = /* GraphQL */ `
     }
   }
 `;
-export const gameStatsByGameNameAndType = /* GraphQL */ `
-  query GameStatsByGameNameAndType(
+export const gameStatByGameStatsID = /* GraphQL */ `
+  query GameStatByGameStatsID(
     $gameName: String!
-    $type: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelGameStatsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    gameStatsByGameNameAndType(
-      gameName: $gameName
-      type: $type
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        gameID
-        userEmail
-        gameName
-        gameComments
-        gameStates
-        gameTime
-        type
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const gameStatsByDate = /* GraphQL */ `
-  query GameStatsByDate(
-    $type: String!
     $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelGameStatsFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    gameStatsByDate(
-      type: $type
+    gameStatByGameStatsID(
+      gameName: $gameName
       createdAt: $createdAt
       sortDirection: $sortDirection
       filter: $filter
@@ -375,10 +525,134 @@ export const gameStatsByDate = /* GraphQL */ `
         gameID
         userEmail
         gameName
-        gameComments
         gameStates
-        gameTime
-        type
+        gameScore {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const gameScoreByGameStatsID = /* GraphQL */ `
+  query GameScoreByGameStatsID(
+    $gameStatsID: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelGameScoreFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    gameScoreByGameStatsID(
+      gameStatsID: $gameStatsID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        gameStatsID
+        numberOfPlayers
+        gameComments
+        gameTotalTime
+        completed
+        gameStopTime {
+          nextToken
+        }
+        gameHintTime {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const gameHintTimeByGameScoreID = /* GraphQL */ `
+  query GameHintTimeByGameScoreID(
+    $gameScoreID: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelGameHintTimeFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    gameHintTimeByGameScoreID(
+      gameScoreID: $gameScoreID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        gameScoreID
+        gameHintTime
+        gameStop
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const gameStopTimeByGameScoreID = /* GraphQL */ `
+  query GameStopTimeByGameScoreID(
+    $gameScoreID: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelGameStopTimeFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    gameStopTimeByGameScoreID(
+      gameScoreID: $gameScoreID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        gameScoreID
+        gameStopTime
+        gameStop
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const gameStopByGameID = /* GraphQL */ `
+  query GameStopByGameID(
+    $gameID: ID!
+    $order: ModelIntKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelGameStopFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    gameStopByGameID(
+      gameID: $gameID
+      order: $order
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        gameID
+        gameStopName
+        order
         createdAt
         updatedAt
       }
@@ -412,7 +686,10 @@ export const gamesByGameNameAndType = /* GraphQL */ `
         gameLocationPlace
         gameLocationCity
         gameType
-        gameStop
+        gameStopString
+        gameStop {
+          nextToken
+        }
         type
         createdAt
         user {
@@ -450,7 +727,12 @@ export const gamesByDate = /* GraphQL */ `
         gameLocationPlace
         gameLocationCity
         gameType
-        gameStop
+        gameStopString
+        gameStop {
+          items {
+            gameStopName
+          }
+        }
         type
         createdAt
         user {
@@ -520,7 +802,7 @@ export const userGamePlaysByGameId = /* GraphQL */ `
           gameLocationPlace
           gameLocationCity
           gameType
-          gameStop
+          gameStopString
           type
           createdAt
           updatedAt
@@ -568,7 +850,7 @@ export const userGamePlaysByUserId = /* GraphQL */ `
           gameLocationPlace
           gameLocationCity
           gameType
-          gameStop
+          gameStopString
           type
           createdAt
           updatedAt
