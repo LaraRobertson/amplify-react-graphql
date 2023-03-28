@@ -8,6 +8,8 @@ import { Home } from './components/Home';
 import { Admin } from './components/Admin';
 import { Layout } from './components/Layout';
 import { Waiver } from './components/Waiver';
+import { LeaderBoard } from './components/LeaderBoard';
+import { MyStats } from './components/MyStats';
 
 /* Games */
 import { Thief1 } from './games/thief1/Thief1';
@@ -19,14 +21,12 @@ import { Hurricane1Stop2 } from './games/hurricane1/Hurricane1Stop2';
 import './App.css';
 import './games/jaycee.css';
 
-/* test branch */
-
 function MyRoutes() {
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Layout/>}>
-                    <Route index element={<Home />} />
+                    <Route index element={<Home />}/>
                     <Route
                         path="/admin"
                         element={
@@ -72,7 +72,19 @@ function MyRoutes() {
                         element={
                             <Login />
                         }
-                        />
+                    />
+                    <Route
+                        path="/leaderboard"
+                        element={
+                            <LeaderBoard />
+                        }
+                    />
+                    <Route
+                        path="/myStats"
+                        element={
+                            <MyStats />
+                        }
+                    />
                 </Route>
             </Routes>
         </BrowserRouter>

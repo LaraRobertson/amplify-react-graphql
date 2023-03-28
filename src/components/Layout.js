@@ -1,4 +1,5 @@
 // components/Layout.js
+// components/Layout.js
 import React, {useEffect, useState} from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import {useAuthenticator, Flex, Button, useTheme, Heading, View, Image, Authenticator,Card, Text, TextField, TextAreaField} from '@aws-amplify/ui-react';
@@ -38,7 +39,6 @@ export function Layout() {
             id: gameStatID,
             gameStates: JSON.stringify(gameStatsValues)
         };
-
         const apiGameStatsUpdate = await API.graphql({ query: updateGameStatsMutation, variables: {input: newGameStats}});*/
         /* end save game stats */
         setUserAuth({});
@@ -49,24 +49,29 @@ export function Layout() {
         localStorage.setItem("gameName","");
         navigate('/');
     }
+
+    function myStats() {
+        navigate('/myStats');
+    }
+
     async function save() {
         console.log("save");
         try {
-        /* update game state */
-        /* get values from local variables - need gamename */
-        const gameStatID = localStorage.getItem("gameStatsID");
-        const waiverSigned = localStorage.getItem("agreeToWaiver");
-        /* update game state */
-        /* get values from local variables - need gamename and email */
-        const gameStatsValues = {
-            waiverSigned: waiverSigned,
-        }
-        const newGameStats = {
-            id: gameStatID,
-            gameStates: JSON.stringify(gameStatsValues)
-        };
+            /* update game state */
+            /* get values from local variables - need gamename */
+            const gameStatID = localStorage.getItem("gameStatsID");
+            const waiverSigned = localStorage.getItem("agreeToWaiver");
+            /* update game state */
+            /* get values from local variables - need gamename and email */
+            const gameStatsValues = {
+                waiverSigned: waiverSigned,
+            }
+            const newGameStats = {
+                id: gameStatID,
+                gameStates: JSON.stringify(gameStatsValues)
+            };
 
-        const apiGameStatsUpdate= await API.graphql({ query: updateGameStatsMutation, variables: {input: newGameStats}});
+            const apiGameStatsUpdate= await API.graphql({ query: updateGameStatsMutation, variables: {input: newGameStats}});
             setErrorInternet(false);
         } catch (err) {
             console.log('errorInternet: ', err);
@@ -97,7 +102,7 @@ export function Layout() {
             setUserAuth({
                 email: user?.signInUserSession?.idToken?.payload?.email
             });
-           // setUserAuthEmail(user?.signInUserSession?.idToken?.payload?.email);
+            // setUserAuthEmail(user?.signInUserSession?.idToken?.payload?.email);
         })
             .catch(err => {
                 console.log(err)
@@ -124,7 +129,7 @@ export function Layout() {
 
     const location = useLocation();
     const navigate = useNavigate();
-   // const { tokens } = useTheme();
+    // const { tokens } = useTheme();
     console.log("location: " + location.pathname);
 
     return (
@@ -133,18 +138,17 @@ export function Layout() {
             margin="10px auto 10px auto">
             {(route === 'authenticated') && (location.pathname === '/') ? (
                 <View padding="0 10px">
-                        <header>
-                            <View>
-                               <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/logo-escapeout.png" />
-                            </View>
-                        </header>
-                        <View padding=".5rem 0">
-                            <Button onClick={() => goHome()}>Home</Button> | <Button
-                            onClick={() => logOut()}>Logout</Button> | <Button
-                            onClick={() => localStorage.clear()}>Clear</Button>
+                    <header>
+                        <View>
+                            <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/logo-escapeout.png" />
                         </View>
+                    </header>
+                    <View padding=".5rem 0">
+                        <Button onClick={() => myStats()}>My Stats</Button> | <Button
+                        onClick={() => logOut()}>Logout</Button>
+                    </View>
                 </View>) : null}
-            {(route !== 'authenticated') && (location.pathname === '/')||(location.pathname === '/login') ? (
+            {(route !== 'authenticated') && (location.pathname === '/')||(location.pathname === '/login')||(location.pathname === '/leaderboard') ? (
                 <View padding="0 10px">
                     <header>
                         <View>
@@ -164,8 +168,8 @@ export function Layout() {
                             </View>
                             <hr />
                             <View paddingTop="10px">
-                                {location.pathname === '/login' ? (
-                                    <Button onClick={() => navigate('/')}>Home</Button>
+                                {location.pathname === '/login' || location.pathname === '/leaderboard' ? (
+                                    <Button onClick={() => navigate('/')}>Back to Games</Button>
                                 ) : (
                                     <div>
                                         <View paddingBottom="10px">Fell free to create an account and test:</View>
@@ -181,7 +185,7 @@ export function Layout() {
                 </View>) : null}
             <ErrorComponent />
             <Outlet />
-            {(location.pathname === '/')||(location.pathname === '/login') ? (
+            {(location.pathname === '/')||(location.pathname === '/login')||(location.pathname === '/leaderboard') ? (
                 <View padding="40px 10px 0 10px"> © 2023 EscapeOut.Games</View>
             ) : null}
         </View>

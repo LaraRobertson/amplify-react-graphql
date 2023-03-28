@@ -131,7 +131,7 @@ export function Home() {
                     <View><h3>If an object disappears from screen when you click on it, it may be in your backpack.</h3></View>
 
                 </Grid>
-                </div>
+            </div>
         )
     }
 
@@ -140,7 +140,11 @@ export function Home() {
         console.log("go to page: " + '/' + path);
         navigate('/' + path);
     }
-
+    async function leaderBoard(gameDetails) {
+        localStorage.setItem("gameID",gameDetails.gameID);
+        localStorage.setItem("gameName",gameDetails.gameName);
+        navigate('/leaderboard');
+    }
     async function goToGame(gameDetails) {
         localStorage.setItem("gameName",gameDetails.gameName);
         localStorage.setItem("gameID",gameDetails.gameID);
@@ -159,7 +163,7 @@ export function Home() {
             console.log("need to add game stat");
             const data = {
                 gameID: gameDetails.gameID,
-                userEmail: userDB.email,
+                userEmail: userAuth.email,
                 gameName: gameDetails.gameName
             };
             console.log("data for createGameStats: " + JSON.stringify(data));
@@ -222,6 +226,8 @@ export function Home() {
                             /* add new game score */
                             const data = {
                                 gameStatsID: gamesStatsFromAPI.id,
+                                gameID: gamesStatsFromAPI.gameID,
+                                gameTotalTime: 0,
                                 completed: false
                             };
                             await API.graphql({
@@ -238,9 +244,9 @@ export function Home() {
                         localStorage.setItem("gameStatsID",gamesStatsFromAPI.id);
                         let path = gameDetails.gameName.replace(/\s+/g, '-').toLowerCase();
                         console.log("go to page: " + '/' + path);
-                       navigate('/' + path);
+                        navigate('/' + path);
                     } else {
-                       navigate('/waiver');
+                        navigate('/waiver');
                     }
                 } else {
                     navigate('/waiver');
@@ -317,27 +323,29 @@ export function Home() {
         } catch (err) {
             console.log('error fetchUserDB..', err)
         }
-   }
+    }
 
-   async function fetchUserGamePlay() {
-       console.log("fetchUserGamePlay - userID: " + userDB.id);
-       /* check if user in database, if not create user and games */
-       try {
-            const apiUserGamePlay =  await API.graphql({
-                query: userGamePlaysByUserId,
-                variables: { userId: userDB.id}
-            });
-            console.log("apiUserGamePlay: " + JSON.stringify(apiUserGamePlay.data.userGamePlaysByUserId.items));
-            /* create array of gameIDs */
-            const gameIDsUser = apiUserGamePlay.data.userGamePlaysByUserId.items;
-            const gameIDsUserArray = gameIDsUser.map(item => {
-                return item.gameId
-            })
-            console.log('gameIDsUserArray: ' + gameIDsUserArray);
-            setGamesIDUser(gameIDsUserArray);
-       } catch (err) {
-           console.log('error fetchUserGamePlay..', err)
-       }
+    async function fetchUserGamePlay() {
+        console.log("fetchUserGamePlay - userID: " + userDB.id);
+        /* check if user in database, if not create user and games */
+        if (userDB.id != null){
+            try {
+                const apiUserGamePlay =  await API.graphql({
+                    query: userGamePlaysByUserId,
+                    variables: { userId: userDB.id}
+                });
+                console.log("apiUserGamePlay: " + JSON.stringify(apiUserGamePlay.data.userGamePlaysByUserId.items));
+                /* create array of gameIDs */
+                const gameIDsUser = apiUserGamePlay.data.userGamePlaysByUserId.items;
+                const gameIDsUserArray = gameIDsUser.map(item => {
+                    return item.gameId
+                })
+                console.log('gameIDsUserArray: ' + gameIDsUserArray);
+                setGamesIDUser(gameIDsUserArray);
+            } catch (err) {
+                console.log('error fetchUserGamePlay..', err)
+            }
+        }
     }
 
     async function fetchGamesFree() {
@@ -370,8 +378,8 @@ export function Home() {
         const gameNameSaved = localStorage.getItem("gameName");
         if (gameNameSaved !== null && gameNameSaved != '') {
             console.log("go to page: " + gameNameSaved);
-           setGameNameLink(true);
-           setGameName(gameNameSaved);
+            setGameNameLink(true);
+            setGameName(gameNameSaved);
         } else {
             setGameNameLink(false);
             setGameName('');
@@ -394,10 +402,13 @@ export function Home() {
         /* get game ids from usergameplay */
         console.log("***useEffect***:  fetchUserGamePlay()");
         fetchUserGamePlay();
-    }, [userDB])
+    }, [userAuth])
 
     useEffect(() => {
         console.log("***useEffect***: userAuth.email: " + userAuth.email);
+    });
+    useEffect(() => {
+        console.log("***useEffect***: userDB: " + userDB);
     });
 
     useEffect(() => {
@@ -418,9 +429,9 @@ export function Home() {
         console.log("props.userName: " + props);
         /*for (const key in props) {
             console.log(`${key}: ${ props[key]}`);*/
-            /* for (const key1 in dataTest[key]) {
-                 console.log(`${key1}: ${dataTest[key][key1]}`);
-             }*/
+        /* for (const key1 in dataTest[key]) {
+             console.log(`${key1}: ${dataTest[key][key1]}`);
+         }*/
         /*}*/
         return (
             <View marginBottom="10px">Welcome {props.userName.username} | {props.userName.email}</View>
@@ -433,80 +444,86 @@ export function Home() {
             maxWidth="900px"
             margin="10px auto 10px auto">
             <GameDetailView />
-        {route === 'authenticated' ? (
-            <View padding="0 10px">
-                <HeadingComponent userName = {userAuth} />
-                {gameNameLink ?
-                    <div>currently playing {gameName}: <Button style={{display:'inline'}} className={buttonDetailClassShow} onClick={() => goToGameSet({gameName:gameName,gameID:''})}>
-                       go to game
-                    </Button></div> : <div></div>
-                }
-                <Heading level={"5"}>
-                    Games:
-                </Heading>
+            {route === 'authenticated' ? (
+                <View padding="0 10px">
+                    <HeadingComponent userName = {userAuth} />
+                    {gameNameLink ?
+                        <div>currently playing {gameName}: <Button style={{display:'inline'}} className={buttonDetailClassShow} onClick={() => goToGameSet({gameName:gameName,gameID:''})}>
+                            go to game
+                        </Button></div> : <div></div>
+                    }
+                    <Heading level={"5"}>
+                        Games:
+                    </Heading>
 
-                <Flex
-                    wrap="wrap"
-                    gap="1rem"
-                    paddingTop="20px"
-                    direction="row"
-                    justifyContent="flex-start"
-                >
-                    {games.map((game,index) => (
-                        <Card className="gameCard" variation="elevated"  key={game.id || game.gameName} >
-                            <Text className="bold">{game.gameName} <span className="small">({game.gameType})</span></Text>
-                            <Text><span className="italics">Location</span>: {game.gameLocationPlace}</Text>
-                            <Text><span className="italics">City</span>: {game.gameLocationCity}</Text>
-                            <Text><span className="italics">Stops</span>: {game.gameStop.items.length}</Text>
-
-                            {(gamesIDUser.includes(game.id) || game.gameType === "free") ?
-                                (<div>
-                                    <Button onClick={() => goToGame({gameName:game.gameName,gameID:game.id})}>
-                                        go to game
-                                    </Button>
-                                </div>) :
-                                (<div></div>)
-                            }
-                            <Button className={buttonDetailClassShow} onClick={() => showGameDetail(index)} >Show Game Details</Button>
-                        </Card>
-
-                    ))}
-                </Flex>
-                {userAuth.email === "lararobertson70@gmail.com" ? (
-                    <View
-                        maxWidth="800px"
-                        margin="10px auto 10px auto"
+                    <Flex
+                        wrap="wrap"
+                        gap="1rem"
+                        paddingTop="20px"
+                        direction="row"
+                        justifyContent="flex-start"
                     >
-                        <Button onClick={() => navigate('/admin')}>Admin</Button>
-                    </View>) : (<div></div>)
-                }
-            </View>
+                        {games.map((game,index) => (
+                            <Card className="gameCard" variation="elevated"  key={game.id || game.gameName} >
+                                <Text className="bold">{game.gameName} <span className="small">({game.gameType})</span></Text>
+                                <Text><span className="italics">Location</span>: {game.gameLocationPlace}</Text>
+                                <Text><span className="italics">City</span>: {game.gameLocationCity}</Text>
+                                <Text><span className="italics">Stops</span>: {game.gameStop.items.length}</Text>
+
+                                {(gamesIDUser.includes(game.id) || game.gameType === "free") ?
+                                    (<div>
+                                        <Button onClick={() => goToGame({gameName:game.gameName,gameID:game.id})}>
+                                            go to game
+                                        </Button>
+                                    </div>) :
+                                    (<div></div>)
+                                }
+                                <Button className={buttonDetailClassShow} onClick={() => leaderBoard({gameName:game.gameName,gameID:game.id})}>
+                                    Leader Board
+                                </Button>
+                                <Button className={buttonDetailClassShow} onClick={() => showGameDetail(index)} >Show Game Details</Button>
+                            </Card>
+
+                        ))}
+                    </Flex>
+                    {userAuth.email === "lararobertson70@gmail.com" ? (
+                        <View
+                            maxWidth="800px"
+                            margin="10px auto 10px auto"
+                        >
+                            <Button onClick={() => navigate('/admin')}>Admin</Button>
+                        </View>) : (<div></div>)
+                    }
+                </View>
             ): (
-            <View padding="0 10px">
-                <Heading level={"5"}>
-                    Games:
-                </Heading>
+                <View padding="0 10px">
+                    <Heading level={"5"}>
+                        Games:
+                    </Heading>
 
-                <Flex
-                    wrap="wrap"
-                    gap="1rem"
-                    paddingTop="20px"
-                    direction="row"
-                    justifyContent="flex-start"
-                >
-                    {games.map((game,index) => (
-                        <Card className="gameCard" variation="elevated" key={game.id || game.gameName}>
-                            <Text className="bold">{game.gameName} <span className="small"> ({game.gameType})</span></Text>
-                            <Text><span className="italics">Location</span>: {game.gameLocationPlace}</Text>
-                            <Text><span className="italics">City</span>: {game.gameLocationCity}</Text>
-                            <Text><span className="italics">Stops</span>: {game.gameStop.items.length}</Text>
-                            <Button className={buttonDetailClassShow} onClick={() => showGameDetail(index)} >Show Game Details</Button>
-                        </Card>
+                    <Flex
+                        wrap="wrap"
+                        gap="1rem"
+                        paddingTop="20px"
+                        direction="row"
+                        justifyContent="flex-start"
+                    >
+                        {games.map((game,index) => (
+                            <Card className="gameCard" variation="elevated" key={game.id || game.gameName}>
+                                <Text className="bold">{game.gameName} <span className="small"> ({game.gameType})</span></Text>
+                                <Text><span className="italics">Location</span>: {game.gameLocationPlace}</Text>
+                                <Text><span className="italics">City</span>: {game.gameLocationCity}</Text>
+                                <Text><span className="italics">Stops</span>: {game.gameStop.items.length}</Text>
+                                <Button className={buttonDetailClassShow} onClick={() => leaderBoard({gameName:game.gameName,gameID:game.id})}>
+                                    Leader Board
+                                </Button>
+                                <Button className={buttonDetailClassShow} onClick={() => showGameDetail(index)} >Show Game Details</Button>
+                            </Card>
 
-                    ))}
-                </Flex>
-            </View>
-        )}
+                        ))}
+                    </Flex>
+                </View>
+            )}
         </View>
     );
 }
