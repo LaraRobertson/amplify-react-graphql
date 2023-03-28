@@ -781,7 +781,9 @@ export const gamesByDate = /* GraphQL */ `
         gameType
         gameStopString
         gameStop {
-          nextToken
+          items {
+            gameStopName
+          }
         }
         type
         createdAt
