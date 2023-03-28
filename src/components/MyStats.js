@@ -49,35 +49,35 @@ export function MyStats() {
         myStatsFunction();
     }, []);
     return (
-            <View margin="1rem 0"
-                  maxWidth="800px"
-                  margin="10px auto 10px auto">
+        <View margin="1rem 0"
+              maxWidth="800px"
+              margin="10px auto 10px auto">
 
-                    <View
-                        maxWidth="800px"
-                        margin="10px auto 10px auto"
-                    >
-                        <Heading level={2}>LeaderBoard</Heading>
-                            <Heading level={3}>{localStorage.getItem("gameName")}</Heading>
-                        <div className="table-container" role="table" aria-label="Destinations">
-                            <div className="flex-table header" role="rowgroup">
-                                <div className="flex-row first" role="columnheader">Team Name</div>
-                                <div className="flex-row" role="columnheader">Rank</div>
-                                <div className="flex-row" role="columnheader">Team Score</div>
-                                <div className="flex-row" role="columnheader"># Players</div>
-                                <div className="flex-row" role="columnheader">Played</div>
-                            </div>
-                                {myStats.map((game, index) => (
-                                    <div className="flex-table row" role="rowgroup" key={game.id}>
-                                        <div className="flex-row first" role="cell">{game.teamName}</div>
-                                        <div className="flex-row" role="cell">{index}</div>
-                                        <div className="flex-row" role="cell">{game.gameTotalTime} mins</div>
-                                        <div className="flex-row" role="cell">{game.numberOfPlayers}</div>
-                                        <div className="flex-row" role="cell"> {format(new Date(game.createdAt), "MM/dd/yyyy H:mma")}</div>
-                                    </div>
-                                ))}
-                            </div>
-                    </View>
+            <View
+                maxWidth="800px"
+                margin="10px auto 10px auto"
+            >
+                <Heading level={2}>LeaderBoard</Heading>
+                <Heading level={3}>{localStorage.getItem("gameName")}</Heading>
+                <div className="table-container" role="table" aria-label="Destinations">
+                    <div className="flex-table header" role="rowgroup">
+                        <div className="flex-row first" role="columnheader">Team Name</div>
+                        <div className="flex-row" role="columnheader">Rank</div>
+                        <div className="flex-row" role="columnheader">Team Score</div>
+                        <div className="flex-row" role="columnheader"># Players</div>
+                        <div className="flex-row" role="columnheader">Played</div>
+                    </div>
+                    {myStats.map((game, index) => (
+                        <div className="flex-table row" role="rowgroup" key={game.id}>
+                            <div className="flex-row first" role="cell">{game.teamName}</div>
+                            <div className="flex-row" role="cell">{index}</div>
+                            <div className="flex-row" role="cell">{game.gameTotalTime} mins</div>
+                            <div className="flex-row" role="cell">{game.numberOfPlayers}</div>
+                            <div className="flex-row" role="cell"> {format(new Date(game.createdAt), "MM/dd/yyyy H:mma")}</div>
+                        </div>
+                    ))}
+                </div>
             </View>
+        </View>
     );
 }

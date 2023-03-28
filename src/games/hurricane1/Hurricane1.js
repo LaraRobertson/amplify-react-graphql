@@ -83,6 +83,7 @@ export function Hurricane1() {
     const navigate = useNavigate();
     function removeLocalStorage() {
         localStorage.removeItem("agreeToWaiver");
+        localStorage.removeItem("gameID");
         localStorage.removeItem("gameStatsID");
         localStorage.removeItem("gameScoreID");
         localStorage.removeItem("gameName");
@@ -214,7 +215,7 @@ export function Hurricane1() {
         const data = {
             id: gameScoreID,
             numberOfPlayers: numberOfPlayers,
-            gameTotalTime: GameTimeTotalVar,
+            gameTotalTime:  Number(GameTimeTotalVar),
             completed: gameComplete
         };
         const apiUpdateGameScore = await API.graphql({
@@ -299,10 +300,10 @@ export function Hurricane1() {
         let gameScoreID = gameScoreFromAPI.data.gameScoreByGameStatsID.items[0].id;
         let testObject = gameStopNameArrayConst[0];
         for (const key in testObject) {
-        console.log(`${key}: ${ testObject[key]}`);
-        for (const key1 in testObject[key]) {
-             //console.log(`${key1}: ${testObject[key][key1]}`);
-         }
+            console.log(`${key}: ${ testObject[key]}`);
+            for (const key1 in testObject[key]) {
+                //console.log(`${key1}: ${testObject[key][key1]}`);
+            }
         }
         let GameStopIndex = Number(localStorage.getItem("gameStop"))-1;
         setGameStopNameArray(gameStopNameArrayConst);
@@ -357,9 +358,9 @@ export function Hurricane1() {
     const [haveGuessed1,setHaveGuessed1] = useState();
     const [isWrong1, setIsWrong1] = useState(true);
     const answer1 = {'numbers':'78493'};
-   /* useEffect(() => {
-        console.log("***useEffect***: guess1.numbers: " + guess1.numbers);
-    });*/
+    /* useEffect(() => {
+         console.log("***useEffect***: guess1.numbers: " + guess1.numbers);
+     });*/
     function setGuess1Numbers(guess) {
         var x = guess;
         console.log("guess1 x: " + x);
@@ -512,9 +513,9 @@ export function Hurricane1() {
     function toggleSafeInfoStop2() {
         isSafeInfoStop2Visible ? setIsSafeInfoStop2Visible(false) : setIsSafeInfoStop2Visible(true);
     }
-   /* useEffect(() => {
-        console.log("***useEffect***: isSafeInfoStop2Visible: " + isSafeInfoStop2Visible);
-    });*/
+    /* useEffect(() => {
+         console.log("***useEffect***: isSafeInfoStop2Visible: " + isSafeInfoStop2Visible);
+     });*/
 
     /* use key in key hole */
     const [isKeyUsed, setIsKeyUsed] = useState(false);
@@ -968,8 +969,8 @@ export function Hurricane1() {
                         {gameBackpack.map((item) => {
                             return (
                                 <div key={item.key}>
-                                        <Image alt={item.src} onClick={() => showItemContents(item.key)}
-                                               className={item.key} src={item.src}/>
+                                    <Image alt={item.src} onClick={() => showItemContents(item.key)}
+                                           className={item.key} src={item.src}/>
                                 </div>
                             )
                         })}
@@ -1156,7 +1157,7 @@ export function Hurricane1() {
 
                         </div>
                         <Button className="button small" onClick={() => toggleHelp()}>Close Help and
-                        Play</Button>
+                            Play</Button>
                     </View>
                 </View>
                 <View
@@ -1201,12 +1202,12 @@ export function Hurricane1() {
 
                         <span className="small"> <strong>Your score is based on your time to complete each stop.
                             Each Hint costs 5 minutes. Clock starts when you hit "Tap to Play". Clock doesn't stop until you complete the stop.</strong></span>
-                    <br />
+                        <br />
 
                         <Button className="button" onClick={() => toggleIntro()}>Tap To Play</Button>
                         |
                         <Button className="button" onClick={() => goHomeQuit()}>Back to Games</Button>
-                     </View>
+                    </View>
 
                     <View ariaLabel="stop 1 Time" className="time">
                         <Button className="hide button small" onClick={() => completeStop()}>complete stop (REMOVE)</Button>
@@ -1475,7 +1476,7 @@ export function Hurricane1() {
                         <span className="small"> <strong>Remember, clock doesn't stop until you complete the stop.</strong></span></View>
                     <View><span className="small"><strong>Total Time So Far</strong>: { Number((gameTime + gameTimeHint + gameTimeTotal).toFixed(2)) } min</span></View>
 
-                        <Button className="button" onClick={() => toggleIntro()}>I Want To Play!</Button>
+                    <Button className="button" onClick={() => toggleIntro()}>I Want To Play!</Button>
                 </View>
             </View>
         )
