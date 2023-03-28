@@ -20,7 +20,7 @@ import {
     createUser,
     createUserGamePlay,
     updateGameStats,
-    createGameStop
+    createGameStop, createGameScore
 } from "../graphql/mutations";
 import { useNavigate } from 'react-router-dom';
 
@@ -206,25 +206,24 @@ export function Admin() {
     }
 
     //create new game
-    async function createGame(event) {
+    async function createGameFunction(event) {
         console.log("createGame");
         event.preventDefault();
         const form = new FormData(event.target);
-        const image = form.get("image");
+        //const image = form.get("image");
         const data = {
             gameName: form.get("GameName"),
             gameType: form.get("GameType"),
-            gameStop: form.get("GameStop"),
             gameLocationPlace: form.get("GameLocationPlace"),
             gameLocationCity: form.get("GameLocationCity"),
             type: "game",
             gameDescriptionH2: form.get("GameDescriptionH2"),
             gameDescriptionH3: form.get("GameDescriptionH3"),
-            gameDescriptionP: form.get("GameDescriptionP"),
+            gameDescriptionP: form.get("GameDescriptionP")
         };
         await API.graphql({
             query: createGame,
-            variables: { input: data },
+            variables: {input: data}
         });
         fetchGames();
         event.target.reset();
@@ -432,7 +431,7 @@ export function Admin() {
                                 </Button>
                             </Flex>
                         </View>
-                        <View as="form" margin="3rem 0" onSubmit={createGame}>
+                        <View as="form" margin="3rem 0" onSubmit={createGameFunction}>
                             <Flex direction="row" justifyContent="center" gap="1rem">
                                 <TextField
                                     name="GameName"
@@ -456,7 +455,6 @@ export function Admin() {
                                     label="Game Stop"
                                     labelHidden
                                     variation="quiet"
-                                    required
                                 />
                                 <TextField
                                     name="GameLocationPlace"
