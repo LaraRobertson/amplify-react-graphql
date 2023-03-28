@@ -36,6 +36,7 @@ export function Hurricane1() {
     const [gameID, setGameID] = useState('');
     const [numberOfTimes, setNumberOfTimes] = useState(0);
     const [gameStop,setGameStop] = useState(0);
+    const [gameStopName,setGameStopName] = useState(0);
     const [gameStopNameArray,setGameStopNameArray] = useState('');
     const [gameComplete, setGameComplete] = useState(false);
     /* end set in local storage too */
@@ -52,6 +53,7 @@ export function Hurricane1() {
     const [hintTime3,setHintTime3] = useState(0);
     const [hintTime4,setHintTime4] = useState(0);
     const [isIntroVisible, setIsIntroVisible] = useState(true);
+
     function toggleIntro() {
         console.log("gameTime: " + gameTime);
         console.log("gameTimeTotal: " + gameTimeTotal);
@@ -79,7 +81,26 @@ export function Hurricane1() {
         setIsIntroVisible(true);
     }
     const navigate = useNavigate();
+    function removeLocalStorage() {
+        localStorage.removeItem("agreeToWaiver");
+        localStorage.removeItem("gameStatsID");
+        localStorage.removeItem("gameScoreID");
+        localStorage.removeItem("gameName");
+        localStorage.removeItem("gameNameID");
+        localStorage.removeItem("gameTime")
+        localStorage.removeItem("gameTimeHint");
+        localStorage.removeItem("gameTimeTotal");
+        localStorage.removeItem("gameStop");
+        localStorage.removeItem("gameStopNameArray");
+        localStorage.removeItem("numberOfTimes");
+        localStorage.removeItem("numberOfPlayers");
+        localStorage.removeItem("key");
+        localStorage.removeItem("prybar");
+        localStorage.removeItem("shovel");
+        localStorage.removeItem("key2");
+    }
     function goHomeQuit() {
+        removeLocalStorage();
         navigate('/');
     }
     async function goHome() {
@@ -90,20 +111,7 @@ export function Hurricane1() {
             completed: true
         };
         const apiGameScoreUpdate = await API.graphql({ query: updateGameScore, variables: {input: newGameStats}});
-        localStorage.removeItem("agreeToWaiver");
-        localStorage.removeItem("gameStatsID");
-        localStorage.removeItem("gameScoreID");
-        localStorage.removeItem("gameName");
-        localStorage.removeItem("gameTime");
-        localStorage.removeItem("gameTimeTotal");
-        localStorage.removeItem("gameStop");
-        localStorage.removeItem("gameStopNameArray");
-        localStorage.removeItem("numberOfTimes");
-        localStorage.removeItem("numberOfPlayers");
-        localStorage.removeItem("key");
-        localStorage.removeItem("prybar");
-        localStorage.removeItem("shovel");
-        localStorage.removeItem("key2");
+        removeLocalStorage();
         navigate('/');
     }
 
@@ -285,18 +293,21 @@ export function Hurricane1() {
         setGameStatsID(localStorage.getItem("gameStatsID"));
         /* get gameStop name */
         const gameStopFromAPI = await getGameStopName();
-        let gameStopNameArray = gameStopFromAPI.data.gameStopByGameID.items;
+        let gameStopNameArrayConst = gameStopFromAPI.data.gameStopByGameID.items;
         /* get gameScore Id */
         const gameScoreFromAPI = await getGameScoreID();
         let gameScoreID = gameScoreFromAPI.data.gameScoreByGameStatsID.items[0].id;
-        /*let testObject = gameStopNameArray[0];
+        let testObject = gameStopNameArrayConst[0];
         for (const key in testObject) {
-    console.log(`${key}: ${ testObject[key]}`);
+        console.log(`${key}: ${ testObject[key]}`);
         for (const key1 in testObject[key]) {
              //console.log(`${key1}: ${testObject[key][key1]}`);
          }
-        }*/
-        setGameStopNameArray(gameStopFromAPI.data.gameStopByGameID.items);
+        }
+        let GameStopIndex = Number(localStorage.getItem("gameStop"))-1;
+        setGameStopNameArray(gameStopNameArrayConst);
+        setGameStopName(gameStopNameArrayConst[GameStopIndex].gameStopName);
+        console.log("gameStopNameArrayConst[0].gameStopName (setGameStopFunction): " + gameStopNameArrayConst[GameStopIndex].gameStopName);
         localStorage.setItem("gameStopNameArray", gameStopFromAPI.data.gameStopByGameID.items);
         setGameScoreID(gameScoreID);
         localStorage.setItem("gameScoreID", gameScoreID);
@@ -956,11 +967,9 @@ export function Hurricane1() {
                         <h3>Backpack Contents</h3><br/>
                         {gameBackpack.map((item) => {
                             return (
-                                <div className="wp-block-columns" key={item.key}>
-                                    <div className="wp-block-column">
+                                <div key={item.key}>
                                         <Image alt={item.src} onClick={() => showItemContents(item.key)}
                                                className={item.key} src={item.src}/>
-                                    </div>
                                 </div>
                             )
                         })}
@@ -1154,8 +1163,10 @@ export function Hurricane1() {
                     ariaLabel="stop 1 intro"
                     textAlign="center"
                     className={isIntroVisible ? "all-screen show" : "hide"}>
-                    <h3>Game Goals: Find Sandbags!</h3>
-                    {numberOfPlayersError}
+                    <h3>{gameStopName}</h3>
+                    <span className="small"> <strong>Game Goals: Find Sandbags!</strong></span><br />
+
+                    <span class="red">{numberOfPlayersError}</span>
                     <SelectField
                         label="numberOfPlayers"
                         className="num-Player"
@@ -1181,22 +1192,27 @@ export function Hurricane1() {
                         <div> You have played {localStorage.getItem("numberOfTimes")} time(s) before - good luck this
                             time! </div>
                     ) : null}
-                    <h4>Start Playing Game When You are Here:</h4>
+                    <h4>Start Playing Stop {gameStop} When You are Here:</h4>
                     <View>
                         <Image maxHeight="150px"
                                src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/game-picture-jaycee-shelter.jpg"/>
                     </View>
                     <View>
-                    <span ariaLabel="stop 1 intro" className="small"> <strong>Remember, clock doesn't stop until you complete the stop.</strong></span></View>
-                    <Button className="button" onClick={() => toggleIntro()}>I Want To Play!</Button>
-                    |
-                    <Button className="button" onClick={() => goHomeQuit()}>Back Home</Button>
-                </View>
 
-                <View ariaLabel="stop 1 Time" className="time">
-                    <Button className="hide button small" onClick={() => completeStop()}>complete stop (REMOVE)</Button>
-                    <span className="small">hint time: {gameTimeHint} mins | real time: {gameTime} mins |
-                        tot: time: { Number((gameTime + gameTimeHint + gameTimeTotal).toFixed(2))} min</span>
+                        <span className="small"> <strong>Your score is based on your time to complete each stop.
+                            Each Hint costs 5 minutes. Clock starts when you hit "Tap to Play". Clock doesn't stop until you complete the stop.</strong></span>
+                    <br />
+
+                        <Button className="button" onClick={() => toggleIntro()}>Tap To Play</Button>
+                        |
+                        <Button className="button" onClick={() => goHomeQuit()}>Back to Games</Button>
+                     </View>
+
+                    <View ariaLabel="stop 1 Time" className="time">
+                        <Button className="hide button small" onClick={() => completeStop()}>complete stop (REMOVE)</Button>
+                        <span className="small">hint time: {gameTimeHint} mins | real time: {gameTime} mins |
+                            tot: time: { Number((gameTime + gameTimeHint + gameTimeTotal).toFixed(2))} min</span>
+                    </View>
                 </View>
             </View>
         )
@@ -1456,7 +1472,7 @@ export function Hurricane1() {
                         <Image maxHeight="150px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-game-jaycee-gazebo.jpg" />
                     </View>
                     <View>
-                        <span ariaLabel="stop 1 intro" className="small"> <strong>Remember, clock doesn't stop until you complete the stop.</strong></span></View>
+                        <span className="small"> <strong>Remember, clock doesn't stop until you complete the stop.</strong></span></View>
                     <View><span className="small"><strong>Total Time So Far</strong>: { Number((gameTime + gameTimeHint + gameTimeTotal).toFixed(2)) } min</span></View>
 
                         <Button className="button" onClick={() => toggleIntro()}>I Want To Play!</Button>

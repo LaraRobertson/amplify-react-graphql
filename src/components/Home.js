@@ -140,7 +140,11 @@ export function Home() {
         console.log("go to page: " + '/' + path);
         navigate('/' + path);
     }
-
+    async function leaderBoard(gameDetails) {
+        localStorage.setItem("gameID",gameDetails.gameID);
+        localStorage.setItem("gameName",gameDetails.gameName);
+        navigate('/leaderboard');
+    }
     async function goToGame(gameDetails) {
         localStorage.setItem("gameName",gameDetails.gameName);
         localStorage.setItem("gameID",gameDetails.gameID);
@@ -159,7 +163,7 @@ export function Home() {
             console.log("need to add game stat");
             const data = {
                 gameID: gameDetails.gameID,
-                userEmail: userDB.email,
+                userEmail: userAuth.email,
                 gameName: gameDetails.gameName
             };
             console.log("data for createGameStats: " + JSON.stringify(data));
@@ -222,6 +226,8 @@ export function Home() {
                             /* add new game score */
                             const data = {
                                 gameStatsID: gamesStatsFromAPI.id,
+                                gameID: gamesStatsFromAPI.gameID,
+                                gameTotalTime: 0,
                                 completed: false
                             };
                             await API.graphql({
@@ -322,21 +328,23 @@ export function Home() {
    async function fetchUserGamePlay() {
        console.log("fetchUserGamePlay - userID: " + userDB.id);
        /* check if user in database, if not create user and games */
-       try {
-            const apiUserGamePlay =  await API.graphql({
-                query: userGamePlaysByUserId,
-                variables: { userId: userDB.id}
-            });
-            console.log("apiUserGamePlay: " + JSON.stringify(apiUserGamePlay.data.userGamePlaysByUserId.items));
-            /* create array of gameIDs */
-            const gameIDsUser = apiUserGamePlay.data.userGamePlaysByUserId.items;
-            const gameIDsUserArray = gameIDsUser.map(item => {
-                return item.gameId
-            })
-            console.log('gameIDsUserArray: ' + gameIDsUserArray);
-            setGamesIDUser(gameIDsUserArray);
-       } catch (err) {
-           console.log('error fetchUserGamePlay..', err)
+       if (userDB.id != null){
+           try {
+                const apiUserGamePlay =  await API.graphql({
+                    query: userGamePlaysByUserId,
+                    variables: { userId: userDB.id}
+                });
+                console.log("apiUserGamePlay: " + JSON.stringify(apiUserGamePlay.data.userGamePlaysByUserId.items));
+                /* create array of gameIDs */
+                const gameIDsUser = apiUserGamePlay.data.userGamePlaysByUserId.items;
+                const gameIDsUserArray = gameIDsUser.map(item => {
+                    return item.gameId
+                })
+                console.log('gameIDsUserArray: ' + gameIDsUserArray);
+                setGamesIDUser(gameIDsUserArray);
+           } catch (err) {
+               console.log('error fetchUserGamePlay..', err)
+           }
        }
     }
 
@@ -394,10 +402,13 @@ export function Home() {
         /* get game ids from usergameplay */
         console.log("***useEffect***:  fetchUserGamePlay()");
         fetchUserGamePlay();
-    }, [userDB])
+    }, [userAuth])
 
     useEffect(() => {
         console.log("***useEffect***: userAuth.email: " + userAuth.email);
+    });
+    useEffect(() => {
+        console.log("***useEffect***: userDB: " + userDB);
     });
 
     useEffect(() => {
@@ -467,6 +478,9 @@ export function Home() {
                                 </div>) :
                                 (<div></div>)
                             }
+                            <Button className={buttonDetailClassShow} onClick={() => leaderBoard({gameName:game.gameName,gameID:game.id})}>
+                                Leader Board
+                            </Button>
                             <Button className={buttonDetailClassShow} onClick={() => showGameDetail(index)} >Show Game Details</Button>
                         </Card>
 
@@ -500,6 +514,9 @@ export function Home() {
                             <Text><span className="italics">Location</span>: {game.gameLocationPlace}</Text>
                             <Text><span className="italics">City</span>: {game.gameLocationCity}</Text>
                             <Text><span className="italics">Stops</span>: {game.gameStop.items.length}</Text>
+                            <Button className={buttonDetailClassShow} onClick={() => leaderBoard({gameName:game.gameName,gameID:game.id})}>
+                                Leader Board
+                            </Button>
                             <Button className={buttonDetailClassShow} onClick={() => showGameDetail(index)} >Show Game Details</Button>
                         </Card>
 

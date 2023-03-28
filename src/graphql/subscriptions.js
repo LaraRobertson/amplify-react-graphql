@@ -63,7 +63,10 @@ export const onCreateGameStats = /* GraphQL */ `
         items {
           id
           gameStatsID
+          gameID
           numberOfPlayers
+          teamName
+          teamLocation
           gameComments
           gameTotalTime
           completed
@@ -91,7 +94,10 @@ export const onUpdateGameStats = /* GraphQL */ `
         items {
           id
           gameStatsID
+          gameID
           numberOfPlayers
+          teamName
+          teamLocation
           gameComments
           gameTotalTime
           completed
@@ -119,7 +125,10 @@ export const onDeleteGameStats = /* GraphQL */ `
         items {
           id
           gameStatsID
+          gameID
           numberOfPlayers
+          teamName
+          teamLocation
           gameComments
           gameTotalTime
           completed
@@ -140,7 +149,10 @@ export const onCreateGameScore = /* GraphQL */ `
     onCreateGameScore(filter: $filter) {
       id
       gameStatsID
+      gameID
       numberOfPlayers
+      teamName
+      teamLocation
       gameComments
       gameTotalTime
       completed
@@ -178,7 +190,10 @@ export const onUpdateGameScore = /* GraphQL */ `
     onUpdateGameScore(filter: $filter) {
       id
       gameStatsID
+      gameID
       numberOfPlayers
+      teamName
+      teamLocation
       gameComments
       gameTotalTime
       completed
@@ -216,7 +231,10 @@ export const onDeleteGameScore = /* GraphQL */ `
     onDeleteGameScore(filter: $filter) {
       id
       gameStatsID
+      gameID
       numberOfPlayers
+      teamName
+      teamLocation
       gameComments
       gameTotalTime
       completed

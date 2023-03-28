@@ -52,7 +52,10 @@ export const getGameStats = /* GraphQL */ `
         items {
           id
           gameStatsID
+          gameID
           numberOfPlayers
+          teamName
+          teamLocation
           gameComments
           gameTotalTime
           completed
@@ -94,7 +97,10 @@ export const getGameScore = /* GraphQL */ `
     getGameScore(id: $id) {
       id
       gameStatsID
+      gameID
       numberOfPlayers
+      teamName
+      teamLocation
       gameComments
       gameTotalTime
       completed
@@ -135,7 +141,10 @@ export const listGameScores = /* GraphQL */ `
       items {
         id
         gameStatsID
+        gameID
         numberOfPlayers
+        teamName
+        teamLocation
         gameComments
         gameTotalTime
         completed
@@ -503,8 +512,8 @@ export const gameStatsByUserEmail = /* GraphQL */ `
     }
   }
 `;
-export const gameStatByGameStatsID = /* GraphQL */ `
-  query GameStatByGameStatsID(
+export const gameStatsByGameName = /* GraphQL */ `
+  query GameStatsByGameName(
     $gameName: String!
     $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
@@ -512,7 +521,7 @@ export const gameStatByGameStatsID = /* GraphQL */ `
     $limit: Int
     $nextToken: String
   ) {
-    gameStatByGameStatsID(
+    gameStatsByGameName(
       gameName: $gameName
       createdAt: $createdAt
       sortDirection: $sortDirection
@@ -539,7 +548,6 @@ export const gameStatByGameStatsID = /* GraphQL */ `
 export const gameScoreByGameStatsID = /* GraphQL */ `
   query GameScoreByGameStatsID(
     $gameStatsID: ID!
-    $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelGameScoreFilterInput
     $limit: Int
@@ -547,7 +555,6 @@ export const gameScoreByGameStatsID = /* GraphQL */ `
   ) {
     gameScoreByGameStatsID(
       gameStatsID: $gameStatsID
-      createdAt: $createdAt
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -556,7 +563,50 @@ export const gameScoreByGameStatsID = /* GraphQL */ `
       items {
         id
         gameStatsID
+        gameID
         numberOfPlayers
+        teamName
+        teamLocation
+        gameComments
+        gameTotalTime
+        completed
+        gameStopTime {
+          nextToken
+        }
+        gameHintTime {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const gameScoreByGameID = /* GraphQL */ `
+  query GameScoreByGameID(
+    $gameID: ID!
+    $gameTotalTime: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelGameScoreFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    gameScoreByGameID(
+      gameID: $gameID
+      gameTotalTime: $gameTotalTime
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        gameStatsID
+        gameID
+        numberOfPlayers
+        teamName
+        teamLocation
         gameComments
         gameTotalTime
         completed
@@ -729,9 +779,9 @@ export const gamesByDate = /* GraphQL */ `
         gameType
         gameStopString
         gameStop {
-          items {
+         items {
             gameStopName
-          }
+         }
         }
         type
         createdAt

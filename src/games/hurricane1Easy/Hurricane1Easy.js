@@ -27,6 +27,7 @@ export function Hurricane1Easy() {
     const [gameStop,setGameStop] = useState(0);
     const [gameStopNameArray,setGameStopNameArray] = useState('');
     const [gameComplete, setGameComplete] = useState(false);
+    const [gameStopName,setGameStopName] = useState(0);
     /* end set in local storage too */
 
     const [stopClock, setStopClock] = useState(false);
@@ -251,18 +252,21 @@ export function Hurricane1Easy() {
         setGameStatsID(localStorage.getItem("gameStatsID"));
         /* get gameStop name */
         const gameStopFromAPI = await getGameStopName();
-        let gameStopNameArray = gameStopFromAPI.data.gameStopByGameID.items;
+        let gameStopNameArrayConst = gameStopFromAPI.data.gameStopByGameID.items;
         /* get gameScore Id */
         const gameScoreFromAPI = await getGameScoreID();
         let gameScoreID = gameScoreFromAPI.data.gameScoreByGameStatsID.items[0].id;
-        /*let testObject = gameStopNameArray[0];
+        let testObject = gameStopNameArrayConst[0];
         for (const key in testObject) {
-    console.log(`${key}: ${ testObject[key]}`);
-        for (const key1 in testObject[key]) {
-             //console.log(`${key1}: ${testObject[key][key1]}`);
-         }
-        }*/
-        setGameStopNameArray(gameStopFromAPI.data.gameStopByGameID.items);
+            console.log(`${key}: ${ testObject[key]}`);
+            for (const key1 in testObject[key]) {
+                //console.log(`${key1}: ${testObject[key][key1]}`);
+            }
+        }
+        let GameStopIndex = Number(localStorage.getItem("gameStop"))-1;
+        setGameStopNameArray(gameStopNameArrayConst);
+        setGameStopName(gameStopNameArrayConst[GameStopIndex].gameStopName);
+        console.log("gameStopNameArrayConst[0].gameStopName (setGameStopFunction): " + gameStopNameArrayConst[GameStopIndex].gameStopName);
         localStorage.setItem("gameStopNameArray", gameStopFromAPI.data.gameStopByGameID.items);
         setGameScoreID(gameScoreID);
         localStorage.setItem("gameScoreID", gameScoreID);

@@ -36,9 +36,12 @@ export function Waiver() {
         };
         localStorage.setItem("gameStatsID",gamesStatsFromAPI.id);
         const apiGameStatsUpdate = await API.graphql({ query: updateGameStatsMutation, variables: {input: newGameStats}});
+
         /* create gameScore */
         const data = {
             gameStatsID: gamesStatsFromAPI.id,
+            gameID: gamesStatsFromAPI.gameID,
+            gameTotalTime: 0,
             completed: false,
         };
         await API.graphql({
