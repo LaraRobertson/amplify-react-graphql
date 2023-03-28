@@ -1,112 +1,37 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getGame = /* GraphQL */ `
-  query GetGame($id: ID!) {
-    getGame(id: $id) {
+export const getNote = /* GraphQL */ `
+  query GetNote($id: ID!) {
+    getNote(id: $id) {
       id
-      gameName
-      gameDescriptionH2
-      gameDescriptionH3
-      gameDescriptionP
-      gameLocationPlace
-      gameLocationCity
-      gameType
-      gameStopString
-      gameStop {
-        items {
-          id
-          gameID
-          gameStopName
-          order
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      type
-      createdAt
-      user {
-        items {
-          id
-          gameId
-          userId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      updatedAt
-    }
-  }
-`;
-export const listGames = /* GraphQL */ `
-  query ListGames(
-    $filter: ModelGameFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listGames(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        gameName
-        gameDescriptionH2
-        gameDescriptionH3
-        gameDescriptionP
-        gameLocationPlace
-        gameLocationCity
-        gameType
-        gameStopString
-        gameStop {
-          nextToken
-        }
-        type
-        createdAt
-        user {
-          nextToken
-        }
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getUser = /* GraphQL */ `
-  query GetUser($id: ID!) {
-    getUser(id: $id) {
-      id
-      userName
+      name
       description
-      email
-      game {
-        items {
-          id
-          gameId
-          userId
-          createdAt
-          updatedAt
-        }
-        nextToken
+      image
+      test {
+        title
+        email
       }
       createdAt
       updatedAt
     }
   }
 `;
-export const listUsers = /* GraphQL */ `
-  query ListUsers(
-    $filter: ModelUserFilterInput
+export const listNotes = /* GraphQL */ `
+  query ListNotes(
+    $filter: ModelNoteFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listNotes(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        userName
+        name
         description
-        email
-        game {
-          nextToken
+        image
+        test {
+          title
+          email
         }
         createdAt
         updatedAt
@@ -329,18 +254,90 @@ export const listGameStopTimes = /* GraphQL */ `
     }
   }
 `;
-export const getBlog = /* GraphQL */ `
-  query GetBlog($id: ID!) {
-    getBlog(id: $id) {
+export const getGame = /* GraphQL */ `
+  query GetGame($id: ID!) {
+    getGame(id: $id) {
       id
-      name
-      posts {
+      gameName
+      gameDescriptionH2
+      gameDescriptionH3
+      gameDescriptionP
+      gameLocationPlace
+      gameLocationCity
+      gameType
+      gameStopString
+      gameStop {
         items {
           id
-          title
+          gameID
+          gameStopName
+          order
           createdAt
           updatedAt
-          blogPostsId
+        }
+        nextToken
+      }
+      type
+      createdAt
+      user {
+        items {
+          id
+          gameId
+          userId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const listGames = /* GraphQL */ `
+  query ListGames(
+    $filter: ModelGameFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listGames(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        gameName
+        gameDescriptionH2
+        gameDescriptionH3
+        gameDescriptionP
+        gameLocationPlace
+        gameLocationCity
+        gameType
+        gameStopString
+        gameStop {
+          nextToken
+        }
+        type
+        createdAt
+        user {
+          nextToken
+        }
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getUser = /* GraphQL */ `
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
+      id
+      userName
+      description
+      email
+      game {
+        items {
+          id
+          gameId
+          userId
+          createdAt
+          updatedAt
         }
         nextToken
       }
@@ -349,130 +346,23 @@ export const getBlog = /* GraphQL */ `
     }
   }
 `;
-export const listBlogs = /* GraphQL */ `
-  query ListBlogs(
-    $filter: ModelBlogFilterInput
+export const listUsers = /* GraphQL */ `
+  query ListUsers(
+    $filter: ModelUserFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listBlogs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        name
-        posts {
+        userName
+        description
+        email
+        game {
           nextToken
         }
         createdAt
         updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getPost = /* GraphQL */ `
-  query GetPost($id: ID!) {
-    getPost(id: $id) {
-      id
-      title
-      blog {
-        id
-        name
-        posts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      comments {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-          postCommentsId
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-      blogPostsId
-    }
-  }
-`;
-export const listPosts = /* GraphQL */ `
-  query ListPosts(
-    $filter: ModelPostFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        title
-        blog {
-          id
-          name
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        blogPostsId
-      }
-      nextToken
-    }
-  }
-`;
-export const getComment = /* GraphQL */ `
-  query GetComment($id: ID!) {
-    getComment(id: $id) {
-      id
-      post {
-        id
-        title
-        blog {
-          id
-          name
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        blogPostsId
-      }
-      content
-      createdAt
-      updatedAt
-      postCommentsId
-    }
-  }
-`;
-export const listComments = /* GraphQL */ `
-  query ListComments(
-    $filter: ModelCommentFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        post {
-          id
-          title
-          createdAt
-          updatedAt
-          blogPostsId
-        }
-        content
-        createdAt
-        updatedAt
-        postCommentsId
       }
       nextToken
     }
@@ -552,120 +442,6 @@ export const listUserGamePlays = /* GraphQL */ `
           email
           createdAt
           updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const gamesByGameNameAndType = /* GraphQL */ `
-  query GamesByGameNameAndType(
-    $gameName: String!
-    $type: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelGameFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    gamesByGameNameAndType(
-      gameName: $gameName
-      type: $type
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        gameName
-        gameDescriptionH2
-        gameDescriptionH3
-        gameDescriptionP
-        gameLocationPlace
-        gameLocationCity
-        gameType
-        gameStopString
-        gameStop {
-          nextToken
-        }
-        type
-        createdAt
-        user {
-          nextToken
-        }
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const gamesByDate = /* GraphQL */ `
-  query GamesByDate(
-    $type: String!
-    $createdAt: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelGameFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    gamesByDate(
-      type: $type
-      createdAt: $createdAt
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        gameName
-        gameDescriptionH2
-        gameDescriptionH3
-        gameDescriptionP
-        gameLocationPlace
-        gameLocationCity
-        gameType
-        gameStopString
-        gameStop {
-         items {
-            gameStopName
-         }
-        }
-        type
-        createdAt
-        user {
-          nextToken
-        }
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const usersByEmail = /* GraphQL */ `
-  query UsersByEmail(
-    $email: String!
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    usersByEmail(
-      email: $email
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        userName
-        description
-        email
-        game {
-          nextToken
         }
         createdAt
         updatedAt
@@ -929,6 +705,118 @@ export const gameStopTimeByGameScoreID = /* GraphQL */ `
         gameScoreID
         gameStopTime
         gameStop
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const gamesByGameNameAndType = /* GraphQL */ `
+  query GamesByGameNameAndType(
+    $gameName: String!
+    $type: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelGameFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    gamesByGameNameAndType(
+      gameName: $gameName
+      type: $type
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        gameName
+        gameDescriptionH2
+        gameDescriptionH3
+        gameDescriptionP
+        gameLocationPlace
+        gameLocationCity
+        gameType
+        gameStopString
+        gameStop {
+          nextToken
+        }
+        type
+        createdAt
+        user {
+          nextToken
+        }
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const gamesByDate = /* GraphQL */ `
+  query GamesByDate(
+    $type: String!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelGameFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    gamesByDate(
+      type: $type
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        gameName
+        gameDescriptionH2
+        gameDescriptionH3
+        gameDescriptionP
+        gameLocationPlace
+        gameLocationCity
+        gameType
+        gameStopString
+        gameStop {
+          nextToken
+        }
+        type
+        createdAt
+        user {
+          nextToken
+        }
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const usersByEmail = /* GraphQL */ `
+  query UsersByEmail(
+    $email: String!
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    usersByEmail(
+      email: $email
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userName
+        description
+        email
+        game {
+          nextToken
+        }
         createdAt
         updatedAt
       }

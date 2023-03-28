@@ -1,183 +1,48 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateGame = /* GraphQL */ `
-  subscription OnCreateGame($filter: ModelSubscriptionGameFilterInput) {
-    onCreateGame(filter: $filter) {
+export const onCreateNote = /* GraphQL */ `
+  subscription OnCreateNote($filter: ModelSubscriptionNoteFilterInput) {
+    onCreateNote(filter: $filter) {
       id
-      gameName
-      gameDescriptionH2
-      gameDescriptionH3
-      gameDescriptionP
-      gameLocationPlace
-      gameLocationCity
-      gameType
-      gameStopString
-      gameStop {
-        items {
-          id
-          gameID
-          gameStopName
-          order
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      type
-      createdAt
-      user {
-        items {
-          id
-          gameId
-          userId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      updatedAt
-    }
-  }
-`;
-export const onUpdateGame = /* GraphQL */ `
-  subscription OnUpdateGame($filter: ModelSubscriptionGameFilterInput) {
-    onUpdateGame(filter: $filter) {
-      id
-      gameName
-      gameDescriptionH2
-      gameDescriptionH3
-      gameDescriptionP
-      gameLocationPlace
-      gameLocationCity
-      gameType
-      gameStopString
-      gameStop {
-        items {
-          id
-          gameID
-          gameStopName
-          order
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      type
-      createdAt
-      user {
-        items {
-          id
-          gameId
-          userId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      updatedAt
-    }
-  }
-`;
-export const onDeleteGame = /* GraphQL */ `
-  subscription OnDeleteGame($filter: ModelSubscriptionGameFilterInput) {
-    onDeleteGame(filter: $filter) {
-      id
-      gameName
-      gameDescriptionH2
-      gameDescriptionH3
-      gameDescriptionP
-      gameLocationPlace
-      gameLocationCity
-      gameType
-      gameStopString
-      gameStop {
-        items {
-          id
-          gameID
-          gameStopName
-          order
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      type
-      createdAt
-      user {
-        items {
-          id
-          gameId
-          userId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      updatedAt
-    }
-  }
-`;
-export const onCreateUser = /* GraphQL */ `
-  subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
-    onCreateUser(filter: $filter) {
-      id
-      userName
+      name
       description
-      email
-      game {
-        items {
-          id
-          gameId
-          userId
-          createdAt
-          updatedAt
-        }
-        nextToken
+      image
+      test {
+        title
+        email
       }
       createdAt
       updatedAt
     }
   }
 `;
-export const onUpdateUser = /* GraphQL */ `
-  subscription OnUpdateUser($filter: ModelSubscriptionUserFilterInput) {
-    onUpdateUser(filter: $filter) {
+export const onUpdateNote = /* GraphQL */ `
+  subscription OnUpdateNote($filter: ModelSubscriptionNoteFilterInput) {
+    onUpdateNote(filter: $filter) {
       id
-      userName
+      name
       description
-      email
-      game {
-        items {
-          id
-          gameId
-          userId
-          createdAt
-          updatedAt
-        }
-        nextToken
+      image
+      test {
+        title
+        email
       }
       createdAt
       updatedAt
     }
   }
 `;
-export const onDeleteUser = /* GraphQL */ `
-  subscription OnDeleteUser($filter: ModelSubscriptionUserFilterInput) {
-    onDeleteUser(filter: $filter) {
+export const onDeleteNote = /* GraphQL */ `
+  subscription OnDeleteNote($filter: ModelSubscriptionNoteFilterInput) {
+    onDeleteNote(filter: $filter) {
       id
-      userName
+      name
       description
-      email
-      game {
-        items {
-          id
-          gameId
-          userId
-          createdAt
-          updatedAt
-        }
-        nextToken
+      image
+      test {
+        title
+        email
       }
       createdAt
       updatedAt
@@ -520,18 +385,137 @@ export const onDeleteGameStopTime = /* GraphQL */ `
     }
   }
 `;
-export const onCreateBlog = /* GraphQL */ `
-  subscription OnCreateBlog($filter: ModelSubscriptionBlogFilterInput) {
-    onCreateBlog(filter: $filter) {
+export const onCreateGame = /* GraphQL */ `
+  subscription OnCreateGame($filter: ModelSubscriptionGameFilterInput) {
+    onCreateGame(filter: $filter) {
       id
-      name
-      posts {
+      gameName
+      gameDescriptionH2
+      gameDescriptionH3
+      gameDescriptionP
+      gameLocationPlace
+      gameLocationCity
+      gameType
+      gameStopString
+      gameStop {
         items {
           id
-          title
+          gameID
+          gameStopName
+          order
           createdAt
           updatedAt
-          blogPostsId
+        }
+        nextToken
+      }
+      type
+      createdAt
+      user {
+        items {
+          id
+          gameId
+          userId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const onUpdateGame = /* GraphQL */ `
+  subscription OnUpdateGame($filter: ModelSubscriptionGameFilterInput) {
+    onUpdateGame(filter: $filter) {
+      id
+      gameName
+      gameDescriptionH2
+      gameDescriptionH3
+      gameDescriptionP
+      gameLocationPlace
+      gameLocationCity
+      gameType
+      gameStopString
+      gameStop {
+        items {
+          id
+          gameID
+          gameStopName
+          order
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      type
+      createdAt
+      user {
+        items {
+          id
+          gameId
+          userId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const onDeleteGame = /* GraphQL */ `
+  subscription OnDeleteGame($filter: ModelSubscriptionGameFilterInput) {
+    onDeleteGame(filter: $filter) {
+      id
+      gameName
+      gameDescriptionH2
+      gameDescriptionH3
+      gameDescriptionP
+      gameLocationPlace
+      gameLocationCity
+      gameType
+      gameStopString
+      gameStop {
+        items {
+          id
+          gameID
+          gameStopName
+          order
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      type
+      createdAt
+      user {
+        items {
+          id
+          gameId
+          userId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const onCreateUser = /* GraphQL */ `
+  subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
+    onCreateUser(filter: $filter) {
+      id
+      userName
+      description
+      email
+      game {
+        items {
+          id
+          gameId
+          userId
+          createdAt
+          updatedAt
         }
         nextToken
       }
@@ -540,18 +524,20 @@ export const onCreateBlog = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateBlog = /* GraphQL */ `
-  subscription OnUpdateBlog($filter: ModelSubscriptionBlogFilterInput) {
-    onUpdateBlog(filter: $filter) {
+export const onUpdateUser = /* GraphQL */ `
+  subscription OnUpdateUser($filter: ModelSubscriptionUserFilterInput) {
+    onUpdateUser(filter: $filter) {
       id
-      name
-      posts {
+      userName
+      description
+      email
+      game {
         items {
           id
-          title
+          gameId
+          userId
           createdAt
           updatedAt
-          blogPostsId
         }
         nextToken
       }
@@ -560,194 +546,25 @@ export const onUpdateBlog = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteBlog = /* GraphQL */ `
-  subscription OnDeleteBlog($filter: ModelSubscriptionBlogFilterInput) {
-    onDeleteBlog(filter: $filter) {
+export const onDeleteUser = /* GraphQL */ `
+  subscription OnDeleteUser($filter: ModelSubscriptionUserFilterInput) {
+    onDeleteUser(filter: $filter) {
       id
-      name
-      posts {
+      userName
+      description
+      email
+      game {
         items {
           id
-          title
+          gameId
+          userId
           createdAt
           updatedAt
-          blogPostsId
         }
         nextToken
       }
       createdAt
       updatedAt
-    }
-  }
-`;
-export const onCreatePost = /* GraphQL */ `
-  subscription OnCreatePost($filter: ModelSubscriptionPostFilterInput) {
-    onCreatePost(filter: $filter) {
-      id
-      title
-      blog {
-        id
-        name
-        posts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      comments {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-          postCommentsId
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-      blogPostsId
-    }
-  }
-`;
-export const onUpdatePost = /* GraphQL */ `
-  subscription OnUpdatePost($filter: ModelSubscriptionPostFilterInput) {
-    onUpdatePost(filter: $filter) {
-      id
-      title
-      blog {
-        id
-        name
-        posts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      comments {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-          postCommentsId
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-      blogPostsId
-    }
-  }
-`;
-export const onDeletePost = /* GraphQL */ `
-  subscription OnDeletePost($filter: ModelSubscriptionPostFilterInput) {
-    onDeletePost(filter: $filter) {
-      id
-      title
-      blog {
-        id
-        name
-        posts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      comments {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-          postCommentsId
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-      blogPostsId
-    }
-  }
-`;
-export const onCreateComment = /* GraphQL */ `
-  subscription OnCreateComment($filter: ModelSubscriptionCommentFilterInput) {
-    onCreateComment(filter: $filter) {
-      id
-      post {
-        id
-        title
-        blog {
-          id
-          name
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        blogPostsId
-      }
-      content
-      createdAt
-      updatedAt
-      postCommentsId
-    }
-  }
-`;
-export const onUpdateComment = /* GraphQL */ `
-  subscription OnUpdateComment($filter: ModelSubscriptionCommentFilterInput) {
-    onUpdateComment(filter: $filter) {
-      id
-      post {
-        id
-        title
-        blog {
-          id
-          name
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        blogPostsId
-      }
-      content
-      createdAt
-      updatedAt
-      postCommentsId
-    }
-  }
-`;
-export const onDeleteComment = /* GraphQL */ `
-  subscription OnDeleteComment($filter: ModelSubscriptionCommentFilterInput) {
-    onDeleteComment(filter: $filter) {
-      id
-      post {
-        id
-        title
-        blog {
-          id
-          name
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        blogPostsId
-      }
-      content
-      createdAt
-      updatedAt
-      postCommentsId
     }
   }
 `;

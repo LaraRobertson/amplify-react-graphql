@@ -1,201 +1,57 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createGame = /* GraphQL */ `
-  mutation CreateGame(
-    $input: CreateGameInput!
-    $condition: ModelGameConditionInput
+export const createNote = /* GraphQL */ `
+  mutation CreateNote(
+    $input: CreateNoteInput!
+    $condition: ModelNoteConditionInput
   ) {
-    createGame(input: $input, condition: $condition) {
+    createNote(input: $input, condition: $condition) {
       id
-      gameName
-      gameDescriptionH2
-      gameDescriptionH3
-      gameDescriptionP
-      gameLocationPlace
-      gameLocationCity
-      gameType
-      gameStopString
-      gameStop {
-        items {
-          id
-          gameID
-          gameStopName
-          order
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      type
-      createdAt
-      user {
-        items {
-          id
-          gameId
-          userId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      updatedAt
-    }
-  }
-`;
-export const updateGame = /* GraphQL */ `
-  mutation UpdateGame(
-    $input: UpdateGameInput!
-    $condition: ModelGameConditionInput
-  ) {
-    updateGame(input: $input, condition: $condition) {
-      id
-      gameName
-      gameDescriptionH2
-      gameDescriptionH3
-      gameDescriptionP
-      gameLocationPlace
-      gameLocationCity
-      gameType
-      gameStopString
-      gameStop {
-        items {
-          id
-          gameID
-          gameStopName
-          order
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      type
-      createdAt
-      user {
-        items {
-          id
-          gameId
-          userId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      updatedAt
-    }
-  }
-`;
-export const deleteGame = /* GraphQL */ `
-  mutation DeleteGame(
-    $input: DeleteGameInput!
-    $condition: ModelGameConditionInput
-  ) {
-    deleteGame(input: $input, condition: $condition) {
-      id
-      gameName
-      gameDescriptionH2
-      gameDescriptionH3
-      gameDescriptionP
-      gameLocationPlace
-      gameLocationCity
-      gameType
-      gameStopString
-      gameStop {
-        items {
-          id
-          gameID
-          gameStopName
-          order
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      type
-      createdAt
-      user {
-        items {
-          id
-          gameId
-          userId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      updatedAt
-    }
-  }
-`;
-export const createUser = /* GraphQL */ `
-  mutation CreateUser(
-    $input: CreateUserInput!
-    $condition: ModelUserConditionInput
-  ) {
-    createUser(input: $input, condition: $condition) {
-      id
-      userName
+      name
       description
-      email
-      game {
-        items {
-          id
-          gameId
-          userId
-          createdAt
-          updatedAt
-        }
-        nextToken
+      image
+      test {
+        title
+        email
       }
       createdAt
       updatedAt
     }
   }
 `;
-export const updateUser = /* GraphQL */ `
-  mutation UpdateUser(
-    $input: UpdateUserInput!
-    $condition: ModelUserConditionInput
+export const updateNote = /* GraphQL */ `
+  mutation UpdateNote(
+    $input: UpdateNoteInput!
+    $condition: ModelNoteConditionInput
   ) {
-    updateUser(input: $input, condition: $condition) {
+    updateNote(input: $input, condition: $condition) {
       id
-      userName
+      name
       description
-      email
-      game {
-        items {
-          id
-          gameId
-          userId
-          createdAt
-          updatedAt
-        }
-        nextToken
+      image
+      test {
+        title
+        email
       }
       createdAt
       updatedAt
     }
   }
 `;
-export const deleteUser = /* GraphQL */ `
-  mutation DeleteUser(
-    $input: DeleteUserInput!
-    $condition: ModelUserConditionInput
+export const deleteNote = /* GraphQL */ `
+  mutation DeleteNote(
+    $input: DeleteNoteInput!
+    $condition: ModelNoteConditionInput
   ) {
-    deleteUser(input: $input, condition: $condition) {
+    deleteNote(input: $input, condition: $condition) {
       id
-      userName
+      name
       description
-      email
-      game {
-        items {
-          id
-          gameId
-          userId
-          createdAt
-          updatedAt
-        }
-        nextToken
+      image
+      test {
+        title
+        email
       }
       createdAt
       updatedAt
@@ -559,21 +415,149 @@ export const deleteGameStopTime = /* GraphQL */ `
     }
   }
 `;
-export const createBlog = /* GraphQL */ `
-  mutation CreateBlog(
-    $input: CreateBlogInput!
-    $condition: ModelBlogConditionInput
+export const createGame = /* GraphQL */ `
+  mutation CreateGame(
+    $input: CreateGameInput!
+    $condition: ModelGameConditionInput
   ) {
-    createBlog(input: $input, condition: $condition) {
+    createGame(input: $input, condition: $condition) {
       id
-      name
-      posts {
+      gameName
+      gameDescriptionH2
+      gameDescriptionH3
+      gameDescriptionP
+      gameLocationPlace
+      gameLocationCity
+      gameType
+      gameStopString
+      gameStop {
         items {
           id
-          title
+          gameID
+          gameStopName
+          order
           createdAt
           updatedAt
-          blogPostsId
+        }
+        nextToken
+      }
+      type
+      createdAt
+      user {
+        items {
+          id
+          gameId
+          userId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const updateGame = /* GraphQL */ `
+  mutation UpdateGame(
+    $input: UpdateGameInput!
+    $condition: ModelGameConditionInput
+  ) {
+    updateGame(input: $input, condition: $condition) {
+      id
+      gameName
+      gameDescriptionH2
+      gameDescriptionH3
+      gameDescriptionP
+      gameLocationPlace
+      gameLocationCity
+      gameType
+      gameStopString
+      gameStop {
+        items {
+          id
+          gameID
+          gameStopName
+          order
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      type
+      createdAt
+      user {
+        items {
+          id
+          gameId
+          userId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const deleteGame = /* GraphQL */ `
+  mutation DeleteGame(
+    $input: DeleteGameInput!
+    $condition: ModelGameConditionInput
+  ) {
+    deleteGame(input: $input, condition: $condition) {
+      id
+      gameName
+      gameDescriptionH2
+      gameDescriptionH3
+      gameDescriptionP
+      gameLocationPlace
+      gameLocationCity
+      gameType
+      gameStopString
+      gameStop {
+        items {
+          id
+          gameID
+          gameStopName
+          order
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      type
+      createdAt
+      user {
+        items {
+          id
+          gameId
+          userId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const createUser = /* GraphQL */ `
+  mutation CreateUser(
+    $input: CreateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    createUser(input: $input, condition: $condition) {
+      id
+      userName
+      description
+      email
+      game {
+        items {
+          id
+          gameId
+          userId
+          createdAt
+          updatedAt
         }
         nextToken
       }
@@ -582,21 +566,23 @@ export const createBlog = /* GraphQL */ `
     }
   }
 `;
-export const updateBlog = /* GraphQL */ `
-  mutation UpdateBlog(
-    $input: UpdateBlogInput!
-    $condition: ModelBlogConditionInput
+export const updateUser = /* GraphQL */ `
+  mutation UpdateUser(
+    $input: UpdateUserInput!
+    $condition: ModelUserConditionInput
   ) {
-    updateBlog(input: $input, condition: $condition) {
+    updateUser(input: $input, condition: $condition) {
       id
-      name
-      posts {
+      userName
+      description
+      email
+      game {
         items {
           id
-          title
+          gameId
+          userId
           createdAt
           updatedAt
-          blogPostsId
         }
         nextToken
       }
@@ -605,215 +591,28 @@ export const updateBlog = /* GraphQL */ `
     }
   }
 `;
-export const deleteBlog = /* GraphQL */ `
-  mutation DeleteBlog(
-    $input: DeleteBlogInput!
-    $condition: ModelBlogConditionInput
+export const deleteUser = /* GraphQL */ `
+  mutation DeleteUser(
+    $input: DeleteUserInput!
+    $condition: ModelUserConditionInput
   ) {
-    deleteBlog(input: $input, condition: $condition) {
+    deleteUser(input: $input, condition: $condition) {
       id
-      name
-      posts {
+      userName
+      description
+      email
+      game {
         items {
           id
-          title
+          gameId
+          userId
           createdAt
           updatedAt
-          blogPostsId
         }
         nextToken
       }
       createdAt
       updatedAt
-    }
-  }
-`;
-export const createPost = /* GraphQL */ `
-  mutation CreatePost(
-    $input: CreatePostInput!
-    $condition: ModelPostConditionInput
-  ) {
-    createPost(input: $input, condition: $condition) {
-      id
-      title
-      blog {
-        id
-        name
-        posts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      comments {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-          postCommentsId
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-      blogPostsId
-    }
-  }
-`;
-export const updatePost = /* GraphQL */ `
-  mutation UpdatePost(
-    $input: UpdatePostInput!
-    $condition: ModelPostConditionInput
-  ) {
-    updatePost(input: $input, condition: $condition) {
-      id
-      title
-      blog {
-        id
-        name
-        posts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      comments {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-          postCommentsId
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-      blogPostsId
-    }
-  }
-`;
-export const deletePost = /* GraphQL */ `
-  mutation DeletePost(
-    $input: DeletePostInput!
-    $condition: ModelPostConditionInput
-  ) {
-    deletePost(input: $input, condition: $condition) {
-      id
-      title
-      blog {
-        id
-        name
-        posts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      comments {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-          postCommentsId
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-      blogPostsId
-    }
-  }
-`;
-export const createComment = /* GraphQL */ `
-  mutation CreateComment(
-    $input: CreateCommentInput!
-    $condition: ModelCommentConditionInput
-  ) {
-    createComment(input: $input, condition: $condition) {
-      id
-      post {
-        id
-        title
-        blog {
-          id
-          name
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        blogPostsId
-      }
-      content
-      createdAt
-      updatedAt
-      postCommentsId
-    }
-  }
-`;
-export const updateComment = /* GraphQL */ `
-  mutation UpdateComment(
-    $input: UpdateCommentInput!
-    $condition: ModelCommentConditionInput
-  ) {
-    updateComment(input: $input, condition: $condition) {
-      id
-      post {
-        id
-        title
-        blog {
-          id
-          name
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        blogPostsId
-      }
-      content
-      createdAt
-      updatedAt
-      postCommentsId
-    }
-  }
-`;
-export const deleteComment = /* GraphQL */ `
-  mutation DeleteComment(
-    $input: DeleteCommentInput!
-    $condition: ModelCommentConditionInput
-  ) {
-    deleteComment(input: $input, condition: $condition) {
-      id
-      post {
-        id
-        title
-        blog {
-          id
-          name
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        blogPostsId
-      }
-      content
-      createdAt
-      updatedAt
-      postCommentsId
     }
   }
 `;
