@@ -28,7 +28,7 @@ export function LeaderBoard() {
         };
         const apiData = await API.graphql({
             query: gameScoreByGameID,
-            variables: {filter: filter, sortDirection: "DESC", gameID:localStorage.getItem("gameID")}
+            variables: {filter: filter, sortDirection: "ASC", gameID:localStorage.getItem("gameID")}
         });
         const leaderBoardFromAPI = apiData.data.gameScoreByGameID.items;
         /*await Promise.all(

@@ -83,6 +83,7 @@ export function Hurricane1() {
     const navigate = useNavigate();
     function removeLocalStorage() {
         localStorage.removeItem("agreeToWaiver");
+        localStorage.removeItem("gameID");
         localStorage.removeItem("gameStatsID");
         localStorage.removeItem("gameScoreID");
         localStorage.removeItem("gameName");

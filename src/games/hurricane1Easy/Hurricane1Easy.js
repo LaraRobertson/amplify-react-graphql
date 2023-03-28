@@ -178,20 +178,21 @@ export function Hurricane1Easy() {
     async function updateGameScoreFunction(props) {
         console.log("gameScoreID (update):" + gameScoreID);
         let GameTimeTotalVar = gameTimeTotal + gameTime + gameTimeHint;
+        let seconds = Number(GameTimeTotalVar) * 60;
         const data = {
             id: gameScoreID,
             numberOfPlayers: numberOfPlayers,
-            gameTotalTime: Number(GameTimeTotalVar),
+            gameTotalTime: seconds,
             completed: props
         };
         console.log("data: " + data);
-        let testObject = data;
+        /*let testObject = data;
         for (const key in testObject) {
             console.log(`${key}: ${ testObject[key]}`);
             for (const key1 in testObject[key]) {
                 //console.log(`${key1}: ${testObject[key][key1]}`);
             }
-        }
+        }*/
         const apiUpdateGameScore = await API.graphql({
             query: updateGameScore,
             variables: { input: data },
