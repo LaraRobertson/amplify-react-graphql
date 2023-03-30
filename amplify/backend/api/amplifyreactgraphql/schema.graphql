@@ -1,0 +1,91 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+
+input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+
+type NestedObject {
+  title: String
+  email: String
+}
+
+type Note @model @auth(rules: [ { allow: public } ] ){
+  id: ID!
+  name: String
+  description: String
+  image: String
+  test: [NestedObject]
+}
+
+type GameStats @model @auth(rules: [ { allow: public } ] ) {
+  id: ID!
+  gameID: String! @index
+  userEmail: String! @index
+  gameName: String @index(name: "byGameName", queryField: "gameStatsByGameName", sortKeyFields: ["createdAt"])
+  gameStates: String
+  gameScore: [GameScore] @hasMany(indexName: "byGameStats", fields: ["id"])
+  createdAt: String!
+}
+
+type GameScore @model @auth(rules: [ { allow: public } ] ) {
+  id: ID!
+  gameStatsID: ID! @index(name: "byGameStats", queryField: "gameScoreByGameStatsID", sortKeyFields: ["createdAt"])
+  gameID: ID! @index(name: "byGameID", queryField: "gameScoreByGameID", sortKeyFields: ["gameTotalTime"])
+  numberOfPlayers: String
+  teamName: String
+  teamLocation: String
+  gameComments: String
+  gameTotalTime: Float!
+  completed: Boolean
+  gameStopTime: [GameStopTime] @hasMany(indexName: "byGameScore", fields: ["id"])
+  gameHintTime: [GameHintTime] @hasMany(indexName: "byGameScore", fields: ["id"])
+  createdAt: String!
+ }
+
+type GameStop @model @auth(rules: [ { allow: public } ] ) {
+  id: ID!
+  gameID: ID! @index(name: "byGameID", queryField: "gameStopByGameID", sortKeyFields: ["order"])
+  gameStopName: String
+  order: Int!
+  createdAt: String!
+ }
+type GameHintTime @model @auth(rules: [ { allow: public } ] ) {
+  id: ID!
+  gameScoreID: ID! @index(name: "byGameScore", queryField: "gameHintTimeByGameScoreID", sortKeyFields: ["createdAt"])
+  gameHintTime: String
+  gameStop: String
+  createdAt: String!
+ }
+
+type GameStopTime @model @auth(rules: [ { allow: public } ] ) {
+  id: ID!
+  gameScoreID: ID! @index(name: "byGameScore", queryField: "gameStopTimeByGameScoreID", sortKeyFields: ["createdAt"])
+  gameStopTime: String
+  gameStop: String
+  createdAt: String!
+ }
+
+
+type Game @model @auth(rules: [ { allow: public } ] ) {
+  id: ID!
+  gameName: String! @index(name:"SortByType", sortKeyFields:["type"])
+  gameDescriptionH2: String
+  gameDescriptionH3: String
+  gameDescriptionP: String
+  gameLocationPlace: String
+  gameLocationCity: String
+  gameType: String
+  gameStopString: String
+  gameStop: [GameStop] @hasMany(indexName: "byGameID", fields: ["id"])
+  type: String! @index(name: "gamesByDate", queryField: "gamesByDate", sortKeyFields: ["createdAt"])
+  createdAt: String!
+  user:[User] @manyToMany(relationName: "UserGamePlay")
+ }
+
+type User @model @auth(rules: [ { allow: public } ] ) {
+  id: ID!
+  userName: String
+  description: String
+  email: String! @index
+  game: [Game] @manyToMany(relationName: "UserGamePlay")
+  createdAt: String!
+}
