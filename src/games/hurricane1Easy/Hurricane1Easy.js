@@ -42,6 +42,7 @@ export function Hurricane1Easy() {
     const [hintTime3,setHintTime3] = useState(0);
     const [hintTime4,setHintTime4] = useState(0);
     const [isIntroVisible, setIsIntroVisible] = useState(true);
+    const [isGameIntroVisible, setIsGameIntroVisible] = useState(true);
     function toggleIntro() {
         console.log("gameTime: " + gameTime);
         console.log("gameTimeTotal: " + gameTimeTotal);
