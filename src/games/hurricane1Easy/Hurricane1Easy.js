@@ -855,6 +855,14 @@ export function Hurricane1Easy() {
                     <option value="5">5</option>
                     <option value="6">6</option>
                 </SelectField>
+                <TextField
+                    name="TeamName"
+                    placeholder="Team Name"
+                    label="Team Name"
+                    labelHidden
+                    variation="quiet"
+                    required
+                />
                 {localStorage.getItem("numberOfTimes") !== null ? (
                     <div> You have played {localStorage.getItem("numberOfTimes")} time(s) before - good luck this time! </div>
                 ) : null}
