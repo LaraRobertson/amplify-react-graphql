@@ -833,7 +833,7 @@ export function Hurricane1Easy() {
                 <Button className="button" onClick={() => goHomeQuit()}>Back Home</Button>
             </View>
             <View
-                ariaLabel="stop 1 intro"
+                ariaLabel="stop 1 Game intro"
                 textAlign="center"
                 className={isGameIntroVisible ? "all-screen show" : "hide"}>
                 <h3>Game Goals: Find more Discs!</h3>
