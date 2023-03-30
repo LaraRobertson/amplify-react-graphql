@@ -588,7 +588,7 @@ export const gameScoreByGameStatsID = /* GraphQL */ `
 export const gameScoreByGameID = /* GraphQL */ `
   query GameScoreByGameID(
     $gameID: ID!
-    $gameTotalTime: ModelIntKeyConditionInput
+    $gameTotalTime: ModelFloatKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelGameScoreFilterInput
     $limit: Int
@@ -781,9 +781,7 @@ export const gamesByDate = /* GraphQL */ `
         gameType
         gameStopString
         gameStop {
-          items {
-            gameStopName
-          }
+          nextToken
         }
         type
         createdAt

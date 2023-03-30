@@ -178,11 +178,10 @@ export function Hurricane1Easy() {
     async function updateGameScoreFunction(props) {
         console.log("gameScoreID (update):" + gameScoreID);
         let GameTimeTotalVar = gameTimeTotal + gameTime + gameTimeHint;
-        let seconds = Number(GameTimeTotalVar) * 60;
         const data = {
             id: gameScoreID,
             numberOfPlayers: numberOfPlayers,
-            gameTotalTime: seconds,
+            gameTotalTime: Number(GameTimeTotalVar),
             completed: props
         };
         console.log("data: " + data);
