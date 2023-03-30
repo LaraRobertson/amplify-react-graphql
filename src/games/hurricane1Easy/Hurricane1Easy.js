@@ -821,6 +821,22 @@ export function Hurricane1Easy() {
                 textAlign="center"
                 className={isIntroVisible ? "all-screen show" : "hide"}>
                 <h3>Game Goals: Find more Discs!</h3>
+                <h4>Start Playing Game When You are Here:</h4>
+                <View>
+                    <Image maxHeight="150px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/game-picture-jaycee-shelter.jpg" />
+                </View>
+                <View>
+                    <span className="small"> <strong>Remember, clock doesn't stop until you complete the stop.</strong></span></View>
+
+                <Button className="button" onClick={() => toggleIntro()}>I Want To Play!</Button>
+                |
+                <Button className="button" onClick={() => goHomeQuit()}>Back Home</Button>
+            </View>
+            <View
+                ariaLabel="stop 1 intro"
+                textAlign="center"
+                className={isGameIntroVisible ? "all-screen show" : "hide"}>
+                <h3>Game Goals: Find more Discs!</h3>
                 {numberOfPlayersError}
                 <SelectField
                     label="numberOfPlayers"
