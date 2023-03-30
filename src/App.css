@@ -320,6 +320,13 @@ html {
   width:200px;
   margin: 0 auto;
 }
+.team-Name {
+  width:250px;
+  margin:10px auto;
+}
+.team-Name input::placeholder {
+  color:black;
+}
 /* backpack, info, notes */
 .info-button {
   position:absolute;

@@ -33,6 +33,7 @@ export function Hurricane1Easy() {
     const [stopClock, setStopClock] = useState(false);
     const [numberOfPlayers, setNumberOfPlayers] = useState('');
     const [numberOfPlayersError, setNumberOfPlayersError] = useState('');
+    const [teamName, setTeamName] = useState('');
     const [isHint1Visible, setIsHint1Visible] = useState(false);
     const [isHint2Visible, setIsHint2Visible] = useState(false);
     const [isHint3Visible, setIsHint3Visible] = useState(false);
@@ -46,12 +47,19 @@ export function Hurricane1Easy() {
     function toggleIntro() {
         console.log("gameTime: " + gameTime);
         console.log("gameTimeTotal: " + gameTimeTotal);
+        isIntroVisible ? setIsIntroVisible(false) : setIsIntroVisible(true);
+        setStopClock(false);
+
+    }
+    function toggleGameIntro() {
+        console.log("gameTime: " + gameTime);
+        console.log("gameTimeTotal: " + gameTimeTotal);
         /* check numberOfPlayers */
-        if (numberOfPlayers != '') {
-            isIntroVisible ? setIsIntroVisible(false) : setIsIntroVisible(true);
+        if (numberOfPlayers != '' && teamName != '') {
+            isIntroVisible ? setIsGameIntroVisible(false) : setIsGameIntroVisible(true);
             setStopClock(false);
         } else {
-            setNumberOfPlayersError("Please choose number of players");
+            setNumberOfPlayersError("Please complete fields");
         }
 
     }
@@ -182,6 +190,7 @@ export function Hurricane1Easy() {
         const data = {
             id: gameScoreID,
             numberOfPlayers: numberOfPlayers,
+            teamName: teamName,
             gameTotalTime: Number(GameTimeTotalVar),
             completed: props
         };
@@ -248,6 +257,11 @@ export function Hurricane1Easy() {
         console.log("numPlayerFunction: " + numPlayerValue);
         localStorage.setItem("numberOfPlayers", numPlayerValue);
         setNumberOfPlayers(numPlayerValue);
+    }
+    function setTeamNameFunction(teamNameValue) {
+        console.log("setTeamNameFunction: " + teamNameValue);
+        localStorage.setItem("teamName", teamNameValue);
+        setTeamName(teamNameValue);
     }
     /* get gamestats and set localstorage */
     useEffect(() => {
@@ -857,23 +871,25 @@ export function Hurricane1Easy() {
                 </SelectField>
                 <TextField
                     name="TeamName"
+                    className="team-Name"
                     placeholder="Team Name"
                     label="Team Name"
                     labelHidden
-                    variation="quiet"
                     required
+                    value={teamName}
+                    onChange={(e) => setTeamNameFunction(e.target.value)}
                 />
                 {localStorage.getItem("numberOfTimes") !== null ? (
                     <div> You have played {localStorage.getItem("numberOfTimes")} time(s) before - good luck this time! </div>
                 ) : null}
-                <h4>Start Playing Game When You are Here:</h4>
-                <View>
-                    <Image maxHeight="150px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/game-picture-jaycee-shelter.jpg" />
-                </View>
-                <View>
-                    <span className="small"> <strong>Remember, clock doesn't stop until you complete the stop.</strong></span></View>
 
-                <Button className="button" onClick={() => toggleIntro()}>I Want To Play!</Button>
+                <View>
+                    <span className="small"> <strong>Your score is your time. Time doesn't stop until you complete the stop. This game
+                        has {gameStopNameArray.length} stops. Your time between stops is not counted. Click on Help for more
+                    information and links to Hints. If you click a Hint you get 5 minutes added to your time. Click on Notes to write notes during
+                    game. These notes are not saved once you complete game.</strong></span></View>
+
+                <Button className="button" onClick={() => toggleGameIntro()}>Go To Stop 1 Intro</Button>
                 |
                 <Button className="button" onClick={() => goHomeQuit()}>Back Home</Button>
             </View>
