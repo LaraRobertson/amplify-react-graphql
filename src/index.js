@@ -8,7 +8,7 @@ import awsExports from "./aws-exports";
 
 Amplify.configure(awsExports);
 /* can run this to check timing - places timestamp on each console.log comment */
-console.log = (function() {
+/*console.log = (function() {
     var console_log = console.log;
     var timeStart = new Date().getTime();
 
@@ -21,7 +21,7 @@ console.log = (function() {
         }
         console_log.apply(console, args);
     };
-})();
+})();*/
 /* use for changing things in theme like fonts, colors, etc */
 /* if used tokes but disabled for now */
 const theme: Theme = {

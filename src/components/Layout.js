@@ -2,9 +2,10 @@
 // components/Layout.js
 import React, {useEffect, useState} from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import {useAuthenticator, Flex, Button, useTheme, Heading, View, Image, Authenticator,Card, Text, TextField, TextAreaField} from '@aws-amplify/ui-react';
+import {useAuthenticator, Link, Button, useTheme, Heading, View, Image, Authenticator,Card, Text, TextField, TextAreaField} from '@aws-amplify/ui-react';
 import {API, Auth} from "aws-amplify";
 import {updateGameStats as updateGameStatsMutation} from "../graphql/mutations";
+import {removeLocalStorage} from "./helper";
 
 export function Layout() {
     const [userAuth, setUserAuth] = useState({});
@@ -17,16 +18,12 @@ export function Layout() {
 
     async function logOut() {
         console.log("logout");
-        /* save everything for game */
-        localStorage.removeItem("gameName");
-        localStorage.removeItem("email");
-        localStorage.removeItem("agreeToWaiver");
-        localStorage.removeItem("gameStatsID");
-        /* update game state */
+        /* save everything for game? */
         /* get values from local variables - need gamename */
         const gameStatID = localStorage.getItem("gameStatsID");
         const waiverSigned = localStorage.getItem("agreeToWaiver");
         /* update game state */
+        removeLocalStorage();
         /* don't save game stats from home page */
         /* get values from local variables - need gamename and email */
         /*
@@ -133,60 +130,98 @@ export function Layout() {
     console.log("location: " + location.pathname);
 
     return (
-        <View
-            maxWidth="900px"
-            margin="10px auto 10px auto">
-            {(route === 'authenticated') && (location.pathname === '/') ? (
-                <View padding="0 10px">
+        <View>
+            {(route === 'authenticated') && ((location.pathname === '/')||(location.pathname === '/leaderboard')||(location.pathname === '/myStats')) ? (
+            <View className="main-container">
+                <View className="main-content">
                     <header>
-                        <View>
-                            <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/logo-escapeout.png" />
+                        <View marginTop="10px">
+                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/logo-escapeout-dark2.png" />
                         </View>
                     </header>
-                    <View padding=".5rem 0">
-                        <Button onClick={() => myStats()}>My Stats</Button> | <Button
-                        onClick={() => logOut()}>Logout</Button>
-                    </View>
-                </View>) : null}
-            {(route !== 'authenticated') && (location.pathname === '/')||(location.pathname === '/login')||(location.pathname === '/leaderboard') ? (
-                <View padding="0 10px">
-                    <header>
-                        <View>
-                            <Image className="test" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/logo-escapeout.png" />
+                    <hr />
+                    {(location.pathname === '/') ? (
+                    <View>
+                        <View color="white" paddingBottom="15px">
+                        <Heading level={"4"} className="heading" textAlign="center">
+                            Play the ultimate outdoor adventure game!
+                        </Heading>
+                        Grab your phone, round up your family and friends, and head outside for a fun-filled day of problem-solving, exploration, and excitement!
                         </View>
-                    </header>
-                    <div>
-                        <div>
-                            <View padding="0 0 10px 0">
-                                <hr />
-                                <Heading
-                                    level={4}
-                                    paddingTop="10px">
-                                    Game is under development
-                                </Heading>
-                                <div>Please email us at info@escapeout.games if you have questions.</div>
-                            </View>
-                            <hr />
-                            <View paddingTop="10px">
-                                {location.pathname === '/login' || location.pathname === '/leaderboard' ? (
-                                    <Button onClick={() => navigate('/')}>Back to Games</Button>
-                                ) : (
-                                    <div>
-                                        <View paddingBottom="10px">Fell free to create an account and test:</View>
-                                        <Button className="button bouncy" onClick={() => navigate('/login')}>Login or Create an
-                                            Account</Button>
-                                    </div>
-                                )
-                                }
+                        <hr />
+                    </View>):null}
 
-                            </View>
-                        </div>
-                    </div>
-                </View>) : null}
+                    <View padding=".5rem 0">
+                        {location.pathname === '/leaderboard' ?
+                            ( <View><Button marginBottom="10px" className="button" onClick={() => navigate('/')}>Back to Game List</Button>
+                            | <Button className="button" onClick={() => myStats()}>My Stats</Button> </View>
+                        ) : null}
+                        {location.pathname === '/' ?
+                        (<View><Button className="button" onClick={() => myStats()}>My Stats</Button> |
+                               &nbsp;<Button className="button" onClick={() => logOut()}>Logout</Button></View>)
+                            :null}
+                        {location.pathname === '/myStats' ?
+                            (<Button marginBottom="10px" className="button" onClick={() => navigate('/')}>Back to Game List</Button>)
+                            :null}
+                        {userAuth.email === "lararobertson70@gmail.com" ? (<Button className="button" marginLeft="10px" onClick={() => navigate('/admin')}> =>Admin</Button>
+                        ) : (<div></div>)
+                        }
+                    </View>
+                </View>
+            </View>
+            ): null}
+            {(route !== 'authenticated') && ((location.pathname === '/')||(location.pathname === '/login')||(location.pathname === '/leaderboard')) ? (
+              <View className="main-container">
+                  <View className="main-content">
+                      <header>
+                          <View marginTop="10px">
+                              <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/logo-escapeout-dark2.png" />
+                          </View>
+                      </header>
+                      <hr />
+                     <View padding="0 0 15px 0">
+                            <Heading
+                                level={5}
+                                className="heading"
+                                paddingTop="10px">
+                                Games are under development
+                            </Heading>
+                            <div>Please email us at info@escapeout.games if you have questions.</div>
+                     </View>
+                     <hr />
+                     <View padding="15px 0">
+                            {location.pathname === '/login' || location.pathname === '/leaderboard' ? (
+                                <Button marginBottom="10px" className="button" onClick={() => navigate('/')}>Back to Game List</Button>
+                            ) : (
+                                <View>
+                                    <View paddingBottom="10px">Feel free to Test:</View>
+                                    <Button marginBottom="10px" className="button bouncy" onClick={() => navigate('/login')}>Login or Create an
+                                        Account</Button><br />
+                                  Questions?&nbsp;
+                                    <Link
+                                        href="https://escapeout.games/faqs/"
+                                        color="white"
+                                        isExternal={true}
+                                        textDecoration="underline"
+                                    >
+                                        Visit FAQs
+                                    </Link>
+                                </View>
+                            )
+                            }
+                     </View>
+                     <hr />
+                 </View>
+             </View>) : null}
+
             <ErrorComponent />
             <Outlet />
             {(location.pathname === '/')||(location.pathname === '/login')||(location.pathname === '/leaderboard') ? (
-                <View padding="40px 10px 0 10px"> © 2023 EscapeOut.Games</View>
+                <View className="main-container">
+                    <View className="main-content">
+                        <View padding="40px 10px 0 10px"> © 2023 EscapeOut.Games</View>
+                    </View>
+                </View>
             ) : null}
         </View>
     );

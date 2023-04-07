@@ -15,7 +15,6 @@ import { MyStats } from './components/MyStats';
 import { Thief1 } from './games/thief1/Thief1';
 import { Hurricane1Easy } from './games/hurricane1Easy/Hurricane1Easy';
 import { Hurricane1 } from './games/hurricane1/Hurricane1';
-import { Hurricane1Stop2 } from './games/hurricane1/Hurricane1Stop2';
 
 
 import './App.css';

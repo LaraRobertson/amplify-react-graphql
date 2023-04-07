@@ -57,15 +57,15 @@ export function MyStats() {
                 maxWidth="800px"
                 margin="10px auto 10px auto"
             >
-                <Heading level={2}>LeaderBoard</Heading>
-                <Heading level={3}>{localStorage.getItem("gameName")}</Heading>
+                <Heading level={2} className="heading">Your Stats (not done)</Heading>
+                <Heading level={3} className="heading2">{localStorage.getItem("email")}</Heading>
                 <div className="table-container" role="table" aria-label="Destinations">
                     <div className="flex-table header" role="rowgroup">
-                        <div className="flex-row first" role="columnheader">Team Name</div>
-                        <div className="flex-row" role="columnheader">Rank</div>
-                        <div className="flex-row" role="columnheader">Team Score</div>
-                        <div className="flex-row" role="columnheader"># Players</div>
-                        <div className="flex-row" role="columnheader">Played</div>
+                        <div className="flex-row first" role="columnheader">?</div>
+                        <div className="flex-row" role="columnheader">?</div>
+                        <div className="flex-row" role="columnheader">?</div>
+                        <div className="flex-row" role="columnheader">?</div>
+                        <div className="flex-row" role="columnheader">?</div>
                     </div>
                     {myStats.map((game, index) => (
                         <div className="flex-table row" role="rowgroup" key={game.id}>

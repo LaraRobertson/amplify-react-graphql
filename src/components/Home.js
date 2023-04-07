@@ -36,7 +36,7 @@ import { format } from 'date-fns'
 
 
 export function Home() {
-    const [games, setGames] = useState([]);
+    const [gamesTybee, setGamesTybee] = useState([]);
     const [gameNameLink,setGameNameLink] = useState(false);
     const [gameName,setGameName] = useState("");
     const [userDB, setUserDB] = useState({});
@@ -52,19 +52,25 @@ export function Home() {
     /* classes */
     let buttonDetailClassShow = "button button-small show";
 
-    function showGameDetail(gameIndex) {
-        setIsGameDetailVisible(true);
+    function showGameDetail(gameIndex,cardID) {
+       /* setIsGameDetailVisible(true);*/
         setGameIndex(gameIndex);
         console.log("gameIndex (show): " + gameIndex);
         console.log("gameIndex (show): " + typeof gameIndex);
         console.log("isGameDetailVisible: " + isGameDetailVisible);
-        GameDetailView();
+        console.log("cardID: " + cardID);
+        let element =  document.getElementById(cardID);
+        element.classList.add('show');
+        /*GameDetailView();*/
     }
 
-    function hideGameDetail() {
-        setIsGameDetailVisible(false);
+    function hideGameDetail(cardID) {
+        /*setIsGameDetailVisible(false);
         console.log("isGameDetailVisible: " + isGameDetailVisible);
-        GameDetailView();
+        GameDetailView();*/
+        console.log("cardID: " + cardID);
+        let element =  document.getElementById(cardID);
+        element.classList.remove('show');
     }
 
     const GameDetailView = () => {
@@ -76,10 +82,10 @@ export function Home() {
         let gameDescriptionP = "";
         let gameStopDetail = "";
         let gameStopWord = "Stops";
-        console.log("length of games: " + games.length);
-        if (games.length > 0) {
+        console.log("length of games: " + gamesTybee.length);
+        if (gamesTybee.length > 0) {
             if (gameIndex || gameIndex === 0) {
-                let test = games[gameIndex];
+                let test = gamesTybee[gameIndex];
                 console.log("test - game info: " + JSON.stringify(test));
                 console.log("test - gameName: " + test.gameName);
                 /*for (const key in test) {
@@ -180,6 +186,7 @@ export function Home() {
             navigate('/waiver');
         } else {
             console.log("go to page: " + gameDetails.gameName);
+            let firstTime=true;
             /* check if waiver signed */
             if (apiGameStats.data.gameStatsByGameID.items[0].gameStates != "" || apiGameStats.data.gameStatsByGameID.items[0].gameStates !== null ) {
                 console.log("check waiver");
@@ -205,6 +212,7 @@ export function Home() {
                         console.log("gamesScoreFromAPI (home): " + gamesScoreFromAPI.length);
                         if (Array.isArray(gamesScoreFromAPI)) {
                             localStorage.setItem("numberOfTimes", gamesScoreFromAPI.length);
+                            firstTime=false;
                         } else {
                             localStorage.setItem("numberOfTimes", 0);
                         }
@@ -228,7 +236,8 @@ export function Home() {
                                 gameStatsID: gamesStatsFromAPI.id,
                                 gameID: gamesStatsFromAPI.gameID,
                                 gameTotalTime: 0,
-                                completed: false
+                                completed: false,
+                                firstTime: firstTime
                             };
                             await API.graphql({
                                 query: createGameScore,
@@ -276,9 +285,14 @@ export function Home() {
 
     async function fetchGames() {
         console.log("fetchGames");
+        let filter = {
+            gameLocationCity: {
+                eq: "Tybee Island"
+            }
+        };
         const apiData = await API.graphql({
             query: gamesByDate,
-            variables: {sortDirection: "DESC", type: "game"}
+            variables: {filter: filter, sortDirection: "DESC", type: "game"}
         });
         const gamesFromAPI = apiData.data.gamesByDate.items;
         /*await Promise.all(
@@ -291,7 +305,7 @@ export function Home() {
                 return game;
             })
         );*/
-        setGames(gamesFromAPI);
+        setGamesTybee(gamesFromAPI);
     }
 
     async function fetchUserDB() {
@@ -352,6 +366,9 @@ export function Home() {
         let filter = {
             gameType: {
                 eq: "free"
+            },
+            gameLocationCity: {
+                eq: "Tybee Island"
             }
         };
         const apiDataFree = await API.graphql({ query: listGames, variables: { filter: filter} });
@@ -363,7 +380,7 @@ export function Home() {
             }
         }
         const gamesFromAPI = apiDataFree.data.listGames.items;
-        setGames(gamesFromAPI);
+        setGamesTybee(gamesFromAPI);
     }
 
     /* useEffects */
@@ -416,7 +433,7 @@ export function Home() {
     });
 
     useEffect(() => {
-        console.log("***useEffect***: games: " + games);
+        console.log("***useEffect***: gamesTybee: " + gamesTybee);
     });
 
     useEffect(() => {
@@ -437,93 +454,113 @@ export function Home() {
             <View marginBottom="10px">Welcome {props.userName.username} | {props.userName.email}</View>
         )
     }
+    const divStyle = (src) => ({
+        backgroundImage: 'url(' + src + ')'
+    })
+    if (isGameDetailVisible) {
+        return (
+            <View className="main-container">
+                <GameDetailView />
+            </View>
+        )} else {
+        return (
+            <View className="main-container">
 
-
-    return (
-        <View
-            maxWidth="900px"
-            margin="10px auto 10px auto">
-            <GameDetailView />
-            {route === 'authenticated' ? (
-                <View padding="0 10px">
-                    <HeadingComponent userName = {userAuth} />
-                    {gameNameLink ?
-                        <div>currently playing {gameName}: <Button style={{display:'inline'}} className={buttonDetailClassShow} onClick={() => goToGameSet({gameName:gameName,gameID:''})}>
-                            go to game
-                        </Button></div> : <div></div>
-                    }
-                    <Heading level={"5"}>
-                        Games:
-                    </Heading>
-
+                <View className="main-content">
                     <Flex
                         wrap="wrap"
                         gap="1rem"
                         paddingTop="20px"
                         direction="row"
-                        justifyContent="flex-start"
-                    >
-                        {games.map((game,index) => (
-                            <Card className="gameCard" variation="elevated"  key={game.id || game.gameName} >
-                                <Text className="bold">{game.gameName} <span className="small">({game.gameType})</span></Text>
-                                <Text><span className="italics">Location</span>: {game.gameLocationPlace}</Text>
-                                <Text><span className="italics">City</span>: {game.gameLocationCity}</Text>
-                                <Text><span className="italics">Stops</span>: {game.gameStop.items.length}</Text>
-
-                                {(gamesIDUser.includes(game.id) || game.gameType === "free") ?
-                                    (<div>
-                                        <Button onClick={() => goToGame({gameName:game.gameName,gameID:game.id})}>
-                                            go to game
-                                        </Button>
-                                    </div>) :
-                                    (<div></div>)
-                                }
-                                <Button className={buttonDetailClassShow} onClick={() => leaderBoard({gameName:game.gameName,gameID:game.id})}>
-                                    Leader Board
-                                </Button>
-                                <Button className={buttonDetailClassShow} onClick={() => showGameDetail(index)} >Show Game Details</Button>
-                            </Card>
-
-                        ))}
+                        justifyContent="flex-start" className="city-links">
                     </Flex>
-                    {userAuth.email === "lararobertson70@gmail.com" ? (
-                        <View
-                            maxWidth="800px"
-                            margin="10px auto 10px auto"
+                {route === 'authenticated' ? (
+                    <View>
+                        <HeadingComponent userName = {userAuth} />
+                        <Flex
+                            wrap="wrap"
+                            gap="1rem"
+                            paddingTop="20px"
+                            direction="row"
+                            justifyContent="flex-start" className="city-links">Cities: <a href="#tybeeIsland">Tybee Island</a>
+                        </Flex>
+
+                        <a id="tybeeIsland"></a>
+                        <Heading level={"5"} className="heading">
+                            Tybee Island, GA
+                        </Heading>
+                        <Flex
+                            wrap="wrap"
+                            gap="1rem"
+                            paddingTop="20px"
+                            direction="row"
+                            justifyContent="center"
+                            className="flex-games"
                         >
-                            <Button onClick={() => navigate('/admin')}>Admin</Button>
-                        </View>) : (<div></div>)
-                    }
-                </View>
-            ): (
-                <View padding="0 10px">
-                    <Heading level={"5"}>
-                        Games:
-                    </Heading>
+                            {gamesTybee.map((game,index) => (
+                                <Card style={divStyle(game.gameImage)} className="game-card" variation="elevated"  key={game.id || game.gameName} >
+                                    <View className="inner-game-card">
+                                    <Text color="white" className="bold">{game.gameName} <span className="small">({game.gameType})</span></Text>
+                                    <Text color="white" ><span className="italics">Location</span>: {game.gameLocationPlace}</Text>
+                                    <Text color="white"><span className="italics">City</span>: {game.gameLocationCity}</Text>
+                                    <Text color="white"><span className="italics">Stops</span>: {game.gameStop.items.length}</Text>
 
-                    <Flex
-                        wrap="wrap"
-                        gap="1rem"
-                        paddingTop="20px"
-                        direction="row"
-                        justifyContent="flex-start"
-                    >
-                        {games.map((game,index) => (
-                            <Card className="gameCard" variation="elevated" key={game.id || game.gameName}>
-                                <Text className="bold">{game.gameName} <span className="small"> ({game.gameType})</span></Text>
-                                <Text><span className="italics">Location</span>: {game.gameLocationPlace}</Text>
-                                <Text><span className="italics">City</span>: {game.gameLocationCity}</Text>
-                                <Text><span className="italics">Stops</span>: {game.gameStop.items.length}</Text>
-                                <Button className={buttonDetailClassShow} onClick={() => leaderBoard({gameName:game.gameName,gameID:game.id})}>
-                                    Leader Board
-                                </Button>
-                                <Button className={buttonDetailClassShow} onClick={() => showGameDetail(index)} >Show Game Details</Button>
-                            </Card>
+                                    {(gamesIDUser.includes(game.id) || game.gameType === "free") ?
+                                        (<div>
+                                            <Button className="go-to-game-button" onClick={() => goToGame({gameName:game.gameName,gameID:game.id})}>
+                                                go to game
+                                            </Button>
+                                        </div>) :
+                                        (<div></div>)
+                                    }
+                                    <Button className={buttonDetailClassShow} onClick={() => leaderBoard({gameName:game.gameName,gameID:game.id})}>
+                                        Leader Board
+                                    </Button>
+                                    <Button className={buttonDetailClassShow} onClick={() => showGameDetail(index,game.id)} >Show Game Details</Button>
+                                    <View id={game.id} className="hide">
 
-                        ))}
-                    </Flex>
+                                        <Button  onClick={() => hideGameDetail(game.id)} >X</Button>test details</View>
+                                    </View>
+                                </Card>
+                            ))}
+                        </Flex>
+
+                    </View>
+                ): (
+                    <View>
+                        <a id="tybeeIsland"></a>
+                        <Heading level={"5"} className="heading" marginTop="15px">
+                            Tybee Island, GA
+                        </Heading>
+                        <Flex
+                            wrap="wrap"
+                            gap="1rem"
+                            paddingTop="20px"
+                            direction="row"
+                            justifyContent="flex-start"
+                            className="flex-games"
+                        >
+                            {gamesTybee.map((game,index) => (
+                                <Card style={divStyle(game.gameImage)} className="game-card" variation="elevated" key={game.id || game.gameName}>
+                                    <View className="inner-game-card">
+                                    <Text color="white" className="bold">{game.gameName} <span className="small"> ({game.gameType})</span></Text>
+                                    <Text color="white"><span className="italics">Location</span>: {game.gameLocationPlace}</Text>
+                                    <Text color="white"><span className="italics">City</span>: {game.gameLocationCity}</Text>
+                                    <Text color="white"><span className="italics">Stops</span>: {game.gameStop.items.length}</Text>
+                                    <Button className={buttonDetailClassShow} onClick={() => leaderBoard({gameName:game.gameName,gameID:game.id})}>
+                                        Leader Board
+                                    </Button>
+                                    <Button className={buttonDetailClassShow} onClick={() => showGameDetail(index,game.id)} >Show Game Details</Button>
+                                    <View id={game.id} className="hide">
+                                        <Button   onClick={() => hideGameDetail(game.id)} >X</Button>test details</View>
+                                    </View>
+                                </Card>
+
+                            ))}
+                        </Flex>
+                    </View>
+                )}
                 </View>
-            )}
-        </View>
-    );
+            </View>
+        );}
 }

@@ -13,7 +13,14 @@ import {
     useAuthenticator
 } from '@aws-amplify/ui-react';
 import {API, Auth} from "aws-amplify";
-import {listGames, gamesByDate, usersByEmail, listUsers} from "../graphql/queries";
+import {
+    listGames,
+    gamesByDate,
+    usersByEmail,
+    listUsers,
+    gameScoreByGameID,
+    gameStatsByGameName, gameStatsByUserEmail
+} from "../graphql/queries";
 import { format } from 'date-fns'
 import {
     createGame,
@@ -22,15 +29,20 @@ import {
     updateGameStats,
     createGameStop, createGameScore
 } from "../graphql/mutations";
+import {CoverScreenView} from "./sharedComponents";
 import { useNavigate } from 'react-router-dom';
 
 export function Admin() {
     const [games, setGames] = useState([]);
     const [users, setUsers] = useState([]);
     const [userID, setUserID] = useState('');
+    const [userStats, setUserStats] = useState([]);
     const [isGameDetailVisible, setIsGameDetailVisible] = useState(true);
     const [userAuth, setUserAuth] = useState({});
     const [isAddStopVisible, setIsAddStopVisible] = useState(false);
+    const [isUserStatVisible, setIsUserStatVisible] = useState(false);
+    const [isCoverScreenVisible, setIsCoverScreenVisible] = useState(false);
+    const [userEmail, setUserEmail] = useState();
     const [gameID, setGameID] = useState();
     const [gameName, setGameName] = useState();
     const {tokens} = useTheme();
@@ -324,12 +336,14 @@ export function Admin() {
         });
         event.target.reset();
         setIsAddStopVisible(false);
+        setIsCoverScreenVisible(false);
         console.log("isAddStopVisible: " + isAddStopVisible);
         AddStopView();
     }
     function showAddStop(prop) {
         console.log("prop.gameID: " + prop.gameID);
         setIsAddStopVisible(true);
+        setIsCoverScreenVisible(true);
         setGameID(prop.gameID);
         setGameName(prop.gameName);
         AddStopView();
@@ -337,47 +351,125 @@ export function Admin() {
 
     function hideAddStop() {
         setIsAddStopVisible(false);
+        setIsCoverScreenVisible(false);
         console.log("isAddStopVisible: " + isAddStopVisible);
         AddStopView();
     }
 
     const AddStopView = () => {
-        let gameDetailClass = "all-screen hide-gradual";
-        if (isAddStopVisible) gameDetailClass = "all-screen show-gradual";
+        let gameDetailClass = "fixed hide-gradual";
+        if (isAddStopVisible) gameDetailClass = "fixed show-gradual";
         return (
-            <div className={gameDetailClass}>
+            <View className={gameDetailClass}>
                 <Button className="close-button" onClick={() => hideAddStop()}>X</Button>
                 <Heading level={3}>{gameName}</Heading>
                 <View as="form" margin="3rem 0" onSubmit={createAddStop}>
-                    <Flex direction="row" justifyContent="center" gap="1rem">
+                    <Flex wrap="wrap" direction="row" justifyContent="center" gap="1rem">
                         <TextField
                             name="gameStopName"
+                            className="black-text-field"
                             placeholder="Game Stop Name"
                             label="Game Stop Name"
                             labelHidden
-                            variation="quiet"
                             required
                         />
                         <TextField
                             name="order"
+                            className="black-text-field"
                             placeholder="order"
                             label="Game Stop Order"
                             labelHidden
-                            variation="quiet"
                             required
                         />
-                        <Button type="submit" variation="primary">
+                        <Button width="200px" type="submit" variation="primary">
                             Create Add Stop
                         </Button>
                     </Flex>
                 </View>
+            </View>
+        )
+    }
+    function showUserStats(prop) {
+        console.log("prop.email: " + prop.email);
+        setIsUserStatVisible(true);
+        setIsCoverScreenVisible(true);
+        setUserEmail(prop.email);
+        userStatsFunction(prop.email);
+    }
+
+    function hideUserStats() {
+        setIsUserStatVisible(false);
+        setIsCoverScreenVisible(false);
+        console.log("IsUserStatVisible: " + isUserStatVisible);
+        UserStatsView();
+    }
+    async function userStatsFunction(email) {
+        console.log("user stats");
+        const apiData = await API.graphql({
+            query: gameStatsByUserEmail,
+            variables: {userEmail:email}
+        });
+        const userStatsFromAPI = apiData.data.gameStatsByUserEmail.items;
+        /*await Promise.all(
+            gamesFromAPI.map(async (game) => {
+                if (game.gameImage) {
+                    const url = await Storage.get(game.gameName);
+                    game.gameImage = url;
+                    console.log("url: " + url);
+                }
+                return game;
+            })
+        );*/
+        setUserStats(userStatsFromAPI);
+        UserStatsView();
+    }
+    const UserStatsView = () => {
+        let gameDetailClass = "fixed hide-gradual";
+        if (isUserStatVisible) gameDetailClass = "fixed show-gradual";
+        return (
+            <View className={gameDetailClass}>
+                <Button className="close-button" onClick={() => hideUserStats()}>X</Button>
+                <View
+                    maxWidth="800px"
+                    margin="10px auto 10px auto"
+                >
+                    <Heading level={2}>User Stats</Heading>
+                    <Heading level={3}>{userEmail}</Heading>
+                        {userStats.map((userStat, index) => (
+                            <View>
+                                <GameScoreView gameScoreArray = {userStat.gameScore.items} gameName={userStat.gameName}/>
+                            </View>
+                        ))}
+                </View>
+            </View>
+        )
+    }
+    const GameScoreView = (props) => {
+        console.log("gameScoreArray: " + JSON.stringify(props.gameScoreArray));
+        return (
+            <div className="table-container" role="table" aria-label="game score">
+                <div className="flex-table header" role="rowgroup">
+                    <div className="flex-row " role="columnheader">Game Name</div>
+                    <div className="flex-row " role="columnheader">Team Name</div>
+                    <div className="flex-row" role="columnheader">Team Score</div>
+                    <div className="flex-row" role="columnheader"># Players</div>
+                    <div className="flex-row" role="columnheader">Played</div>
+                </div>
+                {props.gameScoreArray.map((score, index) => (
+                    <div className="flex-table row" role="rowgroup" key={score.id}>
+                        <div className="flex-row first" role="cell">{props.gameName}</div>
+                        <div className="flex-row " role="cell">{score.teamName}</div>
+                        <div className="flex-row" role="cell"> {score.gameTotalTime}</div>
+                        <div className="flex-row" role="cell">{score.numberOfPlayers}</div>
+                        <div className="flex-row" role="cell"> {format(new Date(score.updatedAt), "MM/dd/yyyy H:mma")}</div>
+                    </div>
+                ))}
             </div>
         )
     }
     return (
-            <View margin="1rem 0"
-                  maxWidth="800px"
-                  margin="10px auto 10px auto">
+        <View position="relative">
+            <View className="main-container">
                 <HeadingComponent userName = {userAuth} />
                 {userAuth.email === "lararobertson70@gmail.com" ? (
                     <View
@@ -385,6 +477,10 @@ export function Admin() {
                         margin="10px auto 10px auto"
                     >
                         <Heading level={3}>Admin</Heading>
+                        <View padding=".5rem 0">
+                            <Button onClick={() => navigate('/')}>Home</Button><br />
+                            <a href="#games">Games </a> |  <a href="#users">Users </a>
+                        </View>
                         <View as="form" margin="3rem 0" onSubmit={createUserGamePlay}>
                             <Flex direction="row" justifyContent="center">
                                 <TextField
@@ -525,8 +621,9 @@ export function Admin() {
                                     Create Game
                                 </Button>
                             </Flex>
-
+                            <a id="games"></a>
                             <Heading level={3}>Games</Heading>
+
                             <View>
                                 {games.map((game) => (
                                     <div><strong>game id</strong>: {game.id} | <strong>game name</strong>: {game.gameName} | <strong>type</strong>: {game.gameType} <br />
@@ -540,17 +637,29 @@ export function Admin() {
 
                                 ))}
                             </View>
+                            <a id="users"></a>
                             <Heading level={3}>Users</Heading>
                             <View>
                                 {users.map((user) => (
-                                    <div><strong>user id</strong>: {user.id} | <strong>email</strong>: {user.email} | <strong>userName</strong>: {user.userName}</div>
+                                    <View>
+                                    <div><strong>user id</strong>: {user.id} | <strong>email</strong>: {user.email} | <strong>userName</strong>: {user.userName}
+                                    </div>
+                                        <div><Button className="button" onClick={() => showUserStats({"email": user.email})}>User Stat</Button>
+                                    <hr />
+                                    </div>
+                                    </View>
                                 ))}
                             </View>
 
                         </View>
                         <AddStopView />
+                        <UserStatsView />
+
                     </View>) : (<div></div>)
                 }
+
             </View>
+            <CoverScreenView isCoverScreenVisible={isCoverScreenVisible}/>
+        </View>
     );
 }

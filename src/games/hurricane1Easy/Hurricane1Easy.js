@@ -1,14 +1,16 @@
 import React, {useEffect, useState} from "react"
-import {NotesOpen} from "../../components/NotesOpen";
-import {shallowEqual} from "../../components/ShallowEqual";
-import {Button, Heading, View, Image, TextAreaField, TextField, Text, Alert, Flex,  SelectField} from '@aws-amplify/ui-react';
+import {Button, View, Image, TextAreaField, TextField} from '@aws-amplify/ui-react';
 import {useNavigate} from "react-router-dom";
-import {API} from "aws-amplify";
-import { gameScoreByGameStatsID, gameStopByGameID } from "../../graphql/queries";
-import { updateGameScore, createGameHintTime, createGameStopTime } from "../../graphql/mutations";
+import {toggleIntro, toggleHelp, toggleBackpack,
+    toggleNotes, goHomeQuit, setGameStopFunction,
+    intervalFunction, goHome, winGameFunction, toggleHint1,toggleHint2,toggleHint3, toggleHint4, setCommentsFunction} from "../../components/helper";
+import {shallowEqual} from "../../components/ShallowEqual";
+import {NotesOpen, GameIntro, CoverScreenView} from "../../components/sharedComponents";
 
 export function Hurricane1Easy() {
+
     /* for all games */
+    const [isAlertVisible, setIsAlertVisible] = useState(false);
     const [areNotesVisible, setAreNotesVisible] = useState(false);
     const [isHelpVisible, setIsHelpVisible] = useState(false);
     const [gameNotes,setGameNotes] = useState('');
@@ -16,6 +18,7 @@ export function Hurricane1Easy() {
     const [isBackpackVisible, setIsBackpackVisible] = useState(false);
     const [gameBackpack, setGameBackpack] = useState([]);
     const [gameBackpackHasItems, setGameBackpackHasItems] = useState(false);
+    const [isCoverScreenVisible, setIsCoverScreenVisible] = useState(true);
     /* set in local storage too */
     const [gameTime, setGameTime] = useState(0);
     const [gameTimeHint, setGameTimeHint] = useState(0);
@@ -42,302 +45,42 @@ export function Hurricane1Easy() {
     const [hintTime2,setHintTime2] = useState(0);
     const [hintTime3,setHintTime3] = useState(0);
     const [hintTime4,setHintTime4] = useState(0);
-    const [isIntroVisible, setIsIntroVisible] = useState(true);
+    const [isIntroVisible, setIsIntroVisible] = useState(false);
     const [isGameIntroVisible, setIsGameIntroVisible] = useState(true);
-    function toggleIntro() {
-        console.log("gameTime: " + gameTime);
-        console.log("gameTimeTotal: " + gameTimeTotal);
-        isIntroVisible ? setIsIntroVisible(false) : setIsIntroVisible(true);
-        setStopClock(false);
 
-    }
-    function toggleGameIntro() {
-        console.log("gameTime: " + gameTime);
-        console.log("gameTimeTotal: " + gameTimeTotal);
-        /* check numberOfPlayers */
-        if (numberOfPlayers != '' && teamName != '') {
-            isIntroVisible ? setIsGameIntroVisible(false) : setIsGameIntroVisible(true);
-            setStopClock(false);
-        } else {
-            setNumberOfPlayersError("Please complete fields");
-        }
-
-    }
-    function goToStop() {
-        setGameStop(Number(gameStop) + 1);
-        localStorage.setItem("gameStop",Number(gameStop) + 1);
-        console.log("go to stop:" + (Number(gameStop) + 1));
-        setGameTimeTotal(gameTimeTotal + gameTime + gameTimeHint);
-        /* reset time */
-        setHintTime1(0);
-        setHintTime2(0);
-        setHintTime3(0);
-        setHintTime4(0);
-        setGameTime(0);
-        setGameTimeHint(0);
-        setIsIntroVisible(true);
-    }
-    const navigate = useNavigate();
-    function removeLocalStorage() {
-        localStorage.removeItem("agreeToWaiver");
-        localStorage.removeItem("gameStatsID");
-        localStorage.removeItem("gameScoreID");
-        localStorage.removeItem("gameName");
-        localStorage.removeItem("gameNameID");
-        localStorage.removeItem("gameTime")
-        localStorage.removeItem("gameTimeHint");
-        localStorage.removeItem("gameTimeTotal");
-        localStorage.removeItem("gameStop");
-        localStorage.removeItem("gameStopNameArray");
-        localStorage.removeItem("numberOfTimes");
-        localStorage.removeItem("numberOfPlayers");
-        localStorage.removeItem("key");
-        localStorage.removeItem("prybar");
-        localStorage.removeItem("shovel");
-        localStorage.removeItem("key2");
-    }
-    function goHomeQuit() {
-        removeLocalStorage();
-        navigate('/');
-    }
-    async function goHome() {
-        console.log("game comments: " + gameComments);
-        const newGameStats = {
-            id: localStorage.getItem("gameScoreID"),
-            gameComments: gameComments,
-            completed: true
-        };
-        const apiGameScoreUpdate = await API.graphql({ query: updateGameScore, variables: {input: newGameStats}});
-        removeLocalStorage();
-        navigate('/');
-    }
-
-    /* 60000 milliseconds = 1 minute */
-    const MINUTE_MS = 3000;
-    useEffect(() => {
-        const interval = setInterval(() => {
-            console.log('Logs every 3 seconds');
-            if (gameTime) {
-                let gameTimeNum = Number((gameTime + .05).toFixed(2));
-                console.log('game time: ' + gameTimeNum);
-                if (!stopClock) {
-                    localStorage.setItem("gameTime", gameTimeNum);
-                    setGameTime(gameTimeNum);
-                    let hintTimeTotalNum = Number(hintTime1 + hintTime2 + hintTime3 + hintTime4);
-                    console.log("hint time total: " + hintTimeTotalNum);
-                    localStorage.setItem("gameTimeHint", hintTimeTotalNum);
-                    setGameTimeHint(hintTimeTotalNum);
-                }
-                console.log("stopClock: " + stopClock);
-
-            } else {
-                console.log("no gameTime");
-                if (!isIntroVisible) {
-                    setGameTimeFunction(.05);
-                }
-            }
-
-        }, MINUTE_MS);
-        return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
-    }, [gameTime,isIntroVisible])
-
-    function setGameTimeFunction(gameTime) {
-        let gameTimeNum = Number(gameTime);
-        console.log("gametimefunction: " + gameTimeNum.toFixed(2));
-        localStorage.setItem("gameTime",gameTimeNum.toFixed(2));
-        setGameTime(gameTimeNum);
-    }
-
-    useEffect(() => {
-        console.log("***useEffect***: stopClock: " + stopClock);
-    });
-    async function winGameFunction(props) {
-        console.log("props: " + props);
-
-        console.log("winGameFunction");
-        /* for end of game: clearInterval(interval);*/
-        console.log("stop has been won");
-        /* update gameScore based on stop - */
-        updateGameScoreFunction(props);
-        createGameStopFunction();
-        createGameHintFunction();
-    }
-    async function createGameStopFunction() {
-        const data = {
-            gameScoreID: gameScoreID,
-            gameStopTime: gameTime,
-            gameStop: gameStop
-        };
-        await API.graphql({
-            query: createGameStopTime,
-            variables: { input: data },
-        });
-    }
-    async function createGameHintFunction() {
-        const data = {
-            gameScoreID: gameScoreID,
-            gameHintTime: gameTimeHint,
-            gameStop: gameStop
-        };
-        await API.graphql({
-            query: createGameHintTime,
-            variables: { input: data },
-        });
-    }
-    async function updateGameScoreFunction(props) {
-        console.log("gameScoreID (update):" + gameScoreID);
-        let GameTimeTotalVar = gameTimeTotal + gameTime + gameTimeHint;
-        const data = {
-            id: gameScoreID,
-            numberOfPlayers: numberOfPlayers,
-            teamName: teamName,
-            gameTotalTime: Number(GameTimeTotalVar),
-            completed: props
-        };
-        console.log("data: " + data);
-        /*let testObject = data;
-        for (const key in testObject) {
-            console.log(`${key}: ${ testObject[key]}`);
-            for (const key1 in testObject[key]) {
-                //console.log(`${key1}: ${testObject[key][key1]}`);
-            }
-        }*/
-        const apiUpdateGameScore = await API.graphql({
-            query: updateGameScore,
-            variables: { input: data },
-        }).then(response => {
-            console.log(response);
-            return(response);
-        }).catch(e => {
-            console.log("catch apiUpdateGameScore");
-            console.log(e);
-            return null;
-        });
-
-        return(apiUpdateGameScore);
-    }
-
-    /* hint functions */
-    function toggleHint1() {
-        setHintTime1(5);
-        isHint1Visible ? setIsHint1Visible(false) : setIsHint1Visible(true);
-    }
-    function toggleHint2() {
-        setHintTime2(5);
-        isHint2Visible ? setIsHint2Visible(false) : setIsHint2Visible(true);
-    }
-    function toggleHint3() {
-        setHintTime3(5);
-        isHint3Visible ? setIsHint3Visible(false) : setIsHint3Visible(true);
-    }
-    function toggleHint4() {
-        setHintTime4(5);
-        isHint4Visible ? setIsHint4Visible(false) : setIsHint4Visible(true);
-    }
-    /* info functions */
-    function toggleHelp() {
-        isHelpVisible ? setIsHelpVisible(false) : setIsHelpVisible(true);
-    }
-    /* notes functions */
-    function toggleNotes() {
-        areNotesVisible ? setAreNotesVisible(false) : setAreNotesVisible(true);
-    }
-    function setNotesFunction(notes) {
-        console.log('notes: ' + notes);
-        /* set localhost variable */
-        setGameNotes(notes);
-    }
-    /* end notes functions */
-    function setCommentsFunction(notes) {
-        console.log('comments: ' + notes);
-        /* set localhost variable */
-        setGameComments(notes);
-    }
-    function setNumPlayerFunction(numPlayerValue) {
-        console.log("numPlayerFunction: " + numPlayerValue);
-        localStorage.setItem("numberOfPlayers", numPlayerValue);
-        setNumberOfPlayers(numPlayerValue);
-    }
-    function setTeamNameFunction(teamNameValue) {
-        console.log("setTeamNameFunction: " + teamNameValue);
-        localStorage.setItem("teamName", teamNameValue);
-        setTeamName(teamNameValue);
-    }
     /* get gamestats and set localstorage */
     useEffect(() => {
         console.log("***useEffect***: setGameStop (only on mount)");
         /* set local storage for gameStop - only on mount */
-        setGameStopFunction();
+        setGameStopFunction(setGameStop,setNumberOfTimes,setGameID,setGameStatsID,setGameStopNameArray,setGameStopName,setGameScoreID);
     }, []);
 
+    /* 60000 milliseconds = 1 minute */
+    const MINUTE_MS = 3000;
+    /* clock action */
+    useEffect(() => {
+        const interval = setInterval(() => {
+            intervalFunction(gameTime,stopClock,setGameTime,hintTime1,hintTime2,hintTime3,hintTime4,setGameTimeHint,isIntroVisible);
+        }, MINUTE_MS);
+        return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+    }, [gameTime,isIntroVisible])
 
-    async function setGameStopFunction() {
-        console.log("setGameStopFunction - only on mount");
-        console.log ("get Game Stop: " + localStorage.getItem("gameStop"));
-        console.log ("get GameID: " + localStorage.getItem("gameID"));
-        console.log ("get GameStatsID: " + localStorage.getItem("gameStatsID"));
-        setGameStop(localStorage.getItem("gameStop"))
-        setNumberOfTimes(localStorage.getItem("numberOfTimes"));
-        setGameID(localStorage.getItem("gameID"));
-        setGameStatsID(localStorage.getItem("gameStatsID"));
-        /* get gameStop name */
-        const gameStopFromAPI = await getGameStopName();
-        let gameStopNameArrayConst = gameStopFromAPI.data.gameStopByGameID.items;
-        /* get gameScore Id */
-        const gameScoreFromAPI = await getGameScoreID();
-        let gameScoreID = gameScoreFromAPI.data.gameScoreByGameStatsID.items[0].id;
-        let testObject = gameStopNameArrayConst[0];
-        for (const key in testObject) {
-            console.log(`${key}: ${ testObject[key]}`);
-            for (const key1 in testObject[key]) {
-                //console.log(`${key1}: ${testObject[key][key1]}`);
-            }
-        }
-        let GameStopIndex = Number(localStorage.getItem("gameStop"))-1;
-        setGameStopNameArray(gameStopNameArrayConst);
-        setGameStopName(gameStopNameArrayConst[GameStopIndex].gameStopName);
-        console.log("gameStopNameArrayConst[0].gameStopName (setGameStopFunction): " + gameStopNameArrayConst[GameStopIndex].gameStopName);
-        localStorage.setItem("gameStopNameArray", gameStopFromAPI.data.gameStopByGameID.items);
-        setGameScoreID(gameScoreID);
-        localStorage.setItem("gameScoreID", gameScoreID);
-    }
+    /* changed in helper function - testing */
+    useEffect(() => {
+        console.log("***useEffect***: numberOfPlayers: " + numberOfPlayers);
+    });
+    useEffect(() => {
+        console.log("***useEffect***: numberOfPlayersError: " + numberOfPlayersError);
+    });
+    useEffect(() => {
+        console.log("***useEffect***: isGameIntroVisible: " + isGameIntroVisible);
+    });
+    useEffect(() => {
+        console.log("***useEffect***: stopClock: " + stopClock);
+    });
 
-    async function getGameScoreID() {
-        let filter = {
-            completed: {
-                eq: false
-            }
-        };
-        const apiGameScore = await API.graphql({
-            query: gameScoreByGameStatsID,
-            variables: { filter: filter, gameStatsID: localStorage.getItem("gameStatsID")}
-        }).then(response => {
-            console.log(response);
-            return(response);
-        }).catch(e => {
-            console.log("catch");
-            console.log(e);
-            return null;
-        });
+    const navigate = useNavigate();
 
-        return(apiGameScore);
-    }
-
-    async function getGameStopName() {
-        const apiGameStop = await API.graphql({
-            query: gameStopByGameID,
-            variables: { gameID: localStorage.getItem("gameID")}
-        }).then(response => {
-            console.log(response);
-            return(response);
-        }).catch(e => {
-            console.log("catch");
-            console.log(e);
-            return null;
-        });
-
-        return(apiGameStop);
-    }
     /* end for all games */
 
     /* STOP 1 */
@@ -414,9 +157,6 @@ export function Hurricane1Easy() {
     const [haveGuessed1,setHaveGuessed1] = useState();
     const [isWrong1, setIsWrong1] = useState(true);
     const answer1 = {'answer':'wus'};
-    useEffect(() => {
-        console.log("***useEffect***: guess1.answer: " + guess1.answer);
-    });
     function setGuess1Numbers(guess) {
         var x = guess;
         console.log("guess1 x: " + x);
@@ -430,7 +170,7 @@ export function Hurricane1Easy() {
             console.log("stop 1 win game");
             setStopClock(true);
             setGameComplete(true);
-            winGameFunction(true);
+            winGameFunction(true,gameScoreID,gameTime,gameStop,gameTimeTotal,gameTimeHint,numberOfPlayers,teamName);
         } else {
             console.log("wrong guess");
             setHaveGuessed1(true);
@@ -443,21 +183,25 @@ export function Hurricane1Easy() {
     const [isSignVisible, setIsSignVisible] = useState(false);
     function toggleSign() {
         isSignVisible ? setIsSignVisible(false) : setIsSignVisible(true);
+        isCoverScreenVisible ? setIsCoverScreenVisible(false) : setIsCoverScreenVisible(true);
     }
     /* torn diary with message */
     const [isTornDiaryVisible, setIsTornDiaryVisible] = useState(false);
     function toggleTornDiary() {
         isTornDiaryVisible ? setIsTornDiaryVisible(false) : setIsTornDiaryVisible(true);
+        isCoverScreenVisible ? setIsCoverScreenVisible(false) : setIsCoverScreenVisible(true);
     }
     /* diary with message */
     const [isDiaryVisible, setIsDiaryVisible] = useState(false);
     function toggleDiary() {
         isDiaryVisible ? setIsDiaryVisible(false) : setIsDiaryVisible(true);
+        isCoverScreenVisible ? setIsCoverScreenVisible(false) : setIsCoverScreenVisible(true);
     }
     /* need to click on safe */
     const [isSafeInfoVisible, setIsSafeInfoVisible] = useState(false);
     function toggleSafe() {
         isSafeInfoVisible ? setIsSafeInfoVisible(false) : setIsSafeInfoVisible(true);
+        isCoverScreenVisible ? setIsCoverScreenVisible(false) : setIsCoverScreenVisible(true);
     }
     useEffect(() => {
         console.log("***useEffect***: isSafeInfoVisible: " + isSafeInfoVisible);
@@ -479,21 +223,23 @@ export function Hurricane1Easy() {
         isSandbagMessageVisible ? setIsSandbagMessageVisible(false) : setIsSandbagMessageVisible(true);
     }
     /* backpack functions */
-    function toggleBackpack() {
-        isBackpackVisible ? setIsBackpackVisible(false) : setIsBackpackVisible(true);
-    }
     /* backpack items: key */
     /* key is used to open sandbag vault */
     const [isKeyOn, setIsKeyOn] = useState(false);
     useEffect(() => {
         console.log("***useEffect***: isKeyOn: " + isKeyOn);
     });
-    /* remove key from window and put in backpack */
+    /* remove key from window and put in backpack and turn off on in backpack */
     const [isKeyVisible, setIsKeyVisible] = useState(true);
     function keyFunction() {
         setIsKeyVisible(false);
+        setIsAlertVisible(true);
+
+        setTimeout(() => {
+            setIsAlertVisible(false);
+         }, 3000);
         console.log("put key in backpack");
-        localStorage.setItem("key", "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/key-not-using.png");
+        localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png");
         /* check if there */
         if (gameBackpack.length > 0) {
             for (var i = 0; i < gameBackpack.length; i++) {
@@ -506,14 +252,14 @@ export function Hurricane1Easy() {
             if (bptest === true) {
                 console.log("push key to backpack");
                 gameBackpack.push({
-                    src: 'https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/key-not-using.png',
+                    src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png',
                     key: 'key'
                 })
             }
         } else {
             console.log("push key to backpack");
             gameBackpack.push({
-                src: 'https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/key-not-using.png',
+                src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png',
                 key: 'key'
             })
         }
@@ -528,7 +274,6 @@ export function Hurricane1Easy() {
             }
         }
     });
-
     function showItemContents(value) {
         console.log("show contents value: " + value);
         switch (value) {
@@ -540,11 +285,11 @@ export function Hurricane1Easy() {
                     if (gameBackpack[i].key === "key") {
                         console.log("turn on/off key - state");
                         if (!isKeyOn) {
-                            gameBackpack[i].src = "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/key-using.png"
-                            localStorage.setItem("key", "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/key-using.png");
+                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-using.png"
+                            localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-using.png");
                         } else {
-                            gameBackpack[i].src = "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/key-not-using.png"
-                            localStorage.setItem("key", "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/key-not-using.png");
+                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png"
+                            localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png");
                         }
                     }
                 }
@@ -555,8 +300,10 @@ export function Hurricane1Easy() {
     /* end stop 1 - game specific */
 
     return (
+        <View position="relative" height="100%">
         <View
             ariaLabel="Main Container"
+            className="main-container"
             position="relative">
             <View
                 className="image-holder image-short"
@@ -564,26 +311,27 @@ export function Hurricane1Easy() {
                 backgroundImage = "url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-jaycee-shelter.jpg')">
 
                 {/* all games */}
+                {/* push to helperComponent vs Helper Function*/}
                 <View
                     className="z-index102 info-button"
                     ariaLabel="Info Button"
-                    onClick={() => toggleHelp()}>
+                    onClick={() => toggleHelp(isHelpVisible,setIsHelpVisible)}>
                     <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/help.png" />
                 </View>
                 <View
                     className="z-index102 notes-button"
                     ariaLabel="Notes Button"
-                    onClick={() => toggleNotes()}>
+                    onClick={() => toggleNotes(areNotesVisible,setAreNotesVisible)}>
                     <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/notes.png" />
                 </View>
                 <View
                     className="z-index102 backpack-image"
                     ariaLabel="backpack Image"
-                    onClick={()=>toggleBackpack()}>
+                    onClick={()=>toggleBackpack(isBackpackVisible,setIsBackpackVisible)}>
                     <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png" />
                 </View>
                 <View className={isBackpackVisible ? "all-screen zIndex103 show" : "all-screen hide"} >
-                    <Button className="close-button" onClick={() => toggleBackpack()}>X</Button>
+                    <Button className="close-button" onClick={() => toggleBackpack(isBackpackVisible,setIsBackpackVisible)}>X</Button>
                     <h3>Backpack Contents</h3><br />
                     {gameBackpack.map((item) => {
                         return (
@@ -595,7 +343,7 @@ export function Hurricane1Easy() {
                         )
                     })}
                 </View>
-                <NotesOpen areNotesVisible={areNotesVisible} toggleNotes={toggleNotes} gameNotes={gameNotes} setNotesFunction={setNotesFunction}/>
+                <NotesOpen areNotesVisible={areNotesVisible} setAreNotesVisible={setAreNotesVisible} toggleNotes={toggleNotes} gameNotes={gameNotes} setGameNotes={setGameNotes}/>
 
                 {/* end all games */}
 
@@ -603,7 +351,7 @@ export function Hurricane1Easy() {
                     ariaLabel="Torn Diary"
                     className="torn-diary-jaycee"
                     onClick={()=>toggleTornDiary()}>
-                    <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/03/torndiarypage.png" />
+                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/torndiarypage.png" />
                 </View>
                 <View
                     ariaLabel="Hanging Sign"
@@ -615,20 +363,15 @@ export function Hurricane1Easy() {
                     ariaLabel="Diary"
                     className="diary-jaycee"
                     onClick={()=>toggleDiary()}>
-                    <Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/diary.png" />
+                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/diary.png" />
                 </View>
                 <View
                     ariaLabel="left picnic table"
                     className="left-picnic-table"
                 >
-                    <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/left-picnic-table-easy.png" />
+                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/picnictables.png" />
                 </View>
-                <View
-                    ariaLabel="right picnic table"
-                    className="right-picnic-table"
-                >
-                    <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/right-picnic-table-easy.png" />
-                </View>
+
                 <View
                     className={isDiaryVisible ? "all-screen diary-big show" : "hide"}
                 >
@@ -651,14 +394,32 @@ export function Hurricane1Easy() {
                     <Button className="close-button" onClick={()=>toggleSign()}>X</Button>
                     <br /><h3>Hanging Sign Says:</h3>
                     <br />
-                    <div>What is the name of the Field close to here?</div>
+                    <View marginBottom="30px">What is the name of the Field close to here?</View>
                 </View>
-                <View
+
+                { !isGame1Word3Stop1HurricaneWrong && !isGame1Word2Stop1HurricaneWrong && !isGame1Word2Stop1HurricaneWrong  ? (
+                    <View>
+                        <View className={isKeyVisible ? "safe-shelter show" : "hide"}
+                              onClick={keyFunction}>
+                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/open-safe-key.png" />
+                        </View>
+                    </View>
+                ) :  <View
                     ariaLabel="Safe Shelter"
                     className="safe-shelter"
                     onClick={()=>toggleSafe()}>
-                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe-shelter.png"/>
-                </View>
+                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe.png"/>
+                </View> }
+                { !isGame1Word3Stop1HurricaneWrong && !isGame1Word2Stop1HurricaneWrong && !isGame1Word2Stop1HurricaneWrong  ? (
+                    <View>
+                        <View className={isAlertVisible ? "alert-container show" : "hide"}>
+                            <div className='alert-inner'>Key is in backpack</div>
+                        </View>
+                        <View className={!isKeyVisible ? "safe-shelter show" : "hide"}>
+                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/open-safe.png" />
+                        </View>
+                    </View>
+                ) : null }
                 <View className={!isCementSafeOpen? "cement-safe show" : "hide"}
                       onClick={()=>toggleCementSafe()}>
                     <Image className="test" alt="test" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/cementsafeclosed.png" />
@@ -721,14 +482,7 @@ export function Hurricane1Easy() {
                         <span className="green"> Right Answer!</span>
                     ) : null
                 }
-                { !isGame1Word3Stop1HurricaneWrong && !isGame1Word2Stop1HurricaneWrong && !isGame1Word2Stop1HurricaneWrong  ? (
-                    <View>
-                        <View className={isKeyVisible ? "show" : "hide"}
-                              onClick={keyFunction}>
-                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key.png" />
-                        </View>
-                    </View>
-                ) : null }
+
 
             </View>
             <View className={isCementSafeInfoVisible ? "all-screen show" : "hide"}>
@@ -766,13 +520,13 @@ export function Hurricane1Easy() {
                         Now you have lots of Discs!
                         <TextAreaField
                             rows="1"
-                            onChange={(e) => setCommentsFunction(e.currentTarget.value)}
+                            onChange={(e) => setCommentsFunction(e.currentTarget.value,setGameComments)}
                             descriptiveText="Thank you for playing. Please let us know any and all comments you have about the game."
                         />
                         <span className="small">hint time: {gameTimeHint} mins | real time: {gameTime} mins |
                         tot: time: { Number((gameTime + gameTimeHint + gameTimeTotal).toFixed(2))} min</span>
                         <br />
-                        <Button className="button small" onClick={() => goHome()}>Go Home - Play another Game!</Button>
+                        <Button className="button small" onClick={() => goHome(navigate,gameComments)}>Go Home - Play another Game!</Button>
                     </View>
                 ): null }
 
@@ -781,7 +535,7 @@ export function Hurricane1Easy() {
                         tot: time: { Number((gameTime + gameTimeHint + gameTimeTotal).toFixed(2))} min</span>
             </View>
             <View className={isHelpVisible ? "all-screen show" : "all-screen hide"}>
-                <Button className="close-button" onClick={() => toggleHelp()}>X</Button>
+                <Button className="close-button" onClick={() => toggleHelp(isHelpVisible,setIsHelpVisible)}>X</Button>
                 <View width="100%" padding="10px">
                     <View paddingBottom="10px">
                         <strong>Game Stop</strong>: <span className="font-small">{gameStop}</span>
@@ -792,41 +546,41 @@ export function Hurricane1Easy() {
                     <View paddingBottom="10px">
                         <strong>Goal for this stop:</strong> Find the Discs!  Use Hints if you really need them.
                     </View>
-                    <Button className="button small" onClick={() => toggleHint3()}>Open Hint (sport)</Button>
-                    <Button className="button small" onClick={() => toggleHint4()}>Open Hint (name of field)</Button>
-                    <Button className="button small" onClick={() => toggleHint2()}>Open Hint (name of house)</Button>
-                    <Button className="button small" onClick={() => toggleHint1()}>Open Hint (engraved on panel)</Button>
+                    <Button className="button small" onClick={() => toggleHint1(setHintTime1,isHint1Visible,setIsHint1Visible)}>Open Hint (engraved on panel)</Button>
+                    <Button className="button small" onClick={() => toggleHint2(setHintTime2,isHint2Visible,setIsHint2Visible)}>Open Hint (name of house)</Button>
+                    <Button className="button small" onClick={() => toggleHint3(setHintTime3,isHint3Visible,setIsHint3Visible)}>Open Hint (sport)</Button>
+                    <Button className="button small" onClick={() => toggleHint4(setHintTime4,isHint4Visible,setIsHint4Visible)}>Open Hint (name of field)</Button>
 
                     <br /><br />
+                    <div className={isHint1Visible ? "all-screen show" : "all-screen hide"}>
+                        <Button className="close-button" onClick={() => toggleHint1(setHintTime1,isHint1Visible,setIsHint1Visible)}>X</Button>
+                        <strong>Hint for engraved on panel:</strong> <br /><br />
+                        The <span className="bold-underline">first</span> is in reference to the first letter of the named field.<br />
+                        <br />And the pattern continues with name of house and name of sport.<br />
+                    </div>
+                    <div className={isHint2Visible ? "all-screen show" : "all-screen hide"}>
+                        <Button className="close-button" onClick={() => toggleHint2(setHintTime2,isHint2Visible,setIsHint2Visible)}>X</Button>
+                        <strong>Hint for name of house:</strong> <br /><br />
+                        Near the intersection of Solomon and N. Campbell there is a house that people use for events.<br /><br />
+                        Go over there and look for the name.
+                    </div>
+                    <div className={isHint3Visible ? "all-screen show" : "all-screen hide"}>
+                        <Button className="close-button" onClick={() => toggleHint3(setHintTime3,isHint3Visible,setIsHint3Visible)}>X</Button>
+                        <strong>Hint for Sport:</strong>
+                        <br /><br />People do play soccer and disc golf but the closest field to the shelter is the baseball field.
+                        <br /><br />
+                    </div>
                     <div className={isHint4Visible ? "all-screen show" : "all-screen hide"}>
-                        <Button className="close-button" onClick={() => toggleHint4()}>X</Button>
+                        <Button className="close-button" onClick={() => toggleHint4(setHintTime4,isHint4Visible,setIsHint4Visible)}>X</Button>
                         <strong>Hint for name of field</strong>
                         <br /><br />There is a large sign on the fence at the field with the name.
                         <br /><br />
 
                     </div>
-                    <div className={isHint3Visible ? "all-screen show" : "all-screen hide"}>
-                        <Button className="close-button" onClick={() => toggleHint3()}>X</Button>
-                        <strong>Hint for Sport:</strong>
-                        <br /><br />People do play soccer and disc golf but the closest field to the shelter is the baseball field.
-                        <br /><br />
 
-                    </div>
-                    <div className={isHint2Visible ? "all-screen show" : "all-screen hide"}>
-                        <Button className="close-button" onClick={() => toggleHint2()}>X</Button>
-                        <strong>Hint for name of house:</strong> <br /><br />
-                        Near the intersection of Solomon and N. Campbell there is a house that people use for events.<br /><br />
-                        Go over there and look for the name.
 
-                    </div>
-                    <div className={isHint1Visible ? "all-screen show" : "all-screen hide"}>
-                        <Button className="close-button" onClick={() => toggleHint1()}>X</Button>
-                        <strong>Hint for engraved on panel:</strong> <br /><br />
-                        The <span className="bold-underline">first</span> is in reference to the first letter of the named field.<br />
-                        <br />And the pattern continues with name of house and name of sport.<br />
 
-                    </div>
-                    <Button className="button small" onClick={() => toggleHelp()}>Close Help and Play</Button>
+                    <Button className="button small" onClick={() => toggleHelp(isHelpVisible,setIsHelpVisible)}>Close Help and Play</Button>
                 </View>
             </View>
             <View
@@ -836,63 +590,20 @@ export function Hurricane1Easy() {
                 <h3>Game Goals: Find more Discs!</h3>
                 <h4>Start Playing Game When You are Here:</h4>
                 <View>
-                    <Image maxHeight="150px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/game-picture-jaycee-shelter.jpg" />
+                    <Image maxHeight="150px" src="https://escapeout.games/wp-content/uploads/2023/04/game-jaycee-shelter-pic.jpg" />
                 </View>
                 <View>
                     <span className="small"> <strong>Remember, clock doesn't stop until you complete the stop.</strong></span></View>
 
-                <Button className="button" onClick={() => toggleIntro()}>I Want To Play!</Button>
-                |
-                <Button className="button" onClick={() => goHomeQuit()}>Back Home</Button>
+                <Button className="button" onClick={() => toggleIntro(isIntroVisible,setIsIntroVisible,setStopClock,setIsCoverScreenVisible)}>I Want To Play!</Button>
+                &nbsp;&nbsp;
+                <Button className="button" onClick={() => goHomeQuit(navigate)}>Back to All Games</Button>
             </View>
-            <View
-                ariaLabel="stop 1 Game intro"
-                textAlign="center"
-                className={isGameIntroVisible ? "all-screen show" : "hide"}>
-                <h3>Game Goals: Find more Discs!</h3>
-                {numberOfPlayersError}
-                <SelectField
-                    label="numberOfPlayers"
-                    className="num-Player"
-                    isRequired
-                    labelHidden
-                    size="small"
-                    width="200px"
-                    placeholder="How Many Players?"
-                    value={numberOfPlayers}
-                    onChange={(e) => setNumPlayerFunction(e.target.value)}
-                >
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                </SelectField>
-                <TextField
-                    name="TeamName"
-                    className="team-Name"
-                    placeholder="Team Name"
-                    label="Team Name"
-                    labelHidden
-                    required
-                    value={teamName}
-                    onChange={(e) => setTeamNameFunction(e.target.value)}
-                />
-                {localStorage.getItem("numberOfTimes") !== null ? (
-                    <div> You have played {localStorage.getItem("numberOfTimes")} time(s) before - good luck this time! </div>
-                ) : null}
 
-                <View>
-                    <span className="small"> <strong>Your score is your time. Time doesn't stop until you complete the stop. This game
-                        has {gameStopNameArray.length} stops. Your time between stops is not counted. Click on Help for more
-                    information and links to Hints. If you click a Hint you get 5 minutes added to your time. Click on Notes to write notes during
-                    game. These notes are not saved once you complete game.</strong></span></View>
+        </View>
+            <GameIntro isGameIntroVisible={isGameIntroVisible} setIsGameIntroVisible={setIsGameIntroVisible} numberOfPlayersError={numberOfPlayersError} numberOfPlayers={numberOfPlayers} setNumberOfPlayers={setNumberOfPlayers} teamName={teamName} setTeamName={setTeamName} gameStopNameArray={gameStopNameArray} setNumberOfPlayersError={setNumberOfPlayersError} setIsIntroVisible={setIsIntroVisible}/>
 
-                <Button className="button" onClick={() => toggleGameIntro()}>Go To Stop 1 Intro</Button>
-                |
-                <Button className="button" onClick={() => goHomeQuit()}>Back Home</Button>
-            </View>
+            <CoverScreenView isCoverScreenVisible={isCoverScreenVisible}/>
         </View>
     )
 }

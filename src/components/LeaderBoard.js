@@ -24,6 +24,9 @@ export function LeaderBoard() {
         let filter = {
             completed: {
                 eq: true
+            },
+            firstTime: {
+                eq: true
             }
         };
         const apiData = await API.graphql({
@@ -49,16 +52,10 @@ export function LeaderBoard() {
         leaderBoardFunction();
     }, []);
     return (
-        <View margin="1rem 0"
-              maxWidth="800px"
-              margin="10px auto 10px auto">
-
-            <View
-                maxWidth="800px"
-                margin="10px auto 10px auto"
-            >
-                <Heading level={2}>LeaderBoard</Heading>
-                <Heading level={3}>{localStorage.getItem("gameName")}</Heading>
+        <View className="main-container">
+            <View className="main-content">
+                <Heading level={2} className="heading">LeaderBoard</Heading>
+                <Heading level={5} className="heading2">{localStorage.getItem("gameName")}</Heading>
                 <div className="table-container" role="table" aria-label="Destinations">
                     <div className="flex-table header" role="rowgroup">
                         <div className="flex-row first" role="columnheader">Team Name</div>

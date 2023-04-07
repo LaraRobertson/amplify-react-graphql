@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,700;1,500;1,700&family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Delicious+Handrawn&family=Open+Sans:ital,wght@0,400;0,500;0,700;1,500;1,700&family=Roboto&display=swap');
 .App {
   text-align: center;
 }
@@ -35,14 +35,38 @@
   box-sizing: border-box;
 }
 body {
-  background: #f7f7f7;
+  background: #000000;
+  background: #262626;
   padding: 0;
 }
 html {
   font-family: "Open Sans", Helvetica, system-ui, Verdana, Arial, sans-serif;
 }
 /* all games */
-
+.main-content {
+  padding: 0 10px;
+  color:#fff;
+}
+.main-container {
+  max-width:900px;
+  position: relative;
+  margin:0 auto;
+  position:relative;
+}
+.heading {
+  color: #B8CEF9;
+  margin: 10px 0;
+}
+.heading2 {
+  color: #0D5189;
+  background:lightgray;
+  display:inline-block;
+  padding:3px 5px;
+  margin: 10px 0;
+}
+.city-links a {
+  color:#0D5189;
+}
 .link {
   font-size:20px;
   font-weight:bold;
@@ -127,23 +151,71 @@ html {
   width:calc(100vw - 60px);
 }
 .game-card {
-  width:300px;
+  width:350px;
+}
+.inner-game-card {
+  background-color: rgb(0, 0, 0, 0.7);
+  padding:10px;
+  color:white;
+}
+@media (max-width:740px) {
+  .flex-games {
+    justify-content: center !important;
+  }
 }
 .small {
   font-size:.8em;
 }
 .all-screen {
   position: absolute;
-  top: 0;
-  left:0;
-  width: 100vw;
-  max-width:900px;
-  min-height: calc(100vh - 60px);
+  top: 30px;
+  left:30px;
+  width: calc(100vw - 60px);
+  max-width:840px;
   background-color: #699A7D;
   opacity: 1;
   z-index: 103;
   transition: visibility 0s, opacity .5s linear;
   padding:20px;
+  border:1px solid black;
+}
+@media all and (max-width: 500px) {
+  .all-screen {
+    top: 10px;
+    left: 10px;
+    width: calc(100vw - 20px);
+  }
+}
+.cover-screen {
+  position: absolute;
+  top: 0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  opacity: .9;
+  z-index: 102;
+  transition: visibility 0s, opacity .5s linear;
+  overflow-x:hidden;
+}
+
+.fixed {
+  position: fixed;
+  top: 30px;
+  left: 30px;
+  width: calc(100vw - 60px);
+  max-width:900px;
+  z-index: 103;
+  opacity: 1;
+  background-color: #699A7D;
+  padding:20px;
+  border:1px solid black;
+  height:1800px;
+}
+@media all and (min-width: 802px) {
+  .fixed {
+    left: 0;
+  }
 }
 .hint-holder {
   position:absolute;
@@ -175,9 +247,11 @@ html {
 .table-container {
   display: block;
   margin: 2em auto;
-  width: 90%;
+  width: 100%;
   max-width: 900px;
 }
+/* light gray: #E7EEF5 */
+/* blue: #0D5189 */
 
 .flex-table {
   display: flex;
@@ -186,13 +260,23 @@ html {
   transition: 0.5s;
 }
 .flex-table:first-of-type {
-  border-top: solid 1px #1565C0;
-  border-left: solid 1px #1565C0;
+  border-top: solid 1px #0D5189;
+  border-left: solid 1px #0D5189;
 }
 .flex-table:first-of-type .flex-row {
-  background: #1976D2;
+  background: #0D5189;
   color: white;
-  border-color: #1565C0;
+  border-color: #0D5189;
+}
+.flex-row {
+  width: calc(100% / 5);
+  text-align: center;
+  padding: 0.5em 0.5em;
+  border-right: solid 1px #d9d9d9;
+  border-bottom: solid 1px #d9d9d9;
+  background-color: #f4f2f1;
+  color:black;
+  font-size:.8em;
 }
 .flex-table.row:nth-child(odd) .flex-row {
   background: #f4f2f1;
@@ -202,13 +286,7 @@ html {
   transition: 500ms;
 }
 
-.flex-row {
-  width: calc(100% / 5);
-  text-align: center;
-  padding: 0.5em 0.5em;
-  border-right: solid 1px #d9d9d9;
-  border-bottom: solid 1px #d9d9d9;
-}
+
 /*
 @media all and (max-width: 767px) {
   .flex-row {
@@ -249,7 +327,22 @@ html {
   }
 } */
 
+.alert-container {
+  position: absolute;
+  bottom:40%;
+  right: 30%;
+}
 
+.alert-inner {
+  display: inline-block;
+  padding: 8px 16px;
+  z-index: 22;
+  color:white;
+  background-color: #7e0b0b;
+  box-shadow: 1px 2px 10px -3px rgb(0 0 0 / 70%);
+  -webkit-box-shadow: 1px 2px 10px -3px rgb(0 0 0 / 70%);
+  -moz-box-shadow: 1px 2px 10px -3px rgb(0 0 0 / 70%);
+}
 /* buttons */
 .button {
   background-color: #0D5189;
@@ -260,6 +353,18 @@ html {
 .button-small {
   font-size: 12px;
   margin: 10px 20px 10px 0;
+}
+.right-button {
+  margin-left:10px;
+}
+@media (max-width:400px) {
+  .right-button {
+    margin:0 auto;
+    display:block;
+  }
+}
+.go-to-game-button {
+  background-color: #58AAED;;
 }
 .button:hover, .button-small:hover {
   cursor: pointer;
@@ -320,11 +425,11 @@ html {
   width:200px;
   margin: 0 auto;
 }
-.team-Name {
+.black-text-field {
   width:250px;
   margin:10px auto;
 }
-.team-Name input::placeholder {
+.black-text-field input::placeholder {
   color:black;
 }
 /* backpack, info, notes */
@@ -451,6 +556,11 @@ html {
 }
 .diary-big {
   background: url("https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/opendiary.png") #699A7D top left / auto no-repeat;
+  font-family: 'Delicious Handrawn';
+  font-size:16px;
+  line-height: 20px;
+  padding-left: 30px;
+  height:285px;
 }
 .torn-diary-big {
   background: url("https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/04/torndiarythief.png") #699A7D top left / auto no-repeat;
@@ -603,6 +713,7 @@ html {
 .time {
   text-align: center;
   position: relative;
+  color:#fff;
 }
 .bottom-button {
   padding: 2px;

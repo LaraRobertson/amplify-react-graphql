@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import {NotesOpen} from "../../components/NotesOpen";
+import {NotesOpen} from "../../components/sharedComponents";
 import {shallowEqual} from "../../components/ShallowEqual";
 import {
     Button,

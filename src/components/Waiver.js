@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import {API} from "aws-amplify";
 import {gameStatsByUserEmail} from "../graphql/queries";
 import {createGameStats, createGameScore, updateGameStats as updateGameStatsMutation} from "../graphql/mutations";
+import {goHomeQuit} from "./helper";
 
 export function Waiver() {
 
@@ -43,6 +44,7 @@ export function Waiver() {
             gameID: gamesStatsFromAPI.gameID,
             gameTotalTime: 0,
             completed: false,
+            firstTime: true
         };
         await API.graphql({
             query: createGameScore,
@@ -51,11 +53,6 @@ export function Waiver() {
         let path = gameName.replace(/\s+/g, '-').toLowerCase();
         console.log("go to page: " + '/' + path);
         navigate('/' + path);
-    }
-
-    function goHome() {
-        localStorage.removeItem("gameName");
-        navigate('/');
     }
 
     return (
@@ -87,7 +84,7 @@ export function Waiver() {
                 </View>
                 <Flex justifyContent="center" wrap='wrap'>
                     <Button className="button" onClick={() => agreeToWaiverFunction()}>I agree to Waiver - clicking indicates signing</Button>
-                    <Button className="button" onClick={() => goHome()}>Quit Game and go back to Home Page</Button>
+                    <Button className="button" onClick={() => goHomeQuit(navigate)}>Quit Game and go back to Home Page</Button>
                 </Flex>
             </View>
 

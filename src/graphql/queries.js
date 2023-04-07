@@ -503,7 +503,25 @@ export const gameStatsByUserEmail = /* GraphQL */ `
         gameName
         gameStates
         gameScore {
-          nextToken
+            items {
+              teamName
+              numberOfPlayers
+              gameTotalTime
+              createdAt
+              updatedAt
+              gameStopTime {
+                items {
+                    gameStop
+                    gameStopTime
+                }
+              }
+              gameHintTime {
+                items {
+                    gameStop
+                    gameHintTime
+                }
+              }              
+            }
         }
         createdAt
         updatedAt
@@ -536,7 +554,23 @@ export const gameStatsByGameName = /* GraphQL */ `
         gameName
         gameStates
         gameScore {
-          nextToken
+            items {
+              teamName
+              numberOfPlayers
+              gameTotalTime
+              gameStopTime {
+                items {
+                    gameStop
+                    gameStopTime
+                }
+              }
+              gameHintTime {
+                items {
+                    gameStop
+                    gameHintTime
+                }
+              }              
+            }
         }
         createdAt
         updatedAt
@@ -778,6 +812,7 @@ export const gamesByDate = /* GraphQL */ `
         gameDescriptionP
         gameLocationPlace
         gameLocationCity
+        gameImage
         gameType
         gameStopString
         gameStop {

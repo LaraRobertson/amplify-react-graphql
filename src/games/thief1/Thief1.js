@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import {NotesOpen} from "../../components/NotesOpen";
+import {NotesOpen} from "../../components/sharedComponents";
 import {shallowEqual} from "../../components/ShallowEqual";
 import {Button, Heading, View, Image, TextAreaField, TextField, Text, Alert, Flex} from '@aws-amplify/ui-react';
 import {useNavigate} from "react-router-dom";
