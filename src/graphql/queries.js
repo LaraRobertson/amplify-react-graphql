@@ -504,6 +504,7 @@ export const gameStatsByUserEmail = /* GraphQL */ `
         gameStates
         gameScore {
             items {
+              id
               teamName
               numberOfPlayers
               gameTotalTime
@@ -560,12 +561,14 @@ export const gameStatsByGameName = /* GraphQL */ `
               gameTotalTime
               gameStopTime {
                 items {
+                    id
                     gameStop
                     gameStopTime
                 }
               }
               gameHintTime {
                 items {
+                    id
                     gameStop
                     gameHintTime
                 }

@@ -52,15 +52,21 @@ export function Home() {
     /* classes */
     let buttonDetailClassShow = "button button-small show";
 
-    function showGameDetail(gameIndex,cardID) {
-       /* setIsGameDetailVisible(true);*/
+    function showGameDetail(cardID) {
+       /* setIsGameDetailVisible(true);
         setGameIndex(gameIndex);
         console.log("gameIndex (show): " + gameIndex);
         console.log("gameIndex (show): " + typeof gameIndex);
-        console.log("isGameDetailVisible: " + isGameDetailVisible);
+        console.log("isGameDetailVisible: " + isGameDetailVisible);*/
         console.log("cardID: " + cardID);
-        let element =  document.getElementById(cardID);
-        element.classList.add('show');
+        let detail =  document.getElementById(cardID);
+        detail.classList.add('show');
+        let buttonShow = document.getElementById("buttonShow"+cardID);
+        let buttonHide = document.getElementById("buttonHide"+cardID);
+        buttonHide.classList.add('show');
+        buttonHide.classList.remove('hide');
+        buttonShow.classList.remove('show');
+        buttonShow.classList.add('hide');
         /*GameDetailView();*/
     }
 
@@ -71,6 +77,12 @@ export function Home() {
         console.log("cardID: " + cardID);
         let element =  document.getElementById(cardID);
         element.classList.remove('show');
+        let buttonShow = document.getElementById("buttonShow"+cardID);
+        let buttonHide = document.getElementById("buttonHide"+cardID);
+        buttonHide.classList.add('hide');
+        buttonHide.classList.remove('show');
+        buttonShow.classList.remove('hide');
+        buttonShow.classList.add('show');
     }
 
     const GameDetailView = () => {
@@ -286,6 +298,9 @@ export function Home() {
     async function fetchGames() {
         console.log("fetchGames");
         let filter = {
+            gameType: {
+                eq: "free"
+            },
             gameLocationCity: {
                 eq: "Tybee Island"
             }
@@ -516,10 +531,11 @@ export function Home() {
                                     <Button className={buttonDetailClassShow} onClick={() => leaderBoard({gameName:game.gameName,gameID:game.id})}>
                                         Leader Board
                                     </Button>
-                                    <Button className={buttonDetailClassShow} onClick={() => showGameDetail(index,game.id)} >Show Game Details</Button>
-                                    <View id={game.id} className="hide">
-
-                                        <Button  onClick={() => hideGameDetail(game.id)} >X</Button>test details</View>
+                                    <Button id={"buttonShow" + game.id} className="button button-small show" onClick={() => showGameDetail(game.id)} >Show Game Details</Button>
+                                     <Button id={"buttonHide" + game.id} className="button button-small hide" onClick={() => hideGameDetail(game.id)} >Hide Game Details</Button>
+                                        <View id={game.id} className="hide">
+                                        {game.gameDescriptionP}
+                                        </View>
                                     </View>
                                 </Card>
                             ))}
@@ -530,7 +546,7 @@ export function Home() {
                     <View>
                         <a id="tybeeIsland"></a>
                         <Heading level={"5"} className="heading" marginTop="15px">
-                            Tybee Island, GA
+                            Games: Tybee Island, GA
                         </Heading>
                         <Flex
                             wrap="wrap"

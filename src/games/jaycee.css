@@ -20,7 +20,16 @@
   padding-top: 40px;
   padding-left: 30px;
   font-family: 'Delicious Handrawn';
-  font-size:16px;
+  font-size:18px;
+  line-height: 20px;
+}
+.hanging-sign-big-jaycee {
+  background: url("https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/sign-big.png") #699A7D top left / contain no-repeat;
+  height:330px;
+  padding-top: 80px;
+  padding-left: 40px;
+  font-family: 'Delicious Handrawn';
+  font-size:18px;
   line-height: 20px;
 }
 @media (max-width:480px) {
@@ -32,9 +41,24 @@
 
 .diary-jaycee{
   position: absolute;
-  bottom: 25%;
-  right: 35%;
+  bottom: 22%;
+  right: 45%;
   z-index: 23;
+}
+.diary-big-jaycee {
+  background: url("https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/opendiary.png") #699A7D top left / contain no-repeat;
+  height:330px;
+  padding-top: 40px;
+  padding-left: 30px;
+  font-family: 'Delicious Handrawn';
+  font-size:18px;
+  line-height: 20px;
+}
+@media (max-width:480px) {
+  .diary-jaycee {
+    bottom: 25%;
+    right: 40%;
+  }
 }
 .right-picnic-table {
   position:absolute;
@@ -87,7 +111,7 @@
 @media (max-width:480px) {
   .cement-safe  {
     left:38%;
-    bottom: 5%;
+    bottom: 2%;
   }
 }
 /* gazebo */

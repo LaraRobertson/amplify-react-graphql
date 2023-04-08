@@ -199,7 +199,7 @@ export function Layout() {
                                         Account</Button><br />
                                   Questions?&nbsp;
                                     <Link
-                                        href="https://escapeout.games/faqs/"
+                                        href="https://escapeout.games/#faqs"
                                         color="white"
                                         isExternal={true}
                                         textDecoration="underline"
