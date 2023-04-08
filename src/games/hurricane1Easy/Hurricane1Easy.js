@@ -3,7 +3,7 @@ import {Button, View, Image, TextAreaField, TextField} from '@aws-amplify/ui-rea
 import {useNavigate} from "react-router-dom";
 import {toggleIntro, toggleHelp, toggleBackpack,
     toggleNotes, goHomeQuit, setGameStopFunction,
-    intervalFunction, goHome, winGameFunction, toggleHint1,toggleHint2,toggleHint3, toggleHint4, setCommentsFunction} from "../../components/helper";
+    intervalFunction, goHome, leaveComment, winGameFunction, toggleHint1,toggleHint2,toggleHint3, toggleHint4, setCommentsFunction} from "../../components/helper";
 import {shallowEqual} from "../../components/ShallowEqual";
 import {NotesOpen, GameIntro, CoverScreenView} from "../../components/sharedComponents";
 
@@ -11,6 +11,7 @@ export function Hurricane1Easy() {
 
     /* for all games */
     const [isAlertVisible, setIsAlertVisible] = useState(false);
+    const [showComment, setShowComment] = useState(false);
     const [areNotesVisible, setAreNotesVisible] = useState(false);
     const [isHelpVisible, setIsHelpVisible] = useState(false);
     const [gameNotes,setGameNotes] = useState('');
@@ -327,11 +328,11 @@ export function Hurricane1Easy() {
                 <View
                     className="z-index102 backpack-image"
                     ariaLabel="backpack Image"
-                    onClick={()=>toggleBackpack(isBackpackVisible,setIsBackpackVisible)}>
+                    onClick={()=>toggleBackpack(isBackpackVisible,setIsBackpackVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>
                     <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png" />
                 </View>
                 <View className={isBackpackVisible ? "all-screen zIndex103 show" : "all-screen hide"} >
-                    <Button className="close-button" onClick={() => toggleBackpack(isBackpackVisible,setIsBackpackVisible)}>X</Button>
+                    <Button className="close-button" onClick={() => toggleBackpack(isBackpackVisible,setIsBackpackVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>X</Button>
                     <h3>Backpack Contents</h3><br />
                     {gameBackpack.map((item) => {
                         return (
@@ -373,10 +374,10 @@ export function Hurricane1Easy() {
                 </View>
 
                 <View
-                    className={isDiaryVisible ? "all-screen diary-big show" : "hide"}
+                    className={isDiaryVisible ? "all-screen show" : "hide"}
                 >
                     <Button className="close-button" onClick={()=>toggleDiary()}>X</Button>
-                    <View>
+                    <View className="diary-big-jaycee">
                         Dear Diary, <br /><br />I love playing.<br/><br/>the sport<br /><br />on the field<br /><br />closest to the shelter.
                     </View>
                 </View>
@@ -385,16 +386,15 @@ export function Hurricane1Easy() {
                 >
                     <Button className="close-button" onClick={()=>toggleTornDiary()}>X</Button>
                     <View className="torn-diary-big-jaycee">
-                        What is the name of the <br /><br />house Northwest <br /><br />of here?
+                        What is the name of the <br /><br />house Northwest <br /><br />of here? (not a bathroom)
                     </View>
                 </View>
                 <View
                     ariaLabel="sign info"
                     className={isSignVisible ? "all-screen show" : "hide"}>
                     <Button className="close-button" onClick={()=>toggleSign()}>X</Button>
-                    <br /><h3>Hanging Sign Says:</h3>
-                    <br />
-                    <View marginBottom="30px">What is the name of the Field close to here?</View>
+
+                    <View className="hanging-sign-big-jaycee">What is the name of the <br /><br />Field close to here?</View>
                 </View>
 
                 { !isGame1Word3Stop1HurricaneWrong && !isGame1Word2Stop1HurricaneWrong && !isGame1Word2Stop1HurricaneWrong  ? (
@@ -518,14 +518,22 @@ export function Hurricane1Easy() {
                     <View className="winner">
                         <h3>WINNER!</h3>
                         Now you have lots of Discs!
-                        <TextAreaField
-                            rows="1"
-                            onChange={(e) => setCommentsFunction(e.currentTarget.value,setGameComments)}
-                            descriptiveText="Thank you for playing. Please let us know any and all comments you have about the game."
-                        />
                         <span className="small">hint time: {gameTimeHint} mins | real time: {gameTime} mins |
                         tot: time: { Number((gameTime + gameTimeHint + gameTimeTotal).toFixed(2))} min</span>
                         <br />
+                        <Button className="button small" onClick={() => leaveComment(setShowComment)}>Tap to Comment</Button>
+                    </View>
+                ): null }
+            {(showComment)?
+                (
+                    <View className="winner comment-screen">
+                        <h3>Thank you for playing. </h3>
+                        Please let us know any and all comments you have about the game.
+                        <TextAreaField
+                            rows="3"
+                            onChange={(e) => setCommentsFunction(e.currentTarget.value,setGameComments)}
+                            descriptiveText="Any Issues or Problems?  Suggestions for improvement?"
+                        />
                         <Button className="button small" onClick={() => goHome(navigate,gameComments)}>Go Home - Play another Game!</Button>
                     </View>
                 ): null }

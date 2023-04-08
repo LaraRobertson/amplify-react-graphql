@@ -108,8 +108,9 @@ export function toggleIntro(isIntroVisible,setIsIntroVisible,setStopClock,setIsC
 export function toggleHelp(isHelpVisible,setIsHelpVisible) {
     isHelpVisible ? setIsHelpVisible(false) : setIsHelpVisible(true);
 }
-export function toggleBackpack(isBackpackVisible,setIsBackpackVisible) {
+export function toggleBackpack(isBackpackVisible,setIsBackpackVisible,isCoverScreenVisible,setIsCoverScreenVisible) {
     isBackpackVisible ? setIsBackpackVisible(false) : setIsBackpackVisible(true);
+    isCoverScreenVisible ? setIsCoverScreenVisible(false) : setIsCoverScreenVisible(true);
 }
 export function toggleHint1(setHintTime1,isHint1Visible,setIsHint1Visible) {
     setHintTime1(5);
@@ -135,6 +136,11 @@ export function setCommentsFunction(notes,setGameComments) {
 export function goHomeQuit(navigate) {
     removeLocalStorage();
     navigate('/');
+}
+
+export function leaveComment(setShowComments) {
+    console.log('showComments');
+    setShowComments(true);
 }
 
 export async function goHome(navigate,gameComments) {

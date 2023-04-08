@@ -19,7 +19,7 @@ import {
     usersByEmail,
     listUsers,
     gameScoreByGameID,
-    gameStatsByGameName, gameStatsByUserEmail
+    gameStatsByGameName, gameStatsByUserEmail, gameStopTimeByGameScoreID, gameHintTimeByGameScoreID
 } from "../graphql/queries";
 import { format } from 'date-fns'
 import {
@@ -27,7 +27,13 @@ import {
     createUser,
     createUserGamePlay,
     updateGameStats,
-    createGameStop, createGameScore
+    createGameStop,
+    createGameScore,
+    deleteGameScore,
+    deleteGameHintTime,
+    deleteGameStopTime,
+    createGameStats,
+    createGameStopTime
 } from "../graphql/mutations";
 import {CoverScreenView} from "./sharedComponents";
 import { useNavigate } from 'react-router-dom';
@@ -215,6 +221,63 @@ export function Admin() {
         const apiData = await API.graphql({ query: listUsers });
         const usersFromAPI = apiData.data.listUsers.items;
         setUsers(usersFromAPI);
+    }
+
+    async function deleteGameStopTimeFunction(gameStopTimeID) {
+        const data = {
+            id: gameStopTimeID
+        }
+        await API.graphql({
+            query: deleteGameStopTime,
+            variables: { input: data },
+        });
+    }
+    async function deleteGameHintTimeFunction(gameHintTimeID) {
+        const data = {
+            id: gameHintTimeID
+        }
+        await API.graphql({
+            query: deleteGameHintTime,
+            variables: { input: data },
+        });
+    }
+    async function deleteGameScoreFunction(gameScoreIDvar) {
+        console.log("gameScoreIDvar: " + gameScoreIDvar);
+        //  gameStopTimeByGameScoreID
+        // deleteGameStopTime
+        const apiDataGameStop = await API.graphql({
+            query: gameStopTimeByGameScoreID,
+            variables: {gameScoreID: gameScoreIDvar }
+        });
+        const apiData1 = apiDataGameStop.data.gameStopTimeByGameScoreID.items;
+        if (apiData1.length>0) {
+            apiData1.map(arrItem => {
+                console.log("gamestop id: " + arrItem.id);
+                deleteGameStopTimeFunction(arrItem.id)
+            })
+        }
+        //gameHintTimeByGameScoreID
+        //deleteGameHintTime
+        const apiDataGameHint = await API.graphql({
+            query: gameHintTimeByGameScoreID,
+            variables: {gameScoreID: gameScoreIDvar }
+        });
+        const apiData2 = apiDataGameHint.data.gameHintTimeByGameScoreID.items;
+        if (apiData2.length>0) {
+            apiData2.map(arrItem => {
+                console.log("gamehint id: " + arrItem.id);
+                deleteGameHintTimeFunction(arrItem.id)
+            })
+        }
+
+        const gameScoreDetails = {
+            id: gameScoreIDvar,
+        };
+        const apiData3 = await API.graphql({
+            query: deleteGameScore,
+            variables: { input: gameScoreDetails }
+        });
+        fetchUsers();
     }
 
     //create new game
@@ -457,7 +520,7 @@ export function Admin() {
                 </div>
                 {props.gameScoreArray.map((score, index) => (
                     <div className="flex-table row" role="rowgroup" key={score.id}>
-                        <div className="flex-row first" role="cell">{props.gameName}</div>
+                        <div className="flex-row first" role="cell"><Button onClick={() => deleteGameScoreFunction(score.id)} className="button button-small delete">X</Button> {props.gameName}</div>
                         <div className="flex-row " role="cell">{score.teamName}</div>
                         <div className="flex-row" role="cell"> {score.gameTotalTime}</div>
                         <div className="flex-row" role="cell">{score.numberOfPlayers}</div>
@@ -469,7 +532,7 @@ export function Admin() {
     }
     return (
         <View position="relative">
-            <View className="main-container">
+            <View className="main-container admin" >
                 <HeadingComponent userName = {userAuth} />
                 {userAuth.email === "lararobertson70@gmail.com" ? (
                     <View
