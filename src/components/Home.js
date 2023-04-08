@@ -566,9 +566,11 @@ export function Home() {
                                     <Button className={buttonDetailClassShow} onClick={() => leaderBoard({gameName:game.gameName,gameID:game.id})}>
                                         Leader Board
                                     </Button>
-                                    <Button className={buttonDetailClassShow} onClick={() => showGameDetail(index,game.id)} >Show Game Details</Button>
-                                    <View id={game.id} className="hide">
-                                        <Button   onClick={() => hideGameDetail(game.id)} >X</Button>test details</View>
+                                        <Button id={"buttonShow" + game.id} className="button button-small show" onClick={() => showGameDetail(game.id)} >Show Game Details</Button>
+                                        <Button id={"buttonHide" + game.id} className="button button-small hide" onClick={() => hideGameDetail(game.id)} >Hide Game Details</Button>
+                                        <View id={game.id} className="hide">
+                                            {game.gameDescriptionP}
+                                        </View>
                                     </View>
                                 </Card>
 
