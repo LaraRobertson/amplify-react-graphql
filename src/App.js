@@ -43,7 +43,7 @@ function MyRoutes() {
                         }
                     />
                     <Route
-                        path="/hurricane-1-Easy"
+                        path="/hurricane-(warmup)"
                         element={
                             <RequireAuth>
                                 <Hurricane1Easy />
@@ -51,7 +51,7 @@ function MyRoutes() {
                         }
                     />
                     <Route
-                        path="/hurricane-1"
+                        path="/hurricane"
                         element={
                             <RequireAuth>
                                 <Hurricane1 />

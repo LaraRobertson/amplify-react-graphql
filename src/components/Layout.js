@@ -179,17 +179,19 @@ export function Layout() {
                           </View>
                       </header>
                       <hr />
-                     <View padding="0 0 15px 0">
-                            <Heading
-                                level={5}
-                                className="heading"
-                                paddingTop="10px">
-                                Games are under development
-                            </Heading>
-                            <div>Please email us at info@escapeout.games if you have questions.</div>
-                     </View>
-                     <hr />
-                     <View padding="15px 0">
+                      {location.pathname != '/login' ? (
+                          <View>
+                             <View padding="0 0 15px 0">
+                                    <Heading
+                                        level={5}
+                                        className="heading"
+                                        paddingTop="10px">
+                                        Games are under development
+                                    </Heading>
+                                    <div>Please email us at info@escapeout.games if you have questions.</div>
+                             </View><hr/>
+                          </View>):null}
+                     <View padding="15px 0 0 0">
                             {location.pathname === '/login' || location.pathname === '/leaderboard' ? (
                                 <Button marginBottom="10px" className="button" onClick={() => navigate('/')}>Back to Game List</Button>
                             ) : (
@@ -210,7 +212,7 @@ export function Layout() {
                             )
                             }
                      </View>
-                     <hr />
+
                  </View>
              </View>) : null}
 

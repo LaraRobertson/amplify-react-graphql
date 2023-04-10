@@ -138,8 +138,9 @@ export function goHomeQuit(navigate) {
     navigate('/');
 }
 
-export function leaveComment(setShowComments) {
+export function leaveComment(setShowComments,isCoverScreenVisible,setIsCoverScreenVisible) {
     console.log('showComments');
+    isCoverScreenVisible ? setIsCoverScreenVisible(false) : setIsCoverScreenVisible(true);
     setShowComments(true);
 }
 

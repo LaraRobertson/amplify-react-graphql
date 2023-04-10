@@ -55,7 +55,10 @@ export function Hurricane1Easy() {
         /* set local storage for gameStop - only on mount */
         setGameStopFunction(setGameStop,setNumberOfTimes,setGameID,setGameStatsID,setGameStopNameArray,setGameStopName,setGameScoreID);
     }, []);
-
+    /* always scroll to top */
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    });
     /* 60000 milliseconds = 1 minute */
     const MINUTE_MS = 3000;
     /* clock action */
@@ -211,6 +214,7 @@ export function Hurricane1Easy() {
     const [isCementSafeInfoVisible, setIsCementSafeInfoVisible] = useState(false);
     function toggleCementSafeInfo() {
         isCementSafeInfoVisible ? setIsCementSafeInfoVisible(false) : setIsCementSafeInfoVisible(true);
+        isCoverScreenVisible ? setIsCoverScreenVisible(false) : setIsCoverScreenVisible(true);
     }
     /* show 2nd safe and message */
     const [isCementSafeOpen, setIsCementSafeOpen] = useState(false);
@@ -304,12 +308,11 @@ export function Hurricane1Easy() {
         <View position="relative" height="100%">
         <View
             ariaLabel="Main Container"
-            className="main-container"
-            position="relative">
+            className="main-container">
             <View
                 className="image-holder image-short"
                 ariaLabel="Image Holder"
-                backgroundImage = "url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-jaycee-shelter.jpg')">
+                backgroundImage = "url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-game-jaycee-shelter.jpg')">
 
                 {/* all games */}
                 {/* push to helperComponent vs Helper Function*/}
@@ -366,12 +369,6 @@ export function Hurricane1Easy() {
                     onClick={()=>toggleDiary()}>
                     <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/diary.png" />
                 </View>
-                <View
-                    ariaLabel="left picnic table"
-                    className="left-picnic-table"
-                >
-                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/picnictables.png" />
-                </View>
 
                 <View
                     className={isDiaryVisible ? "all-screen show" : "hide"}
@@ -391,7 +388,7 @@ export function Hurricane1Easy() {
                 </View>
                 <View
                     ariaLabel="sign info"
-                    className={isSignVisible ? "all-screen show" : "hide"}>
+                    className={isSignVisible ? "all-screen  show" : "hide"}>
                     <Button className="close-button" onClick={()=>toggleSign()}>X</Button>
 
                     <View className="hanging-sign-big-jaycee">What is the name of the <br /><br />Field close to here?</View>
@@ -517,11 +514,11 @@ export function Hurricane1Easy() {
                 (
                     <View className="winner">
                         <h3>WINNER!</h3>
-                        Now you have lots of Discs!
+                        <View>Now you have lots of Discs!</View>
                         <span className="small">hint time: {gameTimeHint} mins | real time: {gameTime} mins |
                         tot: time: { Number((gameTime + gameTimeHint + gameTimeTotal).toFixed(2))} min</span>
                         <br />
-                        <Button className="button small" onClick={() => leaveComment(setShowComment)}>Tap to Comment</Button>
+                        <Button className="button small" onClick={() => leaveComment(setShowComment,isCoverScreenVisible,setIsCoverScreenVisible)}>Tap to Comment</Button>
                     </View>
                 ): null }
             {(showComment)?
@@ -530,11 +527,11 @@ export function Hurricane1Easy() {
                         <h3>Thank you for playing. </h3>
                         Please let us know any and all comments you have about the game.
                         <TextAreaField
-                            rows="3"
+                            rows="6"
                             onChange={(e) => setCommentsFunction(e.currentTarget.value,setGameComments)}
                             descriptiveText="Any Issues or Problems?  Suggestions for improvement?"
-                        />
-                        <Button className="button small" onClick={() => goHome(navigate,gameComments)}>Go Home - Play another Game!</Button>
+                        /><br />
+                        <Button className="button small" onClick={() => goHome(navigate,gameComments)}>Go back to Games List</Button>
                     </View>
                 ): null }
 
@@ -598,7 +595,7 @@ export function Hurricane1Easy() {
                 <h3>Game Goals: Find more Discs!</h3>
                 <h4>Start Playing Game When You are Here:</h4>
                 <View>
-                    <Image maxHeight="150px" src="https://escapeout.games/wp-content/uploads/2023/04/game-jaycee-shelter-pic.jpg" />
+                    <Image maxHeight="150px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-game-jaycee-shelter.jpg" />
                 </View>
                 <View>
                     <span className="small"> <strong>Remember, clock doesn't stop until you complete the stop.</strong></span></View>
@@ -607,10 +604,8 @@ export function Hurricane1Easy() {
                 &nbsp;&nbsp;
                 <Button className="button" onClick={() => goHomeQuit(navigate)}>Back to All Games</Button>
             </View>
-
-        </View>
             <GameIntro isGameIntroVisible={isGameIntroVisible} setIsGameIntroVisible={setIsGameIntroVisible} numberOfPlayersError={numberOfPlayersError} numberOfPlayers={numberOfPlayers} setNumberOfPlayers={setNumberOfPlayers} teamName={teamName} setTeamName={setTeamName} gameStopNameArray={gameStopNameArray} setNumberOfPlayersError={setNumberOfPlayersError} setIsIntroVisible={setIsIntroVisible}/>
-
+        </View>
             <CoverScreenView isCoverScreenVisible={isCoverScreenVisible}/>
         </View>
     )
