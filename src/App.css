@@ -33,6 +33,7 @@
   margin:0;
   padding:0;
   box-sizing: border-box;
+  overscroll-behavior: contain;
 }
 body {
   background: #000000;
@@ -85,7 +86,7 @@ html {
   font-style: italic;
 }
 .right {
-  color:#46df07;
+  color:#004C09;
   font-size: 1.5em;
   font-weight: bold;
 }
@@ -146,21 +147,40 @@ html {
     width:280px;
   }
 }
-.waiver-class {
-  position:absolute;
-  padding:20px;
-  background-color:#699A7D;
-  color:white;
-  height:calc(100vh - 60px);
-  width:calc(100vw - 60px);
-}
+
 .game-card {
-  width:350px;
+  width:330px;
+  padding:0!important;
+}
+.column-50 {
+  width:50%;
+}
+.game-card-full {
+  text-align: center;
+}
+.game-card-header {
+ color:#fff;
+  font-weight: bold;
+  font-size: 1.3em;
+}
+.game-card-bg-image {
+  height:100%;
+  position:absolute;
+  top:30px;
+  left:0;
 }
 .inner-game-card {
   background-color: rgb(0, 0, 0, 0.7);
-  padding:10px;
+  padding:5px 12px ;
   color:white;
+  height:145px;
+}
+.flex-games {
+ flex-wrap: wrap;
+  gap: 1rem ;
+  padding-top: 20px ;
+  flex-direction: row;
+  justify-content: flex-start;
 }
 @media (max-width:740px) {
   .flex-games {
@@ -177,12 +197,16 @@ html {
   width: calc(100vw - 60px);
   max-width:840px;
   background-color: #699A7D;
+  /*background-image: linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);*/
+  /*background-image: linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);*/
+  background-image: linear-gradient(#45a46d, #87e0ad);
   opacity: 1;
   z-index: 103;
   transition: visibility 0s, opacity .5s linear;
   padding:20px;
   border:1px solid black;
 }
+
 @media all and (max-width: 500px) {
   .all-screen {
     top: 10px;
@@ -358,6 +382,12 @@ html {
   font-size: 12px;
   margin: 10px 20px 10px 0;
 }
+.button-center {
+  margin: 10px auto;
+}
+.inline-block {
+  display: inline-block;
+}
 .delete {
   background-color: red;
   margin: 0px 10px 0px 0;
@@ -372,7 +402,8 @@ html {
   }
 }
 .go-to-game-button {
-  background-color: #58AAED;;
+  background-color: #58AAED;
+  margin-top: 10px;
 }
 .button:hover, .button-small:hover {
   cursor: pointer;
@@ -705,6 +736,7 @@ html {
   font-size: 16px;
   margin-bottom:20px;
   background-color: #58AAED;
+  background-image: linear-gradient( #4279dc, #87bbe7);
   padding:20px;
   border: 2px solid #0D5189;
   z-index:102;

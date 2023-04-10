@@ -56,20 +56,12 @@ export function Waiver() {
     }
 
     return (
-        <View
-            ariaLabel="Main Container"
-            maxWidth="800px"
-            padding="10px"
-            backgroundColor="var(--amplify-colors-white)"
-            margin="auto"
-            position="relative">
+            <View
+                ariaLabel="Main Container"
+                className="main-container">
             <View
                 ariaLabel="Waiver"
-                className="waiver-class"
-                top="0"
-                maxWidth="800px"
-                left="0"
-                marginBottom="20px">
+                className="all-screen">
                 <Heading level={4} marginBottom="10px">Waiver</Heading>
                 <Alert variation="info">I HEREBY ASSUME ALL OF THE RISKS OF PARTICIPATING IN THIS ACTIVITY</Alert>
                 <View>
