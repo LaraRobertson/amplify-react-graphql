@@ -1,25 +1,17 @@
 import React, {useEffect, useState} from "react"
-import {NotesOpen} from "../../components/sharedComponents";
-import {shallowEqual} from "../../components/ShallowEqual";
-import {
-    Button,
-    Heading,
-    View,
-    Image,
-    TextAreaField,
-    TextField,
-    Text,
-    Alert,
-    Flex,
-    SelectField
-} from '@aws-amplify/ui-react';
+import {Button, View, Image, TextAreaField, TextField,Flex} from '@aws-amplify/ui-react';
 import {useNavigate} from "react-router-dom";
-import {API} from "aws-amplify";
-import { gameScoreByGameStatsID, gameStopByGameID } from "../../graphql/queries";
-import { updateGameScore, createGameHintTime, createGameStopTime } from "../../graphql/mutations";
+import {toggleIntro, toggleHelp, toggleBackpack,
+    toggleNotes, goHomeQuit, setGameStopFunction,
+    intervalFunction, goHome, goToStop, leaveComment, winGameFunction, toggleHint1,toggleHint2,toggleHint3, toggleHint4, setCommentsFunction} from "../../components/helper";
+import {shallowEqual} from "../../components/ShallowEqual";
+import {NotesOpen, HelpScreen, GameIntro, CoverScreenView} from "../../components/sharedComponents";
 
 export function Hurricane1() {
+
     /* for all games */
+    const [isAlertVisible, setIsAlertVisible] = useState(false);
+    const [showComment, setShowComment] = useState(false);
     const [areNotesVisible, setAreNotesVisible] = useState(false);
     const [isHelpVisible, setIsHelpVisible] = useState(false);
     const [gameNotes,setGameNotes] = useState('');
@@ -27,6 +19,7 @@ export function Hurricane1() {
     const [isBackpackVisible, setIsBackpackVisible] = useState(false);
     const [gameBackpack, setGameBackpack] = useState([]);
     const [gameBackpackHasItems, setGameBackpackHasItems] = useState(false);
+    const [isCoverScreenVisible, setIsCoverScreenVisible] = useState(true);
     /* set in local storage too */
     const [gameTime, setGameTime] = useState(0);
     const [gameTimeHint, setGameTimeHint] = useState(0);
@@ -36,14 +29,15 @@ export function Hurricane1() {
     const [gameID, setGameID] = useState('');
     const [numberOfTimes, setNumberOfTimes] = useState(0);
     const [gameStop,setGameStop] = useState(0);
-    const [gameStopName,setGameStopName] = useState(0);
     const [gameStopNameArray,setGameStopNameArray] = useState('');
     const [gameComplete, setGameComplete] = useState(false);
+    const [gameStopName,setGameStopName] = useState(0);
     /* end set in local storage too */
 
     const [stopClock, setStopClock] = useState(false);
     const [numberOfPlayers, setNumberOfPlayers] = useState('');
     const [numberOfPlayersError, setNumberOfPlayersError] = useState('');
+    const [teamName, setTeamName] = useState('');
     const [isHint1Visible, setIsHint1Visible] = useState(false);
     const [isHint2Visible, setIsHint2Visible] = useState(false);
     const [isHint3Visible, setIsHint3Visible] = useState(false);
@@ -52,105 +46,47 @@ export function Hurricane1() {
     const [hintTime2,setHintTime2] = useState(0);
     const [hintTime3,setHintTime3] = useState(0);
     const [hintTime4,setHintTime4] = useState(0);
-    const [isIntroVisible, setIsIntroVisible] = useState(true);
+    const [isIntroVisible, setIsIntroVisible] = useState(false);
+    const [isGameIntroVisible, setIsGameIntroVisible] = useState(true);
 
-    function toggleIntro() {
-        console.log("gameTime: " + gameTime);
-        console.log("gameTimeTotal: " + gameTimeTotal);
-        /* check numberOfPlayers */
-        if (numberOfPlayers != '') {
-            isIntroVisible ? setIsIntroVisible(false) : setIsIntroVisible(true);
-            setStopClock(false);
-        } else {
-            setNumberOfPlayersError("Please choose number of players");
-        }
-
-    }
-    function goToStop() {
-        setGameStop(Number(gameStop) + 1);
-        localStorage.setItem("gameStop",Number(gameStop) + 1);
-        console.log("go to stop:" + (Number(gameStop) + 1));
-        setGameTimeTotal(gameTimeTotal + gameTime + gameTimeHint);
-        /* reset time */
-        setHintTime1(0);
-        setHintTime2(0);
-        setHintTime3(0);
-        setHintTime4(0);
-        setGameTime(0);
-        setGameTimeHint(0);
-        setIsIntroVisible(true);
-    }
-    const navigate = useNavigate();
-    function removeLocalStorage() {
-        localStorage.removeItem("agreeToWaiver");
-        localStorage.removeItem("gameID");
-        localStorage.removeItem("gameStatsID");
-        localStorage.removeItem("gameScoreID");
-        localStorage.removeItem("gameName");
-        localStorage.removeItem("gameNameID");
-        localStorage.removeItem("gameTime")
-        localStorage.removeItem("gameTimeHint");
-        localStorage.removeItem("gameTimeTotal");
-        localStorage.removeItem("gameStop");
-        localStorage.removeItem("gameStopNameArray");
-        localStorage.removeItem("numberOfTimes");
-        localStorage.removeItem("numberOfPlayers");
-        localStorage.removeItem("key");
-        localStorage.removeItem("prybar");
-        localStorage.removeItem("shovel");
-        localStorage.removeItem("key2");
-    }
-    function goHomeQuit() {
-        removeLocalStorage();
-        navigate('/');
-    }
-    async function goHome() {
-        console.log("game comments: " + gameComments);
-        const newGameStats = {
-            id: localStorage.getItem("gameScoreID"),
-            gameComments: gameComments,
-            completed: true
-        };
-        const apiGameScoreUpdate = await API.graphql({ query: updateGameScore, variables: {input: newGameStats}});
-        removeLocalStorage();
-        navigate('/');
-    }
-
+    /* get gamestats and set localstorage */
+    useEffect(() => {
+        console.log("***useEffect***: setGameStop (only on mount)");
+        /* set local storage for gameStop - only on mount */
+        setGameStopFunction(setGameStop,setNumberOfTimes,setGameID,setGameStatsID,setGameStopNameArray,setGameStopName,setGameScoreID);
+    }, []);
+    /* always scroll to top */
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    });
     /* 60000 milliseconds = 1 minute */
     const MINUTE_MS = 3000;
+    /* clock action */
     useEffect(() => {
         const interval = setInterval(() => {
-            console.log('Logs every 3 seconds');
-            if (gameTime) {
-                let gameTimeNum = Number((gameTime + .05).toFixed(2));
-                console.log('game time: ' + gameTimeNum);
-                if (!stopClock) {
-                    localStorage.setItem("gameTime", gameTimeNum);
-                    setGameTime(gameTimeNum);
-                    let hintTimeTotalNum = Number(hintTime1 + hintTime2 + hintTime3 + hintTime4);
-                    console.log("hint time total: " + hintTimeTotalNum);
-                    localStorage.setItem("gameTimeHint", hintTimeTotalNum);
-                    setGameTimeHint(hintTimeTotalNum);
-                }
-                console.log("stopClock: " + stopClock);
-
-            } else {
-                console.log("no gameTime");
-                if (!isIntroVisible) {
-                    setGameTimeFunction(.05);
-                }
-            }
-
+            intervalFunction(gameTime,stopClock,setGameTime,hintTime1,hintTime2,hintTime3,hintTime4,setGameTimeHint,isIntroVisible);
         }, MINUTE_MS);
         return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
     }, [gameTime,isIntroVisible])
 
-    function setGameTimeFunction(gameTime) {
-        let gameTimeNum = Number(gameTime);
-        console.log("gametimefunction: " + gameTimeNum.toFixed(2));
-        localStorage.setItem("gameTime",gameTimeNum.toFixed(2));
-        setGameTime(gameTimeNum);
-    }
+    /* changed in helper function - testing */
+    useEffect(() => {
+        console.log("***useEffect***: numberOfPlayers: " + numberOfPlayers);
+    });
+    useEffect(() => {
+        console.log("***useEffect***: numberOfPlayersError: " + numberOfPlayersError);
+    });
+    useEffect(() => {
+        console.log("***useEffect***: isGameIntroVisible: " + isGameIntroVisible);
+    });
+    useEffect(() => {
+        console.log("***useEffect***: stopClock: " + stopClock);
+    });
+
+    const navigate = useNavigate();
+
+    /* end for all games */
+
     function completeStop(){
         /*stop 2 */
         if (gameStop == 2) {
@@ -175,183 +111,6 @@ export function Hurricane1() {
         setStopClock(true);
         winGameFunction();
     }
-    useEffect(() => {
-        console.log("***useEffect***: stopClock: " + stopClock);
-    });
-    async function winGameFunction() {
-        console.log("winGameFunction");
-        /* for end of game: clearInterval(interval);*/
-        console.log("stop has been won");
-        /* update gameScore based on stop - */
-        updateGameScoreFunction();
-        createGameStopFunction();
-        createGameHintFunction();
-    }
-    async function createGameStopFunction() {
-        const data = {
-            gameScoreID: gameScoreID,
-            gameStopTime: gameTime,
-            gameStop: gameStop
-        };
-        await API.graphql({
-            query: createGameStopTime,
-            variables: { input: data },
-        });
-    }
-    async function createGameHintFunction() {
-        const data = {
-            gameScoreID: gameScoreID,
-            gameHintTime: gameTimeHint,
-            gameStop: gameStop
-        };
-        await API.graphql({
-            query: createGameHintTime,
-            variables: { input: data },
-        });
-    }
-    async function updateGameScoreFunction() {
-        console.log("gameScoreID (update):" + gameScoreID);
-        let GameTimeTotalVar = gameTimeTotal + gameTime + gameTimeHint;
-        const data = {
-            id: gameScoreID,
-            numberOfPlayers: numberOfPlayers,
-            gameTotalTime:  Number(GameTimeTotalVar),
-            completed: gameComplete
-        };
-        const apiUpdateGameScore = await API.graphql({
-            query: updateGameScore,
-            variables: { input: data },
-        }).then(response => {
-            console.log(response);
-            return(response);
-        }).catch(e => {
-            console.log("catch apiUpdateGameScore");
-            console.log(e);
-            return null;
-        });
-
-        return(apiUpdateGameScore);
-    }
-
-    /* hint functions */
-    function toggleHint1() {
-        setHintTime1(5);
-        isHint1Visible ? setIsHint1Visible(false) : setIsHint1Visible(true);
-    }
-    function toggleHint2() {
-        setHintTime2(5);
-        isHint2Visible ? setIsHint2Visible(false) : setIsHint2Visible(true);
-    }
-    function toggleHint3() {
-        setHintTime3(5);
-        isHint3Visible ? setIsHint3Visible(false) : setIsHint3Visible(true);
-    }
-    function toggleHint4() {
-        setHintTime4(5);
-        isHint4Visible ? setIsHint4Visible(false) : setIsHint4Visible(true);
-    }
-    /* info functions */
-    function toggleHelp() {
-        isHelpVisible ? setIsHelpVisible(false) : setIsHelpVisible(true);
-    }
-    /* notes functions */
-    function toggleNotes() {
-        areNotesVisible ? setAreNotesVisible(false) : setAreNotesVisible(true);
-    }
-    function setNotesFunction(notes) {
-        console.log('notes: ' + notes);
-        /* set localhost variable */
-        setGameNotes(notes);
-    }
-    /* end notes functions */
-    function setCommentsFunction(notes) {
-        console.log('comments: ' + notes);
-        /* set localhost variable */
-        setGameComments(notes);
-    }
-    function setNumPlayerFunction(numPlayerValue) {
-        console.log("numPlayerFunction: " + numPlayerValue);
-        localStorage.setItem("numberOfPlayers", numPlayerValue);
-        setNumberOfPlayers(numPlayerValue);
-    }
-
-    /* get gamestats and set localstorage */
-    useEffect(() => {
-        console.log("***useEffect***: setGameStop (only on mount)");
-        /* set local storage for gameStop - only on mount */
-        setGameStopFunction();
-    }, []);
-
-
-    async function setGameStopFunction() {
-        console.log("setGameStopFunction - only on mount");
-        console.log ("get Game Stop: " + localStorage.getItem("gameStop"));
-        console.log ("get GameID: " + localStorage.getItem("gameID"));
-        console.log ("get GameStatsID: " + localStorage.getItem("gameStatsID"));
-        setGameStop(localStorage.getItem("gameStop"))
-        setNumberOfTimes(localStorage.getItem("numberOfTimes"));
-        setGameID(localStorage.getItem("gameID"));
-        setGameStatsID(localStorage.getItem("gameStatsID"));
-        /* get gameStop name */
-        const gameStopFromAPI = await getGameStopName();
-        let gameStopNameArrayConst = gameStopFromAPI.data.gameStopByGameID.items;
-        /* get gameScore Id */
-        const gameScoreFromAPI = await getGameScoreID();
-        let gameScoreID = gameScoreFromAPI.data.gameScoreByGameStatsID.items[0].id;
-        let testObject = gameStopNameArrayConst[0];
-        for (const key in testObject) {
-            console.log(`${key}: ${ testObject[key]}`);
-            for (const key1 in testObject[key]) {
-                //console.log(`${key1}: ${testObject[key][key1]}`);
-            }
-        }
-        let GameStopIndex = Number(localStorage.getItem("gameStop"))-1;
-        setGameStopNameArray(gameStopNameArrayConst);
-        setGameStopName(gameStopNameArrayConst[GameStopIndex].gameStopName);
-        console.log("gameStopNameArrayConst[0].gameStopName (setGameStopFunction): " + gameStopNameArrayConst[GameStopIndex].gameStopName);
-        localStorage.setItem("gameStopNameArray", gameStopFromAPI.data.gameStopByGameID.items);
-        setGameScoreID(gameScoreID);
-        localStorage.setItem("gameScoreID", gameScoreID);
-    }
-
-    async function getGameScoreID() {
-        let filter = {
-            completed: {
-                eq: false
-            }
-        };
-        const apiGameScore = await API.graphql({
-            query: gameScoreByGameStatsID,
-            variables: { filter: filter, gameStatsID: localStorage.getItem("gameStatsID")}
-        }).then(response => {
-            console.log(response);
-            return(response);
-        }).catch(e => {
-            console.log("catch");
-            console.log(e);
-            return null;
-        });
-
-        return(apiGameScore);
-    }
-
-    async function getGameStopName() {
-        const apiGameStop = await API.graphql({
-            query: gameStopByGameID,
-            variables: { gameID: localStorage.getItem("gameID")}
-        }).then(response => {
-            console.log(response);
-            return(response);
-        }).catch(e => {
-            console.log("catch");
-            console.log(e);
-            return null;
-        });
-
-        return(apiGameStop);
-    }
-    /* end for all games */
-
     /* STOP 1 */
     /* guessing states and answers for first safe - 5 numbers */
     const [guess1,setGuess1] = useState({'numbers':''});
@@ -414,17 +173,20 @@ export function Hurricane1() {
     const [isSignVisible, setIsSignVisible] = useState(false);
     function toggleSign() {
         isSignVisible ? setIsSignVisible(false) : setIsSignVisible(true);
+        isCoverScreenVisible ? setIsCoverScreenVisible(false) : setIsCoverScreenVisible(true);
     }
     /* need to click on safe */
     const [isSafeInfoVisible, setIsSafeInfoVisible] = useState(false);
     function toggleSafeInfo() {
         isSafeInfoVisible ? setIsSafeInfoVisible(false) : setIsSafeInfoVisible(true);
+        isCoverScreenVisible ? setIsCoverScreenVisible(false) : setIsCoverScreenVisible(true);
     }
 
     /* need to select prybar and then click on cement marking */
     const [isCementSafeInfoVisible, setIsCementSafeInfoVisible] = useState(false);
     function toggleCementSafeInfo() {
         isCementSafeInfoVisible ? setIsCementSafeInfoVisible(false) : setIsCementSafeInfoVisible(true);
+        isCoverScreenVisible ? setIsCoverScreenVisible(false) : setIsCoverScreenVisible(true);
     }
     /* show 2nd safe and message */
     const [isCementSafeOpen, setIsCementSafeOpen] = useState(false);
@@ -704,10 +466,7 @@ export function Hurricane1() {
     /* end Stop 3 */
 
     /* backpack functions */
-    /* backpack items: prybar */
-    function toggleBackpack() {
-        isBackpackVisible ? setIsBackpackVisible(false) : setIsBackpackVisible(true);
-    }
+
     /* Stop 4 */
     /* key is used to open bridge and display flying boat */
     const [isKey2On, setIsKey2On] = useState(false);
@@ -786,8 +545,13 @@ export function Hurricane1() {
     const [isPrybarVisible, setIsPrybarVisible] = useState(true)
     function pryBar() {
         setIsPrybarVisible(false);
+        setIsAlertVisible(true);
+
+        setTimeout(() => {
+            setIsAlertVisible(false);
+        }, 3000);
         console.log("put prybar in backpack");
-        localStorage.setItem("prybar", "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/prybar-not-using.png");
+        localStorage.setItem("prybar", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/prybar-not-using.png");
         /* check if there */
         if (gameBackpack.length > 0) {
             for (var i = 0; i < gameBackpack.length; i++) {
@@ -800,14 +564,14 @@ export function Hurricane1() {
             if (bptest === true) {
                 console.log("push prybar to backpack");
                 gameBackpack.push({
-                    src: 'https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/prybar-not-using.png',
+                    src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/prybar-not-using.png',
                     key: 'prybar'
                 })
             }
         } else {
             console.log("push prybar to backpack");
             gameBackpack.push({
-                src: 'https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/prybar-not-using.png',
+                src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/prybar-not-using.png',
                 key: 'prybar'
             })
         }
@@ -886,11 +650,11 @@ export function Hurricane1() {
                     if (gameBackpack[i].key === "prybar") {
                         console.log("turn on/off prybar - state");
                         if (!isPrybarOn) {
-                            gameBackpack[i].src = "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/prybar-using.png"
-                            localStorage.setItem("prybar", "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/prybar-using.png");
+                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/prybar-using.png"
+                            localStorage.setItem("prybar", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/prybar-using.png");
                         } else {
-                            gameBackpack[i].src = "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/prybar-not-using.png"
-                            localStorage.setItem("prybar", "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/prybar-not-using.png");
+                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/prybar-not-using.png"
+                            localStorage.setItem("prybar", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/prybar-not-using.png");
                         }
                     }
                 }
@@ -936,180 +700,183 @@ export function Hurricane1() {
     /* stop 1 - game specific */
     if (gameStop == 1) {
         return (
-            <View
-                ariaLabel="Main Container"
-                position="relative">
+            <View position="relative" height="100%">
                 <View
-                    className="image-holder image-short"
-                    ariaLabel="Image Holder"
-                    backgroundImage="url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-jaycee-shelter.jpg')">
-                    {/* all games */}
+                    ariaLabel="Main Container"
+                    className="main-container">
                     <View
-                        className="z-index102 info-button"
-                        ariaLabel="Info Button"
-                        onClick={() => toggleHelp()}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/help.png"/>
-                    </View>
-                    <View
-                        className="z-index102 notes-button"
-                        ariaLabel="Notes Button"
-                        onClick={() => toggleNotes()}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/notes.png"/>
-                    </View>
-                    <View
-                        className="z-index102 backpack-image"
-                        ariaLabel="backpack Image"
-                        onClick={() => toggleBackpack()}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png"/>
-                    </View>
-                    <View
-                        className={isBackpackVisible ? "all-screen zIndex103 show" : "all-screen hide"}>
-                        <Button className="close-button" onClick={() => toggleBackpack()}>X</Button>
-                        <h3>Backpack Contents</h3><br/>
-                        {gameBackpack.map((item) => {
-                            return (
-                                <div key={item.key}>
-                                    <Image alt={item.src} onClick={() => showItemContents(item.key)}
-                                           className={item.key} src={item.src}/>
-                                </div>
-                            )
-                        })}
-                    </View>
-                    <NotesOpen areNotesVisible={areNotesVisible} toggleNotes={toggleNotes} gameNotes={gameNotes}
-                               setNotesFunction={setNotesFunction}/>
+                        className="image-holder image-short"
+                        ariaLabel="Image Holder"
+                        backgroundImage = "url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-game-jaycee-shelter-objects.jpg')">
 
-                    {/* end all games */}
+                        {/* all games */}
 
-                    <View
-                        ariaLabel="Hanging Sign"
-                        className="hanging-sign"
-                        onClick={() => toggleSign()}>
-                        <Image
-                            src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/hanging-sign.png"/>
-                    </View>
+                        <View
+                            className="z-index102 info-button"
+                            ariaLabel="Info Button"
+                            onClick={() => toggleHelp(isHelpVisible,setIsHelpVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>
+                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/help.png" />
+                        </View>
+                        <View
+                            className="z-index102 notes-button"
+                            ariaLabel="Notes Button"
+                            onClick={() => toggleNotes(areNotesVisible,setAreNotesVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>
+                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/notes.png" />
+                        </View>
+                        <View
+                            className="z-index102 backpack-image"
+                            ariaLabel="backpack Image"
+                            onClick={()=>toggleBackpack(isBackpackVisible,setIsBackpackVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>
+                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png" />
+                        </View>
+                        <View className={isBackpackVisible ? "all-screen zIndex103 show" : "all-screen hide"} >
+                            <Button className="close-button" onClick={() => toggleBackpack(isBackpackVisible,setIsBackpackVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>X</Button>
+                            <h3>Backpack Contents</h3><br />
+                            {gameBackpack.map((item) => {
+                                return (
+                                    <div className = "wp-block-columns" key={item.key}>
+                                        <div className = "wp-block-column">
+                                            <Image alt={item.src} onClick={() => showItemContents(item.key)} className={item.key} src={item.src} />
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </View>
+                        <NotesOpen areNotesVisible={areNotesVisible} setAreNotesVisible={setAreNotesVisible} isCoverScreenVisible={isCoverScreenVisible} setIsCoverScreenVisible={setIsCoverScreenVisible} toggleNotes={toggleNotes} gameNotes={gameNotes} setGameNotes={setGameNotes}/>
 
-                    <View
-                        ariaLabel="left picnic table"
-                        className="left-picnic-table"
-                    >
-                        <Image
-                            src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/left-picnic-table.png"/>
-                    </View>
-                    <View
-                        ariaLabel="right picnic table"
-                        className="right-picnic-table"
-                    >
-                        <Image
-                            src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/right-picnic-table.png"/>
-                    </View>
-                    <View
-                        ariaLabel="Safe Shelter"
-                        className="safe-shelter"
-                        onClick={() => toggleSafeInfo()}>
-                        <Image
-                            src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe-shelter.png"/>
-                    </View>
-                    <View className={isPrybarOn && !isCementSafeOpen && isWrong2 ? "cement-safe show" : "hide"}
-                          onClick={() => toggleCementSafe()}>
-                        <Image className="test" alt="test"
-                               src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/03/cementsafe1.png"/>
-                    </View>
-                    <View className={!isPrybarOn ? "cement-safe show" : "hide"}>
-                        <Image className="test" alt="test"
-                               src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/03/cementsafe1.png"/>
-                    </View>
-                    <View className={isCementSafeOpen && isWrong2 ? "cement-safe show" : "hide"}
-                          onClick={() => toggleCementSafeInfo()}>
-                        <Image className="test" alt="test"
-                               src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/03/cementsafeopen.png"/>
-                    </View>
-                    <View className={!isWrong2 ? "cement-safe show" : "hide"}>
-                        <Image className="test" alt="test"
-                               src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/03/cementsafeopensandbags.png"/>
-                    </View>
-                </View>
-                <View
-                    ariaLabel="stop 1 - sign info"
-                    className={isSignVisible ? "all-screen show" : "hide"}>
-                    <Button className="close-button" onClick={() => toggleSign()}>X</Button>
-                    <br/><h3>Hanging Sign Says:</h3>
-                    <br/>
-                    <div>I am an odd number. Take away a letter and I become even.</div>
-                </View>
-                <View className={isSafeInfoVisible ? "all-screen show" : "hide"}>
-                    <Button className="close-button" onClick={()=>toggleSafeInfo()}>X</Button>
-                    <TextField
-                        label="Try to Open Safe! (5 numbers)"
-                        value={guess1.numbers}
-                        onChange={(e) => setGuess1Numbers(e.currentTarget.value)}/>
-                    {
-                        haveGuessed1 && isWrong1 ? (
-                            <span className="red"> Wrong Answer!</span>
-                        ) : null
-                    }
+                        {/* end all games */}
 
-                    {!isWrong1 && haveGuessed1 ? (
-                        <View>
-                            <span className="right"> Right Answer!</span><br/>
-                            <View className={isPrybarVisible ? "show" : "hide"}
-                                  onClick={pryBar}>
-                                <Image className="test"
-                                       src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/03/prybar.png"/>
+                        <View
+                            ariaLabel="Hanging Sign"
+                            className="hanging-sign"
+                            onClick={() => toggleSign()}>
+                            <Image
+                                src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/hanging-sign.png"/>
+                        </View>
+
+                        { !isWrong1 && haveGuessed1 ?   (
+                            <View>
+                                <View className={isAlertVisible ? "alert-container show" : "hide"}>
+                                    <div className='alert-inner'>Prybar is in backpack</div>
+                                </View>
+                                <View className="safe-shelter show">
+                                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/open-safe.png" />
+                                    <View marginRight="10px" className={isPrybarVisible ? "safe-shelter  show" : "hide"}
+                                          onClick={pryBar}>
+                                        <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/prybar.png"/>
+                                    </View>
+                                </View>
+
                             </View>
+                        ) : <View
+                            ariaLabel="Safe Shelter"
+                            className="safe-shelter"
+                            onClick={() => toggleSafeInfo()}>
+                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe-shelter.png"/>
+                            </View>
+                        }
+                        {/* what you see first, it can NOT be clicked */}
+                        <View className={!isPrybarOn ? "cement-safe show" : "hide"}>
+                            <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/cementsafe-closed.png" />
                         </View>
-                    ) : (
-                        <div>
-                            <br/><h3>Note Under Safe Says:</h3>
-                            As I sit here under <span className="bold-underline">this sign <span
-                            className="small">(#?)</span></span>,<br/>
-                            I look South and see something near with <span
-                            className="bold-underline">vertical slots <span className="small">(#?)</span></span> that
-                            align,<br/>
-                            I also see on the screen <span className="bold-underline">discs <span
-                            className="small">(#?)</span></span>, <span className="bold-underline">balls <span
-                            className="small">(#?)</span></span>,
-                            and <span className="bold-underline">water bottles <span
-                            className="small">(#?)</span></span> and count in record time.
-                        </div>
-                    )}
-                </View>
-                <View className={isCementSafeInfoVisible ? "all-screen show" : "hide"}>
-                    <Button className="close-button" onClick={() => toggleCementSafeInfo()}>X</Button>
 
-                    <TextField
-                        label="Try to Open Floor Safe! (4 numbers)"
-                        value={guess2.numbers}
-                        onChange={(e) => setGuess2Numbers(e.currentTarget.value)}/>
-                    {
-                        haveGuessed2 && isWrong2 ? (
-                            <span className="red"> Wrong Answer!</span>
-                        ) : null
-                    }
-
-                    {!isWrong2 && haveGuessed2 ? (
-                        <View>
-                            <span className="right"> Right Answer!</span><br/>
-
+                        {/* Now Prybar is ON but Cement Safe is closed */}
+                        <View className={isPrybarOn && !isCementSafeOpen && isWrong2 ? "cement-safe show" : "hide"}
+                              onClick={() => toggleCementSafe()}>
+                            <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/cementsafe-closed.png" />
                         </View>
-                    ) : (
-                        <Image className="test"
-                               src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/03/codeforcement.png"/>
-                    )}
-                </View>
-                {(!isWrong1 && !isWrong2) ?
-                    (
-                        <View ariaLabel="Stop 1 Winner" className="winner">
-                            <h3>Good Job on Finding Sandbags!</h3>
-                            But you need more.<br/>
-                            Next stop is at Jaycee Park Gazebo - maybe you can find some there.<br/><br/>
-                            <Button className="button" onClick={() => goToStop()}>Click here for picture of stop
-                                2</Button>
+
+                        {/* Cement Safe is open, prybar doesn't matter, but answer is wrong  */}
+                        <View className={isCementSafeOpen && isWrong2 ? "cement-safe show" : "hide"}
+                              onClick={() => toggleCementSafeInfo()}>
+                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/cementsafeopencode.png"/>
                         </View>
-                    ) : null}
 
+                        {/* Cement Safe is open, prybar doesn't matter, but answer is RIGHT  */}
+                        <View className={!isWrong2 ? "cement-safe show" : "hide"}>
+                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/cementsafeopensandbags.png"/>
+                        </View>
+                    </View>
 
-                <View ariaLabel="stop 1 help" className={isHelpVisible ? "all-screen show" : "all-screen hide"}>
-                    <Button className="close-button" onClick={() => toggleHelp()}>X</Button>
+                    <View
+                        ariaLabel="stop 1 - sign info"
+                        className={isSignVisible ? "all-screen show" : "hide"}>
+                        <Button className="close-button" onClick={() => toggleSign()}>X</Button>
+                        <View className="hanging-sign-big-jaycee">
+                        <div>I am an odd number. <br />Take away a letter <br />and I become even.</div>
+                        </View>
+                    </View>
+                    <View className={isSafeInfoVisible ? "all-screen show" : "hide"}>
+                        <Button className="close-button" onClick={()=>toggleSafeInfo()}>X</Button>
+                        <TextField
+                            label="Try to Open Safe! (5 numbers)"
+                            value={guess1.numbers}
+                            onChange={(e) => setGuess1Numbers(e.currentTarget.value)}/>
+                        {
+                            haveGuessed1 && isWrong1 ? (
+                                <span className="red"> Wrong Answer!</span>
+                            ) : null
+                        }
+
+                        {!isWrong1 && haveGuessed1 ? (
+                            <View>
+                                <span className="right"> Right Answer!</span><br/>
+                            </View>
+                        ) : (
+
+                                <View className="torn-diary-big-jaycee big-width">
+                                As I sit here under <span className="bold-underline">this sign(#?)</span>,<br/>
+                                I look South and see something near <br />with <span
+                                className="bold-underline">vertical slots (#?)</span> that
+                                align,<br/>
+                                I also see on the screen <span className="bold-underline">discs(#?)</span>,
+                                    <br /><span className="bold-underline">balls (#?)</span>,
+                                and <span className="bold-underline">water bottles (#?)</span>
+                                    <br />and count them in record time.
+                                </View>
+                        )}
+                    </View>
+                    <View className={isCementSafeInfoVisible ? "all-screen show" : "hide"}>
+                        <Button className="close-button" onClick={() => toggleCementSafeInfo()}>X</Button>
+
+                        <TextField
+                            label="Try to Open Floor Safe! (4 numbers)"
+                            value={guess2.numbers}
+                            onChange={(e) => setGuess2Numbers(e.currentTarget.value)}/>
+                        {
+                            haveGuessed2 && isWrong2 ? (
+                                <span className="red"> Wrong Answer!</span>
+                            ) : null
+                        }
+
+                        {!isWrong2 && haveGuessed2 ? (
+                            <View>
+                                <span className="right"> Right Answer!</span><br/>
+
+                            </View>
+                        ) : (
+                            <Image className="test"
+                                   src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/codeforcement.png"/>
+                        )}
+                    </View>
+                    {(!isWrong1 && !isWrong2) ?
+                        (
+                            <View ariaLabel="Stop 1 Winner" className="winner">
+                                <h3>Good Job on Finding Sandbags!</h3>
+                                But you need more.<br/>
+                                Next stop is at Jaycee Park Gazebo - maybe you can find some there.<br/><br/>
+                                <Button className="button" onClick={() => goToStop(setGameStop,gameStop,gameTime,setGameTime,gameTimeTotal,setGameTimeTotal,setGameTimeHint,gameTimeHint,setHintTime1,setHintTime2,setHintTime3,setHintTime4,setIsIntroVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>Click here for picture of stop
+                                    2</Button>
+                            </View>
+                        ) : null}
+
+                    <View ariaLabel="stop 1 Time" className="time">
+                        <Button className="button small" onClick={() => completeStop()}>complete stop (REMOVE)</Button>
+                        <span className="small">hint time: {gameTimeHint} mins | real time: {gameTime} mins |
+                                tot: time: { Number((gameTime + gameTimeHint + gameTimeTotal).toFixed(2))} min</span>
+                    </View>                    <HelpScreen />
+                    <View className={isHelpVisible ? "all-screen show" : "all-screen hide"}>
+                        <Button className="close-button" onClick={() => toggleHelp(isHelpVisible,setIsHelpVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>X</Button>
                     <View width="100%" padding="10px">
                         <View paddingBottom="10px">
                             <strong>Game Stop</strong>: <span className="font-small">{gameStop}</span>
@@ -1119,102 +886,65 @@ export function Hurricane1() {
                             your backpack. If it is in your backpack you may be able to use it by clicking on it.
                         </View>
                         <View paddingBottom="10px">
-                            <strong>Goal for this stop:</strong> Find the Discs! Use Hints if you really need them.
+                            <strong>Goal for this stop:</strong> Find the SandBags! Use Hints if you really need them.
                         </View>
-                        <Button className="button small" onClick={() => toggleHint3()}>Open Hint (this sign)</Button>
-                        <Button className="button small" onClick={() => toggleHint1()}>Open Hint (vertical slots)</Button>
-                        <Button className="button small" onClick={() => toggleHint2()}>Open Hint (discs, water bottles, balls)</Button>
-                        <Button className="button small" onClick={() => toggleHint4()}>Open Hint (#slides, #swings, etc)</Button>
+                        <Flex wrap="wrap">
+                            <Button className="button small" onClick={() => toggleHint1(setHintTime1,isHint1Visible,setIsHint1Visible)}>Open Hint (vertical slots)</Button>
+                            <Button className="button small" onClick={() => toggleHint2(setHintTime2,isHint2Visible,setIsHint2Visible)}>Open Hint (discs, water bottles, balls)</Button>
+                            <Button className="button small" onClick={() => toggleHint3(setHintTime3,isHint3Visible,setIsHint3Visible)}>Open Hint (this sign)</Button>
+                            <Button className="button small" onClick={() => toggleHint4(setHintTime4,isHint4Visible,setIsHint4Visible)}>Open Hint (#slides, #swings, etc)</Button>
+                        </Flex>
 
                         <br/><br/>
-                        <div className={isHint4Visible ? "all-screen show" : "all-screen hide"}>
-                            <Button className="close-button" onClick={() => toggleHint4()}>X</Button>
+                        <div className={isHint4Visible ? "winner show" : "all-screen hide"}>
+                            <Button className="close-button" onClick={() => toggleHint4(setHintTime4,isHint4Visible,setIsHint4Visible)}>X</Button>
                             <strong>#slides, #swings, etc</strong>
                             <br/><br/>These things are all around - you can see them - count the swings and slides in playground, count the
                             windows on the building that has the bathrooms, and get number of closest disc golf hole to the shelter.
                             <br/><br/>
 
                         </div>
-                        <div className={isHint3Visible ? "all-screen show" : "all-screen hide"}>
-                            <Button className="close-button" onClick={() => toggleHint3()}>X</Button>
+                        <div className={isHint3Visible ? "winner show" : "all-screen hide"}>
+                            <Button className="close-button" onClick={() => toggleHint3(setHintTime3,isHint3Visible,setIsHint3Visible)}>X</Button>
                             <strong>this sign:</strong>
                             <br/><br/>It's a riddle but think about how you spell the odd number. It's spelling not math.
                             <br/><br/>
 
                         </div>
-                        <div className={isHint2Visible ? "all-screen show" : "all-screen hide"}>
-                            <Button className="close-button" onClick={() => toggleHint2()}>X</Button>
+                        <div className={isHint2Visible ? "winner show" : "all-screen hide"}>
+                            <Button className="close-button" onClick={() => toggleHint2(setHintTime2,isHint2Visible,setIsHint2Visible)}>X</Button>
                             <strong>discs, water bottles, balls:</strong> <br/><br/>
                             These items are ONLY on the game screen - count them there.
 
                         </div>
-                        <div className={isHint1Visible ? "all-screen show" : "all-screen hide"}>
-                            <Button className="close-button" onClick={() => toggleHint1()}>X</Button>
+                        <div className={isHint1Visible ? "winner show" : "all-screen hide"}>
+                            <Button className="close-button" onClick={() => toggleHint1(setHintTime1,isHint1Visible,setIsHint1Visible)}>X</Button>
                             <strong>Vertical Slots:</strong> <br/><br/>
-                            There is a grill to the south (in direction of parking lot) it has slots on the sides:
-                            <Image className="test" alt="test" src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/slot-pic.jpg"/>
-
-
+                            There is a grill to the south (in direction of parking lot) it has slots on the sides - count these.
                         </div>
-                        <Button className="button small" onClick={() => toggleHelp()}>Close Help and
+                        <Button className="button action-button  small" onClick={() => toggleHelp(isHelpVisible,setIsHelpVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>Close Help and
                             Play</Button>
                     </View>
                 </View>
-                <View
-                    ariaLabel="stop 1 intro"
-                    textAlign="center"
-                    className={isIntroVisible ? "all-screen show" : "hide"}>
-                    <h3>{gameStopName}</h3>
-                    <span className="small"> <strong>Game Goals: Find Sandbags!</strong></span><br />
+                    <View
+                        ariaLabel="stop 1 intro"
+                        textAlign="center"
+                        className={isIntroVisible ? "all-screen show" : "hide"}>
+                        <h3>Game Goals: Find more Discs!</h3>
+                        <h4>Start Playing Game When You are Here:</h4>
+                        <View>
+                            <Image maxHeight="150px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-game-jaycee-shelter.jpg" />
+                        </View>
+                        <View>
+                            <span className="small"> <strong>Remember, clock doesn't stop until you complete the stop.</strong></span></View>
 
-                    <span class="red">{numberOfPlayersError}</span>
-                    <SelectField
-                        label="numberOfPlayers"
-                        className="num-Player"
-                        isRequired
-                        labelHidden
-                        size="small"
-                        width="200px"
-                        placeholder="How Many Players?"
-                        value={numberOfPlayers}
-                        onChange={(e) => setNumPlayerFunction(e.target.value)}
-                    >
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                    </SelectField>
-                    {localStorage.getItem("numberOfTimes") !== null && localStorage.getItem("numberOfTimes") != 0 ? (
-                        <div> You have played {localStorage.getItem("numberOfTimes")} time(s) before - good luck this
-                            time! </div>
-                    ) : null}
-                    <h4>Start Playing Stop {gameStop} When You are Here:</h4>
-                    <View>
-                        <Image maxHeight="150px"
-                               src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/game-picture-jaycee-shelter.jpg"/>
+                        <Button className="button" onClick={() => toggleIntro(isIntroVisible,setIsIntroVisible,setStopClock,setIsCoverScreenVisible)}>I Want To Play!</Button>
+                        &nbsp;&nbsp;
+                        <Button className="button" onClick={() => goHomeQuit(navigate)}>Back to All Games</Button>
                     </View>
-                    <View>
-
-                        <span className="small"> <strong>Your score is based on your time to complete each stop.
-                            Each Hint costs 5 minutes. Clock starts when you hit "Tap to Play". Clock doesn't stop until you complete the stop.</strong></span>
-                        <br />
-
-                        <Button className="button" onClick={() => toggleIntro()}>Tap To Play</Button>
-                        |
-                        <Button className="button" onClick={() => goHomeQuit()}>Back to Games</Button>
-                    </View>
-
-                    <View ariaLabel="stop 1 Time" className="time">
-                        <Button className="hide button small" onClick={() => completeStop()}>complete stop (REMOVE)</Button>
-                        <span className="small">hint time: {gameTimeHint} mins | real time: {gameTime} mins |
-                            tot: time: { Number((gameTime + gameTimeHint + gameTimeTotal).toFixed(2))} min</span>
-                    </View>
+                    <GameIntro isGameIntroVisible={isGameIntroVisible} setIsGameIntroVisible={setIsGameIntroVisible} numberOfPlayersError={numberOfPlayersError} numberOfPlayers={numberOfPlayers} setNumberOfPlayers={setNumberOfPlayers} teamName={teamName} setTeamName={setTeamName} gameStopNameArray={gameStopNameArray} setNumberOfPlayersError={setNumberOfPlayersError} setIsIntroVisible={setIsIntroVisible}/>
                 </View>
+                <CoverScreenView isCoverScreenVisible={isCoverScreenVisible}/>
             </View>
         )
     } else if (gameStop == 2) {
@@ -1258,8 +988,7 @@ export function Hurricane1() {
                             )
                         })}
                     </View>
-                    <NotesOpen areNotesVisible={areNotesVisible} toggleNotes={toggleNotes} gameNotes={gameNotes} setNotesFunction={setNotesFunction}/>
-
+                    <NotesOpen areNotesVisible={areNotesVisible} setAreNotesVisible={setAreNotesVisible} isCoverScreenVisible={isCoverScreenVisible} setIsCoverScreenVisible={setIsCoverScreenVisible} toggleNotes={toggleNotes} gameNotes={gameNotes} setGameNotes={setGameNotes}/>
                     {/* end all games */}
                     {
                         !isLeftBushOpen  ? (
@@ -1476,7 +1205,7 @@ export function Hurricane1() {
                         <span className="small"> <strong>Remember, clock doesn't stop until you complete the stop.</strong></span></View>
                     <View><span className="small"><strong>Total Time So Far</strong>: { Number((gameTime + gameTimeHint + gameTimeTotal).toFixed(2)) } min</span></View>
 
-                    <Button className="button" onClick={() => toggleIntro()}>I Want To Play!</Button>
+                    <Button className="button" onClick={() => toggleIntro(isIntroVisible,setIsIntroVisible,setStopClock,setIsCoverScreenVisible)}>I Want To Play!</Button>
                 </View>
             </View>
         )
@@ -1523,8 +1252,6 @@ export function Hurricane1() {
                             )
                         })}
                     </View>
-                    <NotesOpen areNotesVisible={areNotesVisible} toggleNotes={toggleNotes} gameNotes={gameNotes}
-                               setNotesFunction={setNotesFunction}/>
 
                     {/* end all games */}
                 </View>
@@ -1668,8 +1395,7 @@ export function Hurricane1() {
                             )
                         })}
                     </View>
-                    <NotesOpen areNotesVisible={areNotesVisible} toggleNotes={toggleNotes} gameNotes={gameNotes}
-                               setNotesFunction={setNotesFunction}/>
+                    <NotesOpen areNotesVisible={areNotesVisible} setAreNotesVisible={setAreNotesVisible} isCoverScreenVisible={isCoverScreenVisible} setIsCoverScreenVisible={setIsCoverScreenVisible} toggleNotes={toggleNotes} gameNotes={gameNotes} setGameNotes={setGameNotes}/>
 
                     {/* end all games */}
                 </View>

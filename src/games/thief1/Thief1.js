@@ -4,7 +4,7 @@ import {shallowEqual} from "../../components/ShallowEqual";
 import {Button, Heading, View, Image, TextAreaField, TextField, Text, Alert, Flex} from '@aws-amplify/ui-react';
 import {useNavigate} from "react-router-dom";
 import {API} from "aws-amplify";
-import {gameStatsByGameID, gameStatsByUserEmail} from "../../graphql/queries";
+import {gameStatsByGameID} from "../../graphql/queries";
 import {createGameStats as createGameStatsMutation, updateGameStats as updateGameStatsMutation} from "../../graphql/mutations";
 
 
@@ -74,7 +74,7 @@ export function Thief1() {
             /* check database */
 
             /* check if gameStats entry */
-            const userEmail = localStorage.getItem("email");
+           /* const userEmail = localStorage.getItem("email");
             const gameName = localStorage.getItem("gameName");
             let filter = {
                 gameName: {
@@ -91,7 +91,7 @@ export function Thief1() {
             for (const key in gameStatsState) {
                 console.log(`${key}: ${gameStatsState[key]}`);
             }
-            console.log("*** gameStatsState - end state object ***")
+            console.log("*** gameStatsState - end state object ***")*/
         }
         /* localhost beats saved stats */
 

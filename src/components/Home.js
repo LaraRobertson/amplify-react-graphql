@@ -179,7 +179,9 @@ export function Home() {
             const data = {
                 gameID: gameDetails.gameID,
                 userEmail: userAuth.email,
-                gameName: gameDetails.gameName
+                gameName: gameDetails.gameName,
+                gameLocationCity: gameDetails.gameLocationCity,
+                type: "gameStats"
             };
             console.log("data for createGameStats: " + JSON.stringify(data));
             try {
@@ -499,7 +501,7 @@ export function Home() {
 
                         <a id="tybeeIsland"></a>
                         <Heading level={"5"} className="heading">
-                            Tybee Island, GA
+                            Games: Tybee Island, GA
                         </Heading>
                         <Flex className="flex-games">
                             {gamesTybee.map((game,index) => (
@@ -515,7 +517,7 @@ export function Home() {
                                             <Text color="white"><span className="italics">Stops</span>: {game.gameStop.items.length}</Text>
                                                 {(gamesIDUser.includes(game.id) || game.gameType === "free") ?
                                                     (<div>
-                                                        <Button className="go-to-game-button" onClick={() => goToGame({gameName:game.gameName,gameID:game.id})}>
+                                                        <Button className="go-to-game-button" onClick={() => goToGame({gameName:game.gameName,gameID:game.id,gameLocationCity:game.gameLocationCity})}>
                                                             go to game
                                                         </Button>
                                                     </div>) :

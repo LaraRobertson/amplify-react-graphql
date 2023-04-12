@@ -1,59 +1,539 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createNote = /* GraphQL */ `
-  mutation CreateNote(
-    $input: CreateNoteInput!
-    $condition: ModelNoteConditionInput
+export const createUser = /* GraphQL */ `
+  mutation CreateUser(
+    $input: CreateUserInput!
+    $condition: ModelUserConditionInput
   ) {
-    createNote(input: $input, condition: $condition) {
+    createUser(input: $input, condition: $condition) {
       id
-      name
+      userName
       description
-      image
-      test {
-        title
-        email
+      email
+      game {
+        items {
+          id
+          userId
+          gameId
+          user {
+            id
+            userName
+            description
+            email
+            game {
+              items {
+                id
+                userId
+                gameId
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          game {
+            id
+            gameName
+            gameDescriptionH2
+            gameDescriptionH3
+            gameDescriptionP
+            gameLocationPlace
+            gameLocationCity
+            gameImage
+            gameType
+            gameStopString
+            gameLink
+            gameStop {
+              items {
+                id
+                gameID
+                gameStopName
+                order
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            type
+            createdAt
+            user {
+              items {
+                id
+                userId
+                gameId
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       createdAt
       updatedAt
     }
   }
 `;
-export const updateNote = /* GraphQL */ `
-  mutation UpdateNote(
-    $input: UpdateNoteInput!
-    $condition: ModelNoteConditionInput
+export const updateUser = /* GraphQL */ `
+  mutation UpdateUser(
+    $input: UpdateUserInput!
+    $condition: ModelUserConditionInput
   ) {
-    updateNote(input: $input, condition: $condition) {
+    updateUser(input: $input, condition: $condition) {
       id
-      name
+      userName
       description
-      image
-      test {
-        title
-        email
+      email
+      game {
+        items {
+          id
+          userId
+          gameId
+          user {
+            id
+            userName
+            description
+            email
+            game {
+              items {
+                id
+                userId
+                gameId
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          game {
+            id
+            gameName
+            gameDescriptionH2
+            gameDescriptionH3
+            gameDescriptionP
+            gameLocationPlace
+            gameLocationCity
+            gameImage
+            gameType
+            gameStopString
+            gameLink
+            gameStop {
+              items {
+                id
+                gameID
+                gameStopName
+                order
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            type
+            createdAt
+            user {
+              items {
+                id
+                userId
+                gameId
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       createdAt
       updatedAt
     }
   }
 `;
-export const deleteNote = /* GraphQL */ `
-  mutation DeleteNote(
-    $input: DeleteNoteInput!
-    $condition: ModelNoteConditionInput
+export const deleteUser = /* GraphQL */ `
+  mutation DeleteUser(
+    $input: DeleteUserInput!
+    $condition: ModelUserConditionInput
   ) {
-    deleteNote(input: $input, condition: $condition) {
+    deleteUser(input: $input, condition: $condition) {
       id
-      name
+      userName
       description
-      image
-      test {
-        title
-        email
+      email
+      game {
+        items {
+          id
+          userId
+          gameId
+          user {
+            id
+            userName
+            description
+            email
+            game {
+              items {
+                id
+                userId
+                gameId
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          game {
+            id
+            gameName
+            gameDescriptionH2
+            gameDescriptionH3
+            gameDescriptionP
+            gameLocationPlace
+            gameLocationCity
+            gameImage
+            gameType
+            gameStopString
+            gameLink
+            gameStop {
+              items {
+                id
+                gameID
+                gameStopName
+                order
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            type
+            createdAt
+            user {
+              items {
+                id
+                userId
+                gameId
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       createdAt
+      updatedAt
+    }
+  }
+`;
+export const createGame = /* GraphQL */ `
+  mutation CreateGame(
+    $input: CreateGameInput!
+    $condition: ModelGameConditionInput
+  ) {
+    createGame(input: $input, condition: $condition) {
+      id
+      gameName
+      gameDescriptionH2
+      gameDescriptionH3
+      gameDescriptionP
+      gameLocationPlace
+      gameLocationCity
+      gameImage
+      gameType
+      gameStopString
+      gameLink
+      gameStop {
+        items {
+          id
+          gameID
+          gameStopName
+          order
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      type
+      createdAt
+      user {
+        items {
+          id
+          userId
+          gameId
+          user {
+            id
+            userName
+            description
+            email
+            game {
+              items {
+                id
+                userId
+                gameId
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          game {
+            id
+            gameName
+            gameDescriptionH2
+            gameDescriptionH3
+            gameDescriptionP
+            gameLocationPlace
+            gameLocationCity
+            gameImage
+            gameType
+            gameStopString
+            gameLink
+            gameStop {
+              items {
+                id
+                gameID
+                gameStopName
+                order
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            type
+            createdAt
+            user {
+              items {
+                id
+                userId
+                gameId
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const updateGame = /* GraphQL */ `
+  mutation UpdateGame(
+    $input: UpdateGameInput!
+    $condition: ModelGameConditionInput
+  ) {
+    updateGame(input: $input, condition: $condition) {
+      id
+      gameName
+      gameDescriptionH2
+      gameDescriptionH3
+      gameDescriptionP
+      gameLocationPlace
+      gameLocationCity
+      gameImage
+      gameType
+      gameStopString
+      gameLink
+      gameStop {
+        items {
+          id
+          gameID
+          gameStopName
+          order
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      type
+      createdAt
+      user {
+        items {
+          id
+          userId
+          gameId
+          user {
+            id
+            userName
+            description
+            email
+            game {
+              items {
+                id
+                userId
+                gameId
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          game {
+            id
+            gameName
+            gameDescriptionH2
+            gameDescriptionH3
+            gameDescriptionP
+            gameLocationPlace
+            gameLocationCity
+            gameImage
+            gameType
+            gameStopString
+            gameLink
+            gameStop {
+              items {
+                id
+                gameID
+                gameStopName
+                order
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            type
+            createdAt
+            user {
+              items {
+                id
+                userId
+                gameId
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const deleteGame = /* GraphQL */ `
+  mutation DeleteGame(
+    $input: DeleteGameInput!
+    $condition: ModelGameConditionInput
+  ) {
+    deleteGame(input: $input, condition: $condition) {
+      id
+      gameName
+      gameDescriptionH2
+      gameDescriptionH3
+      gameDescriptionP
+      gameLocationPlace
+      gameLocationCity
+      gameImage
+      gameType
+      gameStopString
+      gameLink
+      gameStop {
+        items {
+          id
+          gameID
+          gameStopName
+          order
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      type
+      createdAt
+      user {
+        items {
+          id
+          userId
+          gameId
+          user {
+            id
+            userName
+            description
+            email
+            game {
+              items {
+                id
+                userId
+                gameId
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          game {
+            id
+            gameName
+            gameDescriptionH2
+            gameDescriptionH3
+            gameDescriptionP
+            gameLocationPlace
+            gameLocationCity
+            gameImage
+            gameType
+            gameStopString
+            gameLink
+            gameStop {
+              items {
+                id
+                gameID
+                gameStopName
+                order
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            type
+            createdAt
+            user {
+              items {
+                id
+                userId
+                gameId
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
@@ -67,6 +547,7 @@ export const createGameStats = /* GraphQL */ `
       id
       gameID
       userEmail
+      gameLocationCity
       gameName
       gameStates
       gameScore {
@@ -80,11 +561,35 @@ export const createGameStats = /* GraphQL */ `
           gameComments
           gameTotalTime
           completed
+          firstTime
+          gameStopTime {
+            items {
+              id
+              gameScoreID
+              gameStopTime
+              gameStop
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          gameHintTime {
+            items {
+              id
+              gameScoreID
+              gameHintTime
+              gameStop
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
         nextToken
       }
+      type
       createdAt
       updatedAt
     }
@@ -99,6 +604,7 @@ export const updateGameStats = /* GraphQL */ `
       id
       gameID
       userEmail
+      gameLocationCity
       gameName
       gameStates
       gameScore {
@@ -112,11 +618,35 @@ export const updateGameStats = /* GraphQL */ `
           gameComments
           gameTotalTime
           completed
+          firstTime
+          gameStopTime {
+            items {
+              id
+              gameScoreID
+              gameStopTime
+              gameStop
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          gameHintTime {
+            items {
+              id
+              gameScoreID
+              gameHintTime
+              gameStop
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
         nextToken
       }
+      type
       createdAt
       updatedAt
     }
@@ -131,6 +661,7 @@ export const deleteGameStats = /* GraphQL */ `
       id
       gameID
       userEmail
+      gameLocationCity
       gameName
       gameStates
       gameScore {
@@ -144,11 +675,35 @@ export const deleteGameStats = /* GraphQL */ `
           gameComments
           gameTotalTime
           completed
+          firstTime
+          gameStopTime {
+            items {
+              id
+              gameScoreID
+              gameStopTime
+              gameStop
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          gameHintTime {
+            items {
+              id
+              gameScoreID
+              gameHintTime
+              gameStop
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
         nextToken
       }
+      type
       createdAt
       updatedAt
     }
@@ -169,6 +724,7 @@ export const createGameScore = /* GraphQL */ `
       gameComments
       gameTotalTime
       completed
+      firstTime
       gameStopTime {
         items {
           id
@@ -211,6 +767,7 @@ export const updateGameScore = /* GraphQL */ `
       gameComments
       gameTotalTime
       completed
+      firstTime
       gameStopTime {
         items {
           id
@@ -253,6 +810,7 @@ export const deleteGameScore = /* GraphQL */ `
       gameComments
       gameTotalTime
       completed
+      firstTime
       gameStopTime {
         items {
           id
@@ -415,149 +973,54 @@ export const deleteGameStopTime = /* GraphQL */ `
     }
   }
 `;
-export const createGame = /* GraphQL */ `
-  mutation CreateGame(
-    $input: CreateGameInput!
-    $condition: ModelGameConditionInput
+export const createBlog = /* GraphQL */ `
+  mutation CreateBlog(
+    $input: CreateBlogInput!
+    $condition: ModelBlogConditionInput
   ) {
-    createGame(input: $input, condition: $condition) {
+    createBlog(input: $input, condition: $condition) {
       id
-      gameName
-      gameDescriptionH2
-      gameDescriptionH3
-      gameDescriptionP
-      gameLocationPlace
-      gameLocationCity
-      gameType
-      gameStopString
-      gameStop {
+      name
+      posts {
         items {
           id
-          gameID
-          gameStopName
-          order
+          title
+          blog {
+            id
+            name
+            posts {
+              items {
+                id
+                title
+                createdAt
+                updatedAt
+                blogPostsId
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          comments {
+            items {
+              id
+              post {
+                id
+                title
+                createdAt
+                updatedAt
+                blogPostsId
+              }
+              content
+              createdAt
+              updatedAt
+              postCommentsId
+            }
+            nextToken
+          }
           createdAt
           updatedAt
-        }
-        nextToken
-      }
-      type
-      createdAt
-      user {
-        items {
-          id
-          gameId
-          userId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      updatedAt
-    }
-  }
-`;
-export const updateGame = /* GraphQL */ `
-  mutation UpdateGame(
-    $input: UpdateGameInput!
-    $condition: ModelGameConditionInput
-  ) {
-    updateGame(input: $input, condition: $condition) {
-      id
-      gameName
-      gameDescriptionH2
-      gameDescriptionH3
-      gameDescriptionP
-      gameLocationPlace
-      gameLocationCity
-      gameType
-      gameStopString
-      gameStop {
-        items {
-          id
-          gameID
-          gameStopName
-          order
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      type
-      createdAt
-      user {
-        items {
-          id
-          gameId
-          userId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      updatedAt
-    }
-  }
-`;
-export const deleteGame = /* GraphQL */ `
-  mutation DeleteGame(
-    $input: DeleteGameInput!
-    $condition: ModelGameConditionInput
-  ) {
-    deleteGame(input: $input, condition: $condition) {
-      id
-      gameName
-      gameDescriptionH2
-      gameDescriptionH3
-      gameDescriptionP
-      gameLocationPlace
-      gameLocationCity
-      gameType
-      gameStopString
-      gameStop {
-        items {
-          id
-          gameID
-          gameStopName
-          order
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      type
-      createdAt
-      user {
-        items {
-          id
-          gameId
-          userId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      updatedAt
-    }
-  }
-`;
-export const createUser = /* GraphQL */ `
-  mutation CreateUser(
-    $input: CreateUserInput!
-    $condition: ModelUserConditionInput
-  ) {
-    createUser(input: $input, condition: $condition) {
-      id
-      userName
-      description
-      email
-      game {
-        items {
-          id
-          gameId
-          userId
-          createdAt
-          updatedAt
+          blogPostsId
         }
         nextToken
       }
@@ -566,23 +1029,54 @@ export const createUser = /* GraphQL */ `
     }
   }
 `;
-export const updateUser = /* GraphQL */ `
-  mutation UpdateUser(
-    $input: UpdateUserInput!
-    $condition: ModelUserConditionInput
+export const updateBlog = /* GraphQL */ `
+  mutation UpdateBlog(
+    $input: UpdateBlogInput!
+    $condition: ModelBlogConditionInput
   ) {
-    updateUser(input: $input, condition: $condition) {
+    updateBlog(input: $input, condition: $condition) {
       id
-      userName
-      description
-      email
-      game {
+      name
+      posts {
         items {
           id
-          gameId
-          userId
+          title
+          blog {
+            id
+            name
+            posts {
+              items {
+                id
+                title
+                createdAt
+                updatedAt
+                blogPostsId
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          comments {
+            items {
+              id
+              post {
+                id
+                title
+                createdAt
+                updatedAt
+                blogPostsId
+              }
+              content
+              createdAt
+              updatedAt
+              postCommentsId
+            }
+            nextToken
+          }
           createdAt
           updatedAt
+          blogPostsId
         }
         nextToken
       }
@@ -591,28 +1085,530 @@ export const updateUser = /* GraphQL */ `
     }
   }
 `;
-export const deleteUser = /* GraphQL */ `
-  mutation DeleteUser(
-    $input: DeleteUserInput!
-    $condition: ModelUserConditionInput
+export const deleteBlog = /* GraphQL */ `
+  mutation DeleteBlog(
+    $input: DeleteBlogInput!
+    $condition: ModelBlogConditionInput
   ) {
-    deleteUser(input: $input, condition: $condition) {
+    deleteBlog(input: $input, condition: $condition) {
       id
-      userName
-      description
-      email
-      game {
+      name
+      posts {
         items {
           id
-          gameId
-          userId
+          title
+          blog {
+            id
+            name
+            posts {
+              items {
+                id
+                title
+                createdAt
+                updatedAt
+                blogPostsId
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          comments {
+            items {
+              id
+              post {
+                id
+                title
+                createdAt
+                updatedAt
+                blogPostsId
+              }
+              content
+              createdAt
+              updatedAt
+              postCommentsId
+            }
+            nextToken
+          }
           createdAt
           updatedAt
+          blogPostsId
         }
         nextToken
       }
       createdAt
       updatedAt
+    }
+  }
+`;
+export const createPost = /* GraphQL */ `
+  mutation CreatePost(
+    $input: CreatePostInput!
+    $condition: ModelPostConditionInput
+  ) {
+    createPost(input: $input, condition: $condition) {
+      id
+      title
+      blog {
+        id
+        name
+        posts {
+          items {
+            id
+            title
+            blog {
+              id
+              name
+              posts {
+                nextToken
+              }
+              createdAt
+              updatedAt
+            }
+            comments {
+              items {
+                id
+                content
+                createdAt
+                updatedAt
+                postCommentsId
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+            blogPostsId
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      comments {
+        items {
+          id
+          post {
+            id
+            title
+            blog {
+              id
+              name
+              posts {
+                nextToken
+              }
+              createdAt
+              updatedAt
+            }
+            comments {
+              items {
+                id
+                content
+                createdAt
+                updatedAt
+                postCommentsId
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+            blogPostsId
+          }
+          content
+          createdAt
+          updatedAt
+          postCommentsId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      blogPostsId
+    }
+  }
+`;
+export const updatePost = /* GraphQL */ `
+  mutation UpdatePost(
+    $input: UpdatePostInput!
+    $condition: ModelPostConditionInput
+  ) {
+    updatePost(input: $input, condition: $condition) {
+      id
+      title
+      blog {
+        id
+        name
+        posts {
+          items {
+            id
+            title
+            blog {
+              id
+              name
+              posts {
+                nextToken
+              }
+              createdAt
+              updatedAt
+            }
+            comments {
+              items {
+                id
+                content
+                createdAt
+                updatedAt
+                postCommentsId
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+            blogPostsId
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      comments {
+        items {
+          id
+          post {
+            id
+            title
+            blog {
+              id
+              name
+              posts {
+                nextToken
+              }
+              createdAt
+              updatedAt
+            }
+            comments {
+              items {
+                id
+                content
+                createdAt
+                updatedAt
+                postCommentsId
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+            blogPostsId
+          }
+          content
+          createdAt
+          updatedAt
+          postCommentsId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      blogPostsId
+    }
+  }
+`;
+export const deletePost = /* GraphQL */ `
+  mutation DeletePost(
+    $input: DeletePostInput!
+    $condition: ModelPostConditionInput
+  ) {
+    deletePost(input: $input, condition: $condition) {
+      id
+      title
+      blog {
+        id
+        name
+        posts {
+          items {
+            id
+            title
+            blog {
+              id
+              name
+              posts {
+                nextToken
+              }
+              createdAt
+              updatedAt
+            }
+            comments {
+              items {
+                id
+                content
+                createdAt
+                updatedAt
+                postCommentsId
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+            blogPostsId
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      comments {
+        items {
+          id
+          post {
+            id
+            title
+            blog {
+              id
+              name
+              posts {
+                nextToken
+              }
+              createdAt
+              updatedAt
+            }
+            comments {
+              items {
+                id
+                content
+                createdAt
+                updatedAt
+                postCommentsId
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+            blogPostsId
+          }
+          content
+          createdAt
+          updatedAt
+          postCommentsId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      blogPostsId
+    }
+  }
+`;
+export const createComment = /* GraphQL */ `
+  mutation CreateComment(
+    $input: CreateCommentInput!
+    $condition: ModelCommentConditionInput
+  ) {
+    createComment(input: $input, condition: $condition) {
+      id
+      post {
+        id
+        title
+        blog {
+          id
+          name
+          posts {
+            items {
+              id
+              title
+              blog {
+                id
+                name
+                createdAt
+                updatedAt
+              }
+              comments {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              blogPostsId
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+        comments {
+          items {
+            id
+            post {
+              id
+              title
+              blog {
+                id
+                name
+                createdAt
+                updatedAt
+              }
+              comments {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              blogPostsId
+            }
+            content
+            createdAt
+            updatedAt
+            postCommentsId
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        blogPostsId
+      }
+      content
+      createdAt
+      updatedAt
+      postCommentsId
+    }
+  }
+`;
+export const updateComment = /* GraphQL */ `
+  mutation UpdateComment(
+    $input: UpdateCommentInput!
+    $condition: ModelCommentConditionInput
+  ) {
+    updateComment(input: $input, condition: $condition) {
+      id
+      post {
+        id
+        title
+        blog {
+          id
+          name
+          posts {
+            items {
+              id
+              title
+              blog {
+                id
+                name
+                createdAt
+                updatedAt
+              }
+              comments {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              blogPostsId
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+        comments {
+          items {
+            id
+            post {
+              id
+              title
+              blog {
+                id
+                name
+                createdAt
+                updatedAt
+              }
+              comments {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              blogPostsId
+            }
+            content
+            createdAt
+            updatedAt
+            postCommentsId
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        blogPostsId
+      }
+      content
+      createdAt
+      updatedAt
+      postCommentsId
+    }
+  }
+`;
+export const deleteComment = /* GraphQL */ `
+  mutation DeleteComment(
+    $input: DeleteCommentInput!
+    $condition: ModelCommentConditionInput
+  ) {
+    deleteComment(input: $input, condition: $condition) {
+      id
+      post {
+        id
+        title
+        blog {
+          id
+          name
+          posts {
+            items {
+              id
+              title
+              blog {
+                id
+                name
+                createdAt
+                updatedAt
+              }
+              comments {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              blogPostsId
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+        comments {
+          items {
+            id
+            post {
+              id
+              title
+              blog {
+                id
+                name
+                createdAt
+                updatedAt
+              }
+              comments {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              blogPostsId
+            }
+            content
+            createdAt
+            updatedAt
+            postCommentsId
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        blogPostsId
+      }
+      content
+      createdAt
+      updatedAt
+      postCommentsId
     }
   }
 `;
@@ -623,8 +1619,59 @@ export const createUserGamePlay = /* GraphQL */ `
   ) {
     createUserGamePlay(input: $input, condition: $condition) {
       id
-      gameId
       userId
+      gameId
+      user {
+        id
+        userName
+        description
+        email
+        game {
+          items {
+            id
+            userId
+            gameId
+            user {
+              id
+              userName
+              description
+              email
+              game {
+                nextToken
+              }
+              createdAt
+              updatedAt
+            }
+            game {
+              id
+              gameName
+              gameDescriptionH2
+              gameDescriptionH3
+              gameDescriptionP
+              gameLocationPlace
+              gameLocationCity
+              gameImage
+              gameType
+              gameStopString
+              gameLink
+              gameStop {
+                nextToken
+              }
+              type
+              createdAt
+              user {
+                nextToken
+              }
+              updatedAt
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       game {
         id
         gameName
@@ -633,27 +1680,66 @@ export const createUserGamePlay = /* GraphQL */ `
         gameDescriptionP
         gameLocationPlace
         gameLocationCity
+        gameImage
         gameType
         gameStopString
+        gameLink
         gameStop {
+          items {
+            id
+            gameID
+            gameStopName
+            order
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         type
         createdAt
         user {
+          items {
+            id
+            userId
+            gameId
+            user {
+              id
+              userName
+              description
+              email
+              game {
+                nextToken
+              }
+              createdAt
+              updatedAt
+            }
+            game {
+              id
+              gameName
+              gameDescriptionH2
+              gameDescriptionH3
+              gameDescriptionP
+              gameLocationPlace
+              gameLocationCity
+              gameImage
+              gameType
+              gameStopString
+              gameLink
+              gameStop {
+                nextToken
+              }
+              type
+              createdAt
+              user {
+                nextToken
+              }
+              updatedAt
+            }
+            createdAt
+            updatedAt
+          }
           nextToken
         }
-        updatedAt
-      }
-      user {
-        id
-        userName
-        description
-        email
-        game {
-          nextToken
-        }
-        createdAt
         updatedAt
       }
       createdAt
@@ -668,8 +1754,59 @@ export const updateUserGamePlay = /* GraphQL */ `
   ) {
     updateUserGamePlay(input: $input, condition: $condition) {
       id
-      gameId
       userId
+      gameId
+      user {
+        id
+        userName
+        description
+        email
+        game {
+          items {
+            id
+            userId
+            gameId
+            user {
+              id
+              userName
+              description
+              email
+              game {
+                nextToken
+              }
+              createdAt
+              updatedAt
+            }
+            game {
+              id
+              gameName
+              gameDescriptionH2
+              gameDescriptionH3
+              gameDescriptionP
+              gameLocationPlace
+              gameLocationCity
+              gameImage
+              gameType
+              gameStopString
+              gameLink
+              gameStop {
+                nextToken
+              }
+              type
+              createdAt
+              user {
+                nextToken
+              }
+              updatedAt
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       game {
         id
         gameName
@@ -678,27 +1815,66 @@ export const updateUserGamePlay = /* GraphQL */ `
         gameDescriptionP
         gameLocationPlace
         gameLocationCity
+        gameImage
         gameType
         gameStopString
+        gameLink
         gameStop {
+          items {
+            id
+            gameID
+            gameStopName
+            order
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         type
         createdAt
         user {
+          items {
+            id
+            userId
+            gameId
+            user {
+              id
+              userName
+              description
+              email
+              game {
+                nextToken
+              }
+              createdAt
+              updatedAt
+            }
+            game {
+              id
+              gameName
+              gameDescriptionH2
+              gameDescriptionH3
+              gameDescriptionP
+              gameLocationPlace
+              gameLocationCity
+              gameImage
+              gameType
+              gameStopString
+              gameLink
+              gameStop {
+                nextToken
+              }
+              type
+              createdAt
+              user {
+                nextToken
+              }
+              updatedAt
+            }
+            createdAt
+            updatedAt
+          }
           nextToken
         }
-        updatedAt
-      }
-      user {
-        id
-        userName
-        description
-        email
-        game {
-          nextToken
-        }
-        createdAt
         updatedAt
       }
       createdAt
@@ -713,8 +1889,59 @@ export const deleteUserGamePlay = /* GraphQL */ `
   ) {
     deleteUserGamePlay(input: $input, condition: $condition) {
       id
-      gameId
       userId
+      gameId
+      user {
+        id
+        userName
+        description
+        email
+        game {
+          items {
+            id
+            userId
+            gameId
+            user {
+              id
+              userName
+              description
+              email
+              game {
+                nextToken
+              }
+              createdAt
+              updatedAt
+            }
+            game {
+              id
+              gameName
+              gameDescriptionH2
+              gameDescriptionH3
+              gameDescriptionP
+              gameLocationPlace
+              gameLocationCity
+              gameImage
+              gameType
+              gameStopString
+              gameLink
+              gameStop {
+                nextToken
+              }
+              type
+              createdAt
+              user {
+                nextToken
+              }
+              updatedAt
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       game {
         id
         gameName
@@ -723,27 +1950,66 @@ export const deleteUserGamePlay = /* GraphQL */ `
         gameDescriptionP
         gameLocationPlace
         gameLocationCity
+        gameImage
         gameType
         gameStopString
+        gameLink
         gameStop {
+          items {
+            id
+            gameID
+            gameStopName
+            order
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         type
         createdAt
         user {
+          items {
+            id
+            userId
+            gameId
+            user {
+              id
+              userName
+              description
+              email
+              game {
+                nextToken
+              }
+              createdAt
+              updatedAt
+            }
+            game {
+              id
+              gameName
+              gameDescriptionH2
+              gameDescriptionH3
+              gameDescriptionP
+              gameLocationPlace
+              gameLocationCity
+              gameImage
+              gameType
+              gameStopString
+              gameLink
+              gameStop {
+                nextToken
+              }
+              type
+              createdAt
+              user {
+                nextToken
+              }
+              updatedAt
+            }
+            createdAt
+            updatedAt
+          }
           nextToken
         }
-        updatedAt
-      }
-      user {
-        id
-        userName
-        description
-        email
-        game {
-          nextToken
-        }
-        createdAt
         updatedAt
       }
       createdAt
