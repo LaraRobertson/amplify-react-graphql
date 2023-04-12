@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react"
 import {Button, Heading, View, Image, TextAreaField, Text, Alert, Flex} from '@aws-amplify/ui-react';
 import {useNavigate} from "react-router-dom";
 import {API} from "aws-amplify";
-import {gameStatsByUserEmail} from "../graphql/queries";
+import {gameStatsByUserEmail,gameStatsSortedByGameName} from "../graphql/queries";
 import {createGameStats, createGameScore, updateGameStats as updateGameStatsMutation} from "../graphql/mutations";
 import {goHomeQuit} from "./helper";
 
@@ -17,16 +17,17 @@ export function Waiver() {
         console.log ("get Game Stats");
         const userEmail = localStorage.getItem("email");
         const gameName = localStorage.getItem("gameName");
+        console.log("gameName: " + gameName);
         let filter = {
-            gameName: {
-                eq: gameName
+            userEmail: {
+                eq: userEmail
             }
         };
         const apiGameStats = await API.graphql({
-            query: gameStatsByUserEmail,
-            variables: { filter: filter, userEmail: userEmail}
+            query: gameStatsSortedByGameName,
+            variables: { filter: filter,  gameName: {eq: gameName}, sortDirection: "DESC", type: "gameStats"}
         });
-        const gamesStatsFromAPI = apiGameStats.data.gameStatsByUserEmail.items[0];
+        const gamesStatsFromAPI = apiGameStats.data.gameStatsSortedByGameName.items[0];
 
         const gameStatsValues = {
             waiverSigned: true

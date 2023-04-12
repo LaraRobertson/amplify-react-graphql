@@ -19,7 +19,7 @@ import {
     usersByEmail,
     listUsers,
     gameScoreByGameID,
-    gameStatsByGameName, gameStatsByUserEmail, gameStopTimeByGameScoreID, gameHintTimeByGameScoreID
+    gameStatsByGameName, gameStatsByUserEmail, gameStopTimeByGameScoreID, gameHintTimeByGameScoreID,gameStatsSortedByGameName
 } from "../graphql/queries";
 import { format } from 'date-fns'
 import {
@@ -33,10 +33,12 @@ import {
     deleteGameHintTime,
     deleteGameStopTime,
     createGameStats,
-    createGameStopTime
+    createGameStopTime,
+    deleteGameStats
 } from "../graphql/mutations";
 import {CoverScreenView} from "./sharedComponents";
 import { useNavigate } from 'react-router-dom';
+
 
 export function Admin() {
     const [games, setGames] = useState([]);
@@ -47,6 +49,7 @@ export function Admin() {
     const [userAuth, setUserAuth] = useState({});
     const [isAddStopVisible, setIsAddStopVisible] = useState(false);
     const [isUserStatVisible, setIsUserStatVisible] = useState(false);
+    const [statsTitle, setStatsTitle] = useState('');
     const [isCoverScreenVisible, setIsCoverScreenVisible] = useState(false);
     const [userEmail, setUserEmail] = useState();
     const [gameID, setGameID] = useState();
@@ -241,7 +244,18 @@ export function Admin() {
             variables: { input: data },
         });
     }
-    async function deleteGameScoreFunction(gameScoreIDvar) {
+    async function deleteGameStatFunction(gameStatIDvar,userEmail) {
+        console.log("gameStatIDvar: " + gameStatIDvar);
+        const gameStatDetails = {
+            id: gameStatIDvar,
+        };
+        const apiData3 = await API.graphql({
+            query: deleteGameStats,
+            variables: { input:gameStatDetails }
+        });
+        userStatsFunction(userEmail);
+    }
+    async function deleteGameScoreFunction(gameScoreIDvar,userEmail) {
         console.log("gameScoreIDvar: " + gameScoreIDvar);
         //  gameStopTimeByGameScoreID
         // deleteGameStopTime
@@ -277,7 +291,7 @@ export function Admin() {
             query: deleteGameScore,
             variables: { input: gameScoreDetails }
         });
-        fetchUsers();
+        userStatsFunction(userEmail);
     }
 
     //create new game
@@ -452,43 +466,60 @@ export function Admin() {
             </View>
         )
     }
-    function showUserStats(prop) {
-        console.log("prop.email: " + prop.email);
+    function showGameStats(props) {
+        window.scrollTo(0, 0);
+        console.log("props.gameName: " + props.gameName);
         setIsUserStatVisible(true);
         setIsCoverScreenVisible(true);
-        setUserEmail(prop.email);
-        userStatsFunction(prop.email);
+        gameStatsFunction({gameName:props.gameName});
+    }
+    function showUserStats(props) {
+        window.scrollTo(0, 0);
+        console.log("props.email: " + props.email);
+        setIsUserStatVisible(true);
+        setIsCoverScreenVisible(true);
+        setUserEmail(props.email);
+        userStatsFunction(props.email);
     }
 
     function hideUserStats() {
         setIsUserStatVisible(false);
         setIsCoverScreenVisible(false);
         console.log("IsUserStatVisible: " + isUserStatVisible);
+        UserStatsView({title:"User Stats"});
+    }
+    async function gameStatsFunction(props) {
+        console.log("game stats: " + props.gameName);
+
+        const apiData = await API.graphql({
+            query: gameStatsSortedByGameName,
+            variables: {gameName: {eq:  props.gameName}, sortDirection: "ASC", type: "gameStats"}
+        });
+        const userStatsFromAPI = apiData.data.gameStatsSortedByGameName.items;
+        setUserStats(userStatsFromAPI);
+        setStatsTitle("Game Stats");
         UserStatsView();
     }
     async function userStatsFunction(email) {
         console.log("user stats");
+        let filter = {
+            userEmail: {
+                eq: email
+            }
+        };
         const apiData = await API.graphql({
-            query: gameStatsByUserEmail,
-            variables: {userEmail:email}
+            query: gameStatsSortedByGameName,
+            variables: {filter: filter, sortDirection: "DESC", type: "gameStats"}
         });
-        const userStatsFromAPI = apiData.data.gameStatsByUserEmail.items;
-        /*await Promise.all(
-            gamesFromAPI.map(async (game) => {
-                if (game.gameImage) {
-                    const url = await Storage.get(game.gameName);
-                    game.gameImage = url;
-                    console.log("url: " + url);
-                }
-                return game;
-            })
-        );*/
+        const userStatsFromAPI = apiData.data.gameStatsSortedByGameName.items;
         setUserStats(userStatsFromAPI);
+        setStatsTitle("User Stats");
         UserStatsView();
     }
     const UserStatsView = () => {
-        let gameDetailClass = "fixed hide-gradual";
-        if (isUserStatVisible) gameDetailClass = "fixed show-gradual";
+        console.log("title: " + statsTitle);
+        let gameDetailClass = "all-screen hide-gradual";
+        if (isUserStatVisible) gameDetailClass = "all-screen show-gradual";
         return (
             <View className={gameDetailClass}>
                 <Button className="close-button" onClick={() => hideUserStats()}>X</Button>
@@ -496,11 +527,12 @@ export function Admin() {
                     maxWidth="800px"
                     margin="10px auto 10px auto"
                 >
-                    <Heading level={2}>User Stats</Heading>
-                    <Heading level={3}>{userEmail}</Heading>
+                    <Heading level={2}>{statsTitle}</Heading>
+                    <Heading level={5}>{userEmail}</Heading>
                         {userStats.map((userStat, index) => (
                             <View>
-                                <GameScoreView gameScoreArray = {userStat.gameScore.items} gameName={userStat.gameName}/>
+                                <Button onClick={() => deleteGameStatFunction(userStat.id,userEmail)} className="button button-small delete">Delete Stat for: {userStat.gameName}</Button>
+                                <GameScoreView gameScoreArray = {userStat.gameScore.items} gameName={userStat.gameName} userEmail={userStat.userEmail}/>
                             </View>
                         ))}
                 </View>
@@ -512,19 +544,33 @@ export function Admin() {
         return (
             <div className="table-container" role="table" aria-label="game score">
                 <div className="flex-table header" role="rowgroup">
-                    <div className="flex-row " role="columnheader">Game Name</div>
                     <div className="flex-row " role="columnheader">Team Name</div>
-                    <div className="flex-row" role="columnheader">Team Score</div>
-                    <div className="flex-row" role="columnheader"># Players</div>
+                    <div className="flex-row " role="columnheader">Team Score</div>
+                    <div className="flex-row" role="columnheader">Stop Time</div>
+                    <div className="flex-row" role="columnheader">Hint Time</div>
                     <div className="flex-row" role="columnheader">Played</div>
                 </div>
                 {props.gameScoreArray.map((score, index) => (
-                    <div className="flex-table row" role="rowgroup" key={score.id}>
-                        <div className="flex-row first" role="cell"><Button onClick={() => deleteGameScoreFunction(score.id)} className="button button-small delete">X</Button> {props.gameName}</div>
-                        <div className="flex-row " role="cell">{score.teamName}</div>
-                        <div className="flex-row" role="cell"> {score.gameTotalTime}</div>
-                        <div className="flex-row" role="cell">{score.numberOfPlayers}</div>
-                        <div className="flex-row" role="cell"> {format(new Date(score.updatedAt), "MM/dd/yyyy H:mma")}</div>
+                    <div role="rowgroup" key={score.id}>
+                    <div className="flex-table row">
+                    <div className="flex-row first" role="cell"><Button onClick={() => deleteGameScoreFunction(score.id,props.userEmail)} className="button button-small delete">X</Button>  {score.teamName}</div>
+                    <div className="flex-row " role="cell">{score.gameTotalTime}</div>
+                    <div className="flex-row" role="cell">
+                {score.gameStopTime.items.map((gameStop,index) => (
+                    <div>stop: {gameStop.gameStop}: {gameStop.gameStopTime}<br /></div>
+                    ))}
+                    </div>
+                    <div className="flex-row" role="cell">
+                {score.gameHintTime.items.map((gameHint,index) => (
+                    <div>stop: {gameHint.gameStop}: {gameHint.gameHintTime}<br /></div>
+                    ))}
+                    </div>
+                    <div className="flex-row" role="cell">{score.completed ? ("true"):("false")}<br />{score.firstTime ? ("1st") :null}</div>
+                    </div>
+                    <div className="flex-table row">
+                    <div className="flex-row four-width" role="cell">{props.userEmail}: "{score.gameComments}"</div>
+                    <div className="flex-row" role="cell"> {format(new Date(score.updatedAt), "MM/dd/yyyy H:mma")}</div>
+                    </div>
                     </div>
                 ))}
             </div>
@@ -695,6 +741,7 @@ export function Admin() {
                                     <strong>gameDescriptionH3</strong>: {game.gameDescriptionH3} <br />
                                    <strong>gameDescriptionP</strong> {game.gameDescriptionP} <br />
                                         <Button className="button" onClick={() => showAddStop({"gameID": game.id, "gameName": game.gameName})}>add stop</Button>
+                                         &nbsp;<Button className="button" onClick={() => showGameStats({"gameID": game.id, "gameName": game.gameName})}>Game Stats</Button>
                                         <hr />
                                     </div>
 
@@ -716,7 +763,7 @@ export function Admin() {
 
                         </View>
                         <AddStopView />
-                        <UserStatsView />
+                        <UserStatsView title={statsTitle} />
 
                     </View>) : (<div></div>)
                 }

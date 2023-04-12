@@ -18,21 +18,25 @@ export async function setGameStopFunction(setGameStop,setNumberOfTimes,setGameID
     let gameStopNameArrayConst = gameStopFromAPI.data.gameStopByGameID.items;
     /* get gameScore Id */
     const gameScoreFromAPI = await getGameScoreID();
-    let gameScoreID = gameScoreFromAPI.data.gameScoreByGameStatsID.items[0].id;
-    let testObject = gameStopNameArrayConst[0];
+    let gameScoreID = "";
+    if (gameScoreFromAPI) {
+        gameScoreID = gameScoreFromAPI.data.gameScoreByGameStatsID.items[0].id;
+        setGameScoreID(gameScoreID);
+        localStorage.setItem("gameScoreID", gameScoreID);
+    }
+    /*let testObject = gameStopNameArrayConst[0];
     for (const key in testObject) {
         console.log(`${key}: ${ testObject[key]}`);
         for (const key1 in testObject[key]) {
             //console.log(`${key1}: ${testObject[key][key1]}`);
         }
-    }
+    }*/
     let GameStopIndex = Number(localStorage.getItem("gameStop"))-1;
     setGameStopNameArray(gameStopNameArrayConst);
     setGameStopName(gameStopNameArrayConst[GameStopIndex].gameStopName);
     console.log("gameStopNameArrayConst[0].gameStopName (setGameStopFunction): " + gameStopNameArrayConst[GameStopIndex].gameStopName);
     localStorage.setItem("gameStopNameArray", gameStopFromAPI.data.gameStopByGameID.items);
-    setGameScoreID(gameScoreID);
-    localStorage.setItem("gameScoreID", gameScoreID);
+
 }
 
 async function getGameScoreID() {
@@ -72,8 +76,10 @@ async function getGameStopName() {
     return(apiGameStop);
 }
 
-export function toggleNotes(areNotesVisible,setAreNotesVisible) {
+
+export function toggleNotes(areNotesVisible,setAreNotesVisible,isCoverScreenVisible,setIsCoverScreenVisible) {
     areNotesVisible ? setAreNotesVisible(false) : setAreNotesVisible(true);
+    isCoverScreenVisible ? setIsCoverScreenVisible(false) : setIsCoverScreenVisible(true);
 }
 
 export function setNumPlayerFunction(numPlayerValue, setNumberOfPlayers) {
@@ -82,13 +88,13 @@ export function setNumPlayerFunction(numPlayerValue, setNumberOfPlayers) {
     setNumberOfPlayers(numPlayerValue);
 }
 
-export function toggleGameIntro(isGameIntroVisible, teamName, numberOfPlayers, setIsGameIntroVisible, setNumberOfPlayersError, setIsIntroVisible) {
+export function toggleGameIntro(isGameIntroVisible, teamName, setIsGameIntroVisible, setNumberOfPlayersError, setIsIntroVisible) {
     console.log("toggleGameIntro: " + setNumberOfPlayersError);
-    if (numberOfPlayers != '' && teamName != '') {
+    if (teamName != '') {
         isGameIntroVisible ? setIsGameIntroVisible(false) : setIsGameIntroVisible(true);
         setIsIntroVisible(true);
     } else {
-        setNumberOfPlayersError("Please complete fields");
+        setNumberOfPlayersError("Please provide a Team Name");
     }
 }
 
@@ -105,8 +111,9 @@ export function toggleIntro(isIntroVisible,setIsIntroVisible,setStopClock,setIsC
     setStopClock(false);
 }
 
-export function toggleHelp(isHelpVisible,setIsHelpVisible) {
+export function toggleHelp(isHelpVisible,setIsHelpVisible,isCoverScreenVisible,setIsCoverScreenVisible) {
     isHelpVisible ? setIsHelpVisible(false) : setIsHelpVisible(true);
+    isCoverScreenVisible ? setIsCoverScreenVisible(false) : setIsCoverScreenVisible(true);
 }
 export function toggleBackpack(isBackpackVisible,setIsBackpackVisible,isCoverScreenVisible,setIsCoverScreenVisible) {
     isBackpackVisible ? setIsBackpackVisible(false) : setIsBackpackVisible(true);
@@ -224,7 +231,7 @@ async function updateGameScoreFunction(props,gameScoreID,gameTime,gameStop,gameT
     return(apiUpdateGameScore);
 }
 
-export function goToStop(setGameStop,gameStop,gameTime,setGameTime,gameTimeTotal,setGameTimeTotal,setGameTimeHint,gameTimeHint,setHintTime1,setHintTime2,setHintTime3,setHintTime4,setIsIntroVisible) {
+export function goToStop(setGameStop,gameStop,gameTime,setGameTime,gameTimeTotal,setGameTimeTotal,setGameTimeHint,gameTimeHint,setHintTime1,setHintTime2,setHintTime3,setHintTime4,setIsIntroVisible,isCoverScreenVisible,setIsCoverScreenVisible) {
     setGameStop(Number(gameStop) + 1);
     localStorage.setItem("gameStop",Number(gameStop) + 1);
     console.log("go to stop:" + (Number(gameStop) + 1));
@@ -236,6 +243,7 @@ export function goToStop(setGameStop,gameStop,gameTime,setGameTime,gameTimeTotal
     setHintTime4(0);
     setGameTime(0);
     setGameTimeHint(0);
+    isCoverScreenVisible ? setIsCoverScreenVisible(false) : setIsCoverScreenVisible(true);
     setIsIntroVisible(true);
 }
 
