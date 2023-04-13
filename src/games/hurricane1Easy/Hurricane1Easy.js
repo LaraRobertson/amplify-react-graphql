@@ -11,6 +11,7 @@ export function Hurricane1Easy() {
 
     /* for all games */
     const [isAlertVisible, setIsAlertVisible] = useState(false);
+    const [alertText, setAlertText] = useState('');
     const [showComment, setShowComment] = useState(false);
     const [areNotesVisible, setAreNotesVisible] = useState(false);
     const [isHelpVisible, setIsHelpVisible] = useState(false);
@@ -53,7 +54,9 @@ export function Hurricane1Easy() {
     useEffect(() => {
         console.log("***useEffect***: setGameStop (only on mount)");
         /* set local storage for gameStop - only on mount */
-        setGameStopFunction(setGameStop,setNumberOfTimes,setGameID,setGameStatsID,setGameStopNameArray,setGameStopName,setGameScoreID);
+        setGameStopFunction(setGameStop,setNumberOfTimes,setGameID,setGameStatsID,setGameStopNameArray,
+            setGameStopName,setGameScoreID,setIsGameIntroVisible,setIsIntroVisible, gameTime,setGameTime,setGameTimeHint,
+            setIsAlertVisible, setAlertText, setIsCoverScreenVisible);
     }, []);
     /* always scroll to top */
     useEffect(() => {
@@ -239,7 +242,7 @@ export function Hurricane1Easy() {
     function keyFunction() {
         setIsKeyVisible(false);
         setIsAlertVisible(true);
-
+        setAlertText('Key is in backpack')
         setTimeout(() => {
             setIsAlertVisible(false);
          }, 3000);
@@ -396,9 +399,7 @@ export function Hurricane1Easy() {
 
                 { !isGame1Word3Stop1HurricaneWrong && !isGame1Word2Stop1HurricaneWrong && !isGame1Word2Stop1HurricaneWrong  ? (
                     <View>
-                        <View className={isAlertVisible ? "alert-container show" : "hide"}>
-                            <div className='alert-inner'>Key is in backpack</div>
-                        </View>
+
                         <View className="safe-shelter show">
                             <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/open-safe.png" />
                             <View marginBottom="10px" marginRight="10px" className={isKeyVisible ? "safe-shelter inside-safe show" : "hide"}
@@ -548,7 +549,10 @@ export function Hurricane1Easy() {
                         <strong>How to Play:</strong> Click around - some items will disappear and then appear in your backpack.  If it is in your backpack you may be able to use it by clicking on it.
                     </View>
                     <View paddingBottom="10px">
-                        <strong>Goal for this stop:</strong> Get More Discs! Use Hints if you really need them.
+                        <strong>Goal for this stop:</strong> Get More Discs!
+                    </View>
+                    <View paddingBottom="10px">
+                        <strong>Hints:</strong> Clicking on a Hint costs <span className="italics"> 5 Minutes!</span> Use Hints if you really need them.
                     </View>
                     <Flex wrap="wrap">
                         <Button className="button small" onClick={() => toggleHint1(setHintTime1,isHint1Visible,setIsHint1Visible)}>Open Hint (engraved on panel)</Button>
@@ -606,6 +610,9 @@ export function Hurricane1Easy() {
                         tot: time: { Number((gameTime + gameTimeHint + gameTimeTotal).toFixed(2))} min</span>
             </View>
             <GameIntro isGameIntroVisible={isGameIntroVisible} setIsGameIntroVisible={setIsGameIntroVisible} numberOfPlayersError={numberOfPlayersError} numberOfPlayers={numberOfPlayers} setNumberOfPlayers={setNumberOfPlayers} teamName={teamName} setTeamName={setTeamName} gameStopNameArray={gameStopNameArray} setNumberOfPlayersError={setNumberOfPlayersError} setIsIntroVisible={setIsIntroVisible}/>
+            <View className={isAlertVisible ? "alert-container show" : "hide"}>
+                <div className='alert-inner'>{alertText}</div>
+            </View>
         </View>
             <CoverScreenView isCoverScreenVisible={isCoverScreenVisible}/>
         </View>
