@@ -20,7 +20,6 @@ import { Hurricane1 } from './games/hurricane1/Hurricane1';
 import './App.css';
 import './games/jaycee.css';
 
-/* redo commits and pushes for staging */
 
 function MyRoutes() {
     return (
