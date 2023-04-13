@@ -4,39 +4,61 @@ import {API} from "aws-amplify";
 import {gameScoreByGameStatsID, gameStopByGameID} from "../graphql/queries";
 import {createGameHintTime, createGameStopTime, updateGameScore} from "../graphql/mutations";
 
-export async function setGameStopFunction(setGameStop,setNumberOfTimes,setGameID,setGameStatsID,setGameStopNameArray,setGameStopName,setGameScoreID) {
+export async function setGameStopFunction(setGameStop,setNumberOfTimes,setGameID,setGameStatsID,setGameStopNameArray,
+ setGameStopName,setGameScoreID,setIsGameIntroVisible,setIsIntroVisible, gameTime,setGameTime,setGameTimeHint,
+ setIsAlertVisible, setAlertText, setIsCoverScreenVisible) {
     console.log("setGameStopFunction - only on mount");
-    console.log ("get Game Stop: " + localStorage.getItem("gameStop"));
-    console.log ("get GameID: " + localStorage.getItem("gameID"));
-    console.log ("get GameStatsID: " + localStorage.getItem("gameStatsID"));
-    setGameStop(localStorage.getItem("gameStop"))
-    setNumberOfTimes(localStorage.getItem("numberOfTimes"));
-    setGameID(localStorage.getItem("gameID"));
-    setGameStatsID(localStorage.getItem("gameStatsID"));
-    /* get gameStop name */
-    const gameStopFromAPI = await getGameStopName();
-    let gameStopNameArrayConst = gameStopFromAPI.data.gameStopByGameID.items;
-    /* get gameScore Id */
-    const gameScoreFromAPI = await getGameScoreID();
-    let gameScoreID = "";
-    if (gameScoreFromAPI) {
-        gameScoreID = gameScoreFromAPI.data.gameScoreByGameStatsID.items[0].id;
-        setGameScoreID(gameScoreID);
-        localStorage.setItem("gameScoreID", gameScoreID);
-    }
-    /*let testObject = gameStopNameArrayConst[0];
-    for (const key in testObject) {
-        console.log(`${key}: ${ testObject[key]}`);
-        for (const key1 in testObject[key]) {
-            //console.log(`${key1}: ${testObject[key][key1]}`);
+    //* check if already playing */
+    console.log ("localStorage.getItem('gameTime'): " + localStorage.getItem('gameTime'));
+    console.log ("gameTime: " + gameTime);
+    if (Number(localStorage.getItem('gameTime')) > 0) {
+        setIsGameIntroVisible(false);
+        setIsIntroVisible(false);
+        setIsAlertVisible(true);
+        setAlertText('resuming game');
+        setIsCoverScreenVisible(false);
+        setTimeout(() => {
+            setIsAlertVisible(false);
+        }, 3000);
+        setGameStop(localStorage.getItem("gameStop"))
+        setGameTime(Number(localStorage.getItem('gameTime')));
+        setGameTimeHint(Number(localStorage.getItem('gameTimeHint')));
+        let GameStopIndex = Number(localStorage.getItem("gameStop"))-1;
+        setGameStopNameArray(localStorage.getItem("gameStopNameArray"));
+        setGameStopName(localStorage.getItem("gameStopNameArray")[GameStopIndex].gameStopName);
+        /* end check */
+    } else {
+        console.log ("get Game Stop: " + localStorage.getItem("gameStop"));
+        console.log ("get GameID: " + localStorage.getItem("gameID"));
+        console.log ("get GameStatsID: " + localStorage.getItem("gameStatsID"));
+        setGameStop(localStorage.getItem("gameStop"))
+        setNumberOfTimes(localStorage.getItem("numberOfTimes"));
+        setGameID(localStorage.getItem("gameID"));
+        setGameStatsID(localStorage.getItem("gameStatsID"));
+        /* get gameStop name */
+        const gameStopFromAPI = await getGameStopName();
+        let gameStopNameArrayConst = gameStopFromAPI.data.gameStopByGameID.items;
+        /* get gameScore Id */
+        const gameScoreFromAPI = await getGameScoreID();
+        let gameScoreID = "";
+        if (gameScoreFromAPI) {
+            gameScoreID = gameScoreFromAPI.data.gameScoreByGameStatsID.items[0].id;
+            setGameScoreID(gameScoreID);
+            localStorage.setItem("gameScoreID", gameScoreID);
         }
-    }*/
-    let GameStopIndex = Number(localStorage.getItem("gameStop"))-1;
-    setGameStopNameArray(gameStopNameArrayConst);
-    setGameStopName(gameStopNameArrayConst[GameStopIndex].gameStopName);
-    console.log("gameStopNameArrayConst[0].gameStopName (setGameStopFunction): " + gameStopNameArrayConst[GameStopIndex].gameStopName);
-    localStorage.setItem("gameStopNameArray", gameStopFromAPI.data.gameStopByGameID.items);
-
+        /*let testObject = gameStopNameArrayConst[0];
+        for (const key in testObject) {
+            console.log(`${key}: ${ testObject[key]}`);
+            for (const key1 in testObject[key]) {
+                //console.log(`${key1}: ${testObject[key][key1]}`);
+            }
+        }*/
+        let GameStopIndex = Number(localStorage.getItem("gameStop"))-1;
+        setGameStopNameArray(gameStopNameArrayConst);
+        setGameStopName(gameStopNameArrayConst[GameStopIndex].gameStopName);
+        console.log("gameStopNameArrayConst[0].gameStopName (setGameStopFunction): " + gameStopNameArrayConst[GameStopIndex].gameStopName);
+        localStorage.setItem("gameStopNameArray", gameStopFromAPI.data.gameStopByGameID.items);
+    }
 }
 
 async function getGameScoreID() {
@@ -165,6 +187,7 @@ export async function goHome(navigate,gameComments) {
 
 export async function winGameFunction(props,gameScoreID,gameTime,gameStop,gameTimeTotal,gameTimeHint,numberOfPlayers,teamName) {
     console.log("props: " + props);
+    console.log("gameTimeTotal: " + gameTimeTotal);
     console.log("winGameFunction");
     /* for end of game: clearInterval(interval);*/
     console.log("stop has been won");
@@ -284,6 +307,7 @@ export function removeLocalStorage() {
         localStorage.removeItem("gameScoreID");
         localStorage.removeItem("gameID");
         localStorage.removeItem("gameName");
+        localStorage.removeItem("gameLink");
         localStorage.removeItem("teamName");
         localStorage.removeItem("gameNameID");
         localStorage.removeItem("gameTime")

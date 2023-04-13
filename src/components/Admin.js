@@ -548,7 +548,7 @@ export function Admin() {
                     <div className="flex-row " role="columnheader">Team Score</div>
                     <div className="flex-row" role="columnheader">Stop Time</div>
                     <div className="flex-row" role="columnheader">Hint Time</div>
-                    <div className="flex-row" role="columnheader">Played</div>
+                    <div className="flex-row" role="columnheader">Completed/Played</div>
                 </div>
                 {props.gameScoreArray.map((score, index) => (
                     <div role="rowgroup" key={score.id}>

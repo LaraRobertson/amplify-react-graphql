@@ -53,7 +53,7 @@ export const GameIntro = (props) => {
                 </View>
                 <View>
                     <span className="small">Click on <strong>Help</strong> for more
-            information and links to Hints. If you click a Hint you get 5 minutes added to your time.</span>
+                        information and links to Hints. If you <span className="italics"> click a Hint you get <strong>5 minutes</strong> </span>added to your time.</span>
                 </View>
                 <View marginTop="15px" marginBottom="-10px">
                     <Image width="70px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/notes.png" />

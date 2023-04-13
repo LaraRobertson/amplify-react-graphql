@@ -368,6 +368,7 @@ html {
   position: absolute;
   bottom:40%;
   right: 30%;
+  z-index: 110;
 }
 
 .alert-inner {

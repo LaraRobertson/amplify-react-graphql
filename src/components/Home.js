@@ -22,7 +22,9 @@ import {
     gameStopByGameID,
     gameScoreByGameStatsID,
     gameStopByGameStatsID,
-    getGameStop
+    getGameStop,
+    getGameStats,
+    getGameScore
 } from "../graphql/queries";
 import {
     createGame, createGameScore,
@@ -32,6 +34,7 @@ import {
 } from "../graphql/mutations";
 import { useNavigate } from 'react-router-dom';
 import { format } from 'date-fns'
+import {removeLocalStorage} from "./helper";
 /*({format(new Date(game.createdAt), "MM/dd/yyyy H:mma")})*/
 
 
@@ -150,11 +153,7 @@ export function Home() {
         )
     }
 
-    async function goToGameSet(gameDetails) {
-        let path = gameDetails.gameName.replace(/\s+/g, '-').toLowerCase();
-        console.log("go to page: " + '/' + path);
-        navigate('/' + path);
-    }
+
     async function leaderBoard(gameDetails) {
         localStorage.setItem("gameID",gameDetails.gameID);
         localStorage.setItem("gameName",gameDetails.gameName);
@@ -162,6 +161,7 @@ export function Home() {
     }
     async function goToGame(gameDetails) {
         localStorage.setItem("gameName",gameDetails.gameName);
+        localStorage.setItem("gameLink",gameDetails.gameLink);
         localStorage.setItem("gameID",gameDetails.gameID);
         localStorage.setItem("gameStop",1);
         /* check if gameStats entry */
@@ -262,7 +262,7 @@ export function Home() {
                     if (gameStatsState !== null && gameStatsState.waiverSigned) {
                         localStorage.setItem("agreeToWaiver", true);
                         localStorage.setItem("gameStatsID",gamesStatsFromAPI.id);
-                        let path = gameDetails.gameName.replace(/\s+/g, '-').toLowerCase();
+                        let path = gameDetails.gameLink.replace(/\s+/g, '-').toLowerCase();
                         console.log("go to page: " + '/' + path);
                         navigate('/' + path);
                     } else {
@@ -278,6 +278,34 @@ export function Home() {
         }
     }
 
+    async function goToCurrentGame(gameDetails) {
+        /* check if gameStats entry */
+        const apiGameStats =  await API.graphql({
+            query: getGameStats,
+            variables: { id: gameDetails.gameStatsID}
+        });
+        if (apiGameStats) {
+            console.log("game stat there");
+            console.log("check waiver");
+            console.log("gapiGameStats.data.getGameStats.gameStates: " + apiGameStats.data.getGameStats.gameStates);
+            if (apiGameStats.data.getGameStats.gameStates != "") {
+                /* check if gameScore entry */
+                const apiGameScore = await API.graphql({
+                    query: getGameScore,
+                    variables: {id: gameDetails.gameScoreID}
+                });
+                if (apiGameScore) {
+                    /* good to go! */
+                    let path = gameDetails.gameName.replace(/\s+/g, '-').toLowerCase();
+                    console.log("current game: go to page: " + '/' + path);
+                    navigate('/' + path);
+
+                }
+            }
+        } else {
+            removeLocalStorage();
+        }
+    }
     async function getUserAuthInfo() {
         Auth.currentAuthenticatedUser({
             bypassCache: false  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
@@ -479,8 +507,23 @@ export function Home() {
         )} else {
         return (
             <View className="main-container">
-
                 <View className="main-content">
+                    {(localStorage.getItem("gameID") !== null &&
+                        localStorage.getItem("gameName") !== null &&
+                        localStorage.getItem("gameLink") !== null &&
+                        localStorage.getItem("gameTime") !== null &&
+                        localStorage.getItem("gameStatsID") !== null &&
+                        localStorage.getItem("gameScoreID") !== null &&
+                        localStorage.getItem("gameStop") !== null ) ? (
+                        <View textAlign="center" border="1px solid white" padding="10px">
+                            Currently Playing: {localStorage.getItem("gameName")}
+                        <Button className="go-to-game-button" onClick={() => goToCurrentGame({
+                            gameName:localStorage.getItem("gameLink"),
+                            gameID:localStorage.getItem("gameID"),
+                            gameScoreID:localStorage.getItem("gameScoreID"),
+                            gameStatsID:localStorage.getItem("gameStatsID")})}>
+                            go back to game
+                        </Button></View>):null}
                     <Flex
                         wrap="wrap"
                         gap="1rem"
@@ -517,7 +560,7 @@ export function Home() {
                                             <Text color="white"><span className="italics">Stops</span>: {game.gameStop.items.length}</Text>
                                                 {(gamesIDUser.includes(game.id) || game.gameType === "free") ?
                                                     (<div>
-                                                        <Button className="go-to-game-button" onClick={() => goToGame({gameName:game.gameName,gameID:game.id,gameLocationCity:game.gameLocationCity})}>
+                                                        <Button className="go-to-game-button" onClick={() => goToGame({gameName:game.gameName,gameID:game.id,gameLocationCity:game.gameLocationCity,gameLink:game.gameLink})}>
                                                             go to game
                                                         </Button>
                                                     </div>) :
