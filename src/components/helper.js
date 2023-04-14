@@ -20,6 +20,7 @@ export async function setGameStopFunction(setGameStop,setNumberOfTimes,setGameID
         setTimeout(() => {
             setIsAlertVisible(false);
         }, 3000);
+        setGameScoreID(localStorage.getItem("gameScoreID"));
         setGameStop(localStorage.getItem("gameStop"))
         setGameTime(Number(localStorage.getItem('gameTime')));
         setGameTimeHint(Number(localStorage.getItem('gameTimeHint')));
@@ -198,6 +199,9 @@ export async function winGameFunction(props,gameScoreID,gameTime,gameStop,gameTi
 }
 
 export async function createGameStopFunction(gameScoreID,gameTime,gameStop) {
+    console.log("createGameStopFunction: gameStop: " + gameStop);
+    console.log("createGameStopFunction: gameTime: " + gameTime);
+    console.log("createGameStopFunction: gameScoreID: " + gameScoreID);
     const data = {
         gameScoreID: gameScoreID,
         gameStopTime: gameTime,
@@ -226,7 +230,6 @@ async function updateGameScoreFunction(props,gameScoreID,gameTime,gameStop,gameT
     let GameTimeTotalVar = gameTimeTotal + gameTime + gameTimeHint;
     const data = {
         id: gameScoreID,
-        numberOfPlayers: numberOfPlayers,
         teamName: teamName,
         gameTotalTime: Number(GameTimeTotalVar),
         completed: props
