@@ -54,6 +54,103 @@ export function Hurricane1() {
     useEffect(() => {
         console.log("***useEffect***: setGameStop (only on mount)");
         /* set local storage for gameStop - only on mount */
+        /* set backpack - set each game for each item */
+        if (localStorage.getItem("key") !== null) {
+            if (gameBackpack.length > 0) {
+                let bptest = "true";
+                for (let i = 0; i < gameBackpack.length; i++) {
+                    if (gameBackpack[i].key === "key") {
+                        console.log("key is already there");
+                        bptest = "false";
+                    }
+                }
+                if (bptest === "true") {
+                    console.log("push key to backpack");
+                    gameBackpack.push({
+                        src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png',
+                        key: 'key'
+                    })
+                    setIsWrong1Stop2(false);
+                    setHaveGuessed1Stop2(true);
+                    setIsWrong2Stop2(false);
+                    setHaveGuessed2Stop2(true);
+                    setIsKeyVisible(false);
+                } else {
+                    console.log("key is already there - bptest false");
+                }
+            } else {
+                console.log("push key to backpack - empty");
+                gameBackpack.push({
+                    src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png',
+                    key: 'key'
+                })
+                setIsWrong1Stop2(false);
+                setHaveGuessed1Stop2(true);
+                setIsWrong2Stop2(false);
+                setHaveGuessed2Stop2(true);
+                setIsKeyVisible(false);
+            }
+        }
+        if (localStorage.getItem("prybar") !== null) {
+            if (gameBackpack.length > 0) {
+                let bptest2 = "true";
+                for (var i = 0; i < gameBackpack.length; i++) {
+                    if (gameBackpack[i].key === "prybar") {
+                        console.log("prybar is already there");
+                        bptest2 = "false";
+                    }
+                }
+                if (bptest2 === "true") {
+                    console.log("push prybar to backpack");
+                    gameBackpack.push({
+                        src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/prybar-not-using.png',
+                        key: 'prybar'
+                    })
+                    setIsWrong1(false);
+                    setHaveGuessed1(true);
+                    setIsPrybarVisible(false);
+                }
+            } else {
+                console.log("push prybar to backpack");
+                gameBackpack.push({
+                    src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/prybar-not-using.png',
+                    key: 'prybar'
+                })
+                setIsWrong1(false);
+                setHaveGuessed1(true);
+                setIsPrybarVisible(false);
+            }
+        }
+        if (localStorage.getItem("shovel") !== null) {
+            if (gameBackpack.length > 0) {
+                let bptest3 = "true";
+                for (var i = 0; i < gameBackpack.length; i++) {
+                    if (gameBackpack[i].key === "shovel") {
+                        console.log("shovel is already there");
+                        bptest3 = "false";
+                    }
+                }
+                if (bptest3 === "true") {
+                    console.log("push shovel to backpack");
+                    gameBackpack.push({
+                        src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/shovel-not-using.png',
+                        key: 'shovel'
+                    });
+                    setIsWrong1Stop3(false);
+                    setHaveGuessed1Stop3(true);
+                    setIsShovelVisible(false);
+                }
+            } else {
+                console.log("push shovel to backpack");
+                gameBackpack.push({
+                    src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/shovel-not-using.png',
+                    key: 'shovel'
+                });
+                setIsWrong1Stop3(false);
+                setHaveGuessed1Stop3(true);
+                setIsShovelVisible(false);
+            }
+        }
         setGameStopFunction(setGameStop,setNumberOfTimes,setGameID,setGameStatsID,setGameStopNameArray,
             setGameStopName,setGameScoreID,setIsGameIntroVisible,setIsIntroVisible, gameTime,setGameTime,setGameTimeHint,
             setIsAlertVisible, setAlertText, setIsCoverScreenVisible);
@@ -308,7 +405,9 @@ export function Hurricane1() {
     /* End Stop 2 */
 
     /* Stop 3 */
-
+    /* Substitution Cipher */
+    /* A-Q,B-O,C-P,D-S,E-V,F-U,G-N,H-Z,I-W,J-R,K-X,L-Y,M-T */
+    /* how many rungs? | Zbi tqgl njvvg jfgnd? */
     /* guessing states and answers for first safe - a number - trying to find total number of green rungs in exercise area */
     const [guess1Stop3,setGuess1Stop3] = useState({'answer':''});
     const [haveGuessed1Stop3,setHaveGuessed1Stop3] = useState();
@@ -477,7 +576,7 @@ export function Hurricane1() {
     function toggleSandbagStop4Messages() {
         isSandbagMessageStop4Visible ? setIsSandbagMessageStop4Visible(false) : setIsSandbagMessageStop4Visible(true);
     }
-    /* end Stop 3 */
+    /* end Stop 4 */
 
     /* backpack functions */
 
@@ -522,10 +621,10 @@ export function Hurricane1() {
         console.log("***useEffect***: isShovelOn: " + isShovelOn);
     });*/
     const [isShovelVisible, setIsShovelVisible] = useState(true)
-    function shovel() {
+    function shovelFunction() {
         setIsShovelVisible(false);
         console.log("put shovel in backpack");
-        localStorage.setItem("shovel", "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/shovel-not-using.png");
+        localStorage.setItem("shovel", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/shovel-not-using.png");
         /* check if there */
         if (gameBackpack.length > 0) {
             for (var i = 0; i < gameBackpack.length; i++) {
@@ -538,14 +637,14 @@ export function Hurricane1() {
             if (bptest === true) {
                 console.log("push shovel to backpack");
                 gameBackpack.push({
-                    src: 'https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/shovel-not-using.png',
+                    src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/shovel-not-using.png',
                     key: 'shovel'
                 })
             }
         } else {
             console.log("push shovel to backpack");
             gameBackpack.push({
-                src: 'https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/shovel-not-using.png',
+                src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/shovel-not-using.png',
                 key: 'shovel'
             })
         }
@@ -652,12 +751,12 @@ export function Hurricane1() {
                 for (var i = 0; i < gameBackpack.length; i++) {
                     if (gameBackpack[i].key === "shovel") {
                         console.log("turn on/off shovel - state");
-                        if (!isPrybarOn) {
-                            gameBackpack[i].src = "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/shovel-using.png"
-                            localStorage.setItem("shovel", "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/shovel-using.png");
+                        if (!isShovelOn) {
+                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/shovel-using.png"
+                            localStorage.setItem("shovel", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/shovel-using.png");
                         } else {
-                            gameBackpack[i].src = "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/shovel-not-using.png"
-                            localStorage.setItem("shovel", "https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/05/shovel-not-using.png");
+                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/shovel-not-using.png"
+                            localStorage.setItem("shovel", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/shovel-not-using.png");
                         }
                     }
                 }
@@ -826,7 +925,7 @@ export function Hurricane1() {
                     <View className={isSafeInfoVisible ? "all-screen show" : "hide"}>
                         <Button className="close-button" onClick={()=>toggleSafeInfo()}>X</Button>
                         <TextField
-                            label="Try to Open Safe! (5 numbers)"
+                            label="Try to Open Safe! (5 digits)"
                             value={guess1.numbers}
                             onChange={(e) => setGuess1Numbers(e.currentTarget.value)}/>
                         {
@@ -857,7 +956,7 @@ export function Hurricane1() {
                         <Button className="close-button" onClick={() => toggleCementSafeInfo()}>X</Button>
 
                         <TextField
-                            label="Try to Open Floor Safe! (4 numbers)"
+                            label="Try to Open Floor Safe! (4 digits)"
                             value={guess2.numbers}
                             onChange={(e) => setGuess2Numbers(e.currentTarget.value)}/>
                         {
@@ -888,7 +987,7 @@ export function Hurricane1() {
                         ) : null}
 
                     <View ariaLabel="stop 1 Time" className="time">
-                        <Button className="button small" onClick={() => completeStop()}>complete stop (REMOVE)</Button>
+                        <Button className="button small hide" onClick={() => completeStop()}>complete stop (REMOVE)</Button>
                         <span className="small">hint time: {gameTimeHint} mins | real time: {gameTime} mins |
                                 tot: time: { Number((gameTime + gameTimeHint + gameTimeTotal).toFixed(2))} min</span>
                     </View>                    <HelpScreen />
@@ -959,8 +1058,6 @@ export function Hurricane1() {
                             <span className="small"> <strong>Remember, clock doesn't stop until you complete the stop.</strong></span></View>
 
                         <Button className="button" onClick={() => toggleIntro(isIntroVisible,setIsIntroVisible,setStopClock,setIsCoverScreenVisible)}>I Want To Play!</Button>
-                        &nbsp;&nbsp;
-                        <Button className="button" onClick={() => goHomeQuit(navigate)}>Back to All Games</Button>
                     </View>
                     <GameIntro isGameIntroVisible={isGameIntroVisible} setIsGameIntroVisible={setIsGameIntroVisible} numberOfPlayersError={numberOfPlayersError} numberOfPlayers={numberOfPlayers} setNumberOfPlayers={setNumberOfPlayers} teamName={teamName} setTeamName={setTeamName} gameStopNameArray={gameStopNameArray} setNumberOfPlayersError={setNumberOfPlayersError} setIsIntroVisible={setIsIntroVisible}/>
                     <View className={isAlertVisible ? "alert-container show" : "hide"}>
@@ -1239,52 +1336,150 @@ export function Hurricane1() {
         )
     } else if (gameStop == 3) {
         return (
-            <View
-                ariaLabel="Main Container"
-                position="relative">
+            <View position="relative" height="100%">
+                <View
+                    ariaLabel="Main Container"
+                    className="main-container">
                 <View
                     className="image-holder image-short"
                     ariaLabel="Image Holder"
                     backgroundImage="url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-game-jaycee-exercise.jpg')">
                     {/* all games */}
+
                     <View
                         className="z-index102 info-button"
                         ariaLabel="Info Button"
-                        onClick={() => toggleHelp()}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/help.png"/>
+                        onClick={() => toggleHelp(isHelpVisible,setIsHelpVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>
+                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/help.png" />
                     </View>
                     <View
                         className="z-index102 notes-button"
                         ariaLabel="Notes Button"
-                        onClick={() => toggleNotes()}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/notes.png"/>
+                        onClick={() => toggleNotes(areNotesVisible,setAreNotesVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>
+                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/notes.png" />
                     </View>
                     <View
                         className="z-index102 backpack-image"
                         ariaLabel="backpack Image"
-                        onClick={() => toggleBackpack()}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png"/>
+                        onClick={()=>toggleBackpack(isBackpackVisible,setIsBackpackVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>
+                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png" />
                     </View>
-                    <View
-                        className={isBackpackVisible ? "all-screen zIndex103 show" : "all-screen hide"}>
-                        <Button className="close-button" onClick={() => toggleBackpack()}>X</Button>
-                        <h3>Backpack Contents</h3><br/>
+                    <View className={isBackpackVisible ? "all-screen zIndex103 show" : "all-screen hide"} >
+                        <Button className="close-button" onClick={() => toggleBackpack(isBackpackVisible,setIsBackpackVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>X</Button>
+                        <h3>Backpack Contents</h3><br />
                         {gameBackpack.map((item) => {
                             return (
-                                <div className="wp-block-columns" key={item.key}>
-                                    <div className="wp-block-column">
-                                        <Image alt={item.src} onClick={() => showItemContents(item.key)}
-                                               className={item.key} src={item.src}/>
+                                <div className = "wp-block-columns" key={item.key}>
+                                    <div className = "wp-block-column">
+                                        <Image alt={item.src} onClick={() => showItemContents(item.key)} className={item.key} src={item.src} />
                                     </div>
                                 </div>
                             )
                         })}
                     </View>
+                    <NotesOpen areNotesVisible={areNotesVisible} setAreNotesVisible={setAreNotesVisible} isCoverScreenVisible={isCoverScreenVisible} setIsCoverScreenVisible={setIsCoverScreenVisible} toggleNotes={toggleNotes} gameNotes={gameNotes} setGameNotes={setGameNotes}/>
 
                     {/* end all games */}
+
+                    <View
+                        ariaLabel="Exercise Sign"
+                        className="exercise-sign"
+                        onClick={() => toggleSign()}>
+                        <Image
+                            src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/exercise-sign.png"/>
+                    </View>
+
+                    {/* show closed safe if haven't guessed or guess is wrong */}
+                    { !isWrong1Stop3 && haveGuessed1Stop3 ?   (
+                        <View>
+                            <View className="safe-shelter show">
+                                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/open-safe.png" />
+                                <View marginRight="10px" className={isShovelVisible ? "safe-shelter  show" : "hide"}
+                                      onClick={shovelFunction}>
+                                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/shovel.png"/>
+                                </View>
+                            </View>
+
+                        </View>
+                    ) : <View
+                        ariaLabel="Safe Exercise Area"
+                        className="safe-shelter"
+                        onClick={() => toggleSafeInfo()}>
+                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe-shelter.png"/>
+                    </View>
+                    }
+
+                    {/* DIRT SAFE: what you see first, it can NOT be clicked */}
+                    <View className={!isShovelOn ? "dirt-safe show" : "hide"}>
+                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/cementsafe-closed.png" />
+                    </View>
+
+                    {/* Now Shovel is ON but Dirt Safe is closed */}
+                    <View className={isShovelOn && !isCementSafeOpen && !isWrong1Stop3 ? "dirt-safe show" : "hide"}
+                          onClick={() => toggleCementSafe()}>
+                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/cementsafe-closed.png" />
+                    </View>
+
+                    {/* Dirt Safe is open, prybar doesn't matter, but answer is RIGHT  */}
+                    <View className={isShovelOn && isCementSafeOpen && !isWrong1Stop3 ? "dirt-safe show" : "hide"}>
+                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/cementsafeopensandbags.png"/>
+                    </View>
                 </View>
-                <View ariaLabel="stop 3 help" className={isHelpVisible ? "all-screen show" : "all-screen hide"}>
-                    <Button className="close-button" onClick={() => toggleHelp()}>X</Button>
+
+                <View
+                    ariaLabel="stop 3 - sign info"
+                    className={isSignVisible ? "all-screen show" : "hide"}>
+                    <Button className="close-button" onClick={() => toggleSign()}>X</Button>
+                    <View className="exercise-sign-big-jaycee">
+                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/exercise-sign-big.png" />
+                    </View>
+                </View>
+
+
+                <View className={isSafeInfoVisible ? "all-screen show" : "hide"}>
+                    <Button className="close-button" onClick={()=>toggleSafeInfo()}>X</Button>
+                    <TextField
+                        label="Try to Open Safe! (a number)"
+                        value={guess1Stop3.answer}
+                        onChange={(e) => setGuess1Stop3Function(e.currentTarget.value)}/>
+                    {
+                        haveGuessed1 && isWrong1 ? (
+                            <span className="red"> Wrong Answer!</span>
+                        ) : null
+                    }
+
+                    {!isWrong1Stop3 && haveGuessed1Stop3 ? (
+                        <View>
+                            <span className="right"> Right Answer!</span><br/>
+                        </View>
+                    ) : (
+
+                        <View className="torn-diary-big-jaycee big-width big-font">
+                            Zbi tqgl<br />
+                            njvvg<br />
+                            jfgnd?
+                        </View>
+                    )}
+                </View>
+
+                {(!isWrong1Stop3 && isCementSafeOpen) ?
+                    (
+                        <View ariaLabel="Stop 1 Winner" className="winner bottom">
+                            <h3>Good Job on Finding Sandbags!</h3>
+                            Now you need a way to transport them to those in need!<br/>
+                            Next stop is at a little bridge.<br/><br/>
+                            <Button className="button" onClick={() => goToStop(setGameStop,gameStop,gameTime,setGameTime,gameTimeTotal,setGameTimeTotal,setGameTimeHint,gameTimeHint,setHintTime1,setHintTime2,setHintTime3,setHintTime4,setIsIntroVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>Click here for picture of stop
+                                4</Button>
+                        </View>
+                    ) : null}
+
+                <View ariaLabel="stop 1 Time" className="time">
+                    <Button className="button small hide" onClick={() => completeStop()}>complete stop (REMOVE)</Button>
+                    <span className="small">hint time: {gameTimeHint} mins | real time: {gameTime} mins |
+                                tot: time: { Number((gameTime + gameTimeHint + gameTimeTotal).toFixed(2))} min</span>
+                </View>                    <HelpScreen />
+                <View className={isHelpVisible ? "all-screen show" : "all-screen hide"}>
+                    <Button className="close-button" onClick={() => toggleHelp(isHelpVisible,setIsHelpVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>X</Button>
                     <View width="100%" padding="10px">
                         <View paddingBottom="10px">
                             <strong>Game Stop</strong>: <span className="font-small">{gameStop}</span>
@@ -1294,49 +1489,35 @@ export function Hurricane1() {
                             your backpack. If it is in your backpack you may be able to use it by clicking on it.
                         </View>
                         <View paddingBottom="10px">
-                            <strong>Goal for this stop:</strong> Find the Discs! Use Hints if you really need them.
+                            <strong>Goal for this stop:</strong> Get More SandBags!
                         </View>
-                        <Button className="button small" onClick={() => toggleHint3()}>Open Hint (sport)</Button>
-                        <Button className="button small" onClick={() => toggleHint4()}>Open Hint (name of
-                            field)</Button>
-                        <Button className="button small" onClick={() => toggleHint2()}>Open Hint (name of
-                            house)</Button>
-                        <Button className="button small" onClick={() => toggleHint1()}>Open Hint (engraved on
-                            panel)</Button>
+                        <View paddingBottom="10px">
+                            <strong>Hints:</strong> Clicking on a Hint costs <span className="italics"> 5 Minutes!</span> Use Hints if you really need them.
+                        </View>
+                        <Flex wrap="wrap">
+                            <Button className="button small" onClick={() => toggleHint1(setHintTime1,isHint1Visible,setIsHint1Visible)}>Open Hint (Crazy words on note)</Button>
+                            <Button className="button small" onClick={() => toggleHint2(setHintTime2,isHint2Visible,setIsHint2Visible)}>Open Hint (Crazy words on note 2)</Button>
+                            <Button className="button small" onClick={() => toggleHint3(setHintTime3,isHint3Visible,setIsHint3Visible)}>Open Hint (Deciphered question on note)</Button>
+                       </Flex>
 
                         <br/><br/>
-                        <div className={isHint4Visible ? "all-screen show" : "all-screen hide"}>
-                            <Button className="close-button" onClick={() => toggleHint4()}>X</Button>
-                            <strong>Hint for name of field</strong>
-                            <br/><br/>There is a large sign on the fence at the field with the name.
-                            <br/><br/>
-
+                        <div className={isHint1Visible ? "winner show" : "all-screen hide"}>
+                            <Button className="close-button" onClick={() => toggleHint1(setHintTime1,isHint1Visible,setIsHint1Visible)}>X</Button>
+                            <strong>Substitution Cipher:</strong> <br/><br/>
+                            Use the picture of the sign with the different letters and compare to the real sign to figure out substitution cipher.
                         </div>
-                        <div className={isHint3Visible ? "all-screen show" : "all-screen hide"}>
-                            <Button className="close-button" onClick={() => toggleHint3()}>X</Button>
-                            <strong>Hint for Sport:</strong>
-                            <br/><br/>People do play soccer and disc golf but the closest field to the shelter is the
-                            baseball field.
-                            <br/><br/>
-
+                        <div className={isHint2Visible ? "winner show" : "all-screen hide"}>
+                            <Button className="close-button" onClick={() => toggleHint2(setHintTime2,isHint2Visible,setIsHint2Visible)}>X</Button>
+                            <strong>Substitution Cipher 2:</strong> <br/><br/>
+                            These items are ONLY on the game screen - count them there.
                         </div>
-                        <div className={isHint2Visible ? "all-screen show" : "all-screen hide"}>
-                            <Button className="close-button" onClick={() => toggleHint2()}>X</Button>
-                            <strong>Hint for name of house:</strong> <br/><br/>
-                            Near the intersection of Solomon and N. Campbell there is a house that people use for
-                            events.<br/><br/>
-                            Go over there and look for the name.
-
+                        <div className={isHint3Visible ? "winner show" : "all-screen hide"}>
+                            <Button className="close-button" onClick={() => toggleHint1(setHintTime3,isHint3Visible,setIsHint3Visible)}>X</Button>
+                            <strong>Question on Note:</strong> <br/><br/>
+                            After deciphering, count the things in cipher - they are only in the exercise area and only on the equipment.
                         </div>
-                        <div className={isHint1Visible ? "all-screen show" : "all-screen hide"}>
-                            <Button className="close-button" onClick={() => toggleHint1()}>X</Button>
-                            <strong>Hint for engraved on panel:</strong> <br/><br/>
-                            The <span className="bold-underline">first</span> is in reference to the first letter of the
-                            named field.<br/>
-                            <br/>And the pattern continues with name of house and name of sport.<br/>
 
-                        </div>
-                        <Button className="button small" onClick={() => toggleHelp()}>Close Help and
+                        <Button className="button action-button  small" onClick={() => toggleHelp(isHelpVisible,setIsHelpVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>Close Help and
                             Play</Button>
                     </View>
                 </View>
@@ -1347,177 +1528,286 @@ export function Hurricane1() {
                     <h3>Game Goals: Find Sandbags!</h3>
                     <h4>Start Playing Game When You are Here:</h4>
                     <View>
-                        <Image maxHeight="150px"
-                               src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-game-jaycee-exercise.jpg"/>
+                        <Image maxHeight="150px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-game-jaycee-exercise.jpg" />
                     </View>
-                    <View><span className="small">
-                        <strong>Total Time So Far</strong>: { Number((gameTime + gameTimeHint + gameTimeTotal).toFixed(2))} min</span>
-                    </View>
-                    <Button className="hide button" >I Want To Play!</Button><br />
-                    <TextAreaField
-                        rows="1"
-                        onChange={(e) => setCommentsFunction(e.currentTarget.value)}
-                        descriptiveText="Thank you for playing. Please let us know any and all comments you have about the game."
-                    />
-                    <Button className="button small" onClick={() => goHome()}>Go Home - Game not finished, sorry</Button>
+                    <View>
+                        <span className="small"> <strong>Remember, clock doesn't stop until you complete the stop.</strong></span></View>
+
+                    <Button className="button" onClick={() => toggleIntro(isIntroVisible,setIsIntroVisible,setStopClock,setIsCoverScreenVisible)}>I Want To Play!</Button>
                 </View>
-                <View ariaLabel="Time - Stop 3" className="time">
-                    <Button className="hide button small" onClick={() => completeStop()}>complete stop (REMOVE)</Button>
-                    <span className="small">hint time: {gameTimeHint} mins | real time: {gameTime} mins |
-                        tot: time: { Number((gameTime + gameTimeHint + gameTimeTotal).toFixed(2))} min</span>
-                </View>
-                {(isShovelOn && isShovelUsed && !isWrong1Stop3)?
-                    (
-                        <View className="winner">
-                            <h3>Good Job on Finding Sandbags!</h3>
-                            You will need to find some way to transport these sandbags!
-                            <br /><br />
-                            Next stop is at the Exercise Area<br /><br />
-                            <Button className="button" onClick={() => goToStop()}>Click here for picture of stop
-                                4</Button>
-                        </View>
-                    ): null }
+                <GameIntro isGameIntroVisible={isGameIntroVisible} setIsGameIntroVisible={setIsGameIntroVisible} numberOfPlayersError={numberOfPlayersError} numberOfPlayers={numberOfPlayers} setNumberOfPlayers={setNumberOfPlayers} teamName={teamName} setTeamName={setTeamName} gameStopNameArray={gameStopNameArray} setNumberOfPlayersError={setNumberOfPlayersError} setIsIntroVisible={setIsIntroVisible}/>
                 <View className={isAlertVisible ? "alert-container show" : "hide"}>
                     <div className='alert-inner'>{alertText}</div>
                 </View>
             </View>
+        <CoverScreenView isCoverScreenVisible={isCoverScreenVisible}/>
+    </View>
         )
     } else if (gameStop == 4) {
         return (
-            <View
-                ariaLabel="Main Container"
-                position="relative">
+            <View position="relative" height="100%">
                 <View
-                    className="image-holder image-short"
-                    ariaLabel="Image Holder"
-                    backgroundImage="url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-game-jaycee-exercise.jpg')">
-                    {/* all games */}
+                    ariaLabel="Main Container"
+                    className="main-container">
                     <View
-                        className="z-index102 info-button"
-                        ariaLabel="Info Button"
-                        onClick={() => toggleHelp()}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/help.png"/>
-                    </View>
-                    <View
-                        className="z-index102 notes-button"
-                        ariaLabel="Notes Button"
-                        onClick={() => toggleNotes()}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/notes.png"/>
-                    </View>
-                    <View
-                        className="z-index102 backpack-image"
-                        ariaLabel="backpack Image"
-                        onClick={() => toggleBackpack()}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png"/>
-                    </View>
-                    <View
-                        className={isBackpackVisible ? "all-screen zIndex103 show" : "all-screen hide"}>
-                        <Button className="close-button" onClick={() => toggleBackpack()}>X</Button>
-                        <h3>Backpack Contents</h3><br/>
-                        {gameBackpack.map((item) => {
-                            return (
-                                <div className="wp-block-columns" key={item.key}>
-                                    <div className="wp-block-column">
-                                        <Image alt={item.src} onClick={() => showItemContents(item.key)}
-                                               className={item.key} src={item.src}/>
+                        className="image-holder image-short"
+                        ariaLabel="Image Holder"
+                        backgroundImage = "url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-game-jaycee-little-bridge.jpg')">
+
+                        {/* all games */}
+
+                        <View
+                            className="z-index102 info-button"
+                            ariaLabel="Info Button"
+                            onClick={() => toggleHelp(isHelpVisible,setIsHelpVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>
+                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/help.png" />
+                        </View>
+                        <View
+                            className="z-index102 notes-button"
+                            ariaLabel="Notes Button"
+                            onClick={() => toggleNotes(areNotesVisible,setAreNotesVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>
+                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/notes.png" />
+                        </View>
+                        <View
+                            className="z-index102 backpack-image"
+                            ariaLabel="backpack Image"
+                            onClick={()=>toggleBackpack(isBackpackVisible,setIsBackpackVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>
+                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png" />
+                        </View>
+                        <View className={isBackpackVisible ? "all-screen zIndex103 show" : "all-screen hide"} >
+                            <Button className="close-button" onClick={() => toggleBackpack(isBackpackVisible,setIsBackpackVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>X</Button>
+                            <h3>Backpack Contents</h3><br />
+                            {gameBackpack.map((item) => {
+                                return (
+                                    <div className = "wp-block-columns" key={item.key}>
+                                        <div className = "wp-block-column">
+                                            <Image alt={item.src} onClick={() => showItemContents(item.key)} className={item.key} src={item.src} />
+                                        </div>
                                     </div>
-                                </div>
+                                )
+                            })}
+                        </View>
+                        <NotesOpen areNotesVisible={areNotesVisible} setAreNotesVisible={setAreNotesVisible} isCoverScreenVisible={isCoverScreenVisible} setIsCoverScreenVisible={setIsCoverScreenVisible} toggleNotes={toggleNotes} gameNotes={gameNotes} setGameNotes={setGameNotes}/>
+
+                        {/* end all games */}
+                        {/* show closed safe if haven't guessed or guess is wrong */}
+                        { !isWrong1Stop2 && !isWrong2Stop2 && haveGuessed1Stop2 && haveGuessed2Stop2  ?   (
+                            <View>
+                                <View className="left-bush show">
+                                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe-right-open.png" />
+                                    <View marginRight="10px" className={isKeyVisible ? "left-bush show" : "hide"}
+                                          onClick={keyFunction}>
+                                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key.png" />
+                                    </View>
+
+                                </View>
+
+                            </View>
+                        ) : <View
+                            ariaLabel="Safe Shelter"
+                            className="left-bush"
+                            onClick={()=>toggleSafeInfoStop2()}>
+                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe-right-closed-note.png"/>
+                        </View>
+                        }
+
+                        {
+                            !isRightBushOpen? (
+                                <View
+                                    ariaLabel="right bush"
+                                    className="right-bush"
+                                    onClick={()=>toggleRightBush()}>
+                                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bush-right-new.png" />
+                                </View>
+                            ) : (
+                                <View>
+                                    <View
+                                        ariaLabel="right bush"
+                                        className={!isKeyOn ? "right-bush show" : "hide"}
+                                        onClick={()=>toggleRightBush()}>
+                                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bush-open-right-new.png" />
+                                    </View>
+                                    <View
+                                        ariaLabel="right bush"
+                                        className={isKeyOn ? "right-bush show" : "hide"}
+                                        onClick={()=>toggleUseKey()}>
+                                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bush-open-right-new.png" />
+                                    </View>
+                                </View>
                             )
-                        })}
-                    </View>
-                    <NotesOpen areNotesVisible={areNotesVisible} setAreNotesVisible={setAreNotesVisible} isCoverScreenVisible={isCoverScreenVisible} setIsCoverScreenVisible={setIsCoverScreenVisible} toggleNotes={toggleNotes} gameNotes={gameNotes} setGameNotes={setGameNotes}/>
-
-                    {/* end all games */}
-                </View>
-                <View ariaLabel="stop 4 help" className={isHelpVisible ? "all-screen show" : "all-screen hide"}>
-                    <Button className="close-button" onClick={() => toggleHelp()}>X</Button>
-                    <View width="100%" padding="10px">
-                        <View paddingBottom="10px">
-                            <strong>Game Stop</strong>: <span className="font-small">{gameStop}</span>
+                        }
+                        <View
+                            ariaLabel="stop2 - words on string"
+                            className="words-on-string"
+                            onClick={()=>toggleSignStop2()}>
+                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/words-small.png" />
                         </View>
-                        <View paddingBottom="10px">
-                            <strong>How to Play:</strong> Click around - some items will disappear and then appear in
-                            your backpack. If it is in your backpack you may be able to use it by clicking on it.
+                        <View
+                            ariaLabel="bench"
+                            className="bench"
+                            onClick={()=>toggleBench()}>
+                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bench-gazebo.png" />
                         </View>
-                        <View paddingBottom="10px">
-                            <strong>Goal for this stop:</strong> Find the Discs! Use Hints if you really need them.
+                        <View
+                            ariaLabel="stop2 - sign info"
+                            className={isSignStop2Visible ? "all-screen show" : "hide"}>
+                            <Button className="close-button" onClick={()=>toggleSignStop2()}>X</Button>
+                            <br /><h3>What Order for Letters in Words On Panels?</h3>
+                            <br />
+                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/words-big.png" />
                         </View>
-                        <Button className="button small" onClick={() => toggleHint3()}>Open Hint (sport)</Button>
-                        <Button className="button small" onClick={() => toggleHint4()}>Open Hint (name of
-                            field)</Button>
-                        <Button className="button small" onClick={() => toggleHint2()}>Open Hint (name of
-                            house)</Button>
-                        <Button className="button small" onClick={() => toggleHint1()}>Open Hint (engraved on
-                            panel)</Button>
+                        <View
+                            ariaLabel="bench info"
+                            className={isBenchVisible ? "all-screen show" : "hide"}>
+                            <Button className="close-button" onClick={()=>toggleBench()}>X</Button>
+                            <View className="bench-big-jaycee">
+                                <div>Matthews DOB <br />(4 digit YEAR) + <br /><br />First Girl Scout Troop Here +<br /><br />Infantry that valued Girl Scouting in 1937.</div>
+                            </View>
+                        </View>
+                        {(isKeyOn && isKeyUsed && !isWrong2Stop2 && !isWrong1Stop2)?
+                            (
+                                <View className="winner">
+                                    <h3>Good Job on Finding Sandbags!</h3>
+                                    You still need MORE!
+                                    <br /><br />
+                                    Next stop is at the Exercise Area<br /><br />
+                                    <Button className="button" onClick={() => goToStop(setGameStop,gameStop,gameTime,setGameTime,gameTimeTotal,setGameTimeTotal,setGameTimeHint,gameTimeHint,setHintTime1,setHintTime2,setHintTime3,setHintTime4,setIsIntroVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>Click here for picture of stop
+                                        3</Button>
+                                </View>
+                            ): null }
 
-                        <br/><br/>
-                        <div className={isHint4Visible ? "all-screen show" : "all-screen hide"}>
-                            <Button className="close-button" onClick={() => toggleHint4()}>X</Button>
-                            <strong>Hint for name of field</strong>
-                            <br/><br/>There is a large sign on the fence at the field with the name.
-                            <br/><br/>
-
-                        </div>
-                        <div className={isHint3Visible ? "all-screen show" : "all-screen hide"}>
-                            <Button className="close-button" onClick={() => toggleHint3()}>X</Button>
-                            <strong>Hint for Sport:</strong>
-                            <br/><br/>People do play soccer and disc golf but the closest field to the shelter is the
-                            baseball field.
-                            <br/><br/>
-
-                        </div>
-                        <div className={isHint2Visible ? "all-screen show" : "all-screen hide"}>
-                            <Button className="close-button" onClick={() => toggleHint2()}>X</Button>
-                            <strong>Hint for name of house:</strong> <br/><br/>
-                            Near the intersection of Solomon and N. Campbell there is a house that people use for
-                            events.<br/><br/>
-                            Go over there and look for the name.
-
-                        </div>
-                        <div className={isHint1Visible ? "all-screen show" : "all-screen hide"}>
-                            <Button className="close-button" onClick={() => toggleHint1()}>X</Button>
-                            <strong>Hint for engraved on panel:</strong> <br/><br/>
-                            The <span className="bold-underline">first</span> is in reference to the first letter of the
-                            named field.<br/>
-                            <br/>And the pattern continues with name of house and name of sport.<br/>
-
-                        </div>
-                        <Button className="button small" onClick={() => toggleHelp()}>Close Help and
-                            Play</Button>
+                        <View className={isKeyOn && isKeyUsed && !isWrong2Stop2 && !isWrong1Stop2? "cement-safe show" : "hide"}>
+                            <Image className="test" alt="test" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/cementsafeopensandbags.png" />
+                        </View>
                     </View>
-                </View>
-                <View
-                    ariaLabel="stop 4 intro"
-                    textAlign="center"
-                    className={isIntroVisible ? "all-screen show" : "hide"}>
-                    <h3>Game Goals: Find Sandbags!</h3>
-                    <h4>Start Playing Game When You are Here:</h4>
-                    <View>
-                        <Image maxHeight="150px"
-                               src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-game-jaycee-exercise.jpg"/>
+                    <View ariaLabel="Stop2 - safe" className={isSafeInfoStop2Visible ? "all-screen show" : "hide"}>
+                        <Button className="close-button" onClick={()=>toggleSafeInfoStop2()}>X</Button>
+                        <h3>Try to Open Safe</h3>
+                        <TextField
+                            label="6 Letters"
+                            value={guess1Stop2.answer}
+                            onChange={(e) => setGuess1Stop2Function(e.currentTarget.value)}/>
+                        {
+                            haveGuessed1Stop2 && isWrong1Stop2  ? (
+                                <span className="red"> Wrong Answer!</span>
+                            ) : null
+                        }
+                        {
+                            !isWrong1Stop2  ? (
+                                <span  className="right"> Right Answer!</span>
+                            ) : null
+                        }
+                        <TextField
+                            label="4 numbers"
+                            value={guess2Stop2.answer}
+                            onChange={(e) => setGuess2Stop2Function(e.currentTarget.value)}/>
+                        {
+                            haveGuessed2Stop2 && isWrong2Stop2 ? (
+                                <span className="red"> This is wrong.</span>
+                            ) : null
+                        }
+                        {
+                            !isWrong2Stop2  ? (
+                                <span  className="right"> Right Answer!</span>
+                            ) : null
+                        }
+                        { !isWrong1Stop2 && !isWrong2Stop2 && haveGuessed1Stop2 && haveGuessed2Stop2  ? (
+                            <View>
+
+                            </View>
+                        ) : (
+                            <div>
+                                <br /><h3>Note Under Safe Says:</h3>
+                                There are Letters on a String...<br />
+                                And you should ADD NUMBERS on Bench Thing.
+                            </div>
+                        )}
                     </View>
-                    <Button className="button" onClick={() => toggleIntro()}>I Want To Play!</Button>
-                </View>
-                <View ariaLabel="Time - Stop 4" className="time">
-                    <Button className="hide button small" onClick={() => completeStop()}>complete stop (REMOVE)</Button>
-                    <span className="small">hint time: {gameTimeHint} mins | real time: {gameTime} mins |
+
+                    <View ariaLabel="time stop 2" className="time"> <Button className="hide button small" onClick={() => completeStop()}>complete stop (REMOVE)</Button>
+                        <span className="small">hint time: {gameTimeHint} mins | real time: {gameTime} mins |
                         tot: time: { Number((gameTime + gameTimeHint + gameTimeTotal).toFixed(2))} min</span>
-                </View>
-                {(isKey2On && isKey2Used && !isWrong1Stop4 && !isWrong2Stop4 && !isWrong3Stop4)?
-                    (
-                        <View className="winner">
-                            <h3>YOU WIN!!!</h3><br/><br/>
-                            <TextAreaField
-                                rows="1"
-                                onChange={(e) => setCommentsFunction(e.currentTarget.value)}
-                                descriptiveText="Thank you for playing. Please let us know any and all comments you have about the game."
-                            />
-                            <span className="small">hint time: {gameTimeHint} mins | real time: {gameTime} mins |
-                        tot: time: { Number((gameTime + gameTimeHint + gameTimeTotal).toFixed(2))} min</span>
-                            <Button className="button small" onClick={() => goHome()}>Go Home - Play another Game!</Button>
-                        </View>
-                    ) : null}
+                    </View>
+                    <View ariaLabel="stop 2 help" className={isHelpVisible ? "all-screen show" : "all-screen hide"}>
+                        <Button className="close-button" onClick={() => toggleHelp(isHelpVisible,setIsHelpVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>X</Button>
+                        <View width="100%" padding="10px">
+                            <View paddingBottom="10px">
+                                <strong>Game Stop</strong>: <span className="font-small">{gameStop} (stop 2)</span><br />
+                            </View>
+                            <View paddingBottom="10px">
+                                <strong>How to Play:</strong> Click around - some items will disappear and then appear in your backpack.  If it is in your backpack you may be able to use it by clicking on it.
+                            </View>
+                            <View paddingBottom="10px">
+                                <strong>Goal for this stop:</strong> Get More Discs!
+                            </View>
+                            <View paddingBottom="10px">
+                                <strong>Hints:</strong> Clicking on a Hint costs <span className="italics"> 5 Minutes!</span> Use Hints if you really need them.
+                            </View>
+                            <Flex wrap="wrap">
+                                <Button className="button small" onClick={() => toggleHint3()}>Open Hint (words on panels)</Button>
+                                <Button className="button small" onClick={() => toggleHint4()}>Open Hint (matthews DOB)</Button>
+                                <Button className="button small" onClick={() => toggleHint2()}>Open Hint (First Girl Scout Troop Here)</Button>
+                                <Button className="button small" onClick={() => toggleHint1()}>Open Hint (infantry that erected girl scout hut)</Button>
+                            </Flex>
 
+                            <br /><br />
+                            <div className={isHint4Visible ? "all-screen show" : "all-screen hide"}>
+                                <Button className="close-button" onClick={() => toggleHint4()}>X</Button>
+                                <strong>Hint for Matthews DOB:</strong>
+                                <br /><br />Go to the
+                                historical signs at the path turn-off for the gazebo.  Look at the sign that has
+                                a picture of General George C. Marshall and his wife Katherine at the top. Note the General Information for
+                                Mrs. Frederick S. Matthews.
+                                <br /><br />
+
+                            </div>
+                            <div className={isHint3Visible ? "all-screen show" : "all-screen hide"}>
+                                <Button className="close-button" onClick={() => toggleHint3()}>X</Button>
+                                <strong>Hint for Words on Panel:</strong>
+                                <br /><br />Get the Order of Words from the top of sign with "Regular Army Values the Girl Scouts". Use the
+                                bolded, capitals.
+                                <br /><br />
+
+                            </div>
+                            <div className={isHint2Visible ? "all-screen show" : "all-screen hide"}>
+                                <Button className="close-button" onClick={() => toggleHint2()}>X</Button>
+                                <strong>Hint for First Girl Scout Troop Here:</strong> <br /><br />
+                                Go to the
+                                historical signs at the path turn-off for the gazebo. The signs often mention what Troop # is the first Tybee Island based troop.
+
+                            </div>
+                            <div className={isHint1Visible ? "all-screen show" : "all-screen hide"}>
+                                <Button className="close-button" onClick={() => toggleHint1()}>X</Button>
+                                <strong>Hint for Infantry that erected girl scout hut:</strong> <br /><br />
+                                Go to the
+                                historical signs at the path turn-off for the gazebo.  Look closely at the picture with title "Regular Army Values the Girl Scouts".<br /><br />
+
+                            </div>
+                            <Button className="button action-button  small" onClick={() => toggleHelp(isHelpVisible,setIsHelpVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>Close Help and
+                                Play</Button>
+                        </View>
+                    </View>
+                    {/* doesn't need number of players */}
+                    <View
+                        ariaLabel="stop 4 intro"
+                        textAlign="center"
+                        className={isIntroVisible ? "all-screen show" : "hide"}>
+                        <h3>Game Goals: Transport Sandbags!</h3>
+                        <h4>Start Playing Game when are at the little bridge at the northern end of Jaycee Park:</h4>
+                        <View>
+                            <Image maxHeight="150px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-game-jaycee-little-bridge.jpg" />
+                        </View>
+                        <View>
+                            <span className="small"> <strong>Remember, clock doesn't stop until you complete the stop.</strong></span></View>
+                        <View><span className="small"><strong>Total Time So Far</strong>: { Number((gameTime + gameTimeHint + gameTimeTotal).toFixed(2)) } min</span></View>
+
+                        <Button className="button">Final Stop - Not Ready yet</Button>
+                    </View>
+                    <View className={isAlertVisible ? "alert-container show" : "hide"}>
+                        <div className='alert-inner'>{alertText}</div>
+                    </View>
+                </View>
+                <CoverScreenView isCoverScreenVisible={isCoverScreenVisible}/>
             </View>
         )
     }

@@ -754,6 +754,14 @@ html {
   padding:20px;
   border: 2px solid #0D5189;
   z-index:102;
+  animation: fadeIn 5s;
+}
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.bottom {
+  top: 185px;
 }
 .comment-screen {
   z-index:103;
