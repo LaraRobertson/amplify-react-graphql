@@ -1563,6 +1563,75 @@ export const gameStatsByGameID = /* GraphQL */ `
     }
   }
 `;
+export const gameStatsByUserEmail = /* GraphQL */ `
+  query GameStatsByUserEmail(
+    $userEmail: String!
+    $sortDirection: ModelSortDirection
+    $filter: ModelGameStatsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    gameStatsByUserEmail(
+      userEmail: $userEmail
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        gameID
+        userEmail
+        gameLocationCity
+        gameName
+        gameStates
+        gameScore {
+          items {
+            id
+            gameStatsID
+            gameID
+            numberOfPlayers
+            teamName
+            teamLocation
+            gameComments
+            gameTotalTime
+            completed
+            firstTime
+            gameStopTime {
+              items {
+                id
+                gameScoreID
+                gameStopTime
+                gameStop
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            gameHintTime {
+              items {
+                id
+                gameScoreID
+                gameHintTime
+                gameStop
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        type
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const gameStatsByGameName = /* GraphQL */ `
   query GameStatsByGameName(
     $gameName: String!

@@ -366,7 +366,7 @@ html {
 
 .alert-container {
   position: absolute;
-  bottom:40%;
+  top:20%;
   right: 30%;
   z-index: 110;
 }
@@ -754,6 +754,9 @@ html {
   padding:20px;
   border: 2px solid #0D5189;
   z-index:102;
+
+}
+.fade-in {
   animation: fadeIn 5s;
 }
 @keyframes fadeIn {
