@@ -977,7 +977,7 @@ export function Hurricane1() {
                     </View>
                     {(!isWrong1 && !isWrong2) ?
                         (
-                            <View ariaLabel="Stop 1 Winner" className="winner">
+                            <View ariaLabel="Stop 1 Winner" className="winner fade-in">
                                 <h3>Good Job on Finding Sandbags!</h3>
                                 But you need more.<br/>
                                 Next stop is at Jaycee Park Gazebo - maybe you can find some there.<br/><br/>
@@ -1119,7 +1119,7 @@ export function Hurricane1() {
                         <View>
                             <View className="left-bush show">
                                 <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe-right-open.png" />
-                                <View marginRight="10px" className={isKeyVisible ? "left-bush show" : "hide"}
+                                <View margin="0 0 10px 15px" className={isKeyVisible ? "left-bush show" : "hide"}
                                        onClick={keyFunction}>
                                     <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key.png" />
                                 </View>
@@ -1190,7 +1190,7 @@ export function Hurricane1() {
                     </View>
                     {(isKeyOn && isKeyUsed && !isWrong2Stop2 && !isWrong1Stop2)?
                         (
-                            <View className="winner">
+                            <View className="winner fade-in">
                                 <h3>Good Job on Finding Sandbags!</h3>
                                 You still need MORE!
                                 <br /><br />
@@ -1222,7 +1222,7 @@ export function Hurricane1() {
                         ) : null
                     }
                     <TextField
-                        label="4 numbers"
+                        label="4 digits"
                         value={guess2Stop2.answer}
                         onChange={(e) => setGuess2Stop2Function(e.currentTarget.value)}/>
                     {
@@ -1464,7 +1464,7 @@ export function Hurricane1() {
 
                 {(!isWrong1Stop3 && isCementSafeOpen) ?
                     (
-                        <View ariaLabel="Stop 1 Winner" className="winner bottom">
+                        <View ariaLabel="Stop 1 Winner" className="winner fade-in bottom">
                             <h3>Good Job on Finding Sandbags!</h3>
                             Now you need a way to transport them to those in need!<br/>
                             Next stop is at a little bridge.<br/><br/>
@@ -1595,9 +1595,9 @@ export function Hurricane1() {
                             <View>
                                 <View className="left-bush show">
                                     <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe-right-open.png" />
-                                    <View marginRight="10px" className={isKeyVisible ? "left-bush show" : "hide"}
+                                    <View className={isKeyVisible ? "left-bush show" : "hide"}
                                           onClick={keyFunction}>
-                                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key.png" />
+                                        <Image marginLeft="10px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key.png" />
                                     </View>
 
                                 </View>
@@ -1666,7 +1666,7 @@ export function Hurricane1() {
                         </View>
                         {(isKeyOn && isKeyUsed && !isWrong2Stop2 && !isWrong1Stop2)?
                             (
-                                <View className="winner">
+                                <View className="winner fade-in">
                                     <h3>Good Job on Finding Sandbags!</h3>
                                     You still need MORE!
                                     <br /><br />
