@@ -486,18 +486,21 @@ html {
   right:10px;
   top:7px;
   width:50px;
+  z-index: 102;
 }
 .notes-button {
   position:absolute;
   right:10px;
   top:40px;
   width:50px;
+  z-index: 102;
 }
 .backpack-image {
   position:absolute;
   right:65px;
   top:0;
   width:50px;
+  z-index: 102;
 }
 
 .no-show-small {
@@ -764,7 +767,7 @@ html {
   100% { opacity: 1; }
 }
 .bottom {
-  top: 185px;
+  top: 240px;
 }
 .comment-screen {
   z-index:103;
