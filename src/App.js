@@ -16,10 +16,10 @@ import { Thief1 } from './games/thief1/Thief1';
 import { Hurricane1Easy } from './games/hurricane1Easy/Hurricane1Easy';
 import { Hurricane1 } from './games/hurricane1/Hurricane1';
 
-
 import './App.css';
 import './games/jaycee.css';
 
+/* little change because push to amplify failed */
 
 function MyRoutes() {
     return (

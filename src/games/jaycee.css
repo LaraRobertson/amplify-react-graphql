@@ -195,3 +195,23 @@
     bottom: 20%;
   }
 }
+.bridge {
+  position:absolute;
+  bottom:25%;
+  left:40%;
+  max-width: 300px;
+  z-index:23;
+}
+@media (max-width:480px) {
+  .bridge  {
+    left:30%;
+    max-width: 300px;
+    bottom: 30%;
+  }
+}
+.bridge-combo {
+  font-family: 'Delicious Handrawn';
+  padding:10px;
+  margin-top:20px;
+  background-color:#857556;
+}
