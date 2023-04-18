@@ -19,8 +19,6 @@ import { Hurricane1 } from './games/hurricane1/Hurricane1';
 import './App.css';
 import './games/jaycee.css';
 
-/* little change because push to amplify failed */
-
 function MyRoutes() {
     return (
         <BrowserRouter>
@@ -36,7 +34,7 @@ function MyRoutes() {
                         }
                     />
                     <Route
-                        path="/thief-1"
+                        path="/thief"
                         element={
                             <RequireAuth>
                                 <Thief1 />

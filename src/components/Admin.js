@@ -305,6 +305,7 @@ export function Admin() {
             gameType: form.get("GameType"),
             gameLocationPlace: form.get("GameLocationPlace"),
             gameLocationCity: form.get("GameLocationCity"),
+            gameLink: form.get("GameLink"),
             type: "game",
             gameDescriptionH2: form.get("GameDescriptionH2"),
             gameDescriptionH3: form.get("GameDescriptionH3"),
@@ -648,7 +649,7 @@ export function Admin() {
                                 />
                                 <TextField
                                     name="GameType"
-                                    placeholder="Game Type"
+                                    placeholder="Game Type - free or not free"
                                     label="Game Type"
                                     labelHidden
                                     variation="quiet"
@@ -673,6 +674,14 @@ export function Admin() {
                                     name="GameLocationCity"
                                     placeholder="City"
                                     label="Game Location City"
+                                    labelHidden
+                                    variation="quiet"
+                                    required
+                                />
+                                <TextField
+                                    name="GameLink"
+                                    placeholder="GameLink in app.js"
+                                    label="Game Link"
                                     labelHidden
                                     variation="quiet"
                                     required

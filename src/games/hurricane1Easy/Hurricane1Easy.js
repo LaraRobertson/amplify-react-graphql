@@ -56,7 +56,7 @@ export function Hurricane1Easy() {
         /* set local storage for gameStop - only on mount */
         setGameStopFunction(setGameStop,setNumberOfTimes,setGameID,setGameStatsID,setGameStopNameArray,
             setGameStopName,setGameScoreID,setIsGameIntroVisible,setIsIntroVisible, gameTime,setGameTime,setGameTimeHint,
-            setIsAlertVisible, setAlertText, setIsCoverScreenVisible);
+            setIsAlertVisible, setAlertText, setIsCoverScreenVisible, setTeamName);
     }, []);
     /* always scroll to top */
     useEffect(() => {
