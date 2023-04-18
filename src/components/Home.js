@@ -516,7 +516,7 @@ export function Home() {
                         localStorage.getItem("gameScoreID") !== null &&
                         localStorage.getItem("gameStop") !== null ) ? (
                         <View textAlign="center" border="1px solid white" padding="10px">
-                            Currently Playing: {localStorage.getItem("gameName")}
+                            Currently Playing: {localStorage.getItem("gameName")} &nbsp;&nbsp;
                         <Button className="go-to-game-button" onClick={() => goToCurrentGame({
                             gameName:localStorage.getItem("gameLink"),
                             gameID:localStorage.getItem("gameID"),

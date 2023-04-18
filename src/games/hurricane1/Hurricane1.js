@@ -153,7 +153,7 @@ export function Hurricane1() {
         }
         setGameStopFunction(setGameStop,setNumberOfTimes,setGameID,setGameStatsID,setGameStopNameArray,
             setGameStopName,setGameScoreID,setIsGameIntroVisible,setIsIntroVisible, gameTime,setGameTime,setGameTimeHint,
-            setIsAlertVisible, setAlertText, setIsCoverScreenVisible);
+            setIsAlertVisible, setAlertText, setIsCoverScreenVisible, setTeamName);
     }, []);
     /* always scroll to top */
     useEffect(() => {
@@ -181,18 +181,6 @@ export function Hurricane1() {
     });
     useEffect(() => {
         console.log("***useEffect***: stopClock: " + stopClock);
-    });
-    useEffect(() => {
-        console.log("***useEffect***: isKey2On: " + isKey2On);
-    });
-    useEffect(() => {
-        console.log("***useEffect***: isKey2Used: " + isKey2Used);
-    });
-    useEffect(() => {
-        console.log("***useEffect***: isWrong2Stop4: " + isWrong2Stop4);
-    });
-    useEffect(() => {
-        console.log("***useEffect***: sWrong1Stop4: " + isWrong1Stop4);
     });
 
     const navigate = useNavigate();
@@ -869,16 +857,6 @@ function setGuess2Stop4Function1() {
         setGameBackpackHasItems( true);
     }
 
-    /*useEffect(() => {
-        console.log("***useEffect***: gameBackpack: " + gameBackpack);
-        for (const key in gameBackpack) {
-            console.log(`${key}: ${gameBackpack[key]}`);
-            for (const key1 in gameBackpack[key]) {
-                console.log(`${key1}: ${gameBackpack[key][key1]}`);
-            }
-        }
-    });*/
-
     function showItemContents(value) {
         console.log("show contents value: " + value);
         console.log("backpack: " + JSON.stringify(gameBackpack));
@@ -1416,7 +1394,7 @@ function setGuess2Stop4Function1() {
                         </Flex>
 
                         <br /><br />
-                        <div className={isHint4Visible ? "all-screen show" : "all-screen hide"}>
+                        <div className={isHint4Visible ? "winner show" : "all-screen hide"}>
                             <Button className="close-button" onClick={() => toggleHint4(setHintTime4,isHint4Visible,setIsHint4Visible)}>X</Button>
                             <strong>Hint for Matthews DOB:</strong>
                             <br /><br />Go to the
@@ -1426,7 +1404,7 @@ function setGuess2Stop4Function1() {
                             <br /><br />
 
                         </div>
-                        <div className={isHint3Visible ? "all-screen show" : "all-screen hide"}>
+                        <div className={isHint3Visible ? "winner show" : "all-screen hide"}>
                             <Button className="close-button" onClick={() => toggleHint3(setHintTime3,isHint3Visible,setIsHint3Visible)}>X</Button>
                             <strong>Hint for Words on Panel:</strong>
                             <br /><br />Get the Order of Words from the top of sign with "Regular Army Values the Girl Scouts". Use the
@@ -1434,14 +1412,14 @@ function setGuess2Stop4Function1() {
                             <br /><br />
 
                         </div>
-                        <div className={isHint2Visible ? "all-screen show" : "all-screen hide"}>
+                        <div className={isHint2Visible ? "winner show" : "all-screen hide"}>
                             <Button className="close-button" onClick={() => toggleHint2(setHintTime2,isHint2Visible,setIsHint2Visible)}>X</Button>
                             <strong>Hint for First Girl Scout Troop Here:</strong> <br /><br />
                             Go to the
                             historical signs at the path turn-off for the gazebo. The signs often mention what Troop # is the first Tybee Island based troop.
 
                         </div>
-                        <div className={isHint1Visible ? "all-screen show" : "all-screen hide"}>
+                        <div className={isHint1Visible ? "winner show" : "all-screen hide"}>
                             <Button className="close-button" onClick={() => toggleHint1(setHintTime1,isHint1Visible,setIsHint1Visible)}>X</Button>
                             <strong>Hint for Infantry that erected girl scout hut:</strong> <br /><br />
                             Go to the
@@ -1848,7 +1826,7 @@ function setGuess2Stop4Function1() {
                                 <View className="winner fade-in bottom">
                                     <h3>WINNER!</h3>
                                     <View>Now you can take this flying boat, load up your sandbags, and save Tybee Island!</View>
-                                    <Button className="button small" onClick={() => leaveComment(setShowComment,isCoverScreenVisible,setIsCoverScreenVisible)}>Tap to Comment</Button>
+                                    <Button className="button small" onClick={() => leaveComment(setShowComment,isCoverScreenVisible,setIsCoverScreenVisible)}>Please Tap to Comment</Button>
                                 </View>
                             ): null }
 
@@ -1913,7 +1891,7 @@ function setGuess2Stop4Function1() {
                             </Flex>
 
                             <br /><br />
-                            <div className={isHint4Visible ? "all-screen show" : "all-screen hide"}>
+                            <div className={isHint4Visible ? "winner show" : "all-screen hide"}>
                                 <Button className="close-button" onClick={() => toggleHint4(setHintTime4,isHint4Visible,setIsHint4Visible)}>X</Button>
                                 <strong>How many barracks:</strong>
                                 <br /><br />Go to the
@@ -1921,20 +1899,20 @@ function setGuess2Stop4Function1() {
                                 <br /><br />
 
                             </div>
-                            <div className={isHint3Visible ? "all-screen show" : "all-screen hide"}>
+                            <div className={isHint3Visible ? "winner show" : "all-screen hide"}>
                                 <Button className="close-button" onClick={() => toggleHint3(setHintTime3,isHint3Visible,setIsHint3Visible)}>X</Button>
                                 <strong>Bridge Puzzle:</strong>
                                 <br /><br />Each of these things was constructed at a certain time.  Use the buttons to determine order.
                                 <br /><br />
 
                             </div>
-                            <div className={isHint2Visible ? "all-screen show" : "all-screen hide"}>
+                            <div className={isHint2Visible ? "winner show" : "all-screen hide"}>
                                 <Button className="close-button" onClick={() => toggleHint2(setHintTime2,isHint2Visible,setIsHint2Visible)}>X</Button>
                                 <strong>How many men:</strong> <br /><br />
                                A little calculations - how many men before porches and then how many could the porches hold?
 
                             </div>
-                            <div className={isHint1Visible ? "all-screen show" : "all-screen hide"}>
+                            <div className={isHint1Visible ? "winner show" : "all-screen hide"}>
                                 <Button className="close-button" onClick={() => toggleHint1(setHintTime1,isHint1Visible,setIsHint1Visible)}>X</Button>
                                 <strong>Bridge Puzzle 2:</strong> <br /><br />
                             The Tybee Arts theater used to be the firehouse and was built in 1911. The remaining barrack - the one west of here - was built in 1910. Read the signs

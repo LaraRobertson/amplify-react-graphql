@@ -38,7 +38,7 @@
   max-width:250px;
 }
 .big-width {
-  max-width:300px;
+  max-width:300px !important;
 }
 .big-font {
   font-size:24px;

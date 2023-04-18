@@ -5,8 +5,8 @@ import {gameScoreByGameStatsID, gameStopByGameID} from "../graphql/queries";
 import {createGameHintTime, createGameStopTime, updateGameScore} from "../graphql/mutations";
 
 export async function setGameStopFunction(setGameStop,setNumberOfTimes,setGameID,setGameStatsID,setGameStopNameArray,
- setGameStopName,setGameScoreID,setIsGameIntroVisible,setIsIntroVisible, gameTime,setGameTime,setGameTimeHint,
- setIsAlertVisible, setAlertText, setIsCoverScreenVisible) {
+ setGameStopName,setGameScoreID,setIsGameIntroVisible,setIsIntroVisible,gameTime,setGameTime,setGameTimeHint,
+ setIsAlertVisible,setAlertText,setIsCoverScreenVisible,setTeamName) {
     console.log("setGameStopFunction - only on mount");
     //* check if already playing */
     console.log ("localStorage.getItem('gameTime'): " + localStorage.getItem('gameTime'));
@@ -20,6 +20,7 @@ export async function setGameStopFunction(setGameStop,setNumberOfTimes,setGameID
         setTimeout(() => {
             setIsAlertVisible(false);
         }, 3000);
+        setTeamName(localStorage.getItem("teamName"));
         setGameScoreID(localStorage.getItem("gameScoreID"));
         setGameStop(localStorage.getItem("gameStop"))
         setGameTime(Number(localStorage.getItem('gameTime')));
@@ -231,7 +232,7 @@ async function updateGameScoreFunction(props,gameScoreID,gameTime,gameStop,gameT
     const data = {
         id: gameScoreID,
         teamName: teamName,
-        gameTotalTime: Number(GameTimeTotalVar),
+        gameTotalTime: Number(GameTimeTotalVar).toFixed(2),
         completed: props
     };
     console.log("data: " + data);
@@ -306,6 +307,7 @@ export function setTeamNameFunction(teamNameValue,setTeamName) {
 
 export function removeLocalStorage() {
         localStorage.removeItem("agreeToWaiver");
+        localStorage.removeItem("email");
         localStorage.removeItem("gameStatsID");
         localStorage.removeItem("gameScoreID");
         localStorage.removeItem("gameID");
@@ -324,4 +326,5 @@ export function removeLocalStorage() {
         localStorage.removeItem("prybar");
         localStorage.removeItem("shovel");
         localStorage.removeItem("key2");
+        localStorage.removeItem("light");
 }
