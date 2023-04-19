@@ -228,11 +228,12 @@ async function createGameHintFunction(gameScoreID,gameTimeHint,gameStop) {
 
 async function updateGameScoreFunction(props,gameScoreID,gameTime,gameStop,gameTimeTotal,gameTimeHint,numberOfPlayers,teamName) {
     console.log("gameScoreID (update):" + gameScoreID);
-    let GameTimeTotalVar = gameTimeTotal + gameTime + gameTimeHint;
+    let GameTimeTotalVar = Number(gameTimeTotal + gameTime + gameTimeHint).toFixed(2);
+    console.log("gameTimeTotalVar: " +  GameTimeTotalVar);
     const data = {
         id: gameScoreID,
         teamName: teamName,
-        gameTotalTime: Number(GameTimeTotalVar).toFixed(2),
+        gameTotalTime: GameTimeTotalVar,
         completed: props
     };
     console.log("data: " + data);

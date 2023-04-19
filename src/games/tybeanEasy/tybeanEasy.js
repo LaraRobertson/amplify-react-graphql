@@ -196,6 +196,10 @@ export function TybeanEasy() {
         if (shallowEqual(x, game1Word3Page1ThiefAnswer.game1Word3Page1ThiefLetters)) {
             setHaveGuessedGame1Word3Page1Thief(true);
             setIsGame1Word3Page1ThiefWrong(false);
+            console.log("stop 1 win game");
+            setStopClock(true);
+            setGameComplete(true);
+            winGameFunction(true,gameScoreID,gameTime,gameStop,gameTimeTotal,gameTimeHint,numberOfPlayers,teamName);
         } else {
             console.log("wrong guess");
             setHaveGuessedGame1Word3Page1Thief(true);
