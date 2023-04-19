@@ -414,10 +414,10 @@ export function TybeanEasy() {
                             <strong>Hints:</strong> Clicking on a Hint costs <span className="italics"> 5 Minutes!</span> Use Hints if you really need them.
                         </View>
                         <Flex wrap="wrap">
-                            <Button className="button small" onClick={() => toggleHint1(setHintTime1,isHint1Visible,setIsHint1Visible)}>Open Hint (shops)</Button>
-                            <Button className="button small" onClick={() => toggleHint2(setHintTime2,isHint2Visible,setIsHint2Visible)}>Open Hint (famous cat)</Button>
-                            <Button className="button small" onClick={() => toggleHint3(setHintTime3,isHint3Visible,setIsHint3Visible)}>Open Hint (light)</Button>
-                            <Button className="button small" onClick={() => toggleHint4(setHintTime4,isHint4Visible,setIsHint4Visible)}>Open Hint (order of numbers for safe)</Button>
+                            <Button className="button small" onClick={() => toggleHint1(setHintTime1,isHint1Visible,setIsHint1Visible)}>Open Hint (north restaurant)</Button>
+                            <Button className="button small" onClick={() => toggleHint2(setHintTime2,isHint2Visible,setIsHint2Visible)}>Open Hint (hot sauce place)</Button>
+                            <Button className="button small" onClick={() => toggleHint3(setHintTime3,isHint3Visible,setIsHint3Visible)}>Open Hint (shop south)</Button>
+
                         </Flex>
 
                         <br/><br/>
@@ -429,22 +429,19 @@ export function TybeanEasy() {
                         </div>
                         <div className={isHint3Visible ? "winner show" : "all-screen hide"}>
                             <Button className="close-button" onClick={() => toggleHint3(setHintTime3,isHint3Visible,setIsHint3Visible)}>X</Button>
-                            <strong>Hint for light (in backpack):</strong>
-                            <br /><br />Once you click on light it should go into your backpack. This is a blacklight and when you
-                            use it (click it in backpack to turn on) and click on objects you will see more clues.
+                            <strong>Hint for shop south:</strong>
+                            <br /><br />lattitude 32 - 25% of 32 is 8
                             <br /><br />
 
                         </div>
                         <div className={isHint2Visible ? "winner show" : "all-screen hide"}>
                             <Button className="close-button" onClick={() => toggleHint2(setHintTime2,isHint2Visible,setIsHint2Visible)}>X</Button>
-                            <strong>Hint for famous cat:</strong><br /><br />The famous cat has an awesome name for the Tybean Art & Coffee Bar (bean).<br /><br />
+                            <strong>Hint for hot sauce place:</strong><br /><br />Inferno.<br /><br />
 
                         </div>
                         <div className={isHint1Visible ? "winner show" : "all-screen hide"}>
                             <Button className="close-button" onClick={() => toggleHint1(setHintTime1,isHint1Visible,setIsHint1Visible)}>X</Button>
-                            <strong>Hint for shops clue:</strong> <br /><br />There are many little shops along the west side of the Tybee Oaks area - Inferno, Glazed and Confused are in the north part.
-                            The southern most shop on the west side is "Tipsy Mermaid Art", then "granny flounders", then "The Tybee Gallery", then "Rachel Vogel Designs".
-                            The 6th letter of the first (most southern) shop is "M".<br /><br />
+                            <strong>Hint for north restaurant:</strong> <br /><br />HUCAPOOS - POO<br /><br />
                         </div>
                         <Button className="button action-button  small" onClick={() => toggleHelp(isHelpVisible,setIsHelpVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>Close Help and
                             Play</Button>
