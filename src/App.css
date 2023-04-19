@@ -590,9 +590,21 @@ html {
   z-index: 20;
   width: 10%;
 }
+.safe-on-table {
+  max-width: 70px;
+  margin: auto;
+  position: absolute;
+  top: 22%;
+  right: 37%;
+  z-index: 20;
+}
 @media (max-width:450px) {
   .diary {
     top: 42%;
+    right:10%;
+  }
+  .safe-on-table {
+    top: 39%;
     right:10%;
   }
 }
@@ -777,7 +789,7 @@ html {
   margin-bottom:20px;
   background-color: #58AAED;
   background-image: linear-gradient( #4279dc, #87bbe7);
-  padding:20px;
+  padding:15px;
   border: 2px solid #0D5189;
   z-index:102;
 
@@ -851,4 +863,18 @@ html {
     margin-left: 10%;
     text-align:center;
   }
+}
+.poo {
+  width: 100px;
+  display: inline-block;
+  maxLength: 3;
+}
+.short-one-letter {
+  width: 70px;
+  display: inline-block;
+  maxLength: 1;
+}
+.poo label, .short-one-letter label {
+  font-size: .9em;
+  font-weight: bold;
 }

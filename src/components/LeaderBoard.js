@@ -56,6 +56,7 @@ export function LeaderBoard() {
             <View className="main-content">
                 <Heading level={2} className="heading">LeaderBoard</Heading>
                 <Heading level={5} className="heading2">{localStorage.getItem("gameName")}</Heading>
+                <View className="small">Only games played the first time will show on leaderboard.</View>
                 <div className="table-container" role="table" aria-label="Destinations">
                     <div className="flex-table header" role="rowgroup">
                         <div className="flex-row first fourths" role="columnheader">Team Name</div>
