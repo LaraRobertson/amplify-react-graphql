@@ -526,7 +526,7 @@ export function Hurricane1Easy() {
                     <View className="winner comment-screen">
                         <h3>Thank you for playing. </h3>
 
-                            <Heading level={4} className="heading">Please Comment</Heading>
+                            <Heading level={4} className="heading">Please Tap to Leave Comment</Heading>
                        We really want to know any and all comments you have about the game.
                         <TextAreaField
                             rows="6"

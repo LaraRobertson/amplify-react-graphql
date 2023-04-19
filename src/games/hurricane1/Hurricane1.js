@@ -1826,7 +1826,7 @@ function setGuess2Stop4Function1() {
                                 <View className="winner fade-in bottom">
                                     <h3>WINNER!</h3>
                                     <View>Now you can take this flying boat, load up your sandbags, and save Tybee Island!</View>
-                                    <Button className="button small" onClick={() => leaveComment(setShowComment,isCoverScreenVisible,setIsCoverScreenVisible)}>Please Tap to Comment</Button>
+                                    <Button className="button small" onClick={() => leaveComment(setShowComment,isCoverScreenVisible,setIsCoverScreenVisible)}>Please Tap to Leave Comment</Button>
                                 </View>
                             ): null }
 

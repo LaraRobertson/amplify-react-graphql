@@ -272,17 +272,18 @@ export function TybeanEasy() {
                     {/* show closed safe if haven't guessed or guess is wrong */}
                     {(!isGame1Word1Page1ThiefWrong && !isGame1Word2Page1ThiefWrong && !isGame1Word3Page1ThiefWrong)? (
                         <View>
-                            <View className="diary show">
+                            <View  className="safe-on-table show">
                                 <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/open-safe.png" />
-                                <View marginRight="10px" className="diary show">
-                                    <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/important-documents.png"/>
-                                </View>
+
+                            </View>
+                            <View marginRight="10px" className="safe-on-table show">
+                                <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/important-documents.png"/>
                             </View>
 
                         </View>
                     ) : <View
                         ariaLabel="Safe Shelter"
-                        className="diary"
+                        className="safe-on-table"
                         onClick={() => toggleSafeInfo()}>
                         <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe-shelter.png"/>
                     </View>
@@ -369,10 +370,10 @@ export function TybeanEasy() {
                 ): (<span className="green"> Right Answer!</span>)}
             </View>
             {(!isGame1Word1Page1ThiefWrong && !isGame1Word2Page1ThiefWrong && !isGame1Word3Page1ThiefWrong) ? (
-             <View className="winner fade-in">
+             <View className="winner fade-in bottom">
                  <h3>WINNER!</h3>
-                 <View>Now you can TRY and get a reward from the rich person!</View>
-                 <Button className="button small" onClick={() => leaveComment(setShowComment,isCoverScreenVisible,setIsCoverScreenVisible)}>Please Tap to Comment</Button>
+                 <View>Important Documents!Maybe the rich person will give you a reward!</View>
+                 <Button className="button small" onClick={() => leaveComment(setShowComment,isCoverScreenVisible,setIsCoverScreenVisible)}>Please Tap to Leave Comment</Button>
 
              </View>
                 ): null }

@@ -622,7 +622,7 @@ export function Thief1() {
              <View className="winner fade-in bottom">
                  <h3>WINNER!</h3>
                  <View>Now you can return all the items to their rightful owners!!</View>
-                 <Button className="button small" onClick={() => leaveComment(setShowComment,isCoverScreenVisible,setIsCoverScreenVisible)}>Please Tap to Comment</Button>
+                 <Button className="button small" onClick={() => leaveComment(setShowComment,isCoverScreenVisible,setIsCoverScreenVisible)}>Please Tap to Leave Comment</Button>
 
              </View>
                 ): null }
