@@ -17,6 +17,7 @@ export function Waiver() {
         console.log ("get Game Stats");
         const userEmail = localStorage.getItem("email");
         const gameName = localStorage.getItem("gameName");
+        const gameLink = localStorage.getItem("gameLink");
         console.log("gameName: " + gameName);
         let filter = {
             userEmail: {
@@ -51,7 +52,9 @@ export function Waiver() {
             query: createGameScore,
             variables: { input: data },
         });
-        let path = gameName.replace(/\s+/g, '-').toLowerCase();
+        /* gameLink now */
+       // let path = gameName.replace(/\s+/g, '-').toLowerCase();
+        let path = gameLink.replace(/\s+/g, '-').toLowerCase();
         console.log("go to page: " + '/' + path);
         navigate('/' + path);
     }

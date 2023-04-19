@@ -852,3 +852,17 @@ html {
     text-align:center;
   }
 }
+.poo {
+  width: 100px;
+  display: inline-block;
+  maxLength: 3;
+}
+.short-one-letter {
+  width: 70px;
+  display: inline-block;
+  maxLength: 1;
+}
+.poo label, .short-one-letter label {
+  font-size: .9em;
+  font-weight: bold;
+}

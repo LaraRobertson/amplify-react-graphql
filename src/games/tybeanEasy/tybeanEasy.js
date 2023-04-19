@@ -7,7 +7,7 @@ import {toggleIntro, toggleHelp, toggleBackpack,
 import {shallowEqual} from "../../components/ShallowEqual";
 import {NotesOpen, HelpScreen, GameIntro, CoverScreenView} from "../../components/sharedComponents";
 
-export function Thief1() {
+export function TybeanEasy() {
 
     /* for all games */
     const [isAlertVisible, setIsAlertVisible] = useState(false);
@@ -89,33 +89,6 @@ export function Thief1() {
     const navigate = useNavigate();
 
     /* end for all games */
-    const [clickTimeNow,setClickTimeNow] = useState();
-    const [clickTimeThen,setClickTimeThen] = useState();
-    const [clickCount,setClickCount] = useState();
-    function countClicks() {
-        var secondBetweenTwoDate = Math.abs((new Date().getTime() - clickTimeThen) / 1000);
-        console.log("diff: " + secondBetweenTwoDate);
-        let newDate = new Date();
-        setClickTimeNow(newDate);
-        if (clickCount === 0) {
-            // start timing
-            setClickTimeThen(new Date().getTime());
-            console.log("time now: " + clickTimeNow);
-            setClickCount(1);
-        } else if (secondBetweenTwoDate<5 && clickCount > 0) {
-            console.log("add click");
-            setClickTimeThen(clickTimeNow);
-            setClickCount(clickCount + 1);
-        } else {
-            setClickCount(0);
-        }
-        if (clickCount > 4) {
-            setIsSafeVisible(!isSafeVisible);
-            setClickCount(0);
-        }
-        console.log("count Clicks: " + clickCount);
-    }
-
 
     /* stop 1 - game specific */
 
@@ -136,77 +109,36 @@ export function Thief1() {
     const [haveGuessedGame1Word4Page1Thief,setHaveGuessedGame1Word4Page1Thief] = useState();
     const [isGame1Word4Page1ThiefWrong, setIsGame1Word4Page1ThiefWrong] = useState(true);
 
-    const game1Word1Page1ThiefAnswer = {'game1Word1Page1ThiefLetters':'bean'};
-    const game1Word2Page1ThiefAnswer = {'game1Word2Page1ThiefLetters':'math'};
-    const game1Word3Page1ThiefAnswer = {'game1Word3Page1ThiefLetters':'ghirardelli'};
+    const game1Word1Page1ThiefAnswer = {'game1Word1Page1ThiefLetters':'poo'};
+    const game1Word2Page1ThiefAnswer = {'game1Word2Page1ThiefLetters':'i'};
+    const game1Word3Page1ThiefAnswer = {'game1Word3Page1ThiefLetters':'8'};
     const game1Word4Page1ThiefAnswer= {'game1Word4Page1ThiefLetters':'inferno'};
     /* end guessing states and answers for safe - 4 words */
 
 
-    const [isLightVisible, setIsLightVisible] = useState(true);
-    const [isDiaryVisible, setIsDiaryVisible] = useState(false);
-    function toggleDiary() {
-        isDiaryVisible ? setIsDiaryVisible(false) : setIsDiaryVisible(true);
-        isCoverScreenVisible ? setIsCoverScreenVisible(false) : setIsCoverScreenVisible(true);
-    }
-    const [isTornDiaryVisible, setIsTornDiaryVisible] = useState(false);
-    function toggleTornDiary() {
-        isTornDiaryVisible ? setIsTornDiaryVisible(false) : setIsTornDiaryVisible(true);
-        isCoverScreenVisible ? setIsCoverScreenVisible(false) : setIsCoverScreenVisible(true);
-    }
-    const [isSignVisible, setIsSignVisible] = useState(false);
-    function toggleSign() {
-        isSignVisible ? setIsSignVisible(false) : setIsSignVisible(true);
-        isCoverScreenVisible ? setIsCoverScreenVisible(false) : setIsCoverScreenVisible(true);
-    }
-    const [isLegsAvailable, setIsLegsAvailable] = useState(false);
-    const [isLegsVisible, setIsLegsVisible] = useState(false);
-    function toggleLegs() {
-        isLegsVisible ? setIsLegsVisible(false) : setIsLegsVisible(true);
-        console.log("toggleLegs: " + isLegsVisible);
-        isCoverScreenVisible ? setIsCoverScreenVisible(false) : setIsCoverScreenVisible(true);
-    }
-    const [isNumBusAvailable, setIsNumBusAvailable] = useState(false);
-    const [isNumBusVisible, setIsNumBusVisible] = useState(false);
-    function toggleNumBus() {
-        isNumBusVisible ? setIsNumBusVisible(false) : setIsNumBusVisible(true);
-        isCoverScreenVisible ? setIsCoverScreenVisible(false) : setIsCoverScreenVisible(true);
-        console.log("toggleNumBus: " + isNumBusVisible);
-    }
-    const [isKnobMessageAvailable, setIsKnobMessageAvailable] = useState(false);
-    useEffect(() => {
-        console.log("***useEffect***: knobMessage: " + isKnobMessageAvailable);
-    });
-    const [isKnobMessageVisible, setIsKnobMessageVisible] = useState(false);
-    function toggleKnobMessage() {
-        isKnobMessageVisible ? setIsKnobMessageVisible(false) : setIsKnobMessageVisible(true);
-        console.log("toggleKnobMessage: " + isKnobMessageVisible);
-    }
-    const [isSafeVisible, setIsSafeVisible] = useState(false);
-    useEffect(() => {
-        console.log("***useEffect***: isSafeVisible: " + isSafeVisible);
-    });
+    /* need to click on safe */
     const [isSafeInfoVisible, setIsSafeInfoVisible] = useState(false);
-    function toggleSafe() {
+    function toggleSafeInfo() {
         isSafeInfoVisible ? setIsSafeInfoVisible(false) : setIsSafeInfoVisible(true);
         isCoverScreenVisible ? setIsCoverScreenVisible(false) : setIsCoverScreenVisible(true);
-        console.log("toggleSafe: " + isSafeVisible);
     }
+
     /* backpack functions */
     function toggleBackpack() {
         isBackpackVisible ? setIsBackpackVisible(false) : setIsBackpackVisible(true);
     }
-    const [isLightOn, setIsLightOn] = useState(false);
+
+
     function showItemContents(value) {
         console.log("show contents value: " + value);
         switch (value) {
             case 'light':
-                console.log("isLightOn 1: " + isLightOn);
-                setIsLightOn(!isLightOn);
-                lightFunctions(!isLightOn);
+                //console.log("isLightOn 1: " + isLightOn);
+                //setIsLightOn(!isLightOn);
+                //lightFunctions(!isLightOn);
                 // change image
                 for (var i = 0; i < gameBackpack.length; i++) {
-                    if (gameBackpack[i].key === "light") {
+                   /* if (gameBackpack[i].key === "light") {
                         console.log("turn on/off light - state");
                         if (!isLightOn) {
                             gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/light-on.png"
@@ -215,74 +147,13 @@ export function Thief1() {
                             gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blacklight.png"
                             localStorage.setItem("light", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blacklight.png");
                         }
-                    }
+                    }*/
                 }
                 break;
 
             default:
         }
     }
-    function lightFunctions(lightState) {
-        console.log("turn on/off light: " + isLightOn);
-        console.log("turn on/off lightstate: " + lightState);
-        if (lightState) {
-            console.log("Light is ON");
-            setIsLegsAvailable(true);
-            setIsNumBusAvailable(true);
-            setIsKnobMessageAvailable(true);
-        } else {
-            console.log("Light is Off");
-            setIsLegsAvailable(false);
-            setIsNumBusAvailable(false);
-            setIsKnobMessageAvailable(false);
-        }
-    }
-    function backpackLight() {
-        setIsLightVisible(false);
-        setIsAlertVisible(true);
-        setAlertText("Light is in backpack")
-        setTimeout(() => {
-            setIsAlertVisible(false);
-        }, 3000);
-        console.log("put black light in backpack");
-        localStorage.setItem("light", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blacklight.png");
-        /* check if there */
-        if (gameBackpack.length > 0) {
-            for (var i = 0; i < gameBackpack.length; i++) {
-                var bptest = true;
-                if (gameBackpack[i].key === "light") {
-                    console.log("light is already there");
-                    bptest = false;
-                }
-            }
-            if (bptest === true) {
-                console.log("push light to backpack");
-                gameBackpack.push({
-                    src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blacklight.png',
-                    key: 'light'
-                })
-            }
-        } else {
-            console.log("push light to backpack");
-            gameBackpack.push({
-                src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blacklight.png',
-                key: 'light'
-            })
-        }
-        setGameBackpackHasItems( true);
-    }
-   /* useEffect(() => {
-        console.log("***useEffect***: gameBackpack: " + gameBackpack);
-        for (const key in gameBackpack) {
-            console.log(`${key}: ${gameBackpack[key]}`);
-            for (const key1 in gameBackpack[key]) {
-                console.log(`${key1}: ${gameBackpack[key][key1]}`);
-            }
-        }
-    });
-    useEffect(() => {
-        console.log("***useEffect***: isLightOn: " + isLightOn);
-    });*/
 
     function setGame1Word1Page1ThiefLetters(guess) {
         var x = guess;
@@ -397,106 +268,49 @@ export function Thief1() {
                     <NotesOpen areNotesVisible={areNotesVisible} setAreNotesVisible={setAreNotesVisible} isCoverScreenVisible={isCoverScreenVisible} setIsCoverScreenVisible={setIsCoverScreenVisible} toggleNotes={toggleNotes} gameNotes={gameNotes} setGameNotes={setGameNotes}/>
 
                     {/* end all games */}
-                    {
-                        isKnobMessageAvailable ? (
-                            <View
-                                ariaLabel="Red Table 4 chairs"
-                                className="red-table-4-chairs"
-                                onClick={()=>toggleKnobMessage()}>
-                                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/red-table-right.png" />
+
+                    {/* show closed safe if haven't guessed or guess is wrong */}
+                    {(!isGame1Word1Page1ThiefWrong && !isGame1Word2Page1ThiefWrong && !isGame1Word3Page1ThiefWrong)? (
+                        <View>
+                            <View className="diary show">
+                                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/open-safe.png" />
+                                <View marginRight="10px" className="diary show">
+                                    <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/important-documents.png"/>
+                                </View>
                             </View>
-                        ) : (
-                            <View
-                                ariaLabel="Red Table 4 chairs"
-                                className="red-table-4-chairs">
-                                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/red-table-right.png" />
-                            </View>
-                        )
-                    }
-                    <View className={isKnobMessageVisible ? "red-table-4-chairs show" : "hide"}  onClick={()=>toggleKnobMessage()}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/red-table-right-message.png" />
+
+                        </View>
+                    ) : <View
+                        ariaLabel="Safe Shelter"
+                        className="diary"
+                        onClick={() => toggleSafeInfo()}>
+                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe-shelter.png"/>
                     </View>
-                <View
-                    className={isLightVisible ? "black-light show" : "hide"}
-                    onClick={()=>backpackLight()}
-                >
-                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blacklight.png" />
-                </View>
+                    }
+
+
                 <View
                     ariaLabel="Back Picnic Table"
                     className="back-picnic-table"
                  >
                     <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blue-table-right.png"/>
                 </View>
-                <View
-                ariaLabel="Torn Diary"
-                className="torn-diary"
-                onClick={()=>toggleTornDiary()}
-                >
-                <Image  alt="torn diary" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/torndiarypage.png" />
-                </View>
-                <View
-                    ariaLabel="Diary"
-                    className="diary"
-                    onClick={()=>toggleDiary()}
-                >
-                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/diary.png" />
-                </View>
-                <View
-                    className={isDiaryVisible ? "all-screen show" : "hide"}
-                >
-                        <Button className="close-button" onClick={()=>toggleDiary()}>X</Button>
-                        <View className="diary-big-jaycee big-width">
-                            Dear Diary, <br /><br />I learned about a cat.<br/><br/>I saw the shops.<br /><br />What was in that Mocha?<br /><br />Where did I hide from Cops?
-                        </View>
-                </View>
-                <View
-                    className={isTornDiaryVisible ? "all-screen show" : "hide"}
-                >
-                    <Button className="close-button" onClick={()=>toggleTornDiary()}>X</Button>
-                    <View paddingTop="90px" paddingLeft="45px" className="torn-diary-big-jaycee big-width">
-                       The Police were trying<br />
-                        to find me <br />
-                        so I hid somewhere<br />
-                        HOT.
-                    </View>
-                </View>
+
+
+
                 <View
                     ariaLabel="Tree Circle"
                     className="tree-circle"
                 >
                     <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/brown-circle.png"/>
                 </View>
-                <View
-                    ariaLabel="Tree with Sign"
-                    className="tree-with-sign"
-                    onClick={()=>toggleSign()}
-                >
-                    <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/tree-with-sign.png" />
-               </View>
-                <View
-                    ariaLabel="sign info"
-                    className={isSignVisible ? "all-screen show" : "hide"}>
-                    <Button className="close-button" onClick={()=>toggleSign()}>X</Button>
-                    <View paddingTop="90px" className="hanging-sign-big-jaycee big-width">
-                        <div>Look at the Little shops on West <br />side of Tybee Oaks.
-                            <br />Go from South to North  <br />
-                            What word do you see?
-                            <br /><strong>Letter #6</strong><br /><strong>Letter #3</strong><br /><strong>Letter #4</strong><br /><strong>Letter #4</strong></div>
+
+                    <View
+                        ariaLabel="Tree with Sign"
+                        className="tree-with-sign">
+                        <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/tree-without-sign.png" />
                     </View>
-                </View>
-                    <View ariaLabel="front-picnic-table-message" className={isNumBusVisible ? "all-screen show" : "hide"}>
-                        <Button className="close-button" onClick={()=>toggleNumBus()}>X</Button>
-                        <View className="blue-table-message">
-                            Most Famous Cat Here!
-                        </View>
-                    </View>
-                    <View ariaLabel="front-picnic-table-message" className={isLegsVisible ?  "all-screen show" : "hide"}>
-                        <Button className="close-button" onClick={()=>toggleLegs()}>X</Button>
-                        <View className="red-table-message">
-                           What type of chocolate does Tybean use in its Mocha?
-                        </View>
-                    </View>
+
 
 
                         <View
@@ -504,124 +318,60 @@ export function Thief1() {
                             className="palm-tree"
                         >
                             <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/palm-tree.png" />
-                            {isSafeVisible? (
-                                <View
-                                    ariaLabel="Safe"
-                                    className="safe"
-                                    onClick={()=>toggleSafe()}>
-                                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/safe-right-closed.png"/>
-                                </View>
-                            ):null}
-                            {(!isGame1Word1Page1ThiefWrong && !isGame1Word2Page1ThiefWrong && !isGame1Word3Page1ThiefWrong && !isGame1Word4Page1ThiefWrong)?
-                                (
-                                    <View
-                                        ariaLabel="safe open"
-                                        className="safe">
-                                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe-right-open.png" />
-                                    </View>
-                                ): null }
-                            {(!isGame1Word1Page1ThiefWrong && !isGame1Word2Page1ThiefWrong && !isGame1Word3Page1ThiefWrong && !isGame1Word4Page1ThiefWrong)?
-                                (
-                                    <View
-                                        ariaLabel="safe open jewels"
-                                        className="safe">
-                                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/safe-right-open-jewels.png" />
-                                    </View>
-                                ): null }
+
                         </View>
 
                         <View
                             ariaLabel="Red Table 2 chairs"
-                            className="red-table-2-chairs"
-                            onClick={()=>toggleLegs()}
-                        >
-                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/red-table-left-writing.png"/>
+                            className="red-table-2-chairs"            >
+                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/red-table-left.png"/>
                         </View>
 
 
                         <View
                             ariaLabel="Bottom Blue Table"
-                            className="bottom-blue-table"
-                            onClick={()=>toggleNumBus()}
-                        >
-                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blue-table-left-writing.png"/>
+                            className="bottom-blue-table">
+                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blue-table-left.png"/>
                         </View>
 
 
-                <View
-                    ariaLabel="Tybean Octopus"
-                    className="tybean-octopus"
-                    onClick={()=>countClicks()}>
-                        <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/tybean-octopus.png" />
-                </View>
-
             </View>
             <View className={isSafeInfoVisible ? "all-screen show" : "hide"}>
-                <Button className="close-button" onClick={()=>toggleSafe()}>X</Button>
+                <Button className="close-button" onClick={()=>toggleSafeInfo()}>X</Button>
                 <div>Try to Open Safe!</div>
                 <br />
                 <TextField
-                    label="Word 1 (4 letters)"
+                    label="3 letters"
+                    className="poo"
                     value={game1Word1Page1ThiefGuess.game1Word1Page1ThiefLetters}
                     onChange={(e) => setGame1Word1Page1ThiefLetters(e.currentTarget.value)}/>
-                {
-                    isGame1Word1Page1ThiefWrong && haveGuessedGame1Word1Page1Thief  ? (
-                        <span className="red"> Wrong Answer!</span>
-                    ) : null
-                }
-                {
-                    !isGame1Word1Page1ThiefWrong && haveGuessedGame1Word1Page1Thief  ? (
-                        <span className="green"> Right Answer!</span>
-                    ) : null
-                }
+             &nbsp;&nbsp;&nbsp;
                 <TextField
-                    label="Word 2 (4 letters)"
+                    label="1 letter"
+                    className="short-one-letter"
                     value={game1Word2Page1ThiefGuess.game1Word2Page1ThiefLetters}
                     onChange={(e) => setGame1Word2Page1ThiefLetters(e.currentTarget.value)}/>
-                {
-                    isGame1Word2Page1ThiefWrong && haveGuessedGame1Word2Page1Thief  ? (
-                        <span className="red"> Wrong Answer!</span>
-                    ) : null
-                }
-                {
-                    !isGame1Word2Page1ThiefWrong && haveGuessedGame1Word2Page1Thief  ? (
-                        <span className="green"> Right Answer!</span>
-                    ) : null
-                }
+
+                S                 &nbsp;&nbsp;&nbsp;GR
                 <TextField
-                    label="Word 3 (11 letters)"
+                    label="1 number"
+                    className="short-one-letter"
                     value={game1Word3Page1ThiefGuess.game1Word3Page1ThiefLetters}
                     onChange={(e) => setGame1Word3Page1ThiefLetters(e.currentTarget.value)}/>
-                {
-                    isGame1Word3Page1ThiefWrong && haveGuessedGame1Word3Page1Thief  ? (
-                        <span className="red"> Wrong Answer!</span>
-                    ) : null
-                }
-                {
-                    !isGame1Word3Page1ThiefWrong && haveGuessedGame1Word3Page1Thief  ? (
-                        <span className="green"> Right Answer!</span>
-                    ) : null
-                }
-                <TextField
-                    label="Word 4 (7 letters)"
-                    value={game1Word4Page1ThiefGuess.game1Word4Page1ThiefLetters}
-                    onChange={(e) => setGame1Word4Page1ThiefLetters(e.currentTarget.value)}/>
-                {
-                    isGame1Word4Page1ThiefWrong && haveGuessedGame1Word4Page1Thief  ? (
-                        <span className="red"> Wrong Answer!</span>
-                    ) : null
-                }
-                {
-                    !isGame1Word4Page1ThiefWrong && haveGuessedGame1Word4Page1Thief  ? (
-                        <span className="green"> Right Answer!</span>
-                    ) : null
-                }
+
+                {(isGame1Word1Page1ThiefWrong || isGame1Word2Page1ThiefWrong || isGame1Word3Page1ThiefWrong)? (
+                    <View className="torn-diary-big-jaycee big-width">
+                        Letters <span className="bold-underline">#5, #6, #7</span> of restaurant <br />
+                        north of here.<br /><br />
+                      First letter of Hot Sauce Place.<br /><br />
+                        25% of Shop South of here.
+                    </View>
+                ): (<span className="green"> Right Answer!</span>)}
             </View>
-            {(!isGame1Word1Page1ThiefWrong && !isGame1Word2Page1ThiefWrong && !isGame1Word3Page1ThiefWrong && !isGame1Word4Page1ThiefWrong)?
-                (
-             <View className="winner fade-in bottom">
+            {(!isGame1Word1Page1ThiefWrong && !isGame1Word2Page1ThiefWrong && !isGame1Word3Page1ThiefWrong) ? (
+             <View className="winner fade-in">
                  <h3>WINNER!</h3>
-                 <View>Now you can return all the items to their rightful owners!!</View>
+                 <View>Now you can TRY and get a reward from the rich person!</View>
                  <Button className="button small" onClick={() => leaveComment(setShowComment,isCoverScreenVisible,setIsCoverScreenVisible)}>Please Tap to Comment</Button>
 
              </View>
@@ -657,7 +407,7 @@ export function Thief1() {
                             your backpack. If it is in your backpack you may be able to use it by clicking on it.
                         </View>
                         <View paddingBottom="10px">
-                            <strong>Goal for this stop:</strong>  find the thief's stolen goods.
+                            <strong>Goal for this stop:</strong>  open the safe!
                         </View>
                         <View paddingBottom="10px">
                             <strong>Hints:</strong> Clicking on a Hint costs <span className="italics"> 5 Minutes!</span> Use Hints if you really need them.
@@ -703,7 +453,7 @@ export function Thief1() {
                     ariaLabel="stop 1 intro"
                     textAlign="center"
                     className={isIntroVisible ? "all-screen show" : "hide"}>
-                    <h3>Game Goals: Find The Thief's Hiding Place</h3>
+                    <h3>Game Goals: Open the Safe!</h3>
                     <h4>Start Playing Game when you are here:</h4>
                     <View>
                         <Image maxHeight="150px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/background-game-tybean-porch.jpg" />

@@ -306,6 +306,7 @@ export function Admin() {
             gameLocationPlace: form.get("GameLocationPlace"),
             gameLocationCity: form.get("GameLocationCity"),
             gameLink: form.get("GameLink"),
+            gameImage: form.get("GameImage"),
             type: "game",
             gameDescriptionH2: form.get("GameDescriptionH2"),
             gameDescriptionH3: form.get("GameDescriptionH3"),
@@ -670,6 +671,8 @@ export function Admin() {
                                     variation="quiet"
                                     required
                                 />
+                            </Flex>
+                            <Flex direction="row" justifyContent="center" gap="1rem">
                                 <TextField
                                     name="GameLocationCity"
                                     placeholder="City"
@@ -682,6 +685,14 @@ export function Admin() {
                                     name="GameLink"
                                     placeholder="GameLink in app.js"
                                     label="Game Link"
+                                    labelHidden
+                                    variation="quiet"
+                                    required
+                                />
+                                <TextField
+                                    name="GameImage"
+                                    placeholder="game Image"
+                                    label="Game Image"
                                     labelHidden
                                     variation="quiet"
                                     required

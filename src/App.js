@@ -13,6 +13,7 @@ import { MyStats } from './components/MyStats';
 
 /* Games */
 import { Thief1 } from './games/thief1/Thief1';
+import { TybeanEasy } from './games/tybeanEasy/tybeanEasy';
 import { Hurricane1Easy } from './games/hurricane1Easy/Hurricane1Easy';
 import { Hurricane1 } from './games/hurricane1/Hurricane1';
 
@@ -38,6 +39,14 @@ function MyRoutes() {
                         element={
                             <RequireAuth>
                                 <Thief1 />
+                            </RequireAuth>
+                        }
+                    />
+                    <Route
+                        path="/tybeaneasy"
+                        element={
+                            <RequireAuth>
+                                <TybeanEasy />
                             </RequireAuth>
                         }
                     />
