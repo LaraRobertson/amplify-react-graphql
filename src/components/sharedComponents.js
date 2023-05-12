@@ -1,4 +1,4 @@
-import {Button, Image, SelectField, TextAreaField, TextField, View, Flex} from "@aws-amplify/ui-react";
+import {Button, Image, SelectField, TextAreaField, TextField, View, Flex, Heading} from "@aws-amplify/ui-react";
 import React from "react";
 import {
     setNumPlayerFunction,
@@ -6,10 +6,26 @@ import {
     goHomeQuit,
     setTeamNameFunction,
     toggleHelp,
-    toggleHint1, toggleHint2, toggleHint3, toggleHint4
+    toggleHint1,
+    toggleHint2,
+    toggleHint3,
+    toggleHint4,
+    toggleNotes,
+    showItemContents,
+    toggleBackpack,
+    setCommentsFunction, goHome, toggleMap
 } from "./helper";
 import {useNavigate} from "react-router-dom";
 
+export const TimeBlock = (props) => {
+    console.log("props.realTimeStart: " + props.realTimeStart);
+    let realTimeStart = new Date(props.realTimeStart).toLocaleString();
+    return (
+        <View ariaLabel="stop 1 Time" className="time">
+                    <span className="small">hint time: {props.gameTimeHint} mins | time started: {realTimeStart} </span>
+        </View>
+    )
+}
 export const GameIntro = (props) => {
     let gameStopName = "NA";
     if (props.gameStopNameArray[0]) {
@@ -21,18 +37,20 @@ export const GameIntro = (props) => {
         stopWord = "stops. Your time between stops is not counted.";
     }
     return (
+        <View className={props.isGameIntroVisible? "cover-screen show-gradual" : "hide"}>
         <View
             ariaLabel="stop 1 Game intro"
             textAlign="center"
-            className={props.isGameIntroVisible ? "all-screen show-gradual" : "hide-gradual"}>
-            <h3>{gameStopName}</h3>
+            className="all-screen show-gradual">
+            <h3>{localStorage.getItem("gameName")}</h3>
             <View color="#7e0b0b">{props.numberOfPlayersError}</View>
 
             <TextField
                 name="TeamNameField"
-                className="black-text-field"
+                margin="10px auto"
+                maxWidth="300px"
                 placeholder=""
-                label="Team Name?"
+                label="Your Display Name for this game?"
                 required
                 value={props.teamName}
                 onChange={(e) => setTeamNameFunction(e.target.value,props.setTeamName)}
@@ -46,7 +64,7 @@ export const GameIntro = (props) => {
                     <strong>SCORE</strong>
                 </View>
                 <View><span className="small">Your score is your time. Time doesn't stop until you complete the stop. This game
-                    has {props.gameStopNameArray.length} {stopWord}</span>
+                    has <strong>{props.gameStopNameArray.length} {stopWord}</strong></span>
                 </View>
                 <View marginTop="15px" marginBottom="-10px">
                     <Image width="70px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/help.png" />
@@ -63,8 +81,69 @@ export const GameIntro = (props) => {
                 </View>
             </View>
             <View marginTop="10px">
-            <Button className="button" onClick={() => toggleGameIntro(props.isGameIntroVisible, props.teamName, props.setIsGameIntroVisible, props.setNumberOfPlayersError, props.setIsIntroVisible)}>Go To Stop 1 Intro</Button>
-            <Button className="button right-button" onClick={() => goHomeQuit(navigate)}>Back to All Games</Button>
+            <Button className="button" onClick={() => toggleGameIntro(props.isGameIntroVisible, props.teamName, props.setIsGameIntroVisible, props.setNumberOfPlayersError, props.setIsIntroVisible)}>Go To Game</Button>
+            <Button className="button right-button" onClick={() => goHomeQuit(navigate)}>Back to Game List</Button>
+            </View>
+        </View>
+        </View>
+    )
+}
+export const TopRight = (props) => {
+    return (
+        <View>
+            <View
+                className="z-index102 info-button clickable"
+                ariaLabel="Info Button"
+                onClick={() => toggleHelp(props.isHelpVisible,props.setIsHelpVisible)}>
+                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/help.png" />
+            </View>
+            <View
+                className="z-index102 notes-button clickable"
+                ariaLabel="Notes Button"
+                onClick={() => toggleNotes(props.areNotesVisible,props.setAreNotesVisible)}>
+                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/notes.png" />
+            </View>
+            <View
+                className="z-index102 backpack-image clickable"
+                ariaLabel="backpack Image"
+                onClick={()=>toggleBackpack(props.isBackpackVisible,props.setIsBackpackVisible)}>
+                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png" />
+            </View>
+            <View className={props.isBackpackVisible ? "all-screen zIndex103 show" : "all-screen hide"} >
+                <Button className="close-button" onClick={() => toggleBackpack(props.isBackpackVisible,props.setIsBackpackVisible)}>X</Button>
+                <h3>Backpack Contents</h3><br />
+                <Flex wrap="wrap" >
+                    {props.gameBackpack.map((item) => {
+                        return (
+                            <View width="45%" key={item.key}>
+                                <Image alt={item.src} onClick={() => props.showItemContents(item.key)} className={item.key} src={item.src} />
+                            </View>
+                        )
+                    })}
+                </Flex>
+                <View width="100%" textAlign='center' paddingTop="10px">
+                    <Button className="button action-button" onClick={() => toggleBackpack(props.isBackpackVisible,props.setIsBackpackVisible)}>tap to close backpack</Button>
+                </View>
+            </View>
+        </View>
+    )
+
+}
+export const CommentWindow = (props) => {
+    const navigate = useNavigate();
+    return (
+        <View className="cover-screen">
+            <View className="winner comment-screen">
+                <h3>Thank you for playing. </h3>
+
+                <Heading level={4} className="heading">Please Comment</Heading>
+                We really want to know any and all comments you have about the game.
+                <TextAreaField
+                    rows="6"
+                    onChange={(e) => setCommentsFunction(e.currentTarget.value,props.setGameComments)}
+                    descriptiveText="Any Issues or Problems?  Suggestions for improvement?"
+                /><br />
+                <Button className="button small" onClick={() => goHome(navigate,props.gameComments)}>Back to Games Page</Button>
             </View>
         </View>
     )
@@ -74,73 +153,23 @@ export const NotesOpen = (props) => {
     return (
         <View
             ariaLabel="Notes Open"
-            className={props.areNotesVisible ? "all-screen show" : "all-screen hide"}>
-            <Button className="close-button" onClick={() => props.toggleNotes(props.areNotesVisible,props.setAreNotesVisible,props.isCoverScreenVisible,props.setIsCoverScreenVisible)}>X</Button>
-            <div>Take some notes</div>
-            <br/>
+            className={props.areNotesVisible ? "notes show" : "hide"}>
+            <strong>Notes:</strong>
+            <View className={(props.clues != '')?"small show":"hide"}>
+                <strong>clues</strong>: {props.clues}
+                <View textAlign="center"><Button className="link-button small" onClick={() => props.setClues('')}>clear clues</Button></View>
+            </View>
             <TextAreaField
                 label="Notes"
-                onChange={(e) =>  props.setGameNotes(e.currentTarget.value)}
+                labelHidden
+                rows="5"
+                onChange={(e) =>  props.setGameNotesFunction(e.currentTarget.value)}
                 descriptiveText="Take some Notes - close when done, they will still be here"
             />
-        </View>
-    )
-}
-export const HelpScreen = (props) => {
-    return (
-        <View className={props.isHelpVisible ? "all-screen show" : "all-screen hide"}>
-            <Button className="close-button" onClick={() => toggleHelp(props.isHelpVisible,props.setIsHelpVisible,props.isCoverScreenVisible,props.setIsCoverScreenVisible)}>X</Button>
-            <View width="100%" padding="10px">
-                <View paddingBottom="10px">
-                    <strong>Game Stop</strong>: <span className="font-small">{props.gameStop}</span>
-                </View>
-                <View paddingBottom="10px">
-                    <strong>How to Play:</strong> Click around - some items will disappear and then appear in your backpack.  If it is in your backpack you may be able to use it by clicking on it.
-                </View>
-                <View paddingBottom="10px">
-                    <strong>Goal for this stop:</strong> {props.Goal}  Use Hints if you really need them.
-                </View>
-                <Flex wrap="wrap">
-                    <Button className="button small" onClick={() => toggleHint1(props.setHintTime1,props.isHint1Visible,props.setIsHint1Visible)}>{props.Hint1Link}</Button>
-                    <Button className="button small" onClick={() => toggleHint2(props.setHintTime2,props.isHint2Visible,props.setIsHint2Visible)}>{props.Hint2Link}</Button>
-                    <Button className="button small" onClick={() => toggleHint3(props.setHintTime3,props.isHint3Visible,props.setIsHint3Visible)}>{props.Hint3Link}</Button>
-                    <Button className="button small" onClick={() => toggleHint4(props.setHintTime4,props.isHint4Visible,props.setIsHint4Visible)}>{props.Hint4Link}</Button>
-                </Flex>
-                <br /><br />
-                <div className={props.isHint1Visible ? "winner show" : "all-screen hide"}>
-                    <Button className="close-button" onClick={() => toggleHint1(props.setHintTime1,props.isHint1Visible,props.setIsHint1Visible)}>X</Button>
-                    <strong>{props.Hint1Title}:</strong> <br /><br />
-                    {props.Hint1Description}
-                </div>
-                <div className={props.isHint2Visible ? "winner show" : "all-screen hide"}>
-                    <Button className="close-button" onClick={() => toggleHint2(props.setHintTime2,props.isHint2Visible,props.setIsHint2Visible)}>X</Button>
-                    <strong>Hint for name of house:</strong> <br /><br />
-                    Near the intersection of Solomon and N. Campbell there is a house that people use for events.<br /><br />
-                    Go over there and look for the name.
-                </div>
-                <div className={props.isHint3Visible ? "winner show" : "all-screen hide"}>
-                    <Button className="close-button" onClick={() => toggleHint3(props.setHintTime3,props.isHint3Visible,props.setIsHint3Visible)}>X</Button>
-                    <strong>Hint for Sport:</strong>
-                    <br /><br />People do play soccer and disc golf but the closest field to the shelter is the baseball field.
-                    <br /><br />
-                </div>
-                <div className={props.isHint4Visible ? "winner show" : "all-screen hide"}>
-                    <Button className="close-button" onClick={() => toggleHint4(props.setHintTime4,props.isHint4Visible,props.setIsHint4Visible)}>X</Button>
-                    <strong>Hint for name of field</strong>
-                    <br /><br />There is a large sign on the fence at the field with the name.
-                    <br /><br />
-
-                </div>
-                <Button className="button action-button small" onClick={() => toggleHelp(props.isHelpVisible,props.setIsHelpVisible,props.isCoverScreenVisible,props.setIsCoverScreenVisible)}>Close Help and Play</Button>
+            <View width="100%" textAlign='center' paddingTop="10px">
+                <Button className="button action-button small" onClick={() => props.toggleNotes(props.areNotesVisible,props.setAreNotesVisible,props.isCoverScreenVisible,props.setIsCoverScreenVisible)}>tap to close notes</Button>
             </View>
         </View>
     )
 }
-export const CoverScreenView = (props) => {
-    let gameDetailClass = "cover-screen hide-gradual";
-    if (props.isCoverScreenVisible) gameDetailClass = "cover-screen show-gradual";
-    return (
-        <View className={gameDetailClass}>
-        </View>
-    )
-}
+

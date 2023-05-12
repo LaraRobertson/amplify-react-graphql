@@ -539,7 +539,7 @@ export function Home() {
                             gap="1rem"
                             paddingTop="20px"
                             direction="row"
-                            justifyContent="flex-start" className="city-links">Cities: <a href="#tybeeIsland">Tybee Island</a>
+                            justifyContent="flex-start">Cities: <a href="#tybeeIsland">Tybee Island</a>
                         </Flex>
 
                         <a id="tybeeIsland"></a>

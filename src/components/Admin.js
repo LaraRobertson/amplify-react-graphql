@@ -36,7 +36,6 @@ import {
     createGameStopTime,
     deleteGameStats
 } from "../graphql/mutations";
-import {CoverScreenView} from "./sharedComponents";
 import { useNavigate } from 'react-router-dom';
 
 
@@ -50,6 +49,7 @@ export function Admin() {
     const [isAddStopVisible, setIsAddStopVisible] = useState(false);
     const [isUserStatVisible, setIsUserStatVisible] = useState(false);
     const [statsTitle, setStatsTitle] = useState('');
+    const [statsGameName, setStatsGameName] = useState('');
     const [isCoverScreenVisible, setIsCoverScreenVisible] = useState(false);
     const [userEmail, setUserEmail] = useState();
     const [gameID, setGameID] = useState();
@@ -253,6 +253,7 @@ export function Admin() {
             query: deleteGameStats,
             variables: { input:gameStatDetails }
         });
+        /* should probably delete all gamescores with this game stat */
         userStatsFunction(userEmail);
     }
     async function deleteGameScoreFunction(gameScoreIDvar,userEmail) {
@@ -379,11 +380,6 @@ export function Admin() {
         console.log("***useEffect***: userAuth.email: " + userAuth.email);
     });
 
-    useEffect(() => {
-        /* check table to make sure user is there, add free games if needed */
-        console.log("***useEffect***: fetchUserInfofromDB() + email: " + userAuth.email);
-        fetchUserInfofromDB();
-    }, [userAuth]);
 
     const HeadingComponent = props => {
         console.log("props.userName: " + props);
@@ -500,6 +496,7 @@ export function Admin() {
         const userStatsFromAPI = apiData.data.gameStatsSortedByGameName.items;
         setUserStats(userStatsFromAPI);
         setStatsTitle("Game Stats");
+        setStatsGameName(props.gameName);
         UserStatsView();
     }
     async function userStatsFunction(email) {
@@ -525,6 +522,8 @@ export function Admin() {
         return (
             <View className={gameDetailClass}>
                 <Button className="close-button" onClick={() => hideUserStats()}>X</Button>
+                <Button className="button" onClick={() => showGameStats({"gameID": "3e8eb9fb-6b78-4c90-9a45-657125e4ced3", "gameName": "Thief"})}>
+                    Game Stats - test - {statsGameName}</Button>
                 <View
                     maxWidth="800px"
                     margin="10px auto 10px auto"
@@ -532,7 +531,7 @@ export function Admin() {
                     <Heading level={2}>{statsTitle}</Heading>
                     <Heading level={5}>{userEmail}</Heading>
                         {userStats.map((userStat, index) => (
-                            <View>
+                            <View key={userStat.id}>
                                 <Button onClick={() => deleteGameStatFunction(userStat.id,userEmail)} className="button button-small delete">Delete Stat for: {userStat.gameName}</Button>
                                 <GameScoreView gameScoreArray = {userStat.gameScore.items} gameName={userStat.gameName} userEmail={userStat.userEmail}/>
                             </View>
@@ -554,25 +553,25 @@ export function Admin() {
                 </div>
                 {props.gameScoreArray.map((score, index) => (
                     <div role="rowgroup" key={score.id}>
-                    <div className="flex-table row">
-                    <div className="flex-row first" role="cell"><Button onClick={() => deleteGameScoreFunction(score.id,props.userEmail)} className="button button-small delete">X</Button>  {score.teamName}</div>
-                    <div className="flex-row " role="cell">{score.gameTotalTime}</div>
-                    <div className="flex-row" role="cell">
-                {score.gameStopTime.items.map((gameStop,index) => (
-                    <div>stop: {gameStop.gameStop}: {gameStop.gameStopTime}<br /></div>
-                    ))}
-                    </div>
-                    <div className="flex-row" role="cell">
-                {score.gameHintTime.items.map((gameHint,index) => (
-                    <div>stop: {gameHint.gameStop}: {gameHint.gameHintTime}<br /></div>
-                    ))}
-                    </div>
-                    <div className="flex-row" role="cell">{score.completed ? ("true"):("false")}<br />{score.firstTime ? ("1st") :null}</div>
-                    </div>
-                    <div className="flex-table row">
-                    <div className="flex-row four-width" role="cell">{props.userEmail}: "{score.gameComments}"</div>
-                    <div className="flex-row" role="cell"> {format(new Date(score.updatedAt), "MM/dd/yyyy H:mma")}</div>
-                    </div>
+                        <div className="flex-table row">
+                            <div className="flex-row first" role="cell"><Button onClick={() => deleteGameScoreFunction(score.id,props.userEmail)} className="button button-small delete">X</Button>  {score.teamName}</div>
+                            <div className="flex-row " role="cell">{score.gameTotalTime}</div>
+                            <div className="flex-row" role="cell">
+                                    {score.gameStopTime.items.map((gameStop,index) => (
+                                        <div key={gameStop.id}>stop: {gameStop.gameStop}: {gameStop.gameStopTime}<br /></div>
+                                    ))}
+                            </div>
+                            <div className="flex-row" role="cell">
+                                    {score.gameHintTime.items.map((gameHint,index) => (
+                                        <div key={gameHint.id}>stop: {gameHint.gameStop}: {gameHint.gameHintTime}<br /></div>
+                                    ))}
+                            </div>
+                            <div className="flex-row" role="cell">{score.completed ? ("true"):("false")}<br />{score.firstTime ? ("1st") :null}</div>
+                        </div>
+                        <div className="flex-table row">
+                              <div className="flex-row four-width" role="cell">{props.userEmail}: "{score.gameComments}"</div>
+                              <div className="flex-row" role="cell"> {format(new Date(score.updatedAt), "MM/dd/yyyy H:mma")}</div>
+                        </div>
                     </div>
                 ))}
             </div>
@@ -592,6 +591,40 @@ export function Admin() {
                             <Button onClick={() => navigate('/')}>Home</Button><br />
                             <a href="#games">Games </a> |  <a href="#users">Users </a>
                         </View>
+                        <AddStopView />
+                        <UserStatsView title={statsTitle} />
+
+                            <a id="games"></a>
+                            <Heading level={3}>Games</Heading>
+
+                            <View>
+                                {games.map((game) => (
+                                    <div key={game.id}><strong>game id</strong>: {game.id} | <strong>game name</strong>: {game.gameName} | <strong>type</strong>: {game.gameType} <br />
+                                        <strong>gameLocationPlace</strong>: {game.gameLocationPlace} | <strong>gameLocationCity</strong>: {game.gameLocationCity}<br />
+                                        <strong>gameDescriptionH2</strong>: {game.gameDescriptionH2} <br />
+                                        <strong>gameDescriptionH3</strong>: {game.gameDescriptionH3} <br />
+                                        <strong>gameDescriptionP</strong> {game.gameDescriptionP} <br />
+                                        <Button className="button" onClick={() => showAddStop({"gameID": game.id, "gameName": game.gameName})}>add stop</Button>
+                                        &nbsp;<Button className="button" onClick={() => showGameStats({"gameID": game.id, "gameName": game.gameName})}>Game Stats</Button>
+                                        <hr />
+                                    </div>
+
+                                ))}
+                            </View>
+                            <a id="users"></a>
+                            <Heading level={3}>Users</Heading>
+                            <View>
+                                {users.map((user) => (
+                                    <View key={user.id}>
+                                        <div><strong>user id</strong>: {user.id} | <strong>email</strong>: {user.email} | <strong>userName</strong>: {user.userName}
+                                        </div>
+                                        <div><Button className="button" onClick={() => showUserStats({"email": user.email})}>User Stat</Button>
+                                            <hr />
+                                        </div>
+                                    </View>
+                                ))}
+                            </View>
+
                         <View as="form" margin="3rem 0" onSubmit={createUserGamePlay}>
                             <Flex direction="row" justifyContent="center">
                                 <TextField
@@ -750,46 +783,13 @@ export function Admin() {
                                     Create Game
                                 </Button>
                             </Flex>
-                            <a id="games"></a>
-                            <Heading level={3}>Games</Heading>
-
-                            <View>
-                                {games.map((game) => (
-                                    <div><strong>game id</strong>: {game.id} | <strong>game name</strong>: {game.gameName} | <strong>type</strong>: {game.gameType} <br />
-                                   <strong>gameLocationPlace</strong>: {game.gameLocationPlace} | <strong>gameLocationCity</strong>: {game.gameLocationCity}<br />
-                                        <strong>gameDescriptionH2</strong>: {game.gameDescriptionH2} <br />
-                                    <strong>gameDescriptionH3</strong>: {game.gameDescriptionH3} <br />
-                                   <strong>gameDescriptionP</strong> {game.gameDescriptionP} <br />
-                                        <Button className="button" onClick={() => showAddStop({"gameID": game.id, "gameName": game.gameName})}>add stop</Button>
-                                         &nbsp;<Button className="button" onClick={() => showGameStats({"gameID": game.id, "gameName": game.gameName})}>Game Stats</Button>
-                                        <hr />
-                                    </div>
-
-                                ))}
-                            </View>
-                            <a id="users"></a>
-                            <Heading level={3}>Users</Heading>
-                            <View>
-                                {users.map((user) => (
-                                    <View>
-                                    <div><strong>user id</strong>: {user.id} | <strong>email</strong>: {user.email} | <strong>userName</strong>: {user.userName}
-                                    </div>
-                                        <div><Button className="button" onClick={() => showUserStats({"email": user.email})}>User Stat</Button>
-                                    <hr />
-                                    </div>
-                                    </View>
-                                ))}
-                            </View>
 
                         </View>
-                        <AddStopView />
-                        <UserStatsView title={statsTitle} />
 
                     </View>) : (<div></div>)
                 }
 
             </View>
-            <CoverScreenView isCoverScreenVisible={isCoverScreenVisible}/>
         </View>
     );
 }

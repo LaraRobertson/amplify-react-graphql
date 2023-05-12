@@ -1,12 +1,10 @@
 .image-short {
   max-height: 400px;
 }
-
 .exercise-sign{
   position: absolute;
   top: 20%;
   right:32%;
-  z-index: 23;
 }
 @media (max-width:480px) {
   .exercise-sign{
@@ -18,19 +16,16 @@
   position: absolute;
   top: 20%;
   left: 50%;
-  z-index: 23;
 }
 .torn-diary-jaycee{
   position: absolute;
   bottom: 0%;
   left: 25%;
-  z-index: 23;
-
 }
 .torn-diary-big-jaycee {
-  background: url("https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/diarypage-big.png") 0 20px / contain no-repeat;
+  background: url("https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/diarypage-big.png") 0 0 / contain no-repeat;
   height:330px;
-  padding-top: 50px;
+  padding-top: 30px;
   padding-left: 35px;
   font-family: 'Delicious Handrawn';
   font-size:18px;
@@ -80,7 +75,6 @@
 .diary-jaycee{
   position: absolute;
   right:33%;
-  z-index: 23;
   top:64%;
 }
 @media (max-width:480px) {
@@ -93,7 +87,7 @@
 
 .diary-big-jaycee {
   background: url("https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/opendiary.png") 0 20px / contain no-repeat;
-  height:330px;
+  height:265px;
   padding-top: 40px;
   padding-left: 30px;
   font-family: 'Delicious Handrawn';
@@ -105,7 +99,6 @@
   position:absolute;
   bottom:0;
   right:18%;
-  z-index:22;
 }
 
 @media (max-width:480px) {
@@ -119,7 +112,6 @@
   bottom:0%;
   left:45%;
   width:60px;
-  z-index:23;
 }
 
 @media (max-width:480px) {
@@ -133,7 +125,6 @@
   top:33%;
   left:45%;
   width:60px;
-  z-index:23;
 }
 
 @media (max-width:480px) {
@@ -147,7 +138,6 @@
   position:absolute;
   bottom:0%;
   left:23%;
-  z-index:22;
 }
 
 @media (max-width:480px) {
@@ -160,7 +150,6 @@
   position:absolute;
   bottom:0%;
   right:23%;
-  z-index:22;
 }
 @media (max-width:480px) {
   .right-bush {
@@ -172,7 +161,6 @@
   position:absolute;
   bottom:30%;
   right:33%;
-  z-index:22;
 }
 @media (max-width:480px) {
   .words-on-string  {
@@ -186,7 +174,6 @@
   bottom:10%;
   right:45%;
   max-width: 130px;
-  z-index:23;
 }
 @media (max-width:480px) {
   .bench  {
@@ -200,7 +187,6 @@
   bottom:25%;
   left:40%;
   max-width: 300px;
-  z-index:23;
 }
 @media (max-width:480px) {
   .bridge  {

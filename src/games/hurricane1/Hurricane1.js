@@ -5,7 +5,7 @@ import {toggleIntro, toggleHelp, toggleBackpack,
     toggleNotes, goHomeQuit, setGameStopFunction,
     intervalFunction, goHome, goToStop, leaveComment, winGameFunction, toggleHint1,toggleHint2,toggleHint3, toggleHint4, setCommentsFunction} from "../../components/helper";
 import {shallowEqual} from "../../components/ShallowEqual";
-import {NotesOpen, HelpScreen, GameIntro, CoverScreenView} from "../../components/sharedComponents";
+import {NotesOpen, GameIntro} from "../../components/sharedComponents";
 
 export function Hurricane1() {
 
@@ -35,7 +35,7 @@ export function Hurricane1() {
     const [gameStopName,setGameStopName] = useState(0);
     /* end set in local storage too */
 
-    const [stopClock, setStopClock] = useState(false);
+    const [stopClock, setStopClock] = useState(true);
     const [numberOfPlayers, setNumberOfPlayers] = useState('');
     const [numberOfPlayersError, setNumberOfPlayersError] = useState('');
     const [teamName, setTeamName] = useState('');
@@ -1108,7 +1108,7 @@ function setGuess2Stop4Function1() {
                         <Button className="button small hide" onClick={() => completeStop()}>complete stop (REMOVE)</Button>
                         <span className="small">hint time: {gameTimeHint} mins | real time: {gameTime} mins |
                                 tot: time: { Number((gameTime + gameTimeHint + gameTimeTotal).toFixed(2))} min</span>
-                    </View>                    <HelpScreen />
+                    </View>
                     <View className={isHelpVisible ? "all-screen show" : "all-screen hide"}>
                         <Button className="close-button" onClick={() => toggleHelp(isHelpVisible,setIsHelpVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>X</Button>
                     <View width="100%" padding="10px">
@@ -1182,7 +1182,6 @@ function setGuess2Stop4Function1() {
                         <div className='alert-inner'>{alertText}</div>
                     </View>
                 </View>
-                <CoverScreenView isCoverScreenVisible={isCoverScreenVisible}/>
             </View>
         )
     } else if (gameStop == 2) {
@@ -1450,7 +1449,6 @@ function setGuess2Stop4Function1() {
                         <div className='alert-inner'>{alertText}</div>
                     </View>
                 </View>
-                <CoverScreenView isCoverScreenVisible={isCoverScreenVisible}/>
             </View>
         )
     } else if (gameStop == 3) {
@@ -1596,7 +1594,7 @@ function setGuess2Stop4Function1() {
                     <Button className="button small hide" onClick={() => completeStop()}>complete stop (REMOVE)</Button>
                     <span className="small">hint time: {gameTimeHint} mins | real time: {gameTime} mins |
                                 tot: time: { Number((gameTime + gameTimeHint + gameTimeTotal).toFixed(2))} min</span>
-                </View>                    <HelpScreen />
+                </View>
                 <View className={isHelpVisible ? "all-screen show" : "all-screen hide"}>
                     <Button className="close-button" onClick={() => toggleHelp(isHelpVisible,setIsHelpVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>X</Button>
                     <View width="100%" padding="10px">
@@ -1659,7 +1657,6 @@ function setGuess2Stop4Function1() {
                     <div className='alert-inner'>{alertText}</div>
                 </View>
             </View>
-        <CoverScreenView isCoverScreenVisible={isCoverScreenVisible}/>
     </View>
         )
     } else if (gameStop == 4) {
@@ -1934,7 +1931,7 @@ function setGuess2Stop4Function1() {
                                     onChange={(e) => setCommentsFunction(e.currentTarget.value,setGameComments)}
                                     descriptiveText="Any Issues or Problems?  Suggestions for improvement?"
                                 /><br />
-                                <Button className="button small" onClick={() => goHome(navigate,gameComments)}>Go back to Games List</Button>
+                                <Button className="button small" onClick={() => goHome(navigate,gameComments)}>Go back to Games Page</Button>
                             </View>
                         ): null }
                     {/* doesn't need number of players */}
@@ -1958,7 +1955,6 @@ function setGuess2Stop4Function1() {
                         <div className='alert-inner'>{alertText}</div>
                     </View>
                 </View>
-                <CoverScreenView isCoverScreenVisible={isCoverScreenVisible}/>
             </View>
         )
     }
