@@ -81,7 +81,7 @@ export const GameIntro = (props) => {
                 </View>
             </View>
             <View marginTop="10px">
-            <Button className="button" onClick={() => toggleGameIntro(props.isGameIntroVisible, props.teamName, props.setIsGameIntroVisible, props.setNumberOfPlayersError, props.setIsIntroVisible)}>Go To Game</Button>
+            <Button className="button" onClick={() => toggleGameIntro(props.isGameIntroVisible, props.teamName, props.setIsGameIntroVisible, props.setNumberOfPlayersError, props.setIsIntroVisible)}>Go To Game (time does not start yet)</Button>
             <Button className="button right-button" onClick={() => goHomeQuit(navigate)}>Back to Game List</Button>
             </View>
         </View>
@@ -162,8 +162,9 @@ export const NotesOpen = (props) => {
             <TextAreaField
                 label="Notes"
                 labelHidden
+                value={props.gameNotes}
                 rows="5"
-                onChange={(e) =>  props.setGameNotesFunction(e.currentTarget.value)}
+                onChange={(e) =>  props.setGameNotesFunction(e.currentTarget.value,props.setGameNotes)}
                 descriptiveText="Take some Notes - close when done, they will still be here"
             />
             <View width="100%" textAlign='center' paddingTop="10px">

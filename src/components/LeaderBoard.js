@@ -70,7 +70,7 @@ export function LeaderBoard() {
                 <View className="small">Only games played the first time will show on leaderboard.</View>
                 <Heading level={5} className="heading2">Game Name: {localStorage.getItem("gameName")}</Heading>
 
-                <Button className={showAllTimeButton ? "hide" : "button"} onClick={() => leaderBoardFunction(yesterday.toLocaleDateString('en-CA'))}>
+                <Button className={showAllTimeButton ? "hide" : "button"} onClick={() => leaderBoardFunction(today.toLocaleDateString('en-CA'))}>
                     tap to see today</Button>&nbsp;
                 <Button className={showAllTimeButton ? "button" : "hide"} onClick={() => leaderBoardFunction("2021-04-01")}>
                     tap to see all time</Button>

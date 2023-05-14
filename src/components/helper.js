@@ -36,7 +36,7 @@ export async function setGameStopFunction(setGameStop,setNumberOfTimes,setGameID
             setIsAlertVisible(false);
         }, 3000);
         setGameNotes(localStorage.getItem("gameNotes"));
-        setClues(localStorage.getItem("Clues"));
+        setClues(localStorage.getItem("clues"));
         setRealTimeStart(localStorage.getItem("realTimeStart"));
         setTeamName(localStorage.getItem("teamName"));
         setGameScoreID(localStorage.getItem("gameScoreID"));
@@ -123,6 +123,7 @@ async function getGameStopName() {
 }
 
 export function setGameNotesFunction(gameNotes,setGameNotes) {
+    console.log("gameNotes: " + gameNotes);
     setGameNotes(gameNotes);
     localStorage.setItem("gameNotes", gameNotes);
 }

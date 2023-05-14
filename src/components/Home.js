@@ -34,7 +34,7 @@ import {
 } from "../graphql/mutations";
 import { useNavigate } from 'react-router-dom';
 import { format } from 'date-fns'
-import {removeLocalStorage} from "./helper";
+import {removeLocalStorage, toggleMap} from "./helper";
 /*({format(new Date(game.createdAt), "MM/dd/yyyy H:mma")})*/
 
 
@@ -555,6 +555,7 @@ export function Home() {
                                         <View className="column-50">
                                             <Text color="white" ><span className="italics">Location</span>: {game.gameLocationPlace}</Text>
                                             <Text color="white"><span className="italics">City</span>: {game.gameLocationCity}</Text>
+
                                         </View>
                                             <View className="column-50">
                                             <Text color="white"><span className="italics">Stops</span>: {game.gameStop.items.length}</Text>
