@@ -119,20 +119,22 @@ export const TopRight = (props) => {
                 onClick={()=>toggleBackpack(props.isBackpackVisible,props.setIsBackpackVisible)}>
                 <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png" />
             </View>
-            <View className={props.isBackpackVisible ? "all-screen zIndex103 show" : "all-screen hide"} >
-                <Button className="close-button" onClick={() => toggleBackpack(props.isBackpackVisible,props.setIsBackpackVisible)}>X</Button>
-                <h3>Backpack Contents</h3><br />
-                <Flex wrap="wrap" >
-                    {props.gameBackpack.map((item) => {
-                        return (
-                            <View width="45%" key={item.key}>
-                                <Image alt={item.src} onClick={() => props.showItemContents(item.key)} className={item.key} src={item.src} />
-                            </View>
-                        )
-                    })}
-                </Flex>
-                <View width="100%" textAlign='center' paddingTop="10px">
-                    <Button className="button action-button" onClick={() => toggleBackpack(props.isBackpackVisible,props.setIsBackpackVisible)}>tap to close backpack</Button>
+            <View className={props.isBackpackVisible ? "cover-screen show-gradual" : "hide"}>
+                <View className="all-screen zIndex103 show">
+                    <Button className="close-button" onClick={() => toggleBackpack(props.isBackpackVisible,props.setIsBackpackVisible)}>X</Button>
+                    <h3>Backpack Contents</h3><br />
+                    <Flex wrap="wrap" >
+                        {props.gameBackpack.map((item) => {
+                            return (
+                                <View width="45%" key={item.key}>
+                                    <Image alt={item.src} onClick={() => props.showItemContents(item.key)} className={item.key} src={item.src} />
+                                </View>
+                            )
+                        })}
+                    </Flex>
+                    <View width="100%" textAlign='center' paddingTop="10px">
+                        <Button className="button action-button" onClick={() => toggleBackpack(props.isBackpackVisible,props.setIsBackpackVisible)}>tap to close backpack</Button>
+                    </View>
                 </View>
             </View>
         </View>

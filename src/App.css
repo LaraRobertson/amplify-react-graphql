@@ -150,6 +150,7 @@ a {
 }
 
 .game-card {
+  border: 1px solid #BFD6E8;
   width:330px;
   padding:0!important;
 }

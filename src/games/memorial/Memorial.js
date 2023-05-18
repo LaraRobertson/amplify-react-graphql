@@ -88,7 +88,7 @@ export function Memorial() {
     const [guess2, setGuess2] = useState('');
     const [haveGuessed2, setHaveGuessed2] = useState(false);
     const [isWrong2, setIsWrong2] = useState(true);
-    const [answer2] = useState("3");
+    const [answer2] = useState("4");
 
     const [guess3, setGuess3] = useState('');
     const [haveGuessed3, setHaveGuessed3] = useState(false);
@@ -173,7 +173,7 @@ export function Memorial() {
         /* set timeout to close window? */
         setTimeout(() => {
             setIsWinnerScreenVisible(true);
-        }, 3000);
+        }, 2000);
         winGameFunction(true, gameScoreID, gameTime, gameStop, gameTimeTotal, setGameTimeTotal, gameTimeHint, numberOfPlayers, teamName, realTimeStart,
             hintTime1, hintTime2, hintTime3, hintTime4);
     }
@@ -283,15 +283,18 @@ export function Memorial() {
                     </View>
                     <View className={isSignVisible ? "cover-screen show-gradual" : "all-screen hide"}>
                         <View className="all-screen show">
+
                             <View textAlign="center">
-                                <Button className="button small" onClick={() => setCluesFunction(
+                                <h3>Playground Sign</h3>
+                                <Button marginTop="20px" className="button small" onClick={() => setCluesFunction(
                                     "  ** start clue (playground sign)  ==> line 1: Cyvqdv, jvcbjm qgl cjboyvtd |" +
                                     " line 2: Cjwvjv sv dwngqyvj mbfm cjboyvtv | " +
                                     " line 3: Jvcbjmv pfqyafwvj cjboyvtq. Cbj uqebj. <== end clue ** "
                                     , clues, setAlertText, setIsAlertVisible, setClues)}>add clue below to
                                     notes</Button>
                             </View>
-                                <View textAlign="center" padding="40px 0">
+
+                                <View textAlign="center" padding="20px 0">
                                     <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/memorial/playground-sign-big.png" />
                                 </View>
                                 <View width="100%" textAlign='center' marginTop="5px">
@@ -509,9 +512,8 @@ export function Memorial() {
                             <br/><br/>
                             <View className={isHint4Visible ? "cover-screen show-gradual" : "hide"}>
                                 <View className="winner show">
-                                    <Button className="close-button"
-                                            onClick={() => toggleHint3(setHintTime3, isHint3Visible, setIsHint3Visible, hintTime3, setGameTimeHint, gameTimeHint)}>X</Button>
-                                    <strong>Hint for T's on Tennis court door:</strong>
+                                    <Button className="button action-button"
+                                            onClick={() => toggleHint4(setHintTime4, isHint4Visible, setIsHint4Visible, hintTime4, setGameTimeHint, gameTimeHint)}>X</Button>                                   <strong>Hint for T's on <br />Tennis Court Door:</strong>
                                     <br/><br/>There are 2 signs on closest tennis court door.<br /><br />One says "Courts For Tennis or Pickleball only....." that sign has 5 T's.<br />
                                     <br />The other one says "Pets Prohibited on the Tennis Courts" <br />and that sign has 5 T's.<br /><br />
                                     <View width="100%" textAlign='center'>
@@ -523,7 +525,9 @@ export function Memorial() {
                             </View>
                             <View className={isHint3Visible ? "cover-screen show-gradual" : "hide"}>
                                 <View className="winner show">
-                                    <strong>Hint for sides on Bench:</strong>
+                                    <Button className="close-button"
+                                            onClick={() => toggleHint3(setHintTime3, isHint3Visible, setIsHint3Visible, hintTime3, setGameTimeHint, gameTimeHint)}>X</Button>
+                                    <strong>Hint for Sides on Bench:</strong>
                                     <br/><br/>There is a bench near the playground entrance.<br /><br />
                                     It is blue and goes all around the tree. <br />
                                     It has 6 sides.
@@ -539,7 +543,7 @@ export function Memorial() {
                                 <View className="winner show">
                                     <Button className="close-button"
                                             onClick={() => toggleHint2(setHintTime2, isHint2Visible, setIsHint2Visible, hintTime2, setGameTimeHint, gameTimeHint)}>X</Button>
-                                    <strong>Hint for slides that are blue:</strong>
+                                    <strong>Hint for Slides <br />that are Blue:</strong>
                                     <br/><br/>There are many slides on the playground but only 3 are blue.<br/><br/>
                                     There are 2 right next to each other and one that is covered.<br /><br />
                                     <View width="100%" textAlign='center'>
@@ -552,7 +556,7 @@ export function Memorial() {
                             <View className={isHint1Visible ? "cover-screen show-gradual" : "hide"}>
                                 <div className="winner show">
                                     <Button className="close-button" onClick={() => toggleHint1(setHintTime1, isHint1Visible, setIsHint1Visible, hintTime1, setGameTimeHint, gameTimeHint)}>X</Button>
-                                    <strong>Hint for playground fun:</strong>
+                                    <strong>Hint for Playground Fun:</strong>
                                     <br/><br/>The clue in the diary for playground fun is: "MVG"<br/>
                                     This is a simple cipher that substitutes one letter for another A=Q and Q=A. <br /><br /> The key is the clue on the playground sign.
                                     <br />line 1: Cyvqdv, jvcbjm qgl cjboyvtd
