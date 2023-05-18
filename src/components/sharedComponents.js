@@ -42,7 +42,16 @@ export const GameIntro = (props) => {
             ariaLabel="stop 1 Game intro"
             textAlign="center"
             className="all-screen show-gradual">
-            <h3>{localStorage.getItem("gameName")}</h3>
+            <h3>Game Intro</h3>
+            <h2>Game Name: {localStorage.getItem("gameName")}</h2>
+
+            <View backgroundColor="#BFD6E8" margin="10px auto" padding="5px" width="90%" lineHeight="18px">
+                <View className="small"> <strong>Game Details:</strong></View>
+                <View color="#0D5189"><strong>{localStorage.getItem("gameDescriptionH2")}</strong></View>
+                <View>{localStorage.getItem("gameDescriptionH3")}</View>
+                <View className="small italics">{localStorage.getItem("gameDescriptionP")}</View>
+            </View>
+
             <View color="#7e0b0b">{props.numberOfPlayersError}</View>
 
             <TextField
@@ -56,24 +65,24 @@ export const GameIntro = (props) => {
                 onChange={(e) => setTeamNameFunction(e.target.value,props.setTeamName)}
             />
             {(localStorage.getItem("numberOfTimes") !== null && localStorage.getItem("numberOfTimes") != 0) ? (
-                <div> You have played {localStorage.getItem("numberOfTimes")} time(s) before - good luck this time! </div>
+                <View className="small italics"  margin="0 0 5px 0"> You have played {localStorage.getItem("numberOfTimes")} time(s) before - good luck this time! </View>
             ) : null}
 
-            <View width="80%" margin="0 auto">
+            <View width="90%" margin="0 auto" lineHeight="16px">
                 <View color="#7e0b0b">
                     <strong>SCORE</strong>
                 </View>
                 <View><span className="small">Your score is your time. Time doesn't stop until you complete the stop. This game
                     has <strong>{props.gameStopNameArray.length} {stopWord}</strong></span>
                 </View>
-                <View marginTop="15px" marginBottom="-10px">
+                <View marginTop="5px" marginBottom="-20px" height="50px">
                     <Image width="70px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/help.png" />
                 </View>
                 <View>
                     <span className="small">Click on <strong>Help</strong> for more
                         information and links to Hints. If you <span className="italics"> click a Hint you get <strong>5 minutes</strong> </span>added to your time.</span>
                 </View>
-                <View marginTop="15px" marginBottom="-10px">
+                <View marginTop="5px" marginBottom="-20px" height="50px">
                     <Image width="70px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/notes.png" />
                 </View>
                 <View><span className="small">Click on <strong>Notes</strong> to write notes during
@@ -81,8 +90,9 @@ export const GameIntro = (props) => {
                 </View>
             </View>
             <View marginTop="10px">
-            <Button className="button" onClick={() => toggleGameIntro(props.isGameIntroVisible, props.teamName, props.setIsGameIntroVisible, props.setNumberOfPlayersError, props.setIsIntroVisible)}>Go To Game (time does not start yet)</Button>
-            <Button className="button right-button" onClick={() => goHomeQuit(navigate)}>Back to Game List</Button>
+            <Button margin="0 0 5px 0" className="button small" onClick={() => toggleGameIntro(props.isGameIntroVisible, props.teamName, props.setIsGameIntroVisible, props.setNumberOfPlayersError, props.setIsIntroVisible)}>Go To Stop 1 Intro (time does not start yet)</Button>
+            <Button className="button right-button small" onClick={() => goHomeQuit(navigate)}>Back to Game List</Button>
+                <View className="navigate-message">(please use buttons to navigate, back button doesn't work as well)</View>
             </View>
         </View>
         </View>

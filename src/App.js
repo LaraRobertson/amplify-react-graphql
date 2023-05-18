@@ -9,6 +9,7 @@ import { Admin } from './components/Admin';
 import { Layout } from './components/Layout';
 import { Waiver } from './components/Waiver';
 import { LeaderBoard } from './components/LeaderBoard';
+import { LeaderBoard2 } from './components/LeaderBoard2';
 import { MyStats } from './components/MyStats';
 
 /* Games */
@@ -16,6 +17,7 @@ import { Thief1 } from './games/thief1/Thief1';
 import { TybeanEasy } from './games/tybeanEasy/tybeanEasy';
 import { Hurricane1Easy } from './games/hurricane1Easy/Hurricane1Easy';
 import { Hurricane1 } from './games/hurricane1/Hurricane1';
+import { Memorial } from './games/memorial/Memorial';
 
 import './App.css';
 import './games/jaycee.css';
@@ -31,6 +33,14 @@ function MyRoutes() {
                         element={
                             <RequireAuth>
                                 <Admin />
+                            </RequireAuth>
+                        }
+                    />
+                    <Route
+                        path="/memorial"
+                        element={
+                            <RequireAuth>
+                                <Memorial />
                             </RequireAuth>
                         }
                     />
@@ -84,6 +94,12 @@ function MyRoutes() {
                         path="/leaderboard"
                         element={
                             <LeaderBoard />
+                        }
+                    />
+                    <Route
+                        path="/leaderboard2"
+                        element={
+                            <LeaderBoard2 />
                         }
                     />
                     <Route

@@ -267,7 +267,7 @@ export function TybeanEasy() {
                     </View>
                     <View className="bottom z-index125">
                         <View color="white">Total Time: {gameTimeTotal}</View>
-                        <Button className="button" onClick={() => leaveComment(setShowComment)}>Please Tap to Leave Comment</Button>
+                        <Button className="button small" onClick={() => leaveComment(setShowComment)}>Tap to Leave Comment (to help make game better)</Button>
                     </View>
                 </View>
                 ): null }
@@ -349,15 +349,20 @@ export function TybeanEasy() {
         {/* intro(s) */}
         <View className={isIntroVisible? "cover-screen show-gradual" : "hide"}>
             <View ariaLabel="stop 1 intro" textAlign="center" className="all-screen show">
+                <h3>Stop 1 Intro</h3>
                 <h3>Game Goals: Open the Safe!</h3>
                 <View marginBottom="5px">Location: 1 Stop at Tybean Coffee Bar</View>
+                <View>
+                    <span className="small"> <strong>Remember, your time to complete the game is your score and is calculated when you start playing. Hints add 5 minutes.</strong> </span><br />
+                    <strong>Start Playing when you are here:</strong>
+                </View>
                     <View>
                         <Image maxHeight="150px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/background-game-tybean-porch.jpg" />
                     </View>
-                    <View>
-                        <span className="small"> <strong>Remember, your time to complete the game is your score and is calculated when you start playing. Hints add 5 minutes. Start Playing when you are here.</strong></span></View>
+
                     <Button className="button" onClick={() => toggleIntro(isIntroVisible,setIsIntroVisible,setStopClock,gameTime, setGameTime, setRealTimeStart)}>tap to play (time will start)</Button>
                     <Button className="link-button " onClick={() => toggleMap(isMapVisible,setIsMapVisible)}>tap to see location on map</Button>
+                <View className="navigate-message">(please use buttons to navigate, back button doesn't work as well)</View>
                 </View>
                     </View>
                 <GameIntro isGameIntroVisible={isGameIntroVisible} setIsGameIntroVisible={setIsGameIntroVisible} numberOfPlayersError={numberOfPlayersError} numberOfPlayers={numberOfPlayers} setNumberOfPlayers={setNumberOfPlayers} teamName={teamName} setTeamName={setTeamName} gameStopNameArray={gameStopNameArray} setNumberOfPlayersError={setNumberOfPlayersError} setIsIntroVisible={setIsIntroVisible}/>
@@ -366,7 +371,7 @@ export function TybeanEasy() {
                 </View>
                     <View className={isMapVisible? "cover-screen show-gradual" : "hide"}>
                         <View textAlign="center" className="all-screen show">
-                                <Image maxHeight="300px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/tybean-map.jpg" />
+                                <Image maxHeight="300px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/tybean-map.png" />
                             <Link
                                 href="https://goo.gl/maps/GTDCK2z3Jr1xYonL8?coh=178571&entry=tt"
                                 isExternal={true}

@@ -17,7 +17,7 @@ import {gameScoreByGameID} from "../graphql/queries";
 import { format } from 'date-fns'
 import { useNavigate } from 'react-router-dom';
 
-export function LeaderBoard() {
+export function LeaderBoard2() {
     const [leaderBoard, setLeaderBoard] = useState([]);
     const [showAllTimeButton, setShowAllTimeButton] = useState(false);
     async function leaderBoardFunction(date) {
@@ -27,9 +27,6 @@ export function LeaderBoard() {
         (date !== "2021-04-01" )? setShowAllTimeButton(true) : setShowAllTimeButton(false);
         let filter = {
             completed: {
-                eq: true
-            },
-            firstTime: {
                 eq: true
             },
             createdAt: {
@@ -67,7 +64,7 @@ export function LeaderBoard() {
         <View className="main-container">
             <View className="main-content">
                 <Heading level={2} className="heading">LeaderBoard</Heading>
-                <View className="small">Only games played the first time will show on leaderboard.</View>
+                <View className="small">All completed games will be show on this Leader Board. <br />Pick your <strong>Display Name</strong> wisely!</View>
                 <Heading level={5} className="heading2">Game Name: {localStorage.getItem("gameName")}</Heading>
 
                 <Button className={showAllTimeButton ? "hide" : "button"} onClick={() => leaderBoardFunction(today.toLocaleDateString('en-CA'))}>

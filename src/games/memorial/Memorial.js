@@ -19,7 +19,7 @@ import {
 import {shallowEqual} from "../../components/ShallowEqual";
 import {NotesOpen, TopRight, GameIntro, TimeBlock, CommentWindow} from "../../components/sharedComponents";
 
-export function Thief1() {
+export function Memorial() {
     /* for all games */
     const [isAlertVisible, setIsAlertVisible] = useState(false);
     const [isWinnerScreenVisible, setIsWinnerScreenVisible] = useState(false);
@@ -78,54 +78,27 @@ export function Thief1() {
 
     /* end for all games */
     /* stop 1 - game specific */
-    const [clickTimeNow, setClickTimeNow] = useState();
-    const [clickTimeThen, setClickTimeThen] = useState();
-    const [clickCount, setClickCount] = useState();
-
-    function countClicks() {
-        var secondBetweenTwoDate = Math.abs((new Date().getTime() - clickTimeThen) / 1000);
-        console.log("diff: " + secondBetweenTwoDate);
-        let newDate = new Date();
-        setClickTimeNow(newDate);
-        if (clickCount === 0) {
-            // start timing
-            setClickTimeThen(new Date().getTime());
-            console.log("time now: " + clickTimeNow);
-            setClickCount(1);
-        } else if (secondBetweenTwoDate < 5 && clickCount > 0) {
-            console.log("add click");
-            setClickTimeThen(clickTimeNow);
-            setClickCount(clickCount + 1);
-        } else {
-            setClickCount(0);
-        }
-        if (clickCount > 4) {
-            setIsSafeVisible(!isSafeVisible);
-            setClickCount(0);
-        }
-        console.log("count Clicks: " + clickCount);
-    }
 
     /* guessing states and answers for safe - 4 words */
     const [guess1, setGuess1] = useState('');
     const [haveGuessed1, setHaveGuessed1] = useState(false);
     const [isWrong1, setIsWrong1] = useState(true);
-    const [answer1] = useState("bean");
+    const [answer1] = useState("ten");
 
     const [guess2, setGuess2] = useState('');
     const [haveGuessed2, setHaveGuessed2] = useState(false);
     const [isWrong2, setIsWrong2] = useState(true);
-    const [answer2] = useState("math");
+    const [answer2] = useState("3");
 
     const [guess3, setGuess3] = useState('');
     const [haveGuessed3, setHaveGuessed3] = useState(false);
     const [isWrong3, setIsWrong3] = useState(true);
-    const [answer3] = useState("ghirardelli");
+    const [answer3] = useState("6");
 
     const [guess4, setGuess4] = useState('');
     const [haveGuessed4, setHaveGuessed4] = useState(false);
     const [isWrong4, setIsWrong4] = useState(true);
-    const [answer4] = useState("inferno");
+    const [answer4] = useState("10");
 
     function checkAnswer(guess1Val, guess2Val, guess3Val, guess4Val) {
         setGuess1(guess1Val);
@@ -182,161 +155,118 @@ export function Thief1() {
                 setIsWrong4(true);
             }
         }
-        /* set wingame */
+        /* close safe windo */
         if (x == 4) {
-            console.log("stop 1 win game");
-            setGameComplete(true);
+            console.log("close safe window");
             /* set timeout to close window? */
-            /* isSafeInfoVisible */
+            /* isSafeInfoVisible - close in 3 seconds because solved*/
             setTimeout(() => {
                 setIsSafeInfoVisible(false);
-                setIsWinnerScreenVisible(true);
             }, 3000);
-            winGameFunction(true, gameScoreID, gameTime, gameStop, gameTimeTotal, setGameTimeTotal, gameTimeHint, numberOfPlayers, teamName, realTimeStart,
-                hintTime1, hintTime2, hintTime3, hintTime4);
+
         }
+    }
+
+    function winGame() {
+        console.log("stop 1 win game");
+        setGameComplete(true);
+        /* set timeout to close window? */
+        setTimeout(() => {
+            setIsWinnerScreenVisible(true);
+        }, 3000);
+        winGameFunction(true, gameScoreID, gameTime, gameStop, gameTimeTotal, setGameTimeTotal, gameTimeHint, numberOfPlayers, teamName, realTimeStart,
+            hintTime1, hintTime2, hintTime3, hintTime4);
     }
 
     /* game action */
     const [isDiaryVisible, setIsDiaryVisible] = useState(false);
-
     function toggleDiary() {
         isDiaryVisible ? setIsDiaryVisible(false) : setIsDiaryVisible(true);
     }
 
     const [isTornDiaryVisible, setIsTornDiaryVisible] = useState(false);
-
     function toggleTornDiary() {
         isTornDiaryVisible ? setIsTornDiaryVisible(false) : setIsTornDiaryVisible(true);
     }
 
     const [isSignVisible, setIsSignVisible] = useState(false);
-
     function toggleSign() {
         isSignVisible ? setIsSignVisible(false) : setIsSignVisible(true);
     }
 
-    const [isLegsAvailable, setIsLegsAvailable] = useState(false);
-    const [isLegsVisible, setIsLegsVisible] = useState(false);
-
-    function toggleLegs() {
-        isLegsVisible ? setIsLegsVisible(false) : setIsLegsVisible(true);
-        console.log("toggleLegs: " + isLegsVisible);
-    }
-
-    const [isNumBusAvailable, setIsNumBusAvailable] = useState(false);
-    const [isNumBusVisible, setIsNumBusVisible] = useState(false);
-
-    function toggleNumBus() {
-        isNumBusVisible ? setIsNumBusVisible(false) : setIsNumBusVisible(true);
-        console.log("toggleNumBus: " + isNumBusVisible);
-    }
-
-    const [isKnobMessageAvailable, setIsKnobMessageAvailable] = useState(false);
-
-    const [isKnobMessageVisible, setIsKnobMessageVisible] = useState(false);
-
-    function toggleKnobMessage() {
-        isKnobMessageVisible ? setIsKnobMessageVisible(false) : setIsKnobMessageVisible(true);
-        console.log("toggleKnobMessage: " + isKnobMessageVisible);
-    }
-
-    const [isSafeVisible, setIsSafeVisible] = useState(false);
-
     const [isSafeInfoVisible, setIsSafeInfoVisible] = useState(false);
-
-    function toggleSafe() {
+    function toggleSafeInfo() {
         isSafeInfoVisible ? setIsSafeInfoVisible(false) : setIsSafeInfoVisible(true);
-        console.log("toggleSafe: " + isSafeVisible);
     }
 
     /* backpack functions */
-    const [isLightOn, setIsLightOn] = useState(false);
-
+    /* backpack items: key */
+    /* key is used to open sandbag vault */
+    const [isKeyOn, setIsKeyOn] = useState(false);
     function showItemContents(value) {
         console.log("show contents value: " + value);
         switch (value) {
-            case 'light':
-                console.log("isLightOn 1: " + isLightOn);
-                setIsLightOn(!isLightOn);
-                lightFunctions(!isLightOn);
+            case 'key':
+                console.log("isKeyOn 1: " + isKeyOn);
+                setIsKeyOn(!isKeyOn);
                 // change image
                 for (var i = 0; i < gameBackpack.length; i++) {
-                    if (gameBackpack[i].key === "light") {
-                        console.log("turn on/off light - state");
-                        if (!isLightOn) {
-                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blacklight-using.png"
-                            localStorage.setItem("light", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blacklight-using.png");
+                    if (gameBackpack[i].key === "key") {
+                        console.log("turn on/off key - state");
+                        if (!isKeyOn) {
+                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-using.png"
+                            localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-using.png");
                         } else {
-                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blacklight-not-using.png"
-                            localStorage.setItem("light", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blacklight-not-using.png");
+                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png"
+                            localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png");
                         }
                     }
                 }
                 break;
-
             default:
         }
     }
-
-    const [isLightVisible, setIsLightVisible] = useState(true);
-
-    function lightFunctions(lightState) {
-        console.log("turn on/off light: " + isLightOn);
-        console.log("turn on/off lightstate: " + lightState);
-        if (lightState) {
-            console.log("Light is ON");
-            setIsLegsAvailable(true);
-            setIsNumBusAvailable(true);
-            setIsKnobMessageAvailable(true);
-        } else {
-            console.log("Light is Off");
-            setIsLegsAvailable(false);
-            setIsNumBusAvailable(false);
-            setIsKnobMessageAvailable(false);
-        }
-    }
-
-    function lightInBackpack() {
-        setIsLightVisible(false);
+    /* remove key from window and put in backpack and turn off on in backpack */
+    const [isKeyVisible, setIsKeyVisible] = useState(true);
+    function keyInBackpack() {
+        setIsKeyVisible(false);
         setIsAlertVisible(true);
-        setAlertText("Light is in backpack")
+        setAlertText('Key is in backpack')
         setTimeout(() => {
             setIsAlertVisible(false);
         }, 3000);
-        console.log("put black light in backpack");
-        localStorage.setItem("light", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blacklight-not-using.png");
+        console.log("put key in backpack");
+        localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png");
         /* check if there */
         if (gameBackpack.length > 0) {
             for (var i = 0; i < gameBackpack.length; i++) {
                 var bptest = true;
-                if (gameBackpack[i].key === "light") {
-                    console.log("light is already there");
+                if (gameBackpack[i].key === "key") {
+                    console.log("key is already there");
                     bptest = false;
                 }
             }
             if (bptest === true) {
-                console.log("push light to backpack");
+                console.log("push key to backpack");
                 gameBackpack.push({
-                    src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blacklight-not-using.png',
-                    key: 'light'
+                    src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png',
+                    key: 'key'
                 })
             }
         } else {
-            console.log("push light to backpack");
+            console.log("push key to backpack (1st item)");
             gameBackpack.push({
-                src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blacklight-not-using.png',
-                key: 'light'
+                src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png',
+                key: 'key'
             })
         }
     }
-
     /* end stop 1 - game specific */
     return (
         <View position="relative" height="100%">
             <View ariaLabel="Main Container" className="main-container">
                 <View className="image-holder image-short" ariaLabel="Image Holder"
-                      backgroundImage="url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/background-game-new.jpg')">
+                      backgroundImage="url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/memorial/background-game-memorial-park.jpg')">
                     {/* all games */}
                     <TopRight isHelpVisible={isHelpVisible} setIsHelpVisible={setIsHelpVisible}
                               areNotesVisible={areNotesVisible} setAreNotesVisible={setAreNotesVisible}
@@ -345,202 +275,98 @@ export function Thief1() {
                     {/* end all games */}
 
                     {/* static, non-clickable items */}
-                    <View ariaLabel="Back Picnic Table" className="back-picnic-table z-index-not-clicked">
-                        <Image
-                            src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blue-table-right.png"/>
-                    </View>
-                    <View ariaLabel="Tree Circle" className="tree-circle z-index-not-clicked">
-                        <Image
-                            src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/brown-circle.png"/>
-                    </View>
                     {/* end static, non-clickable items */}
 
-                    <View ariaLabel="Bottom Blue Table" className="bottom-blue-table clickable"
-                          onClick={() => toggleNumBus()}>
-                        <Image
-                            src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blue-table-left-writing.png"/>
-                    </View>
-                    <View className={isNumBusVisible ? "cover-screen show-gradual" : "all-screen hide"}>
-                        <View className="all-screen show">
-                            <View textAlign="center">
-                                <Button className="button small" onClick={() => setCluesFunction(
-                                    "  ** start clue (blue table) ==> Most Famous Cat Here <== end clue ** "
-                                    , clues, setAlertText, setIsAlertVisible, setClues)}>add clue below to
-                                    notes</Button>
-                            </View>
-                            <View className="blue-table-message">
-                                Most Famous Cat Here!
-                            </View>
-                            <View width="100%" textAlign='center' marginTop="5px">
-                                <Button className="button action-button small" onClick={() => toggleNumBus()}>tap to
-                                    close this window</Button>
-                            </View>
-                        </View>
-                    </View>
-
-                    <View ariaLabel="Red Table 2 chairs" className="red-table-2-chairs clickable z-index-behind"
-                          onClick={() => toggleLegs()}>
-                        <Image
-                            src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/red-table-left-writing.png"/>
-                    </View>
-                    <View className={isLegsVisible ? "cover-screen show-gradual" : "all-screen hide"}>
-                        <View className="all-screen show">
-                            <View textAlign="center">
-                                <Button className="button small" onClick={() => setCluesFunction(
-                                    "  ** start clue (red table) ==> What brand of chocolate does Tybean use in its Mocha? <== end clue ** "
-                                    , clues, setAlertText, setIsAlertVisible, setClues)}>add clue below to
-                                    notes</Button>
-                            </View>
-                            <View className="red-table-message">
-                                What brand of chocolate does Tybean use in its Mocha?
-                            </View>
-                            <View width="100%" textAlign='center' marginTop="5px">
-                                <Button className="button action-button small" onClick={() => toggleLegs()}>tap to close
-                                    this window</Button>
-                            </View>
-                        </View>
-                    </View>
-
-                    {isKnobMessageAvailable ? (
-                        <View ariaLabel="Red Table 4 chairs" className="red-table-4-chairs clickable"
-                              onClick={() => toggleKnobMessage()}>
-                            <Image
-                                src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/red-table-right.png"/>
-                        </View>
-                    ) : (<View ariaLabel="Red Table 4 chairs" className="red-table-4-chairs z-index-not-clicked">
-                        <Image
-                            src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/red-table-right.png"/>
-                    </View>)
-                    }
-                    <View
-                        className={isKnobMessageVisible && isKnobMessageAvailable ? "red-table-4-chairs z-index20 show" : "hide"}
-                        onClick={() => toggleKnobMessage()}>
-                        <Image
-                            src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/red-table-right-message.png"/>
-                    </View>
-
-                    <View className={isLightVisible ? "black-light clickable show" : "hide"}
-                          onClick={() => lightInBackpack()}>
-                        <Image
-                            src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blacklight.png"/>
-                    </View>
-
-                    <View ariaLabel="Torn Diary" className="torn-diary clickable" onClick={() => toggleTornDiary()}>
-                        <Image alt="torn diary"
-                               src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/torndiarypage.png"/>
-                    </View>
-                    <View className={isTornDiaryVisible ? "cover-screen show-gradual" : "all-screen hide"}>
-                        <View className="all-screen show">
-                            <View textAlign="center">
-                                <Button className="button small" onClick={() => setCluesFunction(
-                                    "  ** start clue (torn diary page)  ==> The Police were trying to find me, so I hid somewhere HOT. <== end clue ** "
-                                    , clues, setAlertText, setIsAlertVisible, setClues)}>add clue below to
-                                    notes</Button>
-                            </View>
-                            <View paddingTop="70px" paddingLeft="45px" className="torn-diary-big-jaycee big-width">
-                                The Police were trying<br/>
-                                to find me, <br/>
-                                so I hid somewhere<br/>
-                                HOT.
-                            </View>
-                            <View width="100%" textAlign='center' marginTop="5px">
-                                <Button className="button action-button small" onClick={() => toggleTornDiary()}>tap to
-                                    close this window</Button>
-                            </View>
-                        </View>
-                    </View>
-
-                    <View ariaLabel="Diary" className="diary clickable" onClick={() => toggleDiary()}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/diary.png"/>
-                    </View>
-                    <View className={isDiaryVisible ? "cover-screen show-gradual" : "all-screen hide"}>
-                        <View className="all-screen show">
-                            <View textAlign="center">
-                                <Button className="button small" onClick={() => setCluesFunction(
-                                    "  ** start clue (diary) ==> Dear Diary, I learned about a cat.  I saw the shops.  What was in that Mocha?  Where did I hide from Cops? <== end clue ** "
-                                    , clues, setAlertText, setIsAlertVisible, setClues)}>add clue below to
-                                    notes</Button>
-                            </View>
-                            <View className="diary-big-jaycee big-width">
-                                Dear Diary, <br/><br/>I learned about a cat.<br/><br/>I saw the shops.<br/><br/>What was
-                                in that Mocha?<br/><br/>Where did I hide from Cops?
-                            </View>
-                            <View width="100%" textAlign='center' marginTop="5px">
-                                <Button className="button action-button small" onClick={() => toggleDiary()}>tap to
-                                    close this window</Button>
-                            </View>
-                        </View>
-                    </View>
-
-                    <View ariaLabel="Tree with Sign" className="tree-with-sign clickable" onClick={() => toggleSign()}>
-                        <Image
-                            src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/tree-with-sign.png"/>
+                    <View ariaLabel="Playground Sign" className="bottom25 left0 absolute clickable"
+                          onClick={() => toggleSign()}>
+                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/memorial/playground-sign.png"/>
                     </View>
                     <View className={isSignVisible ? "cover-screen show-gradual" : "all-screen hide"}>
                         <View className="all-screen show">
                             <View textAlign="center">
                                 <Button className="button small" onClick={() => setCluesFunction(
-                                    "  ** start clue (hanging sign)  ==> Look at the Little shops on West side of Tybee Oaks. " +
-                                    "Go from South to North. What word do you see? Letter #6, Letter #3, Letter #14, Letter #4 <== end clue ** "
+                                    "  ** start clue (playground sign)  ==> line 1: Cyvqdv, jvcbjm qgl cjboyvtd |" +
+                                    " line 2: Cjwvjv sv dwngqyvj mbfm cjboyvtv | " +
+                                    " line 3: Jvcbjmv pfqyafwvj cjboyvtq. Cbj uqebj. <== end clue ** "
                                     , clues, setAlertText, setIsAlertVisible, setClues)}>add clue below to
                                     notes</Button>
                             </View>
-                            <View paddingTop="90px" className="hanging-sign-big-jaycee big-width">
-                                <View>Look at the Little shops on West <br/>side of Tybee Oaks.
-                                    <br/>Go from South to North. <br/>
-                                    What word do you see?
-                                    <br/><strong>Letter #6</strong><br/><strong>Letter #3</strong><br/><strong>Letter
-                                        #14</strong><br/><strong>Letter #4</strong>
+                                <View textAlign="center" padding="40px 0">
+                                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/memorial/playground-sign-big.png" />
                                 </View>
+                                <View width="100%" textAlign='center' marginTop="5px">
+                                    <Button className="button action-button small" onClick={() => toggleSign()}>tap to close
+                                        this window</Button>
+                                </View>
+                        </View>
+                    </View>
+
+                    {isKeyOn ? (
+                        <View ariaLabel="garbage can" className="bottom15 right0 absolute clickable"
+                              onClick={() => winGame()}>
+                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/memorial/garbage-can.png"/>
+                        </View>
+                    ) : (
+                        <View ariaLabel="garbage can" className="bottom15 right0 absolute z-index-not-clicked">
+                            <Image
+                                src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/memorial/garbage-can.png"/>
+                        </View>)
+                    }
+                    <View ariaLabel="garbage can" className={gameComplete ? "bottom15 right0 absolute clickable" : "hide"}>
+                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/memorial/garbage-can-baby.png"/>
+                    </View>
+
+                    {/* show closed safe if haven't guessed or guess is wrong */}
+                    { !isWrong1 && !isWrong2 && !isWrong3 && !isWrong4  ?   (
+                        <View>
+                            <View className="bottom10 left0 absolute clickable">
+                                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe-right-open.png" />
+                                <View margin="0 0 10px 15px" className={isKeyVisible ? "bottom10 left0 absolute clickable show" : "hide"}
+                                      onClick={()=>keyInBackpack()} >
+                                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key.png" />
+                                </View>
+
+                            </View>
+
+                        </View>
+                    ) : <View ariaLabel="Safe" className="bottom10 left0 absolute clickable" onClick={()=>toggleSafeInfo()}>
+                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe-right-closed.png"/>
+                    </View>
+                    }
+
+                    <View ariaLabel="Diary" className="bottom10 right0 absolute clickable" onClick={()=>toggleDiary()}>
+                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/diary.png" />
+                    </View>
+                    <View className={isDiaryVisible? "cover-screen show-gradual" : "all-screen hide"}>
+                        <View className="all-screen show">
+                            <View textAlign="center">
+                                <Button className="button small" onClick={()=>setCluesFunction(
+                                    "  ** start clue (diary) ==> Dear Diary, Answer 1: MVG (playground fun) | Answer 2: Slides that are blue" +
+                                    " | Answer 3: # of sides on bench surrounding tree< | Answer 4: # T's <br />on closest tennis court door <== end clue ** "
+                                    ,clues,setAlertText,setIsAlertVisible,setClues)}>add clue below to notes</Button>
+                            </View>
+                            <Button className="close-button" onClick={()=>toggleDiary()}>X</Button>
+                            <View className="diary-big-jaycee" lineHeight="16px">
+                                Dear Diary, <br /><br />Answer 1: MVG (playground fun)<br/><br/>Answer 2: Slides that are blue<br /><br />
+                                Answer 3: # of sides on <br />bench surrounding tree<br /><br />Answer 4: # T's <br />on closest tennis <br />court door
                             </View>
                             <View width="100%" textAlign='center' marginTop="5px">
-                                <Button className="button action-button small" onClick={() => toggleSign()}>tap to close
-                                    this window</Button>
+                                <Button className="button action-button small" onClick={()=>toggleDiary()}>tap to close this window</Button>
                             </View>
                         </View>
                     </View>
 
-                    <View ariaLabel="Palm Tree" className="palm-tree z-index-not-clicked">
-                        <Image
-                            src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/palm-tree.png"/>
-                    </View>
-                        {isSafeVisible ? (
-                            <View
-                                ariaLabel="Safe"
-                                className="safe clickable"
-                                onClick={() => toggleSafe()}>
-                                <Image
-                                    src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/safe-right-closed.png"/>
-                            </View>
-                        ) : null}
-                        {(!isWrong1 && !isWrong2 && !isWrong3 && !isWrong4) ? (
-                            <View ariaLabel="safe open" className="safe">
-                                <Image
-                                    src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe-right-open.png"/>
-                            </View>
-                        ) : null}
-                        {(!isWrong1 && !isWrong2 && !isWrong3 && !isWrong4) ? (
-                            <View ariaLabel="safe open jewels" className="safe">
-                                <Image
-                                    src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/safe-right-open-jewels.png"/>
-                            </View>
-                        ) : null}
 
-
-                    <View ariaLabel="Tybean Octopus" className="tybean-octopus clickable" onClick={() => countClicks()}>
-                        <Image
-                            src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/tybean-octopus.png"/>
-                    </View>
                 </View>{/* end Image Holder */}
 
                 {/* puzzle solving */}
                 <View className={isSafeInfoVisible ? "cover-screen show-gradual" : "all-screen hide"}>
                     <View className="all-screen show">
-                        <Button className="close-button" onClick={() => toggleSafe()}>X</Button>
+                        <Button className="close-button" onClick={() => toggleSafeInfo()}>X</Button>
                         <div>Try to Open Safe!</div>
                         <br/>
                         <TextField
-                            label="Word 1 (4 letters)"
+                            label="Answer 1 (3 letters)"
                             value={guess1}
                             onChange={(e) => checkAnswer(e.currentTarget.value, guess2, guess3, guess4)}/>
                         {(haveGuessed1 && isWrong1 && !showComment) ? (
@@ -552,7 +378,7 @@ export function Thief1() {
                         ) : null
                         }
                         <TextField
-                            label="Word 2 (4 letters)"
+                            label="Answer 2 (number)"
                             value={guess2}
                             onChange={(e) => checkAnswer(guess1, e.currentTarget.value, guess3, guess4)}/>
                         {
@@ -566,7 +392,7 @@ export function Thief1() {
                             ) : null
                         }
                         <TextField
-                            label="Word 3 (11 letters)"
+                            label="Answer 3 (number)"
                             value={guess3}
                             onChange={(e) => checkAnswer(guess1, guess2, e.currentTarget.value, guess4)}/>
                         {
@@ -580,7 +406,7 @@ export function Thief1() {
                             ) : null
                         }
                         <TextField
-                            label="Word 4 (7 letters)"
+                            label="Answer 4 (number)"
                             value={guess4}
                             onChange={(e) => checkAnswer(guess1, guess2, guess3, e.currentTarget.value)}/>
                         {
@@ -594,7 +420,7 @@ export function Thief1() {
                             ) : null
                         }
                         <View width="100%" textAlign='center' marginTop="5px">
-                            <Button className="button action-button small" onClick={() => toggleSafe()}>tap to close
+                            <Button className="button action-button small" onClick={() => toggleSafeInfo()}>tap to close
                                 this window</Button>
                             <br/><Button className={areNotesVisible ? "hide" : "link-button small"}
                                          onClick={() => toggleNotes(areNotesVisible, setAreNotesVisible)}>open
@@ -613,14 +439,13 @@ export function Thief1() {
                     </View>
                 </View>
 
-                {(!isWrong1 && !isWrong2 && !isWrong3 && !isWrong4 && !showComment) ? (
+                {(!isWrong1 && !isWrong2 && !isWrong3 && !isWrong4 & gameComplete && !showComment) ? (
                     <View className={isWinnerScreenVisible ? "show" : "hide"}>
                         <View className="black-box">
                             <h3>WINNER!</h3>
-                            <View>Now you can return all the items to their rightful owners!</View>
+                            <View>Yeah the baby is safe!</View>
                             <View marginTop="20px">
-                                <Image
-                                    src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/safe-right-open-jewels.png"/>
+                                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/memorial/garbage-can-baby.png"/>
                             </View>
                         </View>
 
@@ -645,49 +470,49 @@ export function Thief1() {
                                 <strong>Game Stop</strong>: <span className="font-small">{gameStop}</span>
                             </View>
                             <View paddingBottom="10px">
-                                <strong>How to Play:</strong> Click around - some items will disappear and then appear
+                                <strong>How to Play:</strong> Tap around - some items will disappear and then appear
                                 in
-                                your backpack. If it is in your backpack you may be able to use it by clicking on it.
+                                your backpack.<br /> <span className="italics">If it is in your backpack you may be able to use it by tapping on it.</span>
                             </View>
                             <View paddingBottom="10px">
-                                <strong>Goal for this stop:</strong> open the safe!
+                                <strong>Goal for this stop:</strong> Find the Baby!
                             </View>
                             <View paddingBottom="10px">
-                                <strong>Hints:</strong> Clicking on a Hint costs <span
+                                <strong>Hints:</strong> Tapping on a Hint costs <span
                                 className="italics"> 5 Minutes!</span> Use Hints if you really need them.
                             </View>
                             <Flex wrap="wrap">
                                 <Button className={(hintTime1 == 0) ? "button small" : "hide"}
                                         onClick={() => toggleHint1(setHintTime1, isHint1Visible, setIsHint1Visible, hintTime1, setGameTimeHint, gameTimeHint)}>Open
-                                    Hint (shops) - adds 5 minutes</Button>
+                                    Hint (playground fun) - adds 5 minutes</Button>
                                 <Button className={(hintTime1 == 0) ? "hide" : "button small"}
                                         onClick={() => toggleHint1(setHintTime1, isHint1Visible, setIsHint1Visible, hintTime1, setGameTimeHint, gameTimeHint)}>Open
-                                    Hint (shops) - free now</Button>
+                                    Hint (playground fun) - free now</Button>
                                 <Button className={(hintTime2 == 0) ? "button small" : "hide"}
                                         onClick={() => toggleHint2(setHintTime2, isHint2Visible, setIsHint2Visible, hintTime2, setGameTimeHint, gameTimeHint)}>Open
-                                    Hint (famous cat) - adds 5 minutes</Button>
+                                    Hint (slides) - adds 5 minutes</Button>
                                 <Button className={(hintTime2 == 0) ? "hide" : "button small"}
                                         onClick={() => toggleHint2(setHintTime2, isHint2Visible, setIsHint2Visible, hintTime2, setGameTimeHint, gameTimeHint)}>Open
-                                    Hint (famous cat) - free now</Button>
+                                    Hint (slides) - free now</Button>
                                 <Button className={(hintTime3 == 0) ? "button small" : "hide"}
                                         onClick={() => toggleHint3(setHintTime3, isHint3Visible, setIsHint3Visible, hintTime3, setGameTimeHint, gameTimeHint)}>Open
-                                    Hint (light) - adds 5 minutes</Button>
+                                    Hint (bench) - adds 5 minutes</Button>
                                 <Button className={(hintTime3 == 0) ? "hide" : "button small"}
                                         onClick={() => toggleHint3(setHintTime3, isHint3Visible, setIsHint3Visible, hintTime3, setGameTimeHint, gameTimeHint)}>Open
-                                    Hint (light) - free now</Button>
+                                    Hint (bench) - free now</Button>
                                 <Button className={(hintTime4 == 0) ? "button small" : "hide"}
                                         onClick={() => toggleHint4(setHintTime4, isHint4Visible, setIsHint4Visible, hintTime4, setGameTimeHint, gameTimeHint)}>Open
-                                    Hint (words for safe) - adds 5 minutes</Button>
+                                    Hint (door) - adds 5 minutes</Button>
                                 <Button className={(hintTime4 == 0) ? "hide" : "button small"}
                                         onClick={() => toggleHint4(setHintTime4, isHint4Visible, setIsHint4Visible, hintTime4, setGameTimeHint, gameTimeHint)}>Open
-                                    Hint (words for safe) - free now</Button>
+                                    Hint (door) - free now</Button>
                             </Flex>
                             <br/><br/>
                             <View className={isHint4Visible ? "cover-screen show-gradual" : "hide"}>
                                 <View className="winner show">
-                                    <strong>Hint for somewhere order of numbers for safe:</strong>
-                                    <br/><br/>The diary had a little rhyme. This rhyme tells you the order of the words.
-                                    For example - what is the name of the cat you learned about? That is the first word.
+                                    <strong>Hint for T's on Tennis court door:</strong>
+                                    <br/><br/>There are 2 signs on closest tennis court door.<br /><br />One says "Courts For Tennis or Pickleball only....." that sign has 5 T's.<br />
+                                    <br />The other one says "Pets Prohibited on the Tennis Courts" <br />and that sign has 5 T's.<br /><br />
                                     <View width="100%" textAlign='center'>
                                         <Button className="button action-button"
                                                 onClick={() => toggleHint4(setHintTime4, isHint4Visible, setIsHint4Visible, hintTime4, setGameTimeHint, gameTimeHint)}>tap
@@ -697,11 +522,10 @@ export function Thief1() {
                             </View>
                             <View className={isHint3Visible ? "cover-screen show-gradual" : "hide"}>
                                 <View className="winner show">
-                                    <strong>Hint for light (in backpack):</strong>
-                                    <br/><br/>Once you click on light it should go into your backpack. This is a
-                                    blacklight and when you
-                                    use it (click it in backpack to turn on) and click on objects you will see more
-                                    clues.
+                                    <strong>Hint for sides on Bench:</strong>
+                                    <br/><br/>There is a bench near the playground entrance.<br /><br />
+                                    It is blue and goes all around the tree. <br />
+                                    It has 6 sides.
                                     <br/><br/>
                                     <View width="100%" textAlign='center'>
                                         <Button className="button action-button"
@@ -712,8 +536,9 @@ export function Thief1() {
                             </View>
                             <View className={isHint2Visible ? "cover-screen show-gradual" : "hide"}>
                                 <View className="winner show">
-                                    <strong>Hint for famous cat:</strong>
-                                    <br/><br/>The famous cat has an awesome name for the Tybean Art & Coffee Bar (Bean).<br/><br/>
+                                    <strong>Hint for slides that are blue:</strong>
+                                    <br/><br/>There are many slides on the playground but only 3 are blue.<br/><br/>
+                                    There are 2 right next to each other and one that is covered.<br /><br />
                                     <View width="100%" textAlign='center'>
                                         <Button className="button action-button"
                                                 onClick={() => toggleHint2(setHintTime2, isHint2Visible, setIsHint2Visible, hintTime2, setGameTimeHint, gameTimeHint)}>tap
@@ -723,14 +548,19 @@ export function Thief1() {
                             </View>
                             <View className={isHint1Visible ? "cover-screen show-gradual" : "hide"}>
                                 <div className="winner show">
-                                    <strong>Hint for shops clue:</strong>
-                                    <br/><br/>There are many little shops along the west side of the Tybee Oaks area -
-                                    Inferno, Glazed and Confused are in the north part.
-                                    The southern most shop on the west side is "Tipsy Mermaid Art", then "granny
-                                    flounders", then "Casey Jones Photography", then "Rachel Vogel Designs".
-                                    The 6th letter of the first (most southern) shop is "M". The 3rd letter of the 2nd
-                                    shop is "A". The 14th letter of the third shop is "T". And the 4th letter of the 4th
-                                    shop is "H".<br/><br/>
+                                    <strong>Hint for playground fun:</strong>
+                                    <br/><br/>The clue in the diary for playground fun is: "MVG"<br/>
+                                    This is a simple cipher that substitutes one letter for another A=Q and Q=A. <br /><br /> The key is the clue on the playground sign.
+                                    <br />line 1: Cyvqdv, jvcbjm qgl cjboyvtd
+                                    <br />line 2: Cjwvjv sv dwngqyvj mbfm cjboyvtv
+                                    <br />line 3: Jvcbjmv pfqyafwvj cjboyvtq. Cbj uqebj.<br /><br />
+                                    on real sign:
+                                    <br />line 1: Please report any problems
+                                    <br />line 2: Priere de signaler tout probleme
+                                    <br />line 3: Reporte cualquier problema. Por favor.<br /><br />
+                                    "M" is in "problems" on first line, it is "T".<br />
+                                    "V" is third letter on first line, it is "E".<br />
+                                    "G" is in third word on first line, it is "N"<br /><br />
                                     <View width="100%" textAlign='center'>
                                         <Button className="button action-button"
                                                 onClick={() => toggleHint1(setHintTime1, isHint1Visible, setIsHint1Visible, hintTime1, setGameTimeHint, gameTimeHint)}>tap
@@ -754,15 +584,15 @@ export function Thief1() {
                 <View className={isIntroVisible ? "cover-screen show-gradual" : "hide"}>
                     <View ariaLabel="stop 1 intro" textAlign="center" className="all-screen show">
                         <h3>Stop 1 Intro</h3>
-                        <h3>Game Goals: Find The Thief's Hiding Place</h3>
-                        <View marginBottom="5px">Location: 1 Stop at Tybean Coffee Bar</View>
+                        <h3>Game Goals: Find The Baby!</h3>
+                        <View marginBottom="5px">Location: 1 Stop at Memorial Park</View>
                         <View>
                             <span className="small"> <strong>Remember, your time to complete the game is your score and is calculated when you start playing. Hints add 5 minutes.</strong> </span><br />
                             <strong>Start Playing when you are here:</strong>
                         </View>
                         <View>
                             <Image maxHeight="150px"
-                                   src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/background-game-tybean-porch.jpg"/>
+                                   src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/memorial/gameImage-memorial-park.jpg"/>
                         </View>
                         <Button className="button"
                                 onClick={() => toggleIntro(isIntroVisible, setIsIntroVisible, setStopClock, gameTime, setGameTime, setRealTimeStart)}>tap
@@ -783,8 +613,8 @@ export function Thief1() {
                 <View className={isMapVisible ? "cover-screen show-gradual" : "hide"}>
                     <View textAlign="center" className="all-screen show">
                         <Image maxHeight="300px"
-                               src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/tybean-map.png"/>
-                        <Link href="https://goo.gl/maps/GTDCK2z3Jr1xYonL8?coh=178571&entry=tt" isExternal={true}>link to
+                               src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/memorial/memorial-map.png"/>
+                        <Link href="https://goo.gl/maps/HEAuNi2rCoFr6UAL7?coh=178571&entry=tt" isExternal={true}>link to
                             google maps</Link><br/>
                         <Button className="button action-button"
                                 onClick={() => toggleHelp(isMapVisible, setIsMapVisible)}>tap to close map</Button>

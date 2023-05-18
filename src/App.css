@@ -70,6 +70,7 @@ a {
   z-index: 125;
 }
 .z-index-not-clicked {
+  opacity: .6;
   z-index: 10;
 }
 .z-index-behind {
@@ -112,8 +113,8 @@ a {
 }
 
 .clickable {
-  background-color: rgb(255, 255, 0, .15);
-  border-radius: 40%;
+ /* background-color: rgb(255, 255, 0, .15);
+  border-radius: 40%;*/
   z-index:20;
 }
 .inputNumBox {
@@ -186,6 +187,11 @@ a {
   .flex-games {
     justify-content: center !important;
   }
+}
+.navigate-message {
+  font-size:.7em;
+  color: #0e0e0e;
+  padding: 3px;
 }
 .small {
   font-size:.8em;
@@ -620,6 +626,36 @@ a {
   bottom:50%;
   left:0%;
 }
+.bottom15-left0 {
+  max-width: 200px;
+  position:absolute;
+  bottom:15%;
+  left:20%;
+}
+.absolute {
+  position: absolute;
+}
+.bottom5{
+  bottom:5%;
+}
+.bottom15 {
+  bottom:15%;
+}
+.bottom25 {
+  bottom:25%;
+}
+.bottom10 {
+  bottom:10%;
+}
+.left0 {
+  left:20%;
+}
+.left45 {
+  left:45%;
+}
+.right0 {
+  right:20%;
+}
 @media (max-width:480px) {
   .red-table-2-chairs {
     max-width: 170px;
@@ -627,9 +663,19 @@ a {
     bottom:59%;
     left:0%;
   }
+  .left0 {
+    left:0%;
+  }
+  .right0 {
+    right:0%;
+  }
+  .left45 {
+    left:45%;
+  }
 }
 
-.bottom-blue-table {
+
+.bottom-blue-table, .bottom5-left0 {
   max-width: 200px;
   position:absolute;
   bottom:5%;
@@ -683,7 +729,7 @@ a {
   margin: auto;
   position:absolute;
   bottom:63%;
-  left:50%;
+  left:30%;
 }
 .black-box {
   position:absolute;

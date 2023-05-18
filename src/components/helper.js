@@ -473,6 +473,9 @@ export function removeLocalStorage() {
         localStorage.removeItem("realTimeEnd");
         localStorage.removeItem("gameNotes");
         localStorage.removeItem("clues");
+        localStorage.removeItem("gameDescriptionP");
+        localStorage.removeItem("gameDescriptionH2");
+        localStorage.removeItem("gameDescriptionH3");
 
 
 }

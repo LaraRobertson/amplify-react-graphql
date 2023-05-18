@@ -131,7 +131,7 @@ export function Layout() {
 
     return (
         <View>
-            {(route === 'authenticated') && ((location.pathname === '/')||(location.pathname === '/leaderboard')||(location.pathname === '/myStats')) ? (
+            {(route === 'authenticated') && ((location.pathname === '/')||(location.pathname === '/leaderboard')||(location.pathname === '/leaderboard2')||(location.pathname === '/myStats')) ? (
             <View className="main-container">
                 <View className="main-content">
                     <header>
@@ -147,12 +147,13 @@ export function Layout() {
                             Play the ultimate outdoor adventure game!
                         </Heading>
                         Grab your phone, round up your family and friends, and head outside for a fun-filled day of problem-solving, exploration, and excitement!
+                            <br />(<span className="italics">games are played at locations below</span> )
                         </View>
                         <hr />
                     </View>):null}
 
                     <View padding=".5rem 0">
-                        {location.pathname === '/leaderboard' ?
+                        {(location.pathname === '/leaderboard' || location.pathname === '/leaderboard2') ?
                             ( <View><Button marginBottom="10px" className="button" onClick={() => navigate('/')}>Back to Game List</Button>
                             | <Button className="button" onClick={() => myStats()}>My Stats</Button> </View>
                         ) : null}
@@ -170,7 +171,7 @@ export function Layout() {
                 </View>
             </View>
             ): null}
-            {(route !== 'authenticated') && ((location.pathname === '/')||(location.pathname === '/login')||(location.pathname === '/leaderboard')) ? (
+            {(route !== 'authenticated') && ((location.pathname === '/')||(location.pathname === '/login')||(location.pathname === '/leaderboard')||(location.pathname === '/leaderboard2')) ? (
               <View className="main-container">
                   <View className="main-content">
                       <header>
@@ -192,7 +193,7 @@ export function Layout() {
                              </View><hr/>
                           </View>):null}
                      <View padding="15px 0 0 0">
-                            {location.pathname === '/login' || location.pathname === '/leaderboard' ? (
+                            {(location.pathname === '/login' || location.pathname === '/leaderboard' || location.pathname === '/leaderboard2') ? (
                                 <Button marginBottom="10px" className="button" onClick={() => navigate('/')}>Back to Game List</Button>
                             ) : (
                                 <View>
@@ -218,7 +219,7 @@ export function Layout() {
 
             <ErrorComponent />
             <Outlet />
-            {(location.pathname === '/')||(location.pathname === '/login')||(location.pathname === '/leaderboard') ? (
+            {(location.pathname === '/')||(location.pathname === '/login')||(location.pathname === '/leaderboard')||(location.pathname === '/leaderboard2') ? (
                 <View className="main-container">
                     <View className="main-content">
                         <View padding="40px 10px 0 10px"> © 2023 EscapeOut.Games</View>
