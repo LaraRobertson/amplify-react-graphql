@@ -14,7 +14,7 @@ import {
     toggleHint1,
     toggleHint2,
     toggleHint3,
-    toggleHint4,
+    toggleHint4, setGameNotesFunction,
 } from "../../components/helper";
 import {shallowEqual} from "../../components/ShallowEqual";
 import {NotesOpen, TopRight, GameIntro, TimeBlock, CommentWindow} from "../../components/sharedComponents";
@@ -431,9 +431,8 @@ export function Memorial() {
                                 <View className="green"> Right Answer! <br/>(window will close in 3 seconds)</View>
                             </View>
                         ) : (
-                            <NotesOpen areNotesVisible={areNotesVisible} clues={clues} setClues={setClues}
-                                       setAreNotesVisible={setAreNotesVisible} toggleNotes={toggleNotes}
-                                       gameNotes={gameNotes} setGameNotes={setGameNotes}/>
+                            <NotesOpen areNotesVisible={areNotesVisible} clues={clues} setClues={setClues} setAreNotesVisible={setAreNotesVisible} toggleNotes={toggleNotes} gameNotes={gameNotes} setGameNotes={setGameNotes} setGameNotesFunction={setGameNotesFunction}/>
+
                         )
                         }
                     </View>
@@ -510,6 +509,8 @@ export function Memorial() {
                             <br/><br/>
                             <View className={isHint4Visible ? "cover-screen show-gradual" : "hide"}>
                                 <View className="winner show">
+                                    <Button className="close-button"
+                                            onClick={() => toggleHint3(setHintTime3, isHint3Visible, setIsHint3Visible, hintTime3, setGameTimeHint, gameTimeHint)}>X</Button>
                                     <strong>Hint for T's on Tennis court door:</strong>
                                     <br/><br/>There are 2 signs on closest tennis court door.<br /><br />One says "Courts For Tennis or Pickleball only....." that sign has 5 T's.<br />
                                     <br />The other one says "Pets Prohibited on the Tennis Courts" <br />and that sign has 5 T's.<br /><br />
@@ -536,6 +537,8 @@ export function Memorial() {
                             </View>
                             <View className={isHint2Visible ? "cover-screen show-gradual" : "hide"}>
                                 <View className="winner show">
+                                    <Button className="close-button"
+                                            onClick={() => toggleHint2(setHintTime2, isHint2Visible, setIsHint2Visible, hintTime2, setGameTimeHint, gameTimeHint)}>X</Button>
                                     <strong>Hint for slides that are blue:</strong>
                                     <br/><br/>There are many slides on the playground but only 3 are blue.<br/><br/>
                                     There are 2 right next to each other and one that is covered.<br /><br />
@@ -548,6 +551,7 @@ export function Memorial() {
                             </View>
                             <View className={isHint1Visible ? "cover-screen show-gradual" : "hide"}>
                                 <div className="winner show">
+                                    <Button className="close-button" onClick={() => toggleHint1(setHintTime1, isHint1Visible, setIsHint1Visible, hintTime1, setGameTimeHint, gameTimeHint)}>X</Button>
                                     <strong>Hint for playground fun:</strong>
                                     <br/><br/>The clue in the diary for playground fun is: "MVG"<br/>
                                     This is a simple cipher that substitutes one letter for another A=Q and Q=A. <br /><br /> The key is the clue on the playground sign.
@@ -622,9 +626,8 @@ export function Memorial() {
                 </View>
             </View> {/* end main-container */}
             <TimeBlock gameTimeHint={gameTimeHint} realTimeStart={realTimeStart}/>
-            <NotesOpen areNotesVisible={areNotesVisible} clues={clues} setClues={setClues}
-                       setAreNotesVisible={setAreNotesVisible} toggleNotes={toggleNotes} gameNotes={gameNotes}
-                       setGameNotes={setGameNotes}/>
+            <NotesOpen areNotesVisible={areNotesVisible} clues={clues} setClues={setClues} setAreNotesVisible={setAreNotesVisible} toggleNotes={toggleNotes} gameNotes={gameNotes} setGameNotes={setGameNotes} setGameNotesFunction={setGameNotesFunction}/>
+
         </View>
     )
 }

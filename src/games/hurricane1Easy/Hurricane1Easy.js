@@ -14,7 +14,7 @@ import {
     toggleHint1,
     toggleHint2,
     toggleHint3,
-    toggleHint4,
+    toggleHint4, setGameNotesFunction,
 } from "../../components/helper";
 import {shallowEqual} from "../../components/ShallowEqual";
 import {NotesOpen, TopRight, GameIntro, TimeBlock, CommentWindow} from "../../components/sharedComponents";
@@ -447,9 +447,8 @@ export function Hurricane1Easy() {
                             <View className="green"> Right Answer! <br/>(window will close in 3 seconds)</View>
                         </View>
                     ) : (
-                        <NotesOpen areNotesVisible={areNotesVisible} clues={clues} setClues={setClues}
-                                   setAreNotesVisible={setAreNotesVisible} toggleNotes={toggleNotes}
-                                   gameNotes={gameNotes} setGameNotes={setGameNotes}/>
+                        <NotesOpen areNotesVisible={areNotesVisible} clues={clues} setClues={setClues} setAreNotesVisible={setAreNotesVisible} toggleNotes={toggleNotes} gameNotes={gameNotes} setGameNotes={setGameNotes} setGameNotesFunction={setGameNotesFunction}/>
+
                     )
                     }
             </View>
@@ -488,9 +487,8 @@ export function Hurricane1Easy() {
                         onClick={() => toggleNotes(areNotesVisible, setAreNotesVisible)}>open
                         notes</Button>
                         </View>
-                        <NotesOpen areNotesVisible={areNotesVisible} clues={clues} setClues={setClues}
-                                   setAreNotesVisible={setAreNotesVisible} toggleNotes={toggleNotes}
-                                   gameNotes={gameNotes} setGameNotes={setGameNotes}/>
+                        <NotesOpen areNotesVisible={areNotesVisible} clues={clues} setClues={setClues} setAreNotesVisible={setAreNotesVisible} toggleNotes={toggleNotes} gameNotes={gameNotes} setGameNotes={setGameNotes} setGameNotesFunction={setGameNotesFunction}/>
+
                     </View>
 
                 )}
@@ -659,9 +657,8 @@ export function Hurricane1Easy() {
             </View>
         </View> {/* end main-container */}
             <TimeBlock gameTimeHint={gameTimeHint} realTimeStart={realTimeStart}/>
-            <NotesOpen areNotesVisible={areNotesVisible} clues={clues} setClues={setClues}
-                       setAreNotesVisible={setAreNotesVisible} toggleNotes={toggleNotes} gameNotes={gameNotes}
-                       setGameNotes={setGameNotes}/>
+            <NotesOpen areNotesVisible={areNotesVisible} clues={clues} setClues={setClues} setAreNotesVisible={setAreNotesVisible} toggleNotes={toggleNotes} gameNotes={gameNotes} setGameNotes={setGameNotes} setGameNotesFunction={setGameNotesFunction}/>
+
 
         </View>
     )
