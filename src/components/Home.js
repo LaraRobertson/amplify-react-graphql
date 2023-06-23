@@ -52,6 +52,65 @@ export function Home() {
     const { route } = useAuthenticator((context) => [context.route]);
     const navigate = useNavigate();
 
+    /* useEffects */
+    /*
+    So if you want to perform an action immediately after setting state on a state variable,
+    we need to pass a callback function to the setState function (use [state variable] at end).
+    But in a functional component no such callback is allowed with useState hook.
+    In that case we can use the useEffect hook to achieve it.
+     */
+    useEffect(() => {
+        console.log("***useEffect***:  navigate to game from localstorage - only on mount because empty []");
+        const gameNameSaved = localStorage.getItem("gameName");
+        if (gameNameSaved !== null && gameNameSaved != '') {
+            console.log("go to page: " + gameNameSaved);
+            setGameNameLink(true);
+            setGameName(gameNameSaved);
+        } else {
+            setGameNameLink(false);
+            setGameName('');
+        }
+
+    }, []);
+
+    useEffect(() => {
+        console.log("***useEffect***:  fetchGames()");
+        fetchGames();
+    }, []);
+
+    useEffect(() => {
+        /* get userAuthEmail from authentication */
+        console.log("***useEffect***:  getUserAuthInfo()");
+        getUserAuthInfo();
+    }, [])
+
+    useEffect(() => {
+        /* get game ids from usergameplay */
+        console.log("***useEffect***:  fetchUserGamePlay()");
+        fetchUserGamePlay();
+    }, [userAuth])
+
+    useEffect(() => {
+        console.log("***useEffect***: userAuth.email: " + userAuth.email);
+    });
+    useEffect(() => {
+        console.log("***useEffect***: userDB: " + userDB);
+    });
+
+    useEffect(() => {
+        console.log("***useEffect***: gamesIDUser: " + gamesIDUser);
+    });
+
+    useEffect(() => {
+        console.log("***useEffect***: gamesTybee: " + gamesTybee);
+    });
+
+    useEffect(() => {
+        /* check table to make sure user is there, add free games if needed */
+        console.log("***useEffect***: fetchUserDB() + email: " + userAuth.email);
+        fetchUserDB();
+    }, [userAuth]);
+
     function showGameDetail(cardID) {
        /* setIsGameDetailVisible(true);
         setGameIndex(gameIndex);
@@ -464,64 +523,6 @@ export function Home() {
         setGamesTybee(gamesFromAPI);
     }
 
-    /* useEffects */
-    /*
-    So if you want to perform an action immediately after setting state on a state variable,
-    we need to pass a callback function to the setState function (use [state variable] at end).
-    But in a functional component no such callback is allowed with useState hook.
-    In that case we can use the useEffect hook to achieve it.
-     */
-    useEffect(() => {
-        console.log("***useEffect***:  navigate to game from localstorage - only on mount because empty []");
-        const gameNameSaved = localStorage.getItem("gameName");
-        if (gameNameSaved !== null && gameNameSaved != '') {
-            console.log("go to page: " + gameNameSaved);
-            setGameNameLink(true);
-            setGameName(gameNameSaved);
-        } else {
-            setGameNameLink(false);
-            setGameName('');
-        }
-
-    }, []);
-
-    useEffect(() => {
-        console.log("***useEffect***:  fetchGames()");
-        fetchGames();
-    }, []);
-
-    useEffect(() => {
-        /* get userAuthEmail from authentication */
-        console.log("***useEffect***:  getUserAuthInfo()");
-        getUserAuthInfo();
-    }, [])
-
-    useEffect(() => {
-        /* get game ids from usergameplay */
-        console.log("***useEffect***:  fetchUserGamePlay()");
-        fetchUserGamePlay();
-    }, [userAuth])
-
-    useEffect(() => {
-        console.log("***useEffect***: userAuth.email: " + userAuth.email);
-    });
-    useEffect(() => {
-        console.log("***useEffect***: userDB: " + userDB);
-    });
-
-    useEffect(() => {
-        console.log("***useEffect***: gamesIDUser: " + gamesIDUser);
-    });
-
-    useEffect(() => {
-        console.log("***useEffect***: gamesTybee: " + gamesTybee);
-    });
-
-    useEffect(() => {
-        /* check table to make sure user is there, add free games if needed */
-        console.log("***useEffect***: fetchUserDB() + email: " + userAuth.email);
-        fetchUserDB();
-    }, [userAuth]);
 
     const HeadingComponent = props => {
         console.log("props.userName: " + props);
