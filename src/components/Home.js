@@ -595,31 +595,30 @@ export function Home() {
                             {gamesTybee.map((game,index) => (
                                 <Card style={divStyle(game.gameImage)} className="game-card" variation="elevated"  key={game.id || game.gameName} >
                                     <View className="inner-game-card">
-                                        <View className="game-card-full"><Text className="game-card-header">{game.gameName} <span className="small">({game.gameType})</span></Text></View>
-                                        <Flex>
-                                        <View className="column-50">
+                                        <View className="game-card-full">
+                                            <Text className="game-card-header">{game.gameName} <span className="small">({game.gameType})</span></Text>
+                                        </View>
+                                        <View className="game-card-full">
                                             <Text color="white" ><span className="italics">Location</span>: {game.gameLocationPlace}</Text>
-                                            <Text color="white"><span className="italics">City</span>: {game.gameLocationCity}</Text>
-
                                         </View>
-                                        <View className="column-50">
+                                        <View className="game-card-full">
                                             <Text color="white"><span className="italics">Stops</span>: {game.gameStop.items.length}</Text>
-                                                {(gamesIDUser.includes(game.id) || game.gameType === "free" || game.gameType === "free-test") ?
-                                                    (<div>
-                                                        <Button className="go-to-game-button small" onClick={() => goToGame({gameName:game.gameName,gameID:game.id,gameLocationCity:game.gameLocationCity,gameLink:game.gameLink,gameDescriptionP:game.gameDescriptionP,gameDescriptionH3:game.gameDescriptionH3,gameDescriptionH2:game.gameDescriptionH2})}>
-                                                            go to game page
-                                                        </Button>
-                                                    </div>) :
-                                                    (<div></div>)
-                                                }
                                         </View>
-                                        </Flex>
-                                        <View textAlign="center">
-                                            <Button id={"mapButtonShow" + game.id} className="link-button small show" margin="5px auto" onClick={() => showMapDetail(game.id)} >Show Map Details</Button>
-                                            <Button id={"mapButtonHide" + game.id} className="link-button small hide" margin="5px auto" onClick={() => hideMapDetail(game.id)} >Hide Map Details</Button>
+                                        <View className="game-card-full">
+                                            <Text color="white"><span className="italics">City</span>: {game.gameLocationCity}</Text>
                                         </View>
                                     </View>
                                     <Flex justifyContent="center">
+                                        <View textAlign="center">
+                                            {(gamesIDUser.includes(game.id) || game.gameType === "free" || game.gameType === "free-test") ?
+                                                (<div>
+                                                    <Button className="button button-small button-center show" onClick={() => goToGame({gameName:game.gameName,gameID:game.id,gameLocationCity:game.gameLocationCity,gameLink:game.gameLink,gameDescriptionP:game.gameDescriptionP,gameDescriptionH3:game.gameDescriptionH3,gameDescriptionH2:game.gameDescriptionH2})}>
+                                                        Go To Game
+                                                    </Button>
+                                                </div>) :
+                                                (<div></div>)
+                                            }
+                                        </View>
                                         <View>
                                             {(game.gameLink == "memorial")? (
                                                 <Button className="button button-small button-center show" onClick={() => leaderBoard2({gameName:game.gameName,gameID:game.id})}>
@@ -629,23 +628,22 @@ export function Home() {
                                                 Go To Leader Board
                                             </Button>)}
                                         </View>
-                                        <View>
-                                            <Button id={"buttonShow" + game.id} className="button button-small button-center show" onClick={() => showGameDetail(game.id)} >Show Game Details</Button>
-                                            <Button id={"buttonHide" + game.id} className="button button-small button-center hide" onClick={() => hideGameDetail(game.id)} >Hide Game Details</Button>
-                                        </View>
                                     </Flex>
                                     <View className="game-card-full">
-                                        <View id={game.id} className="hide">
+                                        <View id={game.id} >
                                             <Heading level={"6"} className="heading" margin="0">{game.gameDescriptionH2}</Heading>
                                             <Heading level={"7"} className="heading"  margin="0">{game.gameDescriptionH3}</Heading>
                                             {game.gameDescriptionP}
                                             <br /><span className="italics">Tap on Leader Board to see average time.</span>
                                         </View>
+                                        <View textAlign="center">
+                                            <Button id={"mapButtonShow" + game.id} className="link-button small show" margin="5px auto" onClick={() => showMapDetail(game.id)} >Show Small Map</Button>
+                                            <Button id={"mapButtonHide" + game.id} className="link-button small hide" margin="5px auto" onClick={() => hideMapDetail(game.id)} >Hide Map</Button>
+                                        </View>
                                     </View>
                                     <View className="game-card-full">
                                         <View id={"map" + game.id} className="hide">
                                             <Image maxHeight="300px" src={game.gameStopString} />
-
                                         </View>
                                     </View>
                                 </Card>
@@ -663,22 +661,25 @@ export function Home() {
                             {gamesTybee.map((game,index) => (
                                 <Card style={divStyle(game.gameImage)} className="game-card" variation="elevated" key={game.id || game.gameName}>
                                     <View className="inner-game-card">
-                                        <View className="game-card-full"><Text  className="game-card-header">{game.gameName} <span className="small">({game.gameType})</span></Text></View>
-                                        <Flex>
-                                            <View className="column-50">
-                                                <Text color="white" ><span className="italics">Location</span>: {game.gameLocationPlace}</Text>
-                                                <Text color="white"><span className="italics">City</span>: {game.gameLocationCity}</Text>
-                                            </View>
-                                            <View className="column-50">
-                                                <Text color="white"><span className="italics">Stops</span>: {game.gameStop.items.length}</Text>
-                                            </View>
-                                        </Flex>
-                                        <View textAlign="center">
-                                            <Button id={"mapButtonShow" + game.id} className="link-button small show" margin="5px auto" onClick={() => showMapDetail(game.id)} >Show Map Details</Button>
-                                            <Button id={"mapButtonHide" + game.id} className="link-button small hide" margin="5px auto" onClick={() => hideMapDetail(game.id)} >Hide Map Details</Button>
+                                        <View className="game-card-full">
+                                            <Text className="game-card-header">{game.gameName} <span className="small">({game.gameType})</span></Text>
+                                        </View>
+                                        <View className="game-card-full">
+                                            <Text color="white" ><span className="italics">Location</span>: {game.gameLocationPlace}</Text>
+                                        </View>
+                                        <View className="game-card-full">
+                                            <Text color="white"><span className="italics">Stops</span>: {game.gameStop.items.length}</Text>
+                                        </View>
+                                        <View className="game-card-full">
+                                            <Text color="white"><span className="italics">City</span>: {game.gameLocationCity}</Text>
                                         </View>
                                     </View>
                                         <Flex justifyContent="center">
+                                            <View textAlign="center">
+                                                <Button className="button button-small button-center show" onClick={() => navigate('/login')}>
+                                                    Login to Play Game
+                                                </Button>
+                                            </View>
                                             <View>
                                                 {(game.gameLink == "memorial")? (
                                                     <Button className="button button-small button-center show" onClick={() => leaderBoard2({gameName:game.gameName,gameID:game.id})}>
@@ -688,17 +689,19 @@ export function Home() {
                                                     Go To Leader Board
                                                 </Button>)}
                                             </View>
-                                            <View>
-                                                <Button id={"buttonShow" + game.id} className="button button-small button-center show" onClick={() => showGameDetail(game.id)} >Show Game Details</Button>
-                                                <Button id={"buttonHide" + game.id} className="button button-small button-center hide" onClick={() => hideGameDetail(game.id)} >Hide Game Details</Button>
-                                            </View>
+
+
                                         </Flex>
                                         <View className="game-card-full">
-                                             <View id={game.id} className="hide">
+                                             <View id={game.id} >
                                                  <Heading level={"6"} className="heading" margin="0">{game.gameDescriptionH2}</Heading>
                                                  <Heading level={"7"} className="heading"  margin="0">{game.gameDescriptionH3}</Heading>
                                                  {game.gameDescriptionP}
                                                  <br /><span className="italics">Tap on Leader Board to see average time.</span>
+                                            </View>
+                                            <View textAlign="center">
+                                                <Button id={"mapButtonShow" + game.id} className="link-button small show" margin="5px auto" onClick={() => showMapDetail(game.id)} >Show Small Map</Button>
+                                                <Button id={"mapButtonHide" + game.id} className="link-button small hide" margin="5px auto" onClick={() => hideMapDetail(game.id)} >Hide Map</Button>
                                             </View>
                                         </View>
                                     <View className="game-card-full">
