@@ -37,7 +37,7 @@ if (isLocalhost) {
 
     awsExports.oauth.redirectSignOut = signOutURI[0]
 
-} else if (window.location.hostname === 'https://dev.play.escapeout.games/'
+} else if (window.location.hostname === 'dev.play.escapeout.games'
     // Add Your Application Domain here. For Example:
     // https://{env}.{appID}.amplifyapp.com/
 ) {
