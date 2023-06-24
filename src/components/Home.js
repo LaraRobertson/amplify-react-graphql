@@ -690,8 +690,6 @@ export function Home() {
                                                     Go To Leader Board
                                                 </Button>)}
                                             </View>
-
-
                                         </Flex>
                                         <View className="game-card-full">
                                              <View id={game.id} >

@@ -48,7 +48,7 @@ if (isLocalhost) {
 
 } else {
 
-    console.alert('This is not possible')
+    console.log('This is not possible')
 
 }
 
