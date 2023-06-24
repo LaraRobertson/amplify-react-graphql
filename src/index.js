@@ -47,9 +47,7 @@ if (isLocalhost) {
     awsExports.oauth.redirectSignOut = signOutURI[1]
 
 } else {
-
     console.log('This is not possible')
-
 }
 
 //Check if you are in localhost or production
