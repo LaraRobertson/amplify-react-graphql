@@ -519,7 +519,7 @@ export function Home() {
          }*/
         /*}*/
         return (
-            <View marginBottom="10px">Welcome {props.user.username} | {props.user.attributes.email}</View>
+            <View marginBottom="10px">Welcome {props.user.attributes.email}</View>
         )
     }
     const divStyle = (src) => ({
@@ -576,7 +576,7 @@ export function Home() {
 
                         <a id="tybeeIsland"></a>
                         <Heading level={"5"} className="heading">
-                            Games: Tybee Island, GA
+                            Game List: Tybee Island, GA
                         </Heading>
                         <Flex className="flex-games">
                             {gamesTybee.map((game,index) => (
@@ -642,7 +642,7 @@ export function Home() {
                     <View>
                         <a id="tybeeIsland"></a>
                         <Heading level={"5"} className="heading" marginTop="15px">
-                            Games: Tybee Island, GA
+                            Game List: Tybee Island, GA
                         </Heading>
                         <Flex className="flex-games">
                             {gamesTybee.map((game,index) => (

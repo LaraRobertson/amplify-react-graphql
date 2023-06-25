@@ -115,7 +115,7 @@ export function Layout() {
         return (
             <View padding=".5rem 0">
                 {props.user.attributes.email === "lararobertson70@gmail.com" ? (<Button className="button" marginLeft="10px" onClick={() => navigate('/admin')}> =>Admin</Button>
-                ) : (<div>props.user.attributes.email: {props.user.attributes.email}</div>)
+                ) : (<div></div>)
                 }
             </View>
         )
@@ -192,7 +192,7 @@ export function Layout() {
                                         Account</Button><br />
                                   Questions?&nbsp;
                                     <Link
-                                        href="https://escapeout.games/#faqs"
+                                        href="https://escapeout.games/faqs/"
                                         color="white"
                                         isExternal={true}
                                         textDecoration="underline"
@@ -212,7 +212,24 @@ export function Layout() {
             {(location.pathname === '/')||(location.pathname === '/login')||(location.pathname === '/leaderboard')||(location.pathname === '/leaderboard2') ? (
                 <View className="main-container">
                     <View className="main-content">
-                        <View padding="40px 10px 0 10px"> © 2023 EscapeOut.Games</View>
+                        <View padding="40px 10px 10px 10px" textAlign="center"> © 2023 EscapeOut.Games<br />
+                            <Link
+                                href="https://escapeout.games/privacy-policy/"
+                                color="white"
+                                isExternal={true}
+                                textDecoration="underline"
+                            >
+                                Privacy Policy
+                            </Link> |
+                            <Link
+                                href="https://escapeout.games/terms-of-service/"
+                                color="white"
+                                isExternal={true}
+                                textDecoration="underline"
+                            >
+                                Terms of Service
+                            </Link>
+                        </View>
                     </View>
                 </View>
             ) : null}
