@@ -533,7 +533,7 @@ export function Home() {
          }*/
         /*}*/
         return (
-            <View marginBottom="10px">Welcome {props.userName.username} | {props.userName.email}</View>
+            <View marginBottom="10px">Welcome {props.userName.email}</View>
         )
     }
     const divStyle = (src) => ({

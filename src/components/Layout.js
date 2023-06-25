@@ -164,7 +164,7 @@ export function Layout() {
                         {location.pathname === '/myStats' ?
                             (<Button marginBottom="10px" className="button" onClick={() => navigate('/')}>Back to Game List</Button>)
                             :null}
-                        {userAuth.email === "lararobertson70@gmail.com" ? (<Button className="button" marginLeft="10px" onClick={() => navigate('/admin')}> =>Admin</Button>
+                        {userAuth.email === "lararobertson70@gmail.com" ? (<Button className="link-button small show" marginLeft="10px" onClick={() => navigate('/admin')}>Admin</Button>
                         ) : (<div></div>)
                         }
                     </View>
