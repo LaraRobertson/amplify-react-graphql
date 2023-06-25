@@ -6,6 +6,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import awsExports from "./aws-exports";
 
+// from https://www.prplbx.com/resources/blog/social-login-with-aws-amplify-guide/
 //Check if you are in localhost or production
 
 const isLocalhost = Boolean(
@@ -36,7 +37,7 @@ if (isLocalhost) {
 
     awsExports.oauth.redirectSignOut = signOutURI[0]
 
-} else if (window.location.hostname === 'play.escapeout.games'
+} else if (window.location.hostname === 'dev.play.escapeout.games'
     // Add Your Application Domain here. For Example:
     // https://{env}.{appID}.amplifyapp.com/
 ) {
@@ -54,7 +55,6 @@ if (isLocalhost) {
 //Check if you are in localhost or production
 
 //Then Configure Resources
-
 Amplify.configure(awsExports);
 
 /* can run this to check timing - places timestamp on each console.log comment */
@@ -75,7 +75,7 @@ Amplify.configure(awsExports);
 
 
 /* use for changing things in theme like fonts, colors, etc */
-/* if used tokens but disabled for now */
+/* if used tokes but disabled for now */
 const theme = {
     name: 'custom-theme',
     tokens: {
