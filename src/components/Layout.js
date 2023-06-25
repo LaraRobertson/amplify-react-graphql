@@ -8,12 +8,12 @@ import {updateGameStats as updateGameStatsMutation} from "../graphql/mutations";
 import {removeLocalStorage} from "./helper";
 
 export function Layout() {
-    const [userAuth, setUserAuth] = useState({});
     const [errorInternet, setErrorInternet] = useState(false);
-
-    const { route, signOut } = useAuthenticator((context) => [
+    // hook below is only reevaluated when `user` changes
+    const { route, signOut, user } = useAuthenticator((context) => [
         context.route,
         context.signOut,
+        context.user
     ]);
 
     async function logOut() {
@@ -38,7 +38,6 @@ export function Layout() {
         };
         const apiGameStatsUpdate = await API.graphql({ query: updateGameStatsMutation, variables: {input: newGameStats}});*/
         /* end save game stats */
-        setUserAuth({});
         signOut();
     }
 
@@ -90,21 +89,7 @@ export function Layout() {
             </View>
         )
     }
-    async function getUserAuthInfo() {
-        Auth.currentAuthenticatedUser({
-            bypassCache: false  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
-        }).then(user => {
-            console.log("getUserAuthInfo()");
-            console.log(" user?.signInUserSession?.idToken?.payload?.email (useEffect-user): " + user?.signInUserSession?.idToken?.payload?.email);
-            setUserAuth({
-                email: user?.signInUserSession?.idToken?.payload?.email
-            });
-            // setUserAuthEmail(user?.signInUserSession?.idToken?.payload?.email);
-        })
-            .catch(err => {
-                console.log(err)
-            });
-    }
+
 
     /* useEffects */
     /*
@@ -113,22 +98,28 @@ export function Layout() {
     But in a functional component no such callback is allowed with useState hook.
     In that case we can use the useEffect hook to achieve it.
      */
-    useEffect(() => {
-        /* check table to make sure user is there, add free games if needed */
-        console.log("***useEffect***: fetchUserInfofromDB() + email: " + userAuth.email);
-    }, [userAuth]);
 
-    useEffect(() => {
-        /* get userAuthEmail from authentication */
-        console.log("***useEffect***:  getUserAuthInfo()");
-        getUserAuthInfo();
-    }, [])
 
     const location = useLocation();
     const navigate = useNavigate();
     // const { tokens } = useTheme();
     console.log("location: " + location.pathname);
-
+    const NavigationButtons = (props) => {
+        console.log("props.user.attributes.email: " + props.user.attributes.email);
+        /*for (const key in props.user) {
+             console.log(`${key}: ${props.user[key]}`);
+            for (const key1 in props.user[key]) {
+                console.log(`(key1)/${key1}: ${props.user[key][key1]}`);
+            }
+         }*/
+        return (
+            <View padding=".5rem 0">
+                {props.user.attributes.email === "lararobertson70@gmail.com" ? (<Button className="button" marginLeft="10px" onClick={() => navigate('/admin')}> =>Admin</Button>
+                ) : (<div>props.user.attributes.email: {props.user.attributes.email}</div>)
+                }
+            </View>
+        )
+    }
     return (
         <View>
             {(route === 'authenticated') && ((location.pathname === '/')||(location.pathname === '/leaderboard')||(location.pathname === '/leaderboard2')||(location.pathname === '/myStats')) ? (
@@ -152,6 +143,7 @@ export function Layout() {
                         <hr />
                     </View>):null}
 
+                    <NavigationButtons user={user} />
                     <View padding=".5rem 0">
                         {(location.pathname === '/leaderboard' || location.pathname === '/leaderboard2') ?
                             ( <View><Button marginBottom="10px" className="button" onClick={() => navigate('/')}>Back to Game List</Button>
@@ -164,9 +156,7 @@ export function Layout() {
                         {location.pathname === '/myStats' ?
                             (<Button marginBottom="10px" className="button" onClick={() => navigate('/')}>Back to Game List</Button>)
                             :null}
-                        {userAuth.email === "lararobertson70@gmail.com" ? (<Button className="button" marginLeft="10px" onClick={() => navigate('/admin')}> =>Admin</Button>
-                        ) : (<div></div>)
-                        }
+
                     </View>
                 </View>
             </View>

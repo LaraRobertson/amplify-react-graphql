@@ -11,9 +11,24 @@ const awsmobile = {
     "aws_cognito_region": "us-east-1",
     "aws_user_pools_id": "us-east-1_ZnvZyq1h3",
     "aws_user_pools_web_client_id": "1hm4e48pjvt6ks2cj1h9b8mf6",
-    "oauth": {},
+    "oauth": {
+        "domain": "p2kr7z0grf5f-staging.auth.us-east-1.amazoncognito.com",
+        "scope": [
+            "phone",
+            "email",
+            "openid",
+            "profile",
+            "aws.cognito.signin.user.admin"
+        ],
+        "redirectSignIn": "http://localhost:3000/,https://play.escapeout.games/",
+        "redirectSignOut": "http://localhost:3000/,https://play.escapeout.games/",
+        "responseType": "code"
+    },
+    "federationTarget": "COGNITO_USER_POOLS",
     "aws_cognito_username_attributes": [],
-    "aws_cognito_social_providers": [],
+    "aws_cognito_social_providers": [
+        "GOOGLE"
+    ],
     "aws_cognito_signup_attributes": [
         "EMAIL"
     ],

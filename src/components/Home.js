@@ -44,12 +44,14 @@ export function Home() {
     const [gameName,setGameName] = useState("");
     const [userDB, setUserDB] = useState({});
     const [gamesIDUser, setGamesIDUser] = useState([]);
-    const [userAuth, setUserAuth] = useState({});
     const [isGameDetailVisible, setIsGameDetailVisible] = useState(false);
     const [gameIndex, setGameIndex] = useState();
 
     //const {tokens} = useTheme();
-    const { route } = useAuthenticator((context) => [context.route]);
+    const { route, user } = useAuthenticator((context) => [
+        context.route,
+        context.user
+    ]);
     const navigate = useNavigate();
 
     function showGameDetail(cardID) {
@@ -205,7 +207,7 @@ export function Home() {
         /* check if gameStats entry */
         let filter = {
             userEmail: {
-                eq: userAuth.email
+                eq: user.attributes.email
             }
         };
         const apiGameStats =  await API.graphql({
@@ -216,7 +218,7 @@ export function Home() {
             console.log("need to add game stat");
             const data = {
                 gameID: gameDetails.gameID,
-                userEmail: userAuth.email,
+                userEmail: user.attributes.email,
                 gameName: gameDetails.gameName,
                 gameLocationCity: gameDetails.gameLocationCity,
                 type: "gameStats"
@@ -344,21 +346,6 @@ export function Home() {
             removeLocalStorage();
         }
     }
-    async function getUserAuthInfo() {
-        Auth.currentAuthenticatedUser({
-            bypassCache: false  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
-        }).then(user => {
-            console.log("getUserAuthInfo()");
-            console.log(" user?.signInUserSession?.idToken?.payload?.email (useEffect-user): " + user?.signInUserSession?.idToken?.payload?.email);
-            setUserAuth({
-                email: user?.signInUserSession?.idToken?.payload?.email,
-                username: user.username
-            });
-            localStorage.setItem("email",user?.signInUserSession?.idToken?.payload?.email);
-        }).catch(err => {
-            console.log(err)
-        });
-    }
 
     async function fetchGames() {
         console.log("fetchGames");
@@ -390,21 +377,21 @@ export function Home() {
     }
 
     async function fetchUserDB() {
-        console.log("fetchUserDB - email: " + userAuth.email);
-        console.log("fetchUserDB - username: " + userAuth.username);
+        console.log("fetchUserDB - email: " + user.attributes.email);
+        console.log("fetchUserDB - username: " + user.username);
         /* check if user in database, if not create user and games */
         try {
             const apiUserDB =  await API.graphql({
                 query: usersByEmail,
-                variables: { email: userAuth.email}
+                variables: { email: user.attributes.email}
             });
             console.log("apiUserDB: " + JSON.stringify(apiUserDB.data.usersByEmail.items[0]));
             /* if nothing is returned (check if username changed??)  */
             if (apiUserDB.data.usersByEmail.items.length === 0) {
                 console.log("need to add user");
                 const data = {
-                    userName: userAuth.username,
-                    email: userAuth.email,
+                    userName: user.username,
+                    email: user.attributes.email,
                 };
                 await API.graphql({
                     query: createUser,
@@ -490,21 +477,13 @@ export function Home() {
         fetchGames();
     }, []);
 
-    useEffect(() => {
-        /* get userAuthEmail from authentication */
-        console.log("***useEffect***:  getUserAuthInfo()");
-        getUserAuthInfo();
-    }, [])
 
     useEffect(() => {
         /* get game ids from usergameplay */
         console.log("***useEffect***:  fetchUserGamePlay()");
         fetchUserGamePlay();
-    }, [userAuth])
+    }, [user])
 
-    useEffect(() => {
-        console.log("***useEffect***: userAuth.email: " + userAuth.email);
-    });
     useEffect(() => {
         console.log("***useEffect***: userDB: " + userDB);
     });
@@ -519,12 +498,20 @@ export function Home() {
 
     useEffect(() => {
         /* check table to make sure user is there, add free games if needed */
-        console.log("***useEffect***: fetchUserDB() + email: " + userAuth.email);
-        fetchUserDB();
-    }, [userAuth]);
+        console.log("***useEffect***: fetchUserDB() + email: " + user);
+        /*for (const key in user) {
+             console.log(`${key}: ${user[key]}`);
+            for (const key1 in user[key]) {
+                console.log(`(key1)/${key1}: ${user[key][key1]}`);
+            }
+         }*/
+        if (user !== undefined && user !== null) {
+            fetchUserDB();
+        }
+    }, [user]);
 
     const HeadingComponent = props => {
-        console.log("props.userName: " + props);
+        console.log("props.user: " + props.user);
         /*for (const key in props) {
             console.log(`${key}: ${ props[key]}`);*/
         /* for (const key1 in dataTest[key]) {
@@ -532,7 +519,7 @@ export function Home() {
          }*/
         /*}*/
         return (
-            <View marginBottom="10px">Welcome {props.userName.username} | {props.userName.email}</View>
+            <View marginBottom="10px">Welcome {props.user.username} | {props.user.attributes.email}</View>
         )
     }
     const divStyle = (src) => ({
@@ -557,7 +544,7 @@ export function Home() {
                     </Flex>
                 {route === 'authenticated' ? (
                     <View>
-                        <HeadingComponent userName = {userAuth} />
+                        <HeadingComponent user = {user} />
                         {(localStorage.getItem("gameID") !== null &&
                             localStorage.getItem("gameName") !== null &&
                             localStorage.getItem("gameLink") !== null &&
