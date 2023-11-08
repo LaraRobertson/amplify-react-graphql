@@ -155,7 +155,7 @@ export function Memorial() {
                 setIsWrong4(true);
             }
         }
-        /* close safe windo */
+        /* close safe window */
         if (x == 4) {
             console.log("close safe window");
             /* set timeout to close window? */

@@ -35,6 +35,8 @@ export function Hurricane1() {
     const [gameStopName,setGameStopName] = useState(0);
     /* end set in local storage too */
 
+
+
     const [stopClock, setStopClock] = useState(true);
     const [numberOfPlayers, setNumberOfPlayers] = useState('');
     const [numberOfPlayersError, setNumberOfPlayersError] = useState('');
@@ -1305,6 +1307,8 @@ function setGuess2Stop4Function1() {
                             <div>Matthews DOB <br />(4 digit YEAR) + <br /><br />First Girl Scout Troop Here +<br /><br />Infantry that valued Girl Scouting in 1937.</div>
                         </View>
                     </View>
+
+                    {/* end stop 2 */}
                     {(isKeyOn && isKeyUsed && !isWrong2Stop2 && !isWrong1Stop2)?
                         (
                             <View className="winner fade-in">
