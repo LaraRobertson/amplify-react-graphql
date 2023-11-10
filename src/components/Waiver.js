@@ -1,13 +1,15 @@
-import React, {useEffect, useState} from "react"
-import {Button, Heading, View, Image, TextAreaField, Text, Alert, Flex} from '@aws-amplify/ui-react';
+import React from "react"
+import {Button, Heading, View, Alert, Flex, useAuthenticator} from '@aws-amplify/ui-react';
 import {useNavigate} from "react-router-dom";
 import {API} from "aws-amplify";
-import {gameStatsByUserEmail,gameStatsSortedByGameName} from "../graphql/queries";
-import {createGameStats, createGameScore, updateGameStats as updateGameStatsMutation} from "../graphql/mutations";
+import {gameStatsSortedByGameName} from "../graphql/queries";
+import {createGameScore} from "../graphql/mutations";
 import {goHomeQuit} from "./helper";
 
 export function Waiver() {
-
+    const { user } = useAuthenticator((context) => [
+        context.user
+    ]);
     const navigate = useNavigate();
 
     async function agreeToWaiverFunction() {
@@ -15,13 +17,12 @@ export function Waiver() {
         localStorage.setItem("agreeToWaiver", true);
         /* update database */
         console.log ("get Game Stats");
-        const userEmail = localStorage.getItem("email");
         const gameName = localStorage.getItem("gameName");
         const gameLink = localStorage.getItem("gameLink");
         console.log("gameName: " + gameName);
         let filter = {
             userEmail: {
-                eq: userEmail
+                eq: user.attributes.email
             }
         };
         const apiGameStats = await API.graphql({
@@ -30,15 +31,8 @@ export function Waiver() {
         });
         const gamesStatsFromAPI = apiGameStats.data.gameStatsSortedByGameName.items[0];
 
-        const gameStatsValues = {
-            waiverSigned: true
-        }
-        const newGameStats = {
-            id: gamesStatsFromAPI.id,
-            gameStates: JSON.stringify(gameStatsValues)
-        };
         localStorage.setItem("gameStatsID",gamesStatsFromAPI.id);
-        const apiGameStatsUpdate = await API.graphql({ query: updateGameStatsMutation, variables: {input: newGameStats}});
+        //const apiGameStatsUpdate = await API.graphql({ query: updateGameStatsMutation, variables: {input: newGameStats}});
 
         /* create gameScore */
         const data = {

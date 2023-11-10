@@ -1,5 +1,5 @@
 //App.js
-import {Authenticator, useAuthenticator} from '@aws-amplify/ui-react';
+import {Authenticator} from '@aws-amplify/ui-react';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { RequireAuth } from './RequireAuthLogin';
