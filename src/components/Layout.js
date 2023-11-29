@@ -1,8 +1,9 @@
 // components/Layout.js
 // components/Layout.js
 import React, {useEffect, useState} from 'react';
-import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import {useAuthenticator, Link, Button, useTheme, Heading, View, Image, Authenticator,Card, Text, TextField, TextAreaField} from '@aws-amplify/ui-react';
+import { Outlet, useNavigate, NavLink as ReactRouterLink, useLocation } from 'react-router-dom';
+import {useAuthenticator, Link, Button, useTheme, Heading, View, Image, Flex, Card, Text, Tabs, TabItem,
+    ThemeProvider, createTheme, TextField, TextAreaField} from '@aws-amplify/ui-react';
 import {API, Auth} from "aws-amplify";
 import {updateGameStats as updateGameStatsMutation} from "../graphql/mutations";
 import {removeLocalStorage} from "./helper";
@@ -99,7 +100,13 @@ export function Layout() {
     In that case we can use the useEffect hook to achieve it.
      */
 
-
+    const css = `.custom-card-class {
+  border: none; background: #262626; 
+}.topLink {text-decoration:none;color:#B8CEF9!important}.topNav{ background:#000;
+  position: fixed;
+  z-index:1;
+  top: 0;
+  width: 100%; max-width:900px;text-align:center; padding-bottom:10px }`;
     const location = useLocation();
     const navigate = useNavigate();
     // const { tokens } = useTheme();
@@ -120,14 +127,25 @@ export function Layout() {
             </View>
         )
     }
+
+    const TabGroup = () => {
+        return (
+          <View>
+                <Tabs>
+                <TabItem title="Tab 1"><View>item 1</View></TabItem>
+                    <TabItem title="Tab 2"><View>item 2</View></TabItem>
+                </Tabs>
+            </View>
+        )
+    }
     return (
         <View>
             {(route === 'authenticated') && ((location.pathname === '/')||(location.pathname === '/leaderboard')||(location.pathname === '/leaderboard2')||(location.pathname === '/myStats')) ? (
             <View className="main-container">
-                <View className="main-content">
+                <View className="main-content" padding="100px 0 0 0">
                     <header>
                         <View marginTop="10px">
-                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/logo-escapeout-dark2.png" />
+                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/new-logo-light-smaller.png" />
                         </View>
                     </header>
                     <hr />
@@ -163,44 +181,101 @@ export function Layout() {
             ): null}
             {(route !== 'authenticated') && ((location.pathname === '/')||(location.pathname === '/login')||(location.pathname === '/leaderboard')||(location.pathname === '/leaderboard2')) ? (
               <View className="main-container">
-                  <View className="main-content">
-                      <header>
+                  <a id="howtoplay"></a>
+                  <View className="main-content" padding="80px 0 0 0">
+                  <View className="topNav">
+                          <Flex justifyContent="center">
                           <View marginTop="10px">
-                              <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/logo-escapeout-dark2.png" />
+                              <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/new-logo-light-smaller.png" />
                           </View>
-                      </header>
-                      <hr />
+                          </Flex>
+
+                          <Flex justifyContent="center">
+                              <ReactRouterLink to="/login" className="topLink" component={Link}>Login</ReactRouterLink>
+                              <Link
+                                  href="#howtoplay"
+                                  className="topLink"
+                              >
+                                 How to Play
+                              </Link>
+                              <Link
+                                  href="#tybeeIsland"
+                                  className="topLink"
+                              >
+                                  Game List
+                              </Link>
+                          </Flex>
+                        </View>
+
                       {location.pathname != '/login' ? (
-                          <View>
-                             <View padding="0 0 15px 0">
-                                    <Heading
-                                        level={5}
-                                        className="heading"
-                                        paddingTop="10px">
-                                        Games are under development
-                                    </Heading>
-                                    <div>Please email us at info@escapeout.games if you have questions.</div>
-                             </View><hr/>
+                          <View padding="10px 10px 40px 10px">
+                              <style>{css}</style>
+                              <Heading
+                                  level={4}
+                                  textAlign="center"
+                                  padding="20px 20px 10px 20px">
+                                  Go Outside and play a <span className="blue">Puzzling Game</span> with your family and friends!
+                              </Heading>
+
+                              <View>
+                                  <Tabs>
+                                      <TabItem title="How to Play">
+                                          <View>
+                                              <ul>
+                                                  <li>Our games are played on location with your smartphone. </li>
+                                                  <li>Gameplay has elements of geocaching, scavenger hunts, and even escape room style puzzles.</li>
+                                                  <li>Gameplay is limited to a certain walkable area like a public park or restaurant and surrounding area.</li>
+                                                  <li>All information needed to solve puzzles in game are located within that area.</li>
+                                                  <li>Once you start playing your time starts - time ends when you complete the game. Your time is your score.</li>
+
+                                                  <li>View the leaderboard on individual game to see best times.</li>
+                                              </ul>
+
+
+                                          </View>
+                                      </TabItem>
+                                      <TabItem title="Group Play">
+                                          <View>
+                                              <ol>
+                                                  <li>Login or create an account with your smartphone and go to location.</li>
+                                                  <li>Select game.</li>
+                                                  <li>Hit Play and select a display name</li>
+                                                  <li>Start game and solve the puzzles.</li>
+                                              </ol>
+                                          </View>
+                                      </TabItem>
+                                      <TabItem title="Levels">
+                                          <View>
+                                              Games have different levels -
+                                                  <ul>
+                                                      <li><strong>level 1</strong> is more like a scavenger hunt.</li>
+                                                      <li>Attention to detail, knowing a little math, and understanding orientation, like north, south, etc is useful.</li>
+                                                  </ul>
+                                          </View>
+                                      </TabItem>
+                                      <TabItem title="How long?"><View>item 2</View></TabItem>
+                                  </Tabs>
+                              </View>
+                              <View>
+                                  <View paddingBottom="10px">Feel free to Test:</View>
+                                  <Button marginBottom="10px" className="button bouncy" onClick={() => navigate('/login')}>Login or Create an
+                                      Account</Button><br />
+                                  Questions?&nbsp;
+                                  <Link
+                                      href="https://escapeout.games/faqs/"
+                                      color="white"
+                                      isExternal={true}
+                                      textDecoration="underline"
+                                  >
+                                      Visit FAQs
+                                  </Link>
+                              </View>
+                              <a id="tybeeIsland"></a>
                           </View>):null}
                      <View padding="15px 0 0 0">
                             {(location.pathname === '/login' || location.pathname === '/leaderboard' || location.pathname === '/leaderboard2') ? (
                                 <Button marginBottom="10px" className="button" onClick={() => navigate('/')}>Back to Game List</Button>
-                            ) : (
-                                <View>
-                                    <View paddingBottom="10px">Feel free to Test:</View>
-                                    <Button marginBottom="10px" className="button bouncy" onClick={() => navigate('/login')}>Login or Create an
-                                        Account</Button><br />
-                                  Questions?&nbsp;
-                                    <Link
-                                        href="https://escapeout.games/faqs/"
-                                        color="white"
-                                        isExternal={true}
-                                        textDecoration="underline"
-                                    >
-                                        Visit FAQs
-                                    </Link>
-                                </View>
-                            )
+                            ) : null
                             }
                      </View>
 

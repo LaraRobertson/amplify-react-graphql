@@ -533,8 +533,8 @@ export function Home() {
         )} else {
         return (
             <View className="main-container">
-                <View className="main-content">
 
+                <View className="main-content" >
                     <Flex
                         wrap="wrap"
                         gap="1rem"
@@ -574,7 +574,7 @@ export function Home() {
                             justifyContent="flex-start">Cities: <a href="#tybeeIsland">Tybee Island</a>
                         </Flex>
 
-                        <a id="tybeeIsland"></a>
+
                         <Heading level={"5"} className="heading">
                             Game List: Tybee Island, GA
                         </Heading>
@@ -640,7 +640,6 @@ export function Home() {
                     </View>
                 ): (
                     <View>
-                        <a id="tybeeIsland"></a>
                         <Heading level={"5"} className="heading" marginTop="15px">
                             Game List: Tybee Island, GA
                         </Heading>
