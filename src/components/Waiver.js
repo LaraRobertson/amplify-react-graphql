@@ -1,7 +1,7 @@
 import React from "react"
 import {Button, Heading, View, Alert, Flex, useAuthenticator} from '@aws-amplify/ui-react';
 import {useNavigate} from "react-router-dom";
-import {API} from "aws-amplify";
+//import {API} from "aws-amplify";
 import {gameStatsSortedByGameName} from "../graphql/queries";
 import {createGameScore} from "../graphql/mutations";
 import {goHomeQuit} from "./helper";

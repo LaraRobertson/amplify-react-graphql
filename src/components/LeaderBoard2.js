@@ -12,7 +12,7 @@ import {
     TextAreaField,
     useAuthenticator
 } from '@aws-amplify/ui-react';
-import {API, Auth} from "aws-amplify";
+//import {API, Auth} from "aws-amplify";
 import {gameScoreByGameID} from "../graphql/queries";
 import { format } from 'date-fns'
 import { useNavigate } from 'react-router-dom';

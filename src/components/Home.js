@@ -12,7 +12,7 @@ import {
     Grid,
     useAuthenticator
 } from '@aws-amplify/ui-react';
-import {API, Auth} from "aws-amplify";
+//import {API, Auth} from "aws-amplify";
 import {
     listGames,
     gamesByDate,
