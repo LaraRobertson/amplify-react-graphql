@@ -2,9 +2,9 @@
 // components/Layout.js
 import React, {useEffect, useState} from 'react';
 import { Outlet, useNavigate, NavLink as ReactRouterLink, useLocation } from 'react-router-dom';
-import {useAuthenticator, Link, Button, useTheme, Heading, View, Image, Flex, Card, Text, Tabs,
+import {useAuthenticator, Link, Button, useTheme, Heading, View, Image, Flex, Card, Text, Tabs, TabItem,
     ThemeProvider, createTheme, TextField, TextAreaField} from '@aws-amplify/ui-react';
-//import {API, Auth} from "aws-amplify";
+import {API, Auth} from "aws-amplify";
 import {updateGameStats as updateGameStatsMutation} from "../graphql/mutations";
 import {removeLocalStorage} from "./helper";
 
@@ -128,6 +128,16 @@ export function Layout() {
         )
     }
 
+    const TabGroup = () => {
+        return (
+          <View>
+                <Tabs>
+                <TabItem title="Tab 1"><View>item 1</View></TabItem>
+                    <TabItem title="Tab 2"><View>item 2</View></TabItem>
+                </Tabs>
+            </View>
+        )
+    }
     return (
         <View>
             {(route === 'authenticated') && ((location.pathname === '/')||(location.pathname === '/leaderboard')||(location.pathname === '/leaderboard2')||(location.pathname === '/myStats')) ? (
@@ -209,7 +219,7 @@ export function Layout() {
 
                               <View>
                                   <Tabs>
-                                      <Tabs.Item title="How to Play">
+                                      <TabItem title="How to Play">
                                           <View>
                                               <ul>
                                                   <li>Our games are played on location with your smartphone. </li>
@@ -223,8 +233,8 @@ export function Layout() {
 
 
                                           </View>
-                                      </Tabs.Item>
-                                      <Tabs.Item title="Group Play">
+                                      </TabItem>
+                                      <TabItem title="Group Play">
                                           <View>
                                               <ol>
                                                   <li>Login or create an account with your smartphone and go to location.</li>
@@ -233,8 +243,8 @@ export function Layout() {
                                                   <li>Start game and solve the puzzles.</li>
                                               </ol>
                                           </View>
-                                      </Tabs.Item>
-                                      <Tabs.Item title="Levels">
+                                      </TabItem>
+                                      <TabItem title="Levels">
                                           <View>
                                               Games have different levels -
                                                   <ul>
@@ -242,7 +252,7 @@ export function Layout() {
                                                       <li>Attention to detail, knowing a little math, and understanding orientation, like north, south, etc is useful.</li>
                                                   </ul>
                                           </View>
-                                      </Tabs.Item>
+                                      </TabItem>
                                       <TabItem title="How long?"><View>item 2</View></TabItem>
                                   </Tabs>
                               </View>

@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
-//import {API} from "aws-amplify";
+import {API} from "aws-amplify";
 import {gameScoreByGameStatsID, gameStopByGameID} from "../graphql/queries";
 import {createGameHintTime, createGameStopTime, updateGameScore} from "../graphql/mutations";
 export function intervalFunction(gameTime,stopClock,setGameTime,hintTime1,hintTime2,hintTime3,hintTime4,setGameTimeHint,isIntroVisible) {

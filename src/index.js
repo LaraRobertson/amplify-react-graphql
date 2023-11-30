@@ -53,18 +53,8 @@ if (isLocalhost) {
 //Check if you are in localhost or production
 
 //Then Configure Resources
-//Amplify.configure(awsExports);
-Amplify.configure({
-    API: {
-        GraphQL: {
-            endpoint: 'https://abcxyz.appsync-api.us-east-1.amazonaws.com/graphql',
-            region: 'us-east-1',
-            // Set the default auth mode to "apiKey" and provide the API key value
-            defaultAuthMode: 'apiKey',
-            apiKey: 'da2-xxxxxxxxxxxxxxxxxxxxxxxxxx'
-        }
-    }
-});
+Amplify.configure(awsExports);
+
 /* can run this to check timing - places timestamp on each console.log comment */
 /*console.log = (function() {
     var console_log = console.log;
