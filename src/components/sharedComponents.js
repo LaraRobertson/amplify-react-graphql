@@ -76,14 +76,14 @@ export const GameIntro = (props) => {
                     has <strong>{props.gameStopNameArray.length} {stopWord}</strong></span>
                 </View>
                 <View marginTop="5px" marginBottom="-20px" height="50px">
-                    <Image width="70px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/help.png" />
+                    <Image width="70px" src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/help.png" />
                 </View>
                 <View>
                     <span className="small">Click on <strong>Help</strong> for more
                         information and links to Hints. If you <span className="italics"> click a Hint you get <strong>5 minutes</strong> </span>added to your time.</span>
                 </View>
                 <View marginTop="5px" marginBottom="-20px" height="50px">
-                    <Image width="70px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/notes.png" />
+                    <Image width="70px" src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/notes.png" />
                 </View>
                 <View><span className="small">Click on <strong>Notes</strong> to write notes during
             game. These notes are not saved once you complete game.</span>
@@ -105,19 +105,19 @@ export const TopRight = (props) => {
                 className="z-index102 info-button clickable"
                 ariaLabel="Info Button"
                 onClick={() => toggleHelp(props.isHelpVisible,props.setIsHelpVisible)}>
-                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/help.png" />
+                <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/help.png" />
             </View>
             <View
                 className="z-index102 notes-button clickable"
                 ariaLabel="Notes Button"
                 onClick={() => toggleNotes(props.areNotesVisible,props.setAreNotesVisible)}>
-                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/notes.png" />
+                <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/notes.png" />
             </View>
             <View
                 className="z-index102 backpack-image clickable"
                 ariaLabel="backpack Image"
                 onClick={()=>toggleBackpack(props.isBackpackVisible,props.setIsBackpackVisible)}>
-                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png" />
+                <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/backpack-new.png" />
             </View>
             <View className={props.isBackpackVisible ? "cover-screen show-gradual" : "hide"}>
                 <View className="all-screen zIndex103 show">

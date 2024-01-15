@@ -265,11 +265,11 @@ export function Thief1() {
                     if (gameBackpack[i].key === "light") {
                         console.log("turn on/off light - state");
                         if (!isLightOn) {
-                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blacklight-using.png"
-                            localStorage.setItem("light", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blacklight-using.png");
+                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/blacklight-using.png"
+                            localStorage.setItem("light", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/blacklight-using.png");
                         } else {
-                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blacklight-not-using.png"
-                            localStorage.setItem("light", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blacklight-not-using.png");
+                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/blacklight-not-using.png"
+                            localStorage.setItem("light", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/blacklight-not-using.png");
                         }
                     }
                 }
@@ -305,7 +305,7 @@ export function Thief1() {
             setIsAlertVisible(false);
         }, 3000);
         console.log("put black light in backpack");
-        localStorage.setItem("light", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blacklight-not-using.png");
+        localStorage.setItem("light", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/blacklight-not-using.png");
         /* check if there */
         if (gameBackpack.length > 0) {
             for (var i = 0; i < gameBackpack.length; i++) {
@@ -318,14 +318,14 @@ export function Thief1() {
             if (bptest === true) {
                 console.log("push light to backpack");
                 gameBackpack.push({
-                    src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blacklight-not-using.png',
+                    src: 'https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/blacklight-not-using.png',
                     key: 'light'
                 })
             }
         } else {
             console.log("push light to backpack");
             gameBackpack.push({
-                src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blacklight-not-using.png',
+                src: 'https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/blacklight-not-using.png',
                 key: 'light'
             })
         }
@@ -336,7 +336,7 @@ export function Thief1() {
         <View position="relative" height="100%">
             <View ariaLabel="Main Container" className="main-container">
                 <View className="image-holder image-short" ariaLabel="Image Holder"
-                      backgroundImage="url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/background-game-new.jpg')">
+                      backgroundImage="url('https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/background-game-new.jpg')">
                     {/* all games */}
                     <TopRight isHelpVisible={isHelpVisible} setIsHelpVisible={setIsHelpVisible}
                               areNotesVisible={areNotesVisible} setAreNotesVisible={setAreNotesVisible}
@@ -347,18 +347,18 @@ export function Thief1() {
                     {/* static, non-clickable items */}
                     <View ariaLabel="Back Picnic Table" className="back-picnic-table z-index-not-clicked">
                         <Image
-                            src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blue-table-right.png"/>
+                            src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/blue-table-right.png"/>
                     </View>
                     <View ariaLabel="Tree Circle" className="tree-circle z-index-not-clicked">
                         <Image
-                            src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/brown-circle.png"/>
+                            src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/brown-circle.png"/>
                     </View>
                     {/* end static, non-clickable items */}
 
                     <View ariaLabel="Bottom Blue Table" className="bottom-blue-table clickable"
                           onClick={() => toggleNumBus()}>
                         <Image
-                            src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blue-table-left-writing.png"/>
+                            src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/blue-table-left-writing.png"/>
                     </View>
                     <View className={isNumBusVisible ? "cover-screen show-gradual" : "all-screen hide"}>
                         <View className="all-screen show">
@@ -381,7 +381,7 @@ export function Thief1() {
                     <View ariaLabel="Red Table 2 chairs" className="red-table-2-chairs clickable z-index-behind"
                           onClick={() => toggleLegs()}>
                         <Image
-                            src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/red-table-left-writing.png"/>
+                            src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/red-table-left-writing.png"/>
                     </View>
                     <View className={isLegsVisible ? "cover-screen show-gradual" : "all-screen hide"}>
                         <View className="all-screen show">
@@ -405,29 +405,29 @@ export function Thief1() {
                         <View ariaLabel="Red Table 4 chairs" className="red-table-4-chairs clickable"
                               onClick={() => toggleKnobMessage()}>
                             <Image
-                                src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/red-table-right.png"/>
+                                src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/red-table-right.png"/>
                         </View>
                     ) : (<View ariaLabel="Red Table 4 chairs" className="red-table-4-chairs z-index-not-clicked">
                         <Image
-                            src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/red-table-right.png"/>
+                            src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/red-table-right.png"/>
                     </View>)
                     }
                     <View
                         className={isKnobMessageVisible && isKnobMessageAvailable ? "red-table-4-chairs z-index20 show" : "hide"}
                         onClick={() => toggleKnobMessage()}>
                         <Image
-                            src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/red-table-right-message.png"/>
+                            src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/red-table-right-message.png"/>
                     </View>
 
                     <View className={isLightVisible ? "black-light clickable show" : "hide"}
                           onClick={() => lightInBackpack()}>
                         <Image
-                            src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blacklight.png"/>
+                            src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/blacklight.png"/>
                     </View>
 
                     <View ariaLabel="Torn Diary" className="torn-diary clickable" onClick={() => toggleTornDiary()}>
                         <Image alt="torn diary"
-                               src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/torndiarypage.png"/>
+                               src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/torndiarypage.png"/>
                     </View>
                     <View className={isTornDiaryVisible ? "cover-screen show-gradual" : "all-screen hide"}>
                         <View className="all-screen show">
@@ -451,7 +451,7 @@ export function Thief1() {
                     </View>
 
                     <View ariaLabel="Diary" className="diary clickable" onClick={() => toggleDiary()}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/diary.png"/>
+                        <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/diary.png"/>
                     </View>
                     <View className={isDiaryVisible ? "cover-screen show-gradual" : "all-screen hide"}>
                         <View className="all-screen show">
@@ -474,7 +474,7 @@ export function Thief1() {
 
                     <View ariaLabel="Tree with Sign" className="tree-with-sign clickable" onClick={() => toggleSign()}>
                         <Image
-                            src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/tree-with-sign.png"/>
+                            src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/tree-with-sign.png"/>
                     </View>
                     <View className={isSignVisible ? "cover-screen show-gradual" : "all-screen hide"}>
                         <View className="all-screen show">
@@ -502,7 +502,7 @@ export function Thief1() {
 
                     <View ariaLabel="Palm Tree" className="palm-tree z-index-not-clicked">
                         <Image
-                            src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/palm-tree.png"/>
+                            src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/palm-tree.png"/>
                     </View>
                         {isSafeVisible ? (
                             <View
@@ -510,26 +510,26 @@ export function Thief1() {
                                 className="safe clickable"
                                 onClick={() => toggleSafe()}>
                                 <Image
-                                    src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/safe-right-closed.png"/>
+                                    src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/safe-right-closed.png"/>
                             </View>
                         ) : null}
                         {(!isWrong1 && !isWrong2 && !isWrong3 && !isWrong4) ? (
                             <View ariaLabel="safe open" className="safe">
                                 <Image
-                                    src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe-right-open.png"/>
+                                    src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/safe-right-open.png"/>
                             </View>
                         ) : null}
                         {(!isWrong1 && !isWrong2 && !isWrong3 && !isWrong4) ? (
                             <View ariaLabel="safe open jewels" className="safe">
                                 <Image
-                                    src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/safe-right-open-jewels.png"/>
+                                    src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/safe-right-open-jewels.png"/>
                             </View>
                         ) : null}
 
 
                     <View ariaLabel="Tybean Octopus" className="tybean-octopus clickable" onClick={() => countClicks()}>
                         <Image
-                            src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/tybean-octopus.png"/>
+                            src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/tybean-octopus.png"/>
                     </View>
                 </View>{/* end Image Holder */}
 
@@ -620,7 +620,7 @@ export function Thief1() {
                             <View>Now you can return all the items to their rightful owners!</View>
                             <View marginTop="20px">
                                 <Image
-                                    src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/safe-right-open-jewels.png"/>
+                                    src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/safe-right-open-jewels.png"/>
                             </View>
                         </View>
 
@@ -762,7 +762,7 @@ export function Thief1() {
                         </View>
                         <View>
                             <Image maxHeight="150px"
-                                   src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/background-game-tybean-porch.jpg"/>
+                                   src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/background-game-tybean-porch.jpg"/>
                         </View>
                         <Button className="button"
                                 onClick={() => toggleIntro(isIntroVisible, setIsIntroVisible, setStopClock, gameTime, setGameTime, setRealTimeStart)}>tap
@@ -783,7 +783,7 @@ export function Thief1() {
                 <View className={isMapVisible ? "cover-screen show-gradual" : "hide"}>
                     <View textAlign="center" className="all-screen show">
                         <Image maxHeight="300px"
-                               src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/tybean-map.png"/>
+                               src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/tybean-map.png"/>
                         <Link href="https://goo.gl/maps/GTDCK2z3Jr1xYonL8?coh=178571&entry=tt" isExternal={true}>link to
                             google maps</Link><br/>
                         <Button className="button action-button"

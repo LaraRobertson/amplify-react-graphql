@@ -517,7 +517,7 @@ export function Thief3() {
             templateColumns="repeat(8, 12.5%)"
             templateRows="repeat(20, 5%)"
             className="image-holder"
-            backgroundImage = "url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/tybee-lower-porch-bg.jpg')">
+            backgroundImage = "url('https://escapeoutbucket213334-staging.s3amazonaws.com/public/tybee-lower-porch-bg.jpg')">
             <View className = "border"></View>
             <View className = "border"></View>
             <View className = "border"></View>
@@ -530,14 +530,14 @@ export function Thief3() {
                   rowSpan={{ base: 2, small: 4 }}
                   onClick={()=>toggleBackpack()}>
                 <View textAlign="right" height="100%" >
-                    <Image height="100%" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png" />
+                    <Image height="100%" src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/backpack-new.png" />
                 </View>
             </View>
             <View ariaLabel="H1"
                   rowSpan={{ base: 1, small: 2 }}
                   className = "border"
                   onClick={() => toggleInfo()}>
-                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/info.png" />
+                <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/info.png" />
             </View>
             <View ariaLabel="a2-big" className = "border no-show-small">a2 - big</View>
             <View  ariaLabel="a2-small"className = "border no-show-bigger"></View>
@@ -558,7 +558,7 @@ export function Thief3() {
                   rowSpan={{ base: 1, small: 2 }}
                   className = "border"
                   onClick={() => toggleNotes()}>
-                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/notes.png" />
+                <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/notes.png" />
             </View>
             <View className = "border no-show-bigger"></View>
             <View className = "border no-show-bigger"></View>

@@ -127,7 +127,7 @@ export function Layout() {
                 <View className="main-content">
                     <header>
                         <View marginTop="10px">
-                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/logo-escapeout-dark2.png" />
+                            <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/logo-escapeout-dark2.png" />
                         </View>
                     </header>
                     <hr />
@@ -166,7 +166,7 @@ export function Layout() {
                   <View className="main-content">
                       <header>
                           <View marginTop="10px">
-                              <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/logo-escapeout-dark2.png" />
+                              <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/logo-escapeout-dark2.png" />
                           </View>
                       </header>
                       <hr />

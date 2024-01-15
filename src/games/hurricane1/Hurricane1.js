@@ -67,7 +67,7 @@ export function Hurricane1() {
                 if (bptest === "true") {
                     console.log("push key to backpack");
                     gameBackpack.push({
-                        src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png',
+                        src: 'https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-not-using.png',
                         key: 'key'
                     })
                     setIsWrong1Stop2(false);
@@ -81,7 +81,7 @@ export function Hurricane1() {
             } else {
                 console.log("push key to backpack - empty");
                 gameBackpack.push({
-                    src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png',
+                    src: 'https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-not-using.png',
                     key: 'key'
                 })
                 setIsWrong1Stop2(false);
@@ -103,7 +103,7 @@ export function Hurricane1() {
                 if (bptest2 === "true") {
                     console.log("push prybar to backpack");
                     gameBackpack.push({
-                        src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/prybar-not-using.png',
+                        src: 'https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/prybar-not-using.png',
                         key: 'prybar'
                     })
                     setIsWrong1(false);
@@ -113,7 +113,7 @@ export function Hurricane1() {
             } else {
                 console.log("push prybar to backpack");
                 gameBackpack.push({
-                    src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/prybar-not-using.png',
+                    src: 'https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/prybar-not-using.png',
                     key: 'prybar'
                 })
                 setIsWrong1(false);
@@ -133,7 +133,7 @@ export function Hurricane1() {
                 if (bptest3 === "true") {
                     console.log("push shovel to backpack");
                     gameBackpack.push({
-                        src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/shovel-not-using.png',
+                        src: 'https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/shovel-not-using.png',
                         key: 'shovel'
                     });
                     setIsWrong1Stop3(false);
@@ -143,7 +143,7 @@ export function Hurricane1() {
             } else {
                 console.log("push shovel to backpack");
                 gameBackpack.push({
-                    src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/shovel-not-using.png',
+                    src: 'https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/shovel-not-using.png',
                     key: 'shovel'
                 });
                 setIsWrong1Stop3(false);
@@ -503,15 +503,15 @@ export function Hurricane1() {
         5: electricity at barrack
         4: lavatories at barrack
         3: bridge */
-const [bridgeAnswer1Image,setBridgeAnswer1Image] = useState("https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bridge-combo-1.png");
+const [bridgeAnswer1Image,setBridgeAnswer1Image] = useState("https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/bridge-combo-1.png");
 const [bridgeAnswer1Value, setBridgeAnswer1Value] = useState(1);
-const [bridgeAnswer2Image,setBridgeAnswer2Image] = useState("https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bridge-combo-1.png");
+const [bridgeAnswer2Image,setBridgeAnswer2Image] = useState("https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/bridge-combo-1.png");
 const [bridgeAnswer2Value, setBridgeAnswer2Value] = useState(1);
-const [bridgeAnswer3Image,setBridgeAnswer3Image] = useState("https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bridge-combo-1.png");
+const [bridgeAnswer3Image,setBridgeAnswer3Image] = useState("https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/bridge-combo-1.png");
 const [bridgeAnswer3Value, setBridgeAnswer3Value] = useState(1);
-const [bridgeAnswer4Image,setBridgeAnswer4Image] = useState("https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bridge-combo-1.png");
+const [bridgeAnswer4Image,setBridgeAnswer4Image] = useState("https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/bridge-combo-1.png");
 const [bridgeAnswer4Value, setBridgeAnswer4Value] = useState(1);
-const [bridgeAnswer5Image,setBridgeAnswer5Image] = useState("https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bridge-combo-1.png");
+const [bridgeAnswer5Image,setBridgeAnswer5Image] = useState("https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/bridge-combo-1.png");
 const [bridgeAnswer5Value, setBridgeAnswer5Value] = useState(1);
 
 const [guess2Stop4,setGuess2Stop4] = useState({'answer':''});
@@ -524,11 +524,11 @@ function setGuess2Stop4Function1() {
         newValue =  Number(bridgeAnswer1Value) + 1;
         console.log("bridgeAnswer1Value + 1: " + newValue);
         setBridgeAnswer1Value(newValue);
-        setBridgeAnswer1Image("https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bridge-combo-" + newValue  + ".png");
+        setBridgeAnswer1Image("https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/bridge-combo-" + newValue  + ".png");
     } else {
         newValue = 1;
         setBridgeAnswer1Value(newValue);
-        setBridgeAnswer1Image("https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bridge-combo-1.png");
+        setBridgeAnswer1Image("https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/bridge-combo-1.png");
     }
     var x = newValue.toString() + bridgeAnswer2Value.toString() + bridgeAnswer3Value.toString() + bridgeAnswer4Value.toString() + bridgeAnswer5Value.toString();
     let guessObject = {"answer":x}
@@ -549,11 +549,11 @@ function setGuess2Stop4Function1() {
         if (bridgeAnswer2Value < 5) {
             newValue = bridgeAnswer2Value + 1;
             setBridgeAnswer2Value( newValue);
-            setBridgeAnswer2Image("https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bridge-combo-" + newValue  + ".png");
+            setBridgeAnswer2Image("https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/bridge-combo-" + newValue  + ".png");
         } else {
             newValue = 1;
             setBridgeAnswer2Value(newValue);
-            setBridgeAnswer2Image("https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bridge-combo-1.png");
+            setBridgeAnswer2Image("https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/bridge-combo-1.png");
         }
         var x = bridgeAnswer1Value.toString() + newValue.toString() + bridgeAnswer3Value.toString() + bridgeAnswer4Value.toString() + bridgeAnswer5Value.toString();
         let guessObject = {"answer":x}
@@ -574,11 +574,11 @@ function setGuess2Stop4Function1() {
         if (bridgeAnswer3Value < 5) {
             newValue = bridgeAnswer3Value + 1;
             setBridgeAnswer3Value( newValue);
-            setBridgeAnswer3Image("https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bridge-combo-" + newValue  + ".png");
+            setBridgeAnswer3Image("https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/bridge-combo-" + newValue  + ".png");
         } else {
             newValue = 1;
             setBridgeAnswer3Value(newValue);
-            setBridgeAnswer3Image("https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bridge-combo-1.png");
+            setBridgeAnswer3Image("https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/bridge-combo-1.png");
         }
         var x = bridgeAnswer1Value.toString() + bridgeAnswer2Value.toString() + newValue.toString() + bridgeAnswer4Value.toString() + bridgeAnswer5Value.toString();
         let guessObject = {"answer":x}
@@ -599,11 +599,11 @@ function setGuess2Stop4Function1() {
         if (bridgeAnswer4Value < 5) {
             newValue = bridgeAnswer4Value + 1;
             setBridgeAnswer4Value( newValue);
-            setBridgeAnswer4Image("https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bridge-combo-" + newValue  + ".png");
+            setBridgeAnswer4Image("https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/bridge-combo-" + newValue  + ".png");
         } else {
             newValue = 1;
             setBridgeAnswer4Value(newValue);
-            setBridgeAnswer4Image("https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bridge-combo-1.png");
+            setBridgeAnswer4Image("https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/bridge-combo-1.png");
         }
         var x = bridgeAnswer1Value.toString() + bridgeAnswer2Value.toString() + bridgeAnswer3Value.toString() + newValue.toString() + bridgeAnswer5Value.toString();
         let guessObject = {"answer":x}
@@ -624,11 +624,11 @@ function setGuess2Stop4Function1() {
         if (bridgeAnswer5Value < 5) {
             newValue = bridgeAnswer5Value + 1;
             setBridgeAnswer5Value( newValue);
-            setBridgeAnswer5Image("https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bridge-combo-" + newValue  + ".png");
+            setBridgeAnswer5Image("https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/bridge-combo-" + newValue  + ".png");
         } else {
             newValue = 1;
             setBridgeAnswer5Value(newValue);
-            setBridgeAnswer5Image("https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bridge-combo-1.png");
+            setBridgeAnswer5Image("https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/bridge-combo-1.png");
         }
         var x = bridgeAnswer1Value.toString() + bridgeAnswer2Value.toString() + bridgeAnswer3Value.toString() + bridgeAnswer4Value.toString() + newValue.toString();
         let guessObject = {"answer":x}
@@ -714,7 +714,7 @@ function setGuess2Stop4Function1() {
             setIsAlertVisible(false);
         }, 3000);
         console.log("put round key in backpack");
-        localStorage.setItem("key2", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key2-not-using.png");
+        localStorage.setItem("key2", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key2-not-using.png");
         /* check if there */
         if (gameBackpack.length > 0) {
             for (var i = 0; i < gameBackpack.length; i++) {
@@ -727,14 +727,14 @@ function setGuess2Stop4Function1() {
             if (bptest === true) {
                 console.log("push key2 to backpack");
                 gameBackpack.push({
-                    src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key2-not-using.png',
+                    src: 'https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key2-not-using.png',
                     key: 'key2'
                 })
             }
         } else {
             console.log("push key to backpack");
             gameBackpack.push({
-                src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key2-not-using.png',
+                src: 'https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key2-not-using.png',
                 key: 'key2'
             })
         }
@@ -750,7 +750,7 @@ function setGuess2Stop4Function1() {
     function shovelFunction() {
         setIsShovelVisible(false);
         console.log("put shovel in backpack");
-        localStorage.setItem("shovel", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/shovel-not-using.png");
+        localStorage.setItem("shovel", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/shovel-not-using.png");
         /* check if there */
         if (gameBackpack.length > 0) {
             for (var i = 0; i < gameBackpack.length; i++) {
@@ -763,14 +763,14 @@ function setGuess2Stop4Function1() {
             if (bptest === true) {
                 console.log("push shovel to backpack");
                 gameBackpack.push({
-                    src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/shovel-not-using.png',
+                    src: 'https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/shovel-not-using.png',
                     key: 'shovel'
                 })
             }
         } else {
             console.log("push shovel to backpack");
             gameBackpack.push({
-                src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/shovel-not-using.png',
+                src: 'https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/shovel-not-using.png',
                 key: 'shovel'
             })
         }
@@ -790,7 +790,7 @@ function setGuess2Stop4Function1() {
             setIsAlertVisible(false);
         }, 3000);
         console.log("put prybar in backpack");
-        localStorage.setItem("prybar", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/prybar-not-using.png");
+        localStorage.setItem("prybar", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/prybar-not-using.png");
         /* check if there */
         if (gameBackpack.length > 0) {
             for (var i = 0; i < gameBackpack.length; i++) {
@@ -803,14 +803,14 @@ function setGuess2Stop4Function1() {
             if (bptest === true) {
                 console.log("push prybar to backpack");
                 gameBackpack.push({
-                    src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/prybar-not-using.png',
+                    src: 'https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/prybar-not-using.png',
                     key: 'prybar'
                 })
             }
         } else {
             console.log("push prybar to backpack");
             gameBackpack.push({
-                src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/prybar-not-using.png',
+                src: 'https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/prybar-not-using.png',
                 key: 'prybar'
             })
         }
@@ -830,7 +830,7 @@ function setGuess2Stop4Function1() {
         }, 3000);
         console.log("put key in backpack");
 
-        localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png");
+        localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-not-using.png");
         /* check if there */
         if (gameBackpack.length > 0) {
             for (var i = 0; i < gameBackpack.length; i++) {
@@ -843,14 +843,14 @@ function setGuess2Stop4Function1() {
             if (bptest === true) {
                 console.log("push key to backpack");
                 gameBackpack.push({
-                    src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png',
+                    src: 'https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-not-using.png',
                     key: 'key'
                 })
             }
         } else {
             console.log("push key to backpack");
             gameBackpack.push({
-                src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png',
+                src: 'https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-not-using.png',
                 key: 'key'
             })
         }
@@ -869,11 +869,11 @@ function setGuess2Stop4Function1() {
                     if (gameBackpack[i].key === "shovel") {
                         console.log("turn on/off shovel - state");
                         if (!isShovelOn) {
-                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/shovel-using.png"
-                            localStorage.setItem("shovel", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/shovel-using.png");
+                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/shovel-using.png"
+                            localStorage.setItem("shovel", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/shovel-using.png");
                         } else {
-                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/shovel-not-using.png"
-                            localStorage.setItem("shovel", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/shovel-not-using.png");
+                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/shovel-not-using.png"
+                            localStorage.setItem("shovel", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/shovel-not-using.png");
                         }
                     }
                 }
@@ -886,11 +886,11 @@ function setGuess2Stop4Function1() {
                     if (gameBackpack[i].key === "prybar") {
                         console.log("turn on/off prybar - state");
                         if (!isPrybarOn) {
-                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/prybar-using.png"
-                            localStorage.setItem("prybar", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/prybar-using.png");
+                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/prybar-using.png"
+                            localStorage.setItem("prybar", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/prybar-using.png");
                         } else {
-                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/prybar-not-using.png"
-                            localStorage.setItem("prybar", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/prybar-not-using.png");
+                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/prybar-not-using.png"
+                            localStorage.setItem("prybar", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/prybar-not-using.png");
                         }
                     }
                 }
@@ -903,11 +903,11 @@ function setGuess2Stop4Function1() {
                     if (gameBackpack[i].key === "key") {
                         console.log("turn on/off key - state");
                         if (!isKeyOn) {
-                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-using.png"
-                            localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-using.png");
+                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-using.png"
+                            localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-using.png");
                         } else {
-                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png"
-                            localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png");
+                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-not-using.png"
+                            localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-not-using.png");
                         }
                     }
                 }
@@ -920,11 +920,11 @@ function setGuess2Stop4Function1() {
                     if (gameBackpack[i].key === "key2") {
                         console.log("turn on/off key2 - state");
                         if (!isKey2On) {
-                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key2-using.png"
-                            localStorage.setItem("key2", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key2-using.png");
+                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key2-using.png"
+                            localStorage.setItem("key2", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key2-using.png");
                         } else {
-                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key2-not-using.png"
-                            localStorage.setItem("key2", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key2-not-using.png");
+                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key2-not-using.png"
+                            localStorage.setItem("key2", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key2-not-using.png");
                         }
                     }
                 }
@@ -943,7 +943,7 @@ function setGuess2Stop4Function1() {
                     <View
                         className="image-holder image-short"
                         ariaLabel="Image Holder"
-                        backgroundImage = "url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-game-jaycee-shelter-objects.jpg')">
+                        backgroundImage = "url('https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/background-game-jaycee-shelter-objects.jpg')">
 
                         {/* all games */}
 
@@ -951,19 +951,19 @@ function setGuess2Stop4Function1() {
                             className="z-index102 info-button"
                             ariaLabel="Info Button"
                             onClick={() => toggleHelp(isHelpVisible,setIsHelpVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>
-                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/help.png" />
+                            <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/help.png" />
                         </View>
                         <View
                             className="z-index102 notes-button"
                             ariaLabel="Notes Button"
                             onClick={() => toggleNotes(areNotesVisible,setAreNotesVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>
-                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/notes.png" />
+                            <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/notes.png" />
                         </View>
                         <View
                             className="z-index102 backpack-image"
                             ariaLabel="backpack Image"
                             onClick={()=>toggleBackpack(isBackpackVisible,setIsBackpackVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>
-                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png" />
+                            <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/backpack-new.png" />
                         </View>
                         <View className={isBackpackVisible ? "all-screen zIndex103 show" : "all-screen hide"} >
                             <Button className="close-button" onClick={() => toggleBackpack(isBackpackVisible,setIsBackpackVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>X</Button>
@@ -988,16 +988,16 @@ function setGuess2Stop4Function1() {
                             className="hanging-sign"
                             onClick={() => toggleSign()}>
                             <Image
-                                src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/hanging-sign.png"/>
+                                src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/hanging-sign.png"/>
                         </View>
                         {/* show closed safe if haven't guessed or guess is wrong */}
                         { !isWrong1 && haveGuessed1 ?   (
                             <View>
                                 <View className="safe-shelter show">
-                                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/open-safe.png" />
+                                    <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/open-safe.png" />
                                     <View marginRight="10px" className={isPrybarVisible ? "safe-shelter  show" : "hide"}
                                           onClick={pryBar}>
-                                        <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/prybar.png"/>
+                                        <Image  src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/prybar.png"/>
                                     </View>
                                 </View>
 
@@ -1006,29 +1006,29 @@ function setGuess2Stop4Function1() {
                             ariaLabel="Safe Shelter"
                             className="safe-shelter"
                             onClick={() => toggleSafeInfo()}>
-                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe-shelter.png"/>
+                            <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/safe-shelter.png"/>
                             </View>
                         }
                         {/* what you see first, it can NOT be clicked */}
                         <View className={!isPrybarOn ? "cement-safe show" : "hide"}>
-                            <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/cementsafe-closed.png" />
+                            <Image  src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/cementsafe-closed.png" />
                         </View>
 
                         {/* Now Prybar is ON but Cement Safe is closed */}
                         <View className={isPrybarOn && !isCementSafeOpen && isWrong2 ? "cement-safe show" : "hide"}
                               onClick={() => toggleCementSafe()}>
-                            <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/cementsafe-closed.png" />
+                            <Image  src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/cementsafe-closed.png" />
                         </View>
 
                         {/* Cement Safe is open, prybar doesn't matter, but answer is wrong  */}
                         <View className={isCementSafeOpen && isWrong2 ? "cement-safe show" : "hide"}
                               onClick={() => toggleCementSafeInfo()}>
-                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/cementsafeopencode.png"/>
+                            <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/cementsafeopencode.png"/>
                         </View>
 
                         {/* Cement Safe is open, prybar doesn't matter, but answer is RIGHT  */}
                         <View className={!isWrong2 ? "cement-safe show" : "hide"}>
-                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/cementsafeopensandbags.png"/>
+                            <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/cementsafeopensandbags.png"/>
                         </View>
                     </View>
 
@@ -1090,7 +1090,7 @@ function setGuess2Stop4Function1() {
                             </View>
                         ) : (
                             <Image className="test"
-                                   src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/codeforcement.png"/>
+                                   src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/codeforcement.png"/>
                         )}
                     </View>
                     {(!isWrong1 && !isWrong2) ?
@@ -1170,7 +1170,7 @@ function setGuess2Stop4Function1() {
                         <h3>Game Goals: Find Sandbags!</h3>
                         <h4>Start Playing Game when you are here:</h4>
                         <View>
-                            <Image maxHeight="150px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-game-jaycee-shelter.jpg" />
+                            <Image maxHeight="150px" src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/background-game-jaycee-shelter.jpg" />
                         </View>
                         <View>
                             <span className="small"> <strong>Remember, clock doesn't stop until you complete the stop.</strong></span></View>
@@ -1193,7 +1193,7 @@ function setGuess2Stop4Function1() {
                 <View
                     className="image-holder image-short"
                     ariaLabel="Image Holder"
-                    backgroundImage = "url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-game-jaycee-gazebo.jpg')">
+                    backgroundImage = "url('https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/background-game-jaycee-gazebo.jpg')">
 
                     {/* all games */}
 
@@ -1201,19 +1201,19 @@ function setGuess2Stop4Function1() {
                         className="z-index102 info-button"
                         ariaLabel="Info Button"
                         onClick={() => toggleHelp(isHelpVisible,setIsHelpVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/help.png" />
+                        <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/help.png" />
                     </View>
                     <View
                         className="z-index102 notes-button"
                         ariaLabel="Notes Button"
                         onClick={() => toggleNotes(areNotesVisible,setAreNotesVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/notes.png" />
+                        <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/notes.png" />
                     </View>
                     <View
                         className="z-index102 backpack-image"
                         ariaLabel="backpack Image"
                         onClick={()=>toggleBackpack(isBackpackVisible,setIsBackpackVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png" />
+                        <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/backpack-new.png" />
                     </View>
                     <View className={isBackpackVisible ? "all-screen zIndex103 show" : "all-screen hide"} >
                         <Button className="close-button" onClick={() => toggleBackpack(isBackpackVisible,setIsBackpackVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>X</Button>
@@ -1235,10 +1235,10 @@ function setGuess2Stop4Function1() {
                     { !isWrong1Stop2 && !isWrong2Stop2 && haveGuessed1Stop2 && haveGuessed2Stop2  ?   (
                         <View>
                             <View className="left-bush show">
-                                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe-right-open.png" />
+                                <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/safe-right-open.png" />
                                 <View margin="0 0 10px 15px" className={isKeyVisible ? "left-bush show" : "hide"}
                                        onClick={keyFunction}>
-                                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key.png" />
+                                    <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key.png" />
                                 </View>
 
                             </View>
@@ -1248,7 +1248,7 @@ function setGuess2Stop4Function1() {
                         ariaLabel="Safe Shelter"
                         className="left-bush"
                         onClick={()=>toggleSafeInfoStop2()}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe-right-closed-note.png"/>
+                        <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/safe-right-closed-note.png"/>
                     </View>
                     }
 
@@ -1258,7 +1258,7 @@ function setGuess2Stop4Function1() {
                                 ariaLabel="right bush"
                                 className="right-bush"
                                 onClick={()=>toggleRightBush()}>
-                                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bush-right-new.png" />
+                                <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/bush-right-new.png" />
                             </View>
                         ) : (
                             <View>
@@ -1266,13 +1266,13 @@ function setGuess2Stop4Function1() {
                                     ariaLabel="right bush"
                                     className={!isKeyOn ? "right-bush show" : "hide"}
                                     onClick={()=>toggleRightBush()}>
-                                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bush-open-right-new.png" />
+                                    <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/bush-open-right-new.png" />
                                 </View>
                                 <View
                                     ariaLabel="right bush"
                                     className={isKeyOn ? "right-bush show" : "hide"}
                                     onClick={()=>toggleUseKey()}>
-                                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bush-open-right-new.png" />
+                                    <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/bush-open-right-new.png" />
                                 </View>
                             </View>
                         )
@@ -1281,13 +1281,13 @@ function setGuess2Stop4Function1() {
                         ariaLabel="stop2 - words on string"
                         className="words-on-string"
                         onClick={()=>toggleSignStop2()}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/words-small.png" />
+                        <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/words-small.png" />
                     </View>
                     <View
                         ariaLabel="bench"
                         className="bench"
                         onClick={()=>toggleBench()}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/bench-gazebo.png" />
+                        <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/bench-gazebo.png" />
                     </View>
                     <View
                         ariaLabel="stop2 - sign info"
@@ -1295,7 +1295,7 @@ function setGuess2Stop4Function1() {
                         <Button className="close-button" onClick={()=>toggleSignStop2()}>X</Button>
                         <br /><h3>What Order for Letters in Words On Panels?</h3>
                         <br />
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/words-big.png" />
+                        <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/words-big.png" />
                     </View>
                     <View
                         ariaLabel="bench info"
@@ -1318,7 +1318,7 @@ function setGuess2Stop4Function1() {
                         ): null }
 
                     <View className={isKeyOn && isKeyUsed && !isWrong2Stop2 && !isWrong1Stop2? "cement-safe show" : "hide"}>
-                        <Image className="test" alt="test" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/cementsafeopensandbags.png" />
+                        <Image className="test" alt="test" src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/cementsafeopensandbags.png" />
                     </View>
                 </View>
                 <View ariaLabel="Stop2 - safe" className={isSafeInfoStop2Visible ? "all-screen show" : "hide"}>
@@ -1437,7 +1437,7 @@ function setGuess2Stop4Function1() {
                     <h3>Game Goals: Find Sandbags!</h3>
                     <h4>Start Playing Game when you are at the Gazebo at Jaycee Park:</h4>
                     <View>
-                        <Image maxHeight="150px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-game-jaycee-gazebo.jpg" />
+                        <Image maxHeight="150px" src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/background-game-jaycee-gazebo.jpg" />
                     </View>
                     <View>
                         <span className="small"> <strong>Remember, clock doesn't stop until you complete the stop.</strong></span></View>
@@ -1460,26 +1460,26 @@ function setGuess2Stop4Function1() {
                 <View
                     className="image-holder image-short"
                     ariaLabel="Image Holder"
-                    backgroundImage="url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-game-jaycee-exercise.jpg')">
+                    backgroundImage="url('https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/background-game-jaycee-exercise.jpg')">
                     {/* all games */}
 
                     <View
                         className="z-index102 info-button"
                         ariaLabel="Info Button"
                         onClick={() => toggleHelp(isHelpVisible,setIsHelpVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/help.png" />
+                        <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/help.png" />
                     </View>
                     <View
                         className="z-index102 notes-button"
                         ariaLabel="Notes Button"
                         onClick={() => toggleNotes(areNotesVisible,setAreNotesVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/notes.png" />
+                        <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/notes.png" />
                     </View>
                     <View
                         className="z-index102 backpack-image"
                         ariaLabel="backpack Image"
                         onClick={()=>toggleBackpack(isBackpackVisible,setIsBackpackVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png" />
+                        <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/backpack-new.png" />
                     </View>
                     <View className={isBackpackVisible ? "all-screen zIndex103 show" : "all-screen hide"} >
                         <Button className="close-button" onClick={() => toggleBackpack(isBackpackVisible,setIsBackpackVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>X</Button>
@@ -1503,17 +1503,17 @@ function setGuess2Stop4Function1() {
                         className="exercise-sign"
                         onClick={() => toggleSign()}>
                         <Image
-                            src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/exercise-sign.png"/>
+                            src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/exercise-sign.png"/>
                     </View>
 
                     {/* show closed safe if haven't guessed or guess is wrong */}
                     { !isWrong1Stop3 && haveGuessed1Stop3 ?   (
                         <View>
                             <View className="safe-shelter show">
-                                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/open-safe.png" />
+                                <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/open-safe.png" />
                                 <View marginRight="10px" className={isShovelVisible ? "safe-shelter  show" : "hide"}
                                       onClick={shovelFunction}>
-                                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/shovel.png"/>
+                                    <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/shovel.png"/>
                                 </View>
                             </View>
 
@@ -1522,24 +1522,24 @@ function setGuess2Stop4Function1() {
                         ariaLabel="Safe Exercise Area"
                         className="safe-shelter"
                         onClick={() => toggleSafeInfo()}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe-shelter.png"/>
+                        <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/safe-shelter.png"/>
                     </View>
                     }
 
                     {/* DIRT SAFE: what you see first, it can NOT be clicked */}
                     <View className={!isShovelOn ? "dirt-safe show" : "hide"}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/cementsafe-closed.png" />
+                        <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/cementsafe-closed.png" />
                     </View>
 
                     {/* Now Shovel is ON but Dirt Safe is closed */}
                     <View className={isShovelOn && !isCementSafeOpenStop3 && !isWrong1Stop3 ? "dirt-safe show" : "hide"}
                           onClick={() => toggleCementSafeStop3()}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/cementsafe-closed.png" />
+                        <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/cementsafe-closed.png" />
                     </View>
 
                     {/* Dirt Safe is open, prybar doesn't matter, but answer is RIGHT  */}
                     <View className={isShovelOn && isCementSafeOpenStop3 && !isWrong1Stop3 ? "dirt-safe show" : "hide"}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/cementsafeopensandbags.png"/>
+                        <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/cementsafeopensandbags.png"/>
                     </View>
                 </View>
 
@@ -1548,7 +1548,7 @@ function setGuess2Stop4Function1() {
                     className={isSignVisible ? "all-screen show" : "hide"}>
                     <Button className="close-button" onClick={() => toggleSign()}>X</Button>
                     <View className="exercise-sign-big-jaycee">
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/exercise-sign-big.png" />
+                        <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/exercise-sign-big.png" />
                     </View>
                 </View>
 
@@ -1645,7 +1645,7 @@ function setGuess2Stop4Function1() {
                     <h3>Game Goals: Find Sandbags!</h3>
                     <h4>tart Playing Game when you are here:</h4>
                     <View>
-                        <Image maxHeight="150px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-game-jaycee-exercise.jpg" />
+                        <Image maxHeight="150px" src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/background-game-jaycee-exercise.jpg" />
                     </View>
                     <View>
                         <span className="small"> <strong>Remember, clock doesn't stop until you complete the stop.</strong></span></View>
@@ -1668,7 +1668,7 @@ function setGuess2Stop4Function1() {
                     <View
                         className="image-holder image-short"
                         ariaLabel="Image Holder"
-                        backgroundImage = "url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-game-jaycee-little-bridge-no-bridge.jpg')">
+                        backgroundImage = "url('https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/background-game-jaycee-little-bridge-no-bridge.jpg')">
 
                         {/* all games */}
 
@@ -1676,19 +1676,19 @@ function setGuess2Stop4Function1() {
                             className="z-index102 info-button"
                             ariaLabel="Info Button"
                             onClick={() => toggleHelp(isHelpVisible,setIsHelpVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>
-                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/help.png" />
+                            <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/help.png" />
                         </View>
                         <View
                             className="z-index102 notes-button"
                             ariaLabel="Notes Button"
                             onClick={() => toggleNotes(areNotesVisible,setAreNotesVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>
-                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/notes.png" />
+                            <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/notes.png" />
                         </View>
                         <View
                             className="z-index102 backpack-image"
                             ariaLabel="backpack Image"
                             onClick={()=>toggleBackpack(isBackpackVisible,setIsBackpackVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>
-                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png" />
+                            <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/backpack-new.png" />
                         </View>
                         <View className={isBackpackVisible ? "all-screen zIndex103 show" : "all-screen hide"} >
                             <Button className="close-button" onClick={() => toggleBackpack(isBackpackVisible,setIsBackpackVisible,isCoverScreenVisible,setIsCoverScreenVisible)}>X</Button>
@@ -1715,14 +1715,14 @@ function setGuess2Stop4Function1() {
                                     ariaLabel="right bush"
                                     className="right-bush"
                                     onClick={()=>toggleRightBush()}>
-                                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/dark-green-bush-closed.png" />
+                                    <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/dark-green-bush-closed.png" />
                                 </View>
                             ) : (
                                 <View>
                                     <View
                                         ariaLabel="right bush"
                                         className="right-bush">
-                                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/dark-green-bush-open.png" />
+                                        <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/dark-green-bush-open.png" />
                                     </View>
                                     {isWrong1Stop4 ? (
                                         <View
@@ -1731,18 +1731,18 @@ function setGuess2Stop4Function1() {
                                             marginRight="20px"
                                             onClick={() => toggleSafeInfoStop4()}>
                                             <Image
-                                                src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe-shelter.png"/>
+                                                src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/safe-shelter.png"/>
                                         </View>) : (
                                         <View>
                                             <View
                                             ariaLabel="right bush"
                                             className="right-bush"
                                             marginRight="20px">
-                                            <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/open-safe.png"/>
+                                            <Image  src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/open-safe.png"/>
                                             </View>
                                             <View marginRight="10px" marginRight="20px" className={isKey2Visible ? "right-bush  show" : "hide"}
                                                   onClick={key2Function}>
-                                                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-tubular.png"/>
+                                                <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-tubular.png"/>
                                             </View>
                                         </View>
                                     )
@@ -1756,7 +1756,7 @@ function setGuess2Stop4Function1() {
                             <View
                                 ariaLabel="bridge"
                                 className="bridge">
-                                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/little-bridge-open.png" />
+                                <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/little-bridge-open.png" />
                             </View>
                             ) : null }
 
@@ -1765,14 +1765,14 @@ function setGuess2Stop4Function1() {
                                 ariaLabel="bridge"
                                 className="bridge"
                                 onClick={()=>toggleUseKey2()}>
-                                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/little-bridge-closed-open-keyhole.png" />
+                                <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/little-bridge-closed-open-keyhole.png" />
                             </View> ) : null}
 
                         {(!isWrong2Stop4 && !isKey2On)? (
                             <View
                                 ariaLabel="bridge"
                                 className="bridge">
-                                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/little-bridge-closed-open-keyhole.png" />
+                                <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/little-bridge-closed-open-keyhole.png" />
                             </View> ) : null}
 
                         {(isWrong2Stop4)? (
@@ -1780,7 +1780,7 @@ function setGuess2Stop4Function1() {
                                 ariaLabel="bridge"
                                 className="bridge"
                                 onClick={()=>toggleBridgeInfo()}>
-                                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/little-bridge-closed.png" />
+                                <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/little-bridge-closed.png" />
                             </View>
                         ):null}
 
@@ -1942,7 +1942,7 @@ function setGuess2Stop4Function1() {
                         <h3>Game Goals: Transport Sandbags!</h3>
                         <h4>Start Playing Game when your are at the little bridge at the northern end of Jaycee Park:</h4>
                         <View>
-                            <Image maxHeight="150px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-game-jaycee-little-bridge.jpg" />
+                            <Image maxHeight="150px" src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/background-game-jaycee-little-bridge.jpg" />
                         </View>
                         <View>
                             <span className="small"> <strong>Remember, clock doesn't stop until you complete the stop.</strong></span></View>
