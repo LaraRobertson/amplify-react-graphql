@@ -214,11 +214,11 @@ export function Memorial() {
                     if (gameBackpack[i].key === "key") {
                         console.log("turn on/off key - state");
                         if (!isKeyOn) {
-                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-using.png"
-                            localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-using.png");
+                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-using.png"
+                            localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-using.png");
                         } else {
-                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png"
-                            localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png");
+                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-not-using.png"
+                            localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-not-using.png");
                         }
                     }
                 }
@@ -236,7 +236,7 @@ export function Memorial() {
             setIsAlertVisible(false);
         }, 3000);
         console.log("put key in backpack");
-        localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png");
+        localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-not-using.png");
         /* check if there */
         if (gameBackpack.length > 0) {
             for (var i = 0; i < gameBackpack.length; i++) {
@@ -249,14 +249,14 @@ export function Memorial() {
             if (bptest === true) {
                 console.log("push key to backpack");
                 gameBackpack.push({
-                    src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png',
+                    src: 'https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-not-using.png',
                     key: 'key'
                 })
             }
         } else {
             console.log("push key to backpack (1st item)");
             gameBackpack.push({
-                src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png',
+                src: 'https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-not-using.png',
                 key: 'key'
             })
         }
@@ -266,7 +266,7 @@ export function Memorial() {
         <View position="relative" height="100%">
             <View ariaLabel="Main Container" className="main-container">
                 <View className="image-holder image-short" ariaLabel="Image Holder"
-                      backgroundImage="url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/memorial/background-game-memorial-park.jpg')">
+                      backgroundImage="url('https://escapeoutbucket213334-staging.s3amazonaws.com/public/memorial/background-game-memorial-park.jpg')">
                     {/* all games */}
                     <TopRight isHelpVisible={isHelpVisible} setIsHelpVisible={setIsHelpVisible}
                               areNotesVisible={areNotesVisible} setAreNotesVisible={setAreNotesVisible}
@@ -279,7 +279,7 @@ export function Memorial() {
 
                     <View ariaLabel="Playground Sign" className="bottom25 left0 absolute clickable"
                           onClick={() => toggleSign()}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/memorial/playground-sign.png"/>
+                        <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/memorial/playground-sign.png"/>
                     </View>
                     <View className={isSignVisible ? "cover-screen show-gradual" : "all-screen hide"}>
                         <View className="all-screen show">
@@ -295,7 +295,7 @@ export function Memorial() {
                             </View>
 
                                 <View textAlign="center" padding="20px 0">
-                                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/memorial/playground-sign-big.png" />
+                                    <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/memorial/playground-sign-big.png" />
                                 </View>
                                 <View width="100%" textAlign='center' marginTop="5px">
                                     <Button className="button action-button small" onClick={() => toggleSign()}>tap to close
@@ -307,38 +307,38 @@ export function Memorial() {
                     {isKeyOn ? (
                         <View ariaLabel="garbage can" className="bottom15 right0 absolute clickable"
                               onClick={() => winGame()}>
-                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/memorial/garbage-can.png"/>
+                            <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/memorial/garbage-can.png"/>
                         </View>
                     ) : (
                         <View ariaLabel="garbage can" className="bottom15 right0 absolute z-index-not-clicked">
                             <Image
-                                src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/memorial/garbage-can.png"/>
+                                src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/memorial/garbage-can.png"/>
                         </View>)
                     }
                     <View ariaLabel="garbage can" className={gameComplete ? "bottom15 right0 absolute clickable" : "hide"}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/memorial/garbage-can-baby.png"/>
+                        <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/memorial/garbage-can-baby.png"/>
                     </View>
 
                     {/* show closed safe if haven't guessed or guess is wrong */}
                     { !isWrong1 && !isWrong2 && !isWrong3 && !isWrong4  ?   (
                         <View>
                             <View className="bottom10 left0 absolute clickable">
-                                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe-right-open.png" />
+                                <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/safe-right-open.png" />
                                 <View margin="0 0 10px 15px" className={isKeyVisible ? "bottom10 left0 absolute clickable show" : "hide"}
                                       onClick={()=>keyInBackpack()} >
-                                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key.png" />
+                                    <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key.png" />
                                 </View>
 
                             </View>
 
                         </View>
                     ) : <View ariaLabel="Safe" className="bottom10 left0 absolute clickable" onClick={()=>toggleSafeInfo()}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe-right-closed.png"/>
+                        <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/safe-right-closed.png"/>
                     </View>
                     }
 
                     <View ariaLabel="Diary" className="bottom10 right0 absolute clickable" onClick={()=>toggleDiary()}>
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/diary.png" />
+                        <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/diary.png" />
                     </View>
                     <View className={isDiaryVisible? "cover-screen show-gradual" : "all-screen hide"}>
                         <View className="all-screen show">
@@ -447,7 +447,7 @@ export function Memorial() {
                             <h3>WINNER!</h3>
                             <View>Yeah the baby is safe!</View>
                             <View marginTop="20px">
-                                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/memorial/garbage-can-baby.png"/>
+                                <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/memorial/garbage-can-baby.png"/>
                             </View>
                         </View>
 
@@ -600,7 +600,7 @@ export function Memorial() {
                         </View>
                         <View>
                             <Image maxHeight="150px"
-                                   src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/memorial/gameImage-memorial-park.jpg"/>
+                                   src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/memorial/gameImage-memorial-park.jpg"/>
                         </View>
                         <Button className="button"
                                 onClick={() => toggleIntro(isIntroVisible, setIsIntroVisible, setStopClock, gameTime, setGameTime, setRealTimeStart)}>tap
@@ -621,7 +621,7 @@ export function Memorial() {
                 <View className={isMapVisible ? "cover-screen show-gradual" : "hide"}>
                     <View textAlign="center" className="all-screen show">
                         <Image maxHeight="300px"
-                               src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/memorial/memorial-map.png"/>
+                               src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/memorial/memorial-map.png"/>
                         <Link href="https://goo.gl/maps/HEAuNi2rCoFr6UAL7?coh=178571&entry=tt" isExternal={true}>link to
                             google maps</Link><br/>
                         <Button className="button action-button"

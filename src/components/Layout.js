@@ -145,7 +145,7 @@ export function Layout() {
                 <View className="main-content" padding="100px 0 0 0">
                     <header>
                         <View marginTop="10px">
-                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/new-logo-light-smaller.png" />
+                            <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/new-logo-light-smaller.png" />
                         </View>
                     </header>
                     <hr />
@@ -186,7 +186,7 @@ export function Layout() {
                   <View className="topNav">
                           <Flex justifyContent="center">
                           <View marginTop="10px">
-                              <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/new-logo-light-smaller.png" />
+                              <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/new-logo-light-smaller.png" />
                           </View>
                           </Flex>
 

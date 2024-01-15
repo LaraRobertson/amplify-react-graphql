@@ -171,13 +171,13 @@ export function Home() {
                     templateColumns="1fr 4fr"
                     rowGap="0.5rem"
                 >
-                    <View><Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/help.png" /></View>
+                    <View><Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/help.png" /></View>
                     <View><h3>Click on Help Sign for Hints and helpful information about game.</h3></View>
-                    <View><Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/notes.png" /></View>
+                    <View><Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/notes.png" /></View>
                     <View><h3>Click on Notes Sign to save notes about game.</h3></View>
                     <View><Image src="https://escapeoutgames.tybeewebdesign.com/wp-content/uploads/2022/02/blacklight.png" /></View>
                     <View><h3>Clicking on objects will sometimes open a small window with information and sometimes put them in your backpack.</h3></View>
-                    <View><Image width="50px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/backpack-new.png" /></View>
+                    <View><Image width="50px" src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/backpack-new.png" /></View>
                     <View><h3>If an object disappears from screen when you click on it, it may be in your backpack.</h3></View>
 
                 </Grid>
@@ -573,8 +573,6 @@ export function Home() {
                             direction="row"
                             justifyContent="flex-start">Cities: <a href="#tybeeIsland">Tybee Island</a>
                         </Flex>
-
-
                         <Heading level={"5"} className="heading">
                             Game List: Tybee Island, GA
                         </Heading>
@@ -691,7 +689,6 @@ export function Home() {
                                     <View className="game-card-full">
                                         <View id={"map" + game.id} className="hide">
                                             <Image maxHeight="300px" src={game.gameStopString} />
-
                                         </View>
                                     </View>
                                 </Card>

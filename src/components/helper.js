@@ -378,11 +378,11 @@ export function showItemContents(value,gameBackpack,isShovelOn,setIsShovelOn,isP
                 if (gameBackpack[i].key === "shovel") {
                     console.log("turn on/off shovel - state");
                     if (!isShovelOn) {
-                        gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/shovel-using.png"
-                        localStorage.setItem("shovel", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/shovel-using.png");
+                        gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/shovel-using.png"
+                        localStorage.setItem("shovel", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/shovel-using.png");
                     } else {
-                        gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/shovel-not-using.png"
-                        localStorage.setItem("shovel", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/shovel-not-using.png");
+                        gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/shovel-not-using.png"
+                        localStorage.setItem("shovel", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/shovel-not-using.png");
                     }
                 }
             }
@@ -395,11 +395,11 @@ export function showItemContents(value,gameBackpack,isShovelOn,setIsShovelOn,isP
                 if (gameBackpack[i].key === "prybar") {
                     console.log("turn on/off prybar - state");
                     if (!isPrybarOn) {
-                        gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/prybar-using.png"
-                        localStorage.setItem("prybar", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/prybar-using.png");
+                        gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/prybar-using.png"
+                        localStorage.setItem("prybar", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/prybar-using.png");
                     } else {
-                        gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/prybar-not-using.png"
-                        localStorage.setItem("prybar", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/prybar-not-using.png");
+                        gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/prybar-not-using.png"
+                        localStorage.setItem("prybar", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/prybar-not-using.png");
                     }
                 }
             }
@@ -412,11 +412,11 @@ export function showItemContents(value,gameBackpack,isShovelOn,setIsShovelOn,isP
                 if (gameBackpack[i].key === "key") {
                     console.log("turn on/off key - state");
                     if (!isKeyOn) {
-                        gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-using.png"
-                        localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-using.png");
+                        gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-using.png"
+                        localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-using.png");
                     } else {
-                        gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png"
-                        localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png");
+                        gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-not-using.png"
+                        localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-not-using.png");
                     }
                 }
             }
@@ -429,11 +429,11 @@ export function showItemContents(value,gameBackpack,isShovelOn,setIsShovelOn,isP
                 if (gameBackpack[i].key === "key2") {
                     console.log("turn on/off key2 - state");
                     if (!isKey2On) {
-                        gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key2-using.png"
-                        localStorage.setItem("key2", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key2-using.png");
+                        gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key2-using.png"
+                        localStorage.setItem("key2", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key2-using.png");
                     } else {
-                        gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key2-not-using.png"
-                        localStorage.setItem("key2", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key2-not-using.png");
+                        gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key2-not-using.png"
+                        localStorage.setItem("key2", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key2-not-using.png");
                     }
                 }
             }

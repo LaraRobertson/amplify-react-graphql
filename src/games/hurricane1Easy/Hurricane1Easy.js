@@ -235,11 +235,11 @@ export function Hurricane1Easy() {
                     if (gameBackpack[i].key === "key") {
                         console.log("turn on/off key - state");
                         if (!isKeyOn) {
-                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-using.png"
-                            localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-using.png");
+                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-using.png"
+                            localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-using.png");
                         } else {
-                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png"
-                            localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png");
+                            gameBackpack[i].src = "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-not-using.png"
+                            localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-not-using.png");
                         }
                     }
                 }
@@ -257,7 +257,7 @@ export function Hurricane1Easy() {
             setIsAlertVisible(false);
          }, 3000);
         console.log("put key in backpack");
-        localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png");
+        localStorage.setItem("key", "https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-not-using.png");
         /* check if there */
         if (gameBackpack.length > 0) {
             for (var i = 0; i < gameBackpack.length; i++) {
@@ -270,14 +270,14 @@ export function Hurricane1Easy() {
             if (bptest === true) {
                 console.log("push key to backpack");
                 gameBackpack.push({
-                    src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png',
+                    src: 'https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-not-using.png',
                     key: 'key'
                 })
             }
         } else {
             console.log("push key to backpack (1st item)");
             gameBackpack.push({
-                src: 'https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key-not-using.png',
+                src: 'https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key-not-using.png',
                 key: 'key'
             })
         }
@@ -287,7 +287,7 @@ export function Hurricane1Easy() {
     return (
         <View position="relative" height="100%">
             <View ariaLabel="Main Container" className="main-container">
-                <View className="image-holder image-short" ariaLabel="Image Holder" backgroundImage = "url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-game-jaycee-shelter.jpg')">
+                <View className="image-holder image-short" ariaLabel="Image Holder" backgroundImage = "url('https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/background-game-jaycee-shelter.jpg')">
                 {/* all games */}
                 <TopRight isHelpVisible={isHelpVisible} setIsHelpVisible={setIsHelpVisible}
                           areNotesVisible={areNotesVisible} setAreNotesVisible={setAreNotesVisible}
@@ -298,7 +298,7 @@ export function Hurricane1Easy() {
 
                 {/* end static, non-clickable items */}
                 <View ariaLabel="Torn Diary" className="torn-diary-jaycee clickable" onClick={()=>toggleTornDiary()}>
-                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/torndiarypage.png" />
+                    <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/torndiarypage.png" />
                 </View>
                 <View className={isTornDiaryVisible? "cover-screen show-gradual" : "all-screen hide"}>
                     <View className="all-screen show">
@@ -320,7 +320,7 @@ export function Hurricane1Easy() {
 
 
                 <View ariaLabel="Hanging Sign" className="hanging-sign clickable" onClick={()=>toggleSign()}>
-                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/hanging-sign.png" />
+                    <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/hanging-sign.png" />
                 </View>
                 <View className={isSignVisible? "cover-screen show-gradual" : "all-screen hide"}>
                     <View className="all-screen show">
@@ -338,7 +338,7 @@ export function Hurricane1Easy() {
                 </View>
 
                 <View ariaLabel="Diary" className="diary-jaycee clickable" onClick={()=>toggleDiary()}>
-                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/diary.png" />
+                    <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/diary.png" />
                 </View>
                 <View className={isDiaryVisible? "cover-screen show-gradual" : "all-screen hide"}>
                     <View className="all-screen show">
@@ -361,32 +361,32 @@ export function Hurricane1Easy() {
                 { (!isWrong1 && !isWrong2 && !isWrong3)  ? (
                     <View>
                         <View className="safe-shelter clickable show">
-                            <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/open-safe.png" />
+                            <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/open-safe.png" />
                             <View marginBottom="10px" marginRight="10px" className={isKeyVisible ? "safe-shelter inside-safe clickable show" : "hide"}
                                   onClick={()=>keyInBackpack()}>
-                                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/key.png"/>
+                                <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/key.png"/>
                             </View>
                         </View>
                     </View>
                 ) :  <View ariaLabel="Safe Shelter" className="safe-shelter clickable" onClick={()=>toggleSafe()}>
-                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe.png"/>
+                    <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/safe.png"/>
                 </View> }
 
                 <View className={!isKeyOn? "cement-safe  z-Index-not-clicked show" : "hide"}>
-                    <Image alt="test" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/cementsafe-closed-keyhole.png" />
+                    <Image alt="test" src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/cementsafe-closed-keyhole.png" />
                 </View>
                 <View className={isKeyOn? "cement-safe clickable show" : "hide"}
                       onClick={()=>toggleCementSafe()}>
-                    <Image alt="test" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/cementsafe-closed-keyhole.png" />
+                    <Image alt="test" src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/cementsafe-closed-keyhole.png" />
                 </View>
                 <View className={isCementSafeOpen && isKeyOn? "cement-safe clickable show" : "hide"}
                       onClick={()=>toggleCementSafeInfo()}>
-                    <Image alt="test" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/cementsafeopencode.png" />
+                    <Image alt="test" src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/cementsafeopencode.png" />
                 </View>
 
                 <View className={(!isWrong4)? "cement-safe show" : "hide"}
                       onClick={()=>toggleSandbagMessages()}>
-                    <Image alt="test" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/cementsafe-shelter-easy-discs.png" />
+                    <Image alt="test" src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/cementsafe-shelter-easy-discs.png" />
                 </View>
             </View>
            {/* puzzle solving */}
@@ -500,7 +500,7 @@ export function Hurricane1Easy() {
                             <h3>WINNER!</h3>
                         <View>Now you have lots of Discs!</View>
                             <View marginTop="20px">
-                                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/cementsafe-shelter-easy-discs.png"/>
+                                <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/cementsafe-shelter-easy-discs.png"/>
                             </View>
                         </View>
 
@@ -628,7 +628,7 @@ export function Hurricane1Easy() {
                         <strong>Start Playing when you are here:</strong>
                     </View>
                     <View>
-                        <Image maxHeight="150px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/background-game-jaycee-shelter.jpg" />
+                        <Image maxHeight="150px" src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/background-game-jaycee-shelter.jpg" />
                     </View>
                     <Button className="button"
                             onClick={() => toggleIntro(isIntroVisible, setIsIntroVisible, setStopClock, gameTime, setGameTime, setRealTimeStart)}>tap
@@ -648,7 +648,7 @@ export function Hurricane1Easy() {
             <View className={isMapVisible ? "cover-screen show-gradual" : "hide"}>
                 <View textAlign="center" className="all-screen show">
                     <Image maxHeight="300px"
-                           src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/jaycee-park-map.png"/>
+                           src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/jaycee-park-map.png"/>
                     <Link href="https://goo.gl/maps/4FHz3mx5zdQjeGwy8?coh=178571&entry=tt" isExternal={true}>link to
                         google maps</Link><br/>
                     <Button className="button action-button"

@@ -155,7 +155,7 @@ export function TybeanEasy() {
                 <View
                     className="image-holder image-short"
                     ariaLabel="Image Holder"
-                    backgroundImage = "url('https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/background-game-new.jpg')">
+                    backgroundImage = "url('https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/background-game-new.jpg')">
                     {/* all games */}
                     <TopRight isHelpVisible={isHelpVisible} setIsHelpVisible={setIsHelpVisible}
                               areNotesVisible={areNotesVisible} setAreNotesVisible={setAreNotesVisible}
@@ -165,22 +165,22 @@ export function TybeanEasy() {
 
                     {/* static, non-clickable items */}
                     <View ariaLabel="Back Picnic Table" className="back-picnic-table z-index-not-clicked">
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blue-table-right.png"/>
+                        <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/blue-table-right.png"/>
                     </View>
                     <View ariaLabel="Tree Circle" className="tree-circle z-index-not-clicked">
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/brown-circle.png"/>
+                        <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/brown-circle.png"/>
                     </View>
                     <View ariaLabel="Red Table 2 chairs" className="red-table-2-chairs z-index-not-clicked">
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/red-table-left.png"/>
+                        <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/red-table-left.png"/>
                     </View>
                     <View ariaLabel="Tree with Sign" className="tree-with-sign z-index-not-clicked">
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/tree-without-sign.png" />
+                        <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/tree-without-sign.png" />
                     </View>
                     <View ariaLabel="Palm Tree" className="palm-tree z-index-not-clicked">
-                        <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/palm-tree.png" />
+                        <Image  src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/palm-tree.png" />
                     </View>
                     <View ariaLabel="Bottom Blue Table" className="bottom-blue-table z-index-not-clicked">
-                        <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/blue-table-left.png"/>
+                        <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/blue-table-left.png"/>
                     </View>
                     {/* end static, non-clickable items */}
 
@@ -188,10 +188,10 @@ export function TybeanEasy() {
                     {(!isWrong1 && !isWrong2 && !isWrong3)? (
                         <View>
                             <View  className="safe-on-table z-index-not-clicked show">
-                                <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/open-safe.png" />
+                                <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/open-safe.png" />
                             </View>
                             <View marginRight="10px" className="safe-on-table z-index-not-clicked show">
-                                <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/important-documents.png"/>
+                                <Image  src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/important-documents.png"/>
                             </View>
                         </View>
                     ) : <View
@@ -199,7 +199,7 @@ export function TybeanEasy() {
                         ariaLabel="Safe Shelter"
                         className="safe-on-table clickable"
                         onClick={() => toggleSafeInfo()}>
-                        <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/safe-shelter.png"/>
+                        <Image  src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/safe-shelter.png"/>
                     </View>
                     }
 
@@ -260,10 +260,10 @@ export function TybeanEasy() {
                             <View>Important Documents! <br /> Maybe the rich person will give you a reward!</View>
                             <View>
                                 <View  className="safe-on-table z-index-not-clicked show">
-                                    <Image src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/hurricane/open-safe.png" />
+                                    <Image src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/hurricane/open-safe.png" />
                                 </View>
                                 <View marginRight="10px" className="safe-on-table z-index-not-clicked show">
-                                    <Image  src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/important-documents.png"/>
+                                    <Image  src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/important-documents.png"/>
                                 </View>
                             </View>
                         </View>
@@ -359,7 +359,7 @@ export function TybeanEasy() {
                                 <strong>Start Playing when you are here:</strong>
                             </View>
                             <View>
-                                <Image maxHeight="150px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/background-game-tybean-porch.jpg" />
+                                <Image maxHeight="150px" src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/background-game-tybean-porch.jpg" />
                             </View>
                             <Button className="button" onClick={() => toggleIntro(isIntroVisible,setIsIntroVisible,setStopClock,gameTime, setGameTime, setRealTimeStart)}>tap to play (time will start)</Button>
                             <Button className="link-button " onClick={() => toggleMap(isMapVisible,setIsMapVisible)}>tap to see location on map</Button>
@@ -375,7 +375,7 @@ export function TybeanEasy() {
 
                     <View className={isMapVisible? "cover-screen show-gradual" : "hide"}>
                         <View textAlign="center" className="all-screen show">
-                                <Image maxHeight="300px" src="https://escapeoutbucket213334-staging.s3.amazonaws.com/public/thief1/tybean-map.png" />
+                                <Image maxHeight="300px" src="https://escapeoutbucket213334-staging.s3amazonaws.com/public/thief1/tybean-map.png" />
                             <Link
                                 href="https://goo.gl/maps/GTDCK2z3Jr1xYonL8?coh=178571&entry=tt"
                                 isExternal={true}
